@@ -28,13 +28,15 @@ services:
 
   langfuse-web:
     ports:
-      - 127.0.0.1:3000:3000
+      - 127.0.0.1:3002:3000
 
   clickhouse:
     ports:
       - 127.0.0.1:8123:8123
       - 127.0.0.1:9000:9000
       - 127.0.0.1:9009:9009
+    volumes:
+      - ./clickhouse-config:/etc/clickhouse-server/config.d
 
   minio:
     ports:
@@ -53,14 +55,4 @@ services:
     ports:
       - 127.0.0.1:8081:8080
 
-  ollama-cpu:
-    ports:
-      - 127.0.0.1:11434:11434
-
-  ollama-gpu:
-    ports:
-      - 127.0.0.1:11434:11434
-      
-  ollama-gpu-amd:
-    ports:
-      - 127.0.0.1:11434:11434
+  # Ports for Ollama are defined in the main docker-compose.yml

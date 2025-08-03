@@ -14,6 +14,8 @@ import time
 import argparse
 import platform
 import sys
+import socket
+from subprocess import Popen, PIPE
 
 def run_command(cmd, cwd=None):
     """Run a shell command and print it."""
@@ -46,8 +48,43 @@ def prepare_supabase_env():
     print("Copying .env in root to .env in supabase/docker...")
     shutil.copyfile(env_example_path, env_path)
 
+def kill_process_using_port(port):
+    """Kill any process using the specified port."""
+    try:
+        # Check if port is in use
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            if s.connect_ex(('127.0.0.1', port)) == 0:
+                print(f"Port {port} is in use. Attempting to free it...")
+                if platform.system() == 'Windows':
+                    # For Windows
+                    process = Popen(['netstat', '-ano', '|', 'findstr', f':{port}'], 
+                                 stdout=PIPE, stderr=PIPE, shell=True)
+                    stdout, _ = process.communicate()
+                    for line in stdout.decode().split('\n'):
+                        if f':{port}' in line:
+                            parts = line.split()
+                            if len(parts) > 4:
+                                pid = parts[-1]
+                                Popen(['taskkill', '/F', '/PID', pid], 
+                                     stdout=PIPE, stderr=PIPE)
+                                print(f"Killed process with PID {pid}")
+                else:
+                    # For Linux/Mac
+                    process = Popen(['lsof', '-ti', f':{port}'], 
+                                 stdout=PIPE, stderr=PIPE)
+                    stdout, _ = process.communicate()
+                    for pid in stdout.decode().split():
+                        if pid.strip():
+                            Popen(['kill', '-9', pid], 
+                                 stdout=PIPE, stderr=PIPE)
+                            print(f"Killed process with PID {pid}")
+    except Exception as e:
+        print(f"Warning: Could not free port {port}. Error: {e}")
+
 def stop_existing_containers(profile=None):
     print("Stopping and removing existing containers for the unified project 'localai'...")
+    # Kill any process using port 11434 before stopping containers
+    kill_process_using_port(11434)
     cmd = ["docker", "compose", "-p", "localai"]
     if profile and profile != "none":
         cmd.extend(["--profile", profile])
@@ -66,6 +103,10 @@ def start_supabase(environment=None):
 def start_local_ai(profile=None, environment=None):
     """Start the local AI services (using its compose file)."""
     print("Starting local AI services...")
+    
+    # Double check if port 11434 is available
+    kill_process_using_port(11434)
+    time.sleep(2)  # Give some time for the port to be released
     cmd = ["docker", "compose", "-p", "localai"]
     if profile and profile != "none":
         cmd.extend(["--profile", profile])
