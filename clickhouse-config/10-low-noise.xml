@@ -1,0 +1,20 @@
+<clickhouse>
+  <logger>
+    <level>warning</level>
+  </logger>
+  <background_pool_size>2</background_pool_size>
+  <background_schedule_pool_size>2</background_schedule_pool_size>
+  <background_fetches_pool_size>1</background_fetches_pool_size>
+
+  <query_log remove="1"/>
+  <part_log remove="1"/>
+  <metric_log remove="1"/>
+  <asynchronous_metric_log remove="1"/>
+
+  <!-- Keep MergeTree mutation queues minimal to satisfy sanity check with low background pool sizes -->
+  <merge_tree>
+    <number_of_free_entries_in_pool_to_execute_mutation>2</number_of_free_entries_in_pool_to_execute_mutation>
+    <number_of_free_entries_in_pool_to_lower_max_size_of_merge>2</number_of_free_entries_in_pool_to_lower_max_size_of_merge>
+    <number_of_free_entries_in_pool_to_execute_optimize_entire_partition>2</number_of_free_entries_in_pool_to_execute_optimize_entire_partition>
+  </merge_tree>
+</clickhouse>

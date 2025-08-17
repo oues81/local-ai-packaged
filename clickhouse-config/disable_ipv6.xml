@@ -1,0 +1,19 @@
+<yandex>
+    <!-- Configuration pour désactiver IPv6 et forcer IPv4 -->
+    <listen_host>0.0.0.0</listen_host>
+    
+    <!-- Configuration pour la journalisation des erreurs -->
+    <logger>
+        <level>warning</level>
+        <console>1</console>
+        <log>/var/log/clickhouse-server/clickhouse-server.log</log>
+        <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+    </logger>
+    
+    <!-- Nettoyage automatique des parties endommagées -->
+    <merge_tree>
+        <enable_mixed_granularity_parts>1</enable_mixed_granularity_parts>
+        <min_bytes_for_wide_part>0</min_bytes_for_wide_part>
+        <min_rows_for_wide_part>0</min_rows_for_wide_part>
+    </merge_tree>
+</yandex>

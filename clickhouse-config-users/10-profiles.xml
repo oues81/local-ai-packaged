@@ -1,0 +1,9 @@
+<clickhouse>
+  <profiles>
+    <default>
+      <max_threads>2</max_threads>
+      <max_concurrent_queries>4</max_concurrent_queries>
+      <max_threads_to_insert>2</max_threads_to_insert>
+    </default>
+  </profiles>
+</clickhouse>

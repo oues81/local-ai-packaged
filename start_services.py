@@ -15,12 +15,59 @@ import argparse
 import platform
 import sys
 import socket
+import secrets
 from subprocess import Popen, PIPE
+
+# Single source of truth for the compose project name
+PROJECT_NAME = "local-ai-packaged"
 
 def run_command(cmd, cwd=None):
     """Run a shell command and print it."""
     print("Running:", " ".join(cmd))
     subprocess.run(cmd, cwd=cwd, check=True)
+
+def run_command_safe(cmd, cwd=None, timeout=None, continue_on_error=False):
+    """Run a shell command with optional timeout; optionally continue on error."""
+    print("Running:", " ".join(cmd))
+    try:
+        subprocess.run(cmd, cwd=cwd, check=True, timeout=timeout)
+        return True
+    except subprocess.TimeoutExpired as e:
+        print(f"Warning: Command timed out after {timeout}s: {' '.join(cmd)}")
+        if continue_on_error:
+            return False
+        raise
+    except subprocess.CalledProcessError as e:
+        print(f"Warning: Command failed (exit {e.returncode}): {' '.join(cmd)}")
+        if continue_on_error:
+            return False
+        raise
+
+def is_container_healthy(container_name: str) -> bool:
+    """Return True if docker container has Health.Status=healthy, False otherwise."""
+    try:
+        result = subprocess.run(
+            ["docker", "inspect", "-f", "{{ .State.Health.Status }}", container_name],
+            capture_output=True, text=True, check=False
+        )
+        status = result.stdout.strip()
+        return status == "healthy"
+    except Exception:
+        return False
+
+def wait_for_containers_healthy(container_names, timeout_seconds=120, poll_interval=2):
+    """Wait for all containers in list to become healthy until timeout; returns bool."""
+    start = time.time()
+    remaining = set(container_names)
+    while time.time() - start < timeout_seconds:
+        ready = {name for name in list(remaining) if is_container_healthy(name)}
+        remaining -= ready
+        if not remaining:
+            return True
+        time.sleep(poll_interval)
+    if remaining:
+        print(f"Warning: Timed out waiting for containers healthy: {', '.join(sorted(remaining))}")
+    return False
 
 def clone_supabase_repo():
     """Clone the Supabase repository using sparse checkout if not already present."""
@@ -82,23 +129,35 @@ def kill_process_using_port(port):
         print(f"Warning: Could not free port {port}. Error: {e}")
 
 def stop_existing_containers(profile=None):
-    print("Stopping and removing existing containers for the unified project 'localai'...")
+    print("Stopping and removing existing containers for the unified project 'local-ai-packaged'...")
     # Kill any process using port 11434 before stopping containers
     kill_process_using_port(11434)
-    cmd = ["docker", "compose", "-p", "localai"]
+    # Use a single compose project name to avoid duplicates
+    cmd = ["docker", "compose", "-p", PROJECT_NAME]
     if profile and profile != "none":
         cmd.extend(["--profile", profile])
-    cmd.extend(["-f", "docker-compose.yml", "down"])
-    run_command(cmd)
+    # Use stop + rm to avoid hangs on network removal with 'down'
+    stop_cmd = cmd + ["-f", "docker-compose.yml", "stop", "--timeout", "10"]
+    run_command_safe(stop_cmd, timeout=60, continue_on_error=True)
+
+    rm_cmd = cmd + ["-f", "docker-compose.yml", "rm", "-f", "-s", "-v"]
+    run_command_safe(rm_cmd, timeout=60, continue_on_error=True)
+
+    # Intentionally skip removing the compose network to prevent blocking.
+    # 'up -d' will reuse or create the network as needed.
 
 def start_supabase(environment=None):
     """Start the Supabase services (using its compose file)."""
     print("Starting Supabase services...")
-    cmd = ["docker", "compose", "-p", "localai", "-f", "supabase/docker/docker-compose.yml"]
+    # Use the same compose project name as local AI to keep a single stack
+    cmd = ["docker", "compose", "-p", PROJECT_NAME, "-f", "supabase/docker/docker-compose.yml", "-f", "supabase/docker/docker-compose.override.local.yml"]
     if environment and environment == "public":
         cmd.extend(["-f", "docker-compose.override.public.supabase.yml"])
     cmd.extend(["up", "-d"])
     run_command(cmd)
+    # Wait for critical Supabase containers to be healthy before proceeding
+    print("Waiting for Supabase health (db, pooler)...")
+    wait_for_containers_healthy(["supabase-db", "supabase-pooler"], timeout_seconds=180)
 
 def start_local_ai(profile=None, environment=None):
     """Start the local AI services (using its compose file)."""
@@ -107,7 +166,8 @@ def start_local_ai(profile=None, environment=None):
     # Double check if port 11434 is available
     kill_process_using_port(11434)
     time.sleep(2)  # Give some time for the port to be released
-    cmd = ["docker", "compose", "-p", "localai"]
+    # Use the unified compose project name
+    cmd = ["docker", "compose", "-p", "local-ai-packaged"]
     if profile and profile != "none":
         cmd.extend(["--profile", profile])
     cmd.extend(["-f", "docker-compose.yml"])
@@ -143,52 +203,25 @@ def generate_searxng_secret_key():
     else:
         print(f"SearXNG settings.yml already exists at {settings_path}")
 
-    print("Generating SearXNG secret key...")
-
-    # Detect the platform and run the appropriate command
-    system = platform.system()
-
+    print("Generating SearXNG secret key (pure Python)...")
     try:
-        if system == "Windows":
-            print("Detected Windows platform, using PowerShell to generate secret key...")
-            # PowerShell command to generate a random key and replace in the settings file
-            ps_command = [
-                "powershell", "-Command",
-                "$randomBytes = New-Object byte[] 32; " +
-                "(New-Object Security.Cryptography.RNGCryptoServiceProvider).GetBytes($randomBytes); " +
-                "$secretKey = -join ($randomBytes | ForEach-Object { \"{0:x2}\" -f $_ }); " +
-                "(Get-Content searxng/settings.yml) -replace 'ultrasecretkey', $secretKey | Set-Content searxng/settings.yml"
-            ]
-            subprocess.run(ps_command, check=True)
-
-        elif system == "Darwin":  # macOS
-            print("Detected macOS platform, using sed command with empty string parameter...")
-            # macOS sed command requires an empty string for the -i parameter
-            openssl_cmd = ["openssl", "rand", "-hex", "32"]
-            random_key = subprocess.check_output(openssl_cmd).decode('utf-8').strip()
-            sed_cmd = ["sed", "-i", "", f"s|ultrasecretkey|{random_key}|g", settings_path]
-            subprocess.run(sed_cmd, check=True)
-
-        else:  # Linux and other Unix-like systems
-            print("Detected Linux/Unix platform, using standard sed command...")
-            # Standard sed command for Linux
-            openssl_cmd = ["openssl", "rand", "-hex", "32"]
-            random_key = subprocess.check_output(openssl_cmd).decode('utf-8').strip()
-            sed_cmd = ["sed", "-i", f"s|ultrasecretkey|{random_key}|g", settings_path]
-            subprocess.run(sed_cmd, check=True)
-
-        print("SearXNG secret key generated successfully.")
-
+        # Generate a 32-byte hex key using Python's secrets
+        random_key = secrets.token_hex(32)
+        with open(settings_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        if "ultrasecretkey" in content:
+            content = content.replace("ultrasecretkey", random_key)
+            # Write atomically: write to temp then replace
+            tmp_path = settings_path + ".tmp"
+            with open(tmp_path, "w", encoding="utf-8") as f:
+                f.write(content)
+            os.replace(tmp_path, settings_path)
+            print("SearXNG secret key generated and applied.")
+        else:
+            print("SearXNG secret key already set; no replacement needed.")
     except Exception as e:
         print(f"Error generating SearXNG secret key: {e}")
-        print("You may need to manually generate the secret key using the commands:")
-        print("  - Linux: sed -i \"s|ultrasecretkey|$(openssl rand -hex 32)|g\" searxng/settings.yml")
-        print("  - macOS: sed -i '' \"s|ultrasecretkey|$(openssl rand -hex 32)|g\" searxng/settings.yml")
-        print("  - Windows (PowerShell):")
-        print("    $randomBytes = New-Object byte[] 32")
-        print("    (New-Object Security.Cryptography.RNGCryptoServiceProvider).GetBytes($randomBytes)")
-        print("    $secretKey = -join ($randomBytes | ForEach-Object { \"{0:x2}\" -f $_ })")
-        print("    (Get-Content searxng/settings.yml) -replace 'ultrasecretkey', $secretKey | Set-Content searxng/settings.yml")
+        print("You may need to manually update searxng/settings.yml with a 64-hex secret.")
 
 def check_and_fix_docker_compose_for_searxng():
     """Check and modify docker-compose.yml for SearXNG first run."""
