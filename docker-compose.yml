@@ -36,8 +36,6 @@ x-ollama: &service-ollama
   restart: unless-stopped
   networks:
     - ai_network
-  ports:
-    - "11434:11434"
   environment:
     - OLLAMA_HOST=0.0.0.0
     - OLLAMA_CONTEXT_LENGTH=4096  # Contexte augmenté pour de meilleurs résultats
@@ -47,23 +45,27 @@ x-ollama: &service-ollama
     - OLLAMA_NUM_GPU=0            # Mode CPU
     - OLLAMA_NUM_THREADS=10       # 10 threads pour de meilleures performances
     - OLLAMA_NUM_PARALLEL=4       # Nombre de requêtes en parallèle pour embeddings
+  ports:
+    - 0.0.0.0:11434:11434
   volumes:
     - /mnt/c/Users/oues/.ollama:/root/.ollama
   deploy:
     resources:
       limits:
-        cpus: '10'                # 10 cœurs CPU
+        cpus: '6'                 # Align with host CPU availability
         memory: 36G               # 36 Go de mémoire
 
 x-init-ollama: &init-ollama
   image: ollama/ollama:latest
   container_name: ollama-pull-llama
+  networks:
+    - ai_network
   volumes:
     - /mnt/c/Users/oues/.ollama:/root/.ollama
   entrypoint: /bin/sh
   command:
     - "-c"
-    - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull qwen2.5:7b-instruct-q4_K_M; OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text"
+    - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull mistral:7b"
 
 services:
   flowise:
@@ -88,10 +90,14 @@ services:
     container_name: open-webui
     expose:
       - 8080/tcp
+    ports:
+      - 0.0.0.0:8090:8080
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
       - open-webui:/app/backend/data
+    networks:
+      - ai_network
 
   n8n-import:
     <<: *service-n8n
@@ -129,6 +135,7 @@ services:
 
   neo4j:
     image: neo4j:latest
+    command: ["bash", "-lc", "exec /var/lib/neo4j/bin/neo4j console"]
     volumes:
         - ./neo4j/logs:/logs
         - ./neo4j/config:/config
@@ -150,6 +157,7 @@ services:
       - 80:80/tcp
       - 443:443/tcp
       - 8111:8111/tcp
+      - 0.0.0.0:18080:18080
     expose:
       - 2019/tcp
       - 443/tcp
@@ -173,6 +181,8 @@ services:
       - LANGFUSE_HOSTNAME=${LANGFUSE_HOSTNAME:-":8007"}
       - NEO4J_HOSTNAME=${NEO4J_HOSTNAME:-":8008"}
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL:-internal}
+    networks:
+      - ai_network
     cap_drop:
       - ALL
     cap_add:
@@ -235,7 +245,7 @@ services:
       LANGFUSE_INGESTION_CLICKHOUSE_WRITE_INTERVAL_MS: ${LANGFUSE_INGESTION_CLICKHOUSE_WRITE_INTERVAL_MS:-}
       REDIS_HOST: ${REDIS_HOST:-redis}
       REDIS_PORT: ${REDIS_PORT:-6379}
-      REDIS_AUTH: ${REDIS_AUTH:-LOCALONLYREDIS}
+      REDIS_AUTH: ${REDIS_AUTH:-}
       REDIS_TLS_ENABLED: ${REDIS_TLS_ENABLED:-false}
       REDIS_TLS_CA: ${REDIS_TLS_CA:-/certs/ca.crt}
       REDIS_TLS_CERT: ${REDIS_TLS_CERT:-/certs/redis.crt}
@@ -324,7 +334,7 @@ services:
       - langfuse_postgres_data:/var/lib/postgresql/data
 
   redis:
-    container_name: redis
+    container_name: localai-redis
     image: docker.io/valkey/valkey:8-alpine
     command: valkey-server --save 30 1 --loglevel warning
     restart: unless-stopped
@@ -417,5 +427,5 @@ services:
 
 networks:
   ai_network:
-    driver: bridge
+    external: true
     name: ai_network

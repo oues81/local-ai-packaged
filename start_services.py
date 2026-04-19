@@ -122,6 +122,16 @@ def kill_process_using_port(port):
                     stdout, _ = process.communicate()
                     for pid in stdout.decode().split():
                         if pid.strip():
+                            # Do not kill Docker-managed proxy/runtime processes.
+                            cmdline_proc = Popen(
+                                ['ps', '-p', pid, '-o', 'comm='],
+                                stdout=PIPE, stderr=PIPE
+                            )
+                            proc_out, _ = cmdline_proc.communicate()
+                            proc_name = proc_out.decode().strip().lower()
+                            if any(x in proc_name for x in ['docker', 'containerd', 'runc']):
+                                print(f"Skipping Docker-managed process on port {port}: PID {pid} ({proc_name})")
+                                continue
                             Popen(['kill', '-9', pid], 
                                  stdout=PIPE, stderr=PIPE)
                             print(f"Killed process with PID {pid}")
@@ -133,15 +143,25 @@ def stop_existing_containers(profile=None):
     # Kill any process using port 11434 before stopping containers
     kill_process_using_port(11434)
     # Use a single compose project name to avoid duplicates
-    cmd = ["docker", "compose", "-p", PROJECT_NAME]
+    base_cmd = ["docker", "compose", "-p", PROJECT_NAME]
+
+    # Stop/remove local AI compose services
+    local_cmd = base_cmd.copy()
     if profile and profile != "none":
-        cmd.extend(["--profile", profile])
-    # Use stop + rm to avoid hangs on network removal with 'down'
-    stop_cmd = cmd + ["-f", "docker-compose.yml", "stop", "--timeout", "10"]
+        local_cmd.extend(["--profile", profile])
+    stop_cmd = local_cmd + ["-f", "docker-compose.yml", "stop", "--timeout", "10"]
     run_command_safe(stop_cmd, timeout=60, continue_on_error=True)
 
-    rm_cmd = cmd + ["-f", "docker-compose.yml", "rm", "-f", "-s", "-v"]
+    rm_cmd = local_cmd + ["-f", "docker-compose.yml", "rm", "-f", "-s", "-v"]
     run_command_safe(rm_cmd, timeout=60, continue_on_error=True)
+
+    # Stop/remove Supabase compose services to prevent container name conflicts
+    supabase_cmd = base_cmd + ["-f", "supabase/docker/docker-compose.yml"]
+    supa_stop_cmd = supabase_cmd + ["stop", "--timeout", "10"]
+    run_command_safe(supa_stop_cmd, timeout=60, continue_on_error=True)
+
+    supa_rm_cmd = supabase_cmd + ["rm", "-f", "-s", "-v"]
+    run_command_safe(supa_rm_cmd, timeout=60, continue_on_error=True)
 
     # Intentionally skip removing the compose network to prevent blocking.
     # 'up -d' will reuse or create the network as needed.
@@ -150,7 +170,7 @@ def start_supabase(environment=None):
     """Start the Supabase services (using its compose file)."""
     print("Starting Supabase services...")
     # Use the same compose project name as local AI to keep a single stack
-    cmd = ["docker", "compose", "-p", PROJECT_NAME, "-f", "supabase/docker/docker-compose.yml", "-f", "supabase/docker/docker-compose.override.local.yml"]
+    cmd = ["docker", "compose", "-p", PROJECT_NAME, "-f", "supabase/docker/docker-compose.yml"]
     if environment and environment == "public":
         cmd.extend(["-f", "docker-compose.override.public.supabase.yml"])
     cmd.extend(["up", "-d"])
