@@ -11,14 +11,15 @@
 ### Services
 | Service | Port | Status | Notes |
 |---------|------|--------|-------|
-| Open WebUI | 3000 | ✅ Ready | ChatGPT-like interface |
-| n8n | 5678 | ✅ Ready | Workflow automation |
+| Open WebUI | 8050 | ✅ Ready | ChatGPT-like interface |
+| n8n | 8002 | ✅ Ready | Workflow automation |
 | Supabase | 8030 | ✅ Ready | Database & auth |
-| Flowise | 3001 | ✅ Ready | Agent builder |
-| Qdrant | 6333 | ✅ Ready | Vector store |
-| Neo4j | 7474 | ✅ Ready | Knowledge graph |
-| SearXNG | 8081 | ✅ Ready | Metasearch |
+| Flowise | 8001 | ✅ Ready | Agent builder |
+| Qdrant | 8003 / 8004 | ✅ Ready | Vector store |
+| Neo4j | 8005 / 8006 | ✅ Ready | Knowledge graph |
+| SearXNG | 8008 | ✅ Ready | Metasearch |
 | Langfuse | 3002 | ✅ Ready | Observability |
+| Caddy | 8081 / 8444 | ✅ Ready | Reverse proxy |
 | MCP Server | - | ✅ Ready | n8n workflow tools |
 
 ### Last Validated
@@ -59,8 +60,8 @@ docker-compose up -d
 docker-compose -f supabase/docker/docker-compose.yml up -d
 
 # Check services
-curl http://localhost:3000/health
-curl http://localhost:5678/health
+curl http://localhost:8050/health
+curl http://localhost:8002/health
 ```
 
 ---

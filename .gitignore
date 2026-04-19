@@ -6,3 +6,4 @@ shared-backup/
 .env.test
 searxng/settings.yml
 searxng/uwsgi*
+.backup-pre-upstream-20260418-224503/

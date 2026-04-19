@@ -47,14 +47,15 @@ docker compose -f supabase/docker/docker-compose.yml up -d
 
 | Service | Default Port |
 |---------|-------------|
-| n8n | 5678 |
-| Open WebUI | 3000 |
-| Flowise | 3001 |
+| n8n | 8002 |
+| Open WebUI | 8050 |
+| Flowise | 8001 |
 | Supabase Studio | 8030 |
-| Qdrant | 6333 |
-| Neo4j | 7474 / 7687 |
-| SearXNG | 8081 |
+| Qdrant | 8003 / 8004 |
+| Neo4j | 8005 / 8006 |
+| SearXNG | 8008 |
 | Langfuse | 3002 |
+| Caddy | 8081 / 8444 |
 
 ## Agent behavior
 

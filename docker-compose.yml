@@ -46,14 +46,14 @@ x-ollama: &service-ollama
     - OLLAMA_NUM_THREADS=10       # 10 threads pour de meilleures performances
     - OLLAMA_NUM_PARALLEL=4       # Nombre de requêtes en parallèle pour embeddings
   ports:
-    - 0.0.0.0:11434:11434
+    - "${OLLAMA_PORT:-11434}:11434"
   volumes:
     - /mnt/c/Users/oues/.ollama:/root/.ollama
   deploy:
     resources:
       limits:
-        cpus: '6'                 # Align with host CPU availability
-        memory: 36G               # 36 Go de mémoire
+        cpus: '4'                 # Align with host CPU availability
+        memory: 8G               # 36 Go de mémoire
 
 x-init-ollama: &init-ollama
   image: ollama/ollama:latest
@@ -65,13 +65,15 @@ x-init-ollama: &init-ollama
   entrypoint: /bin/sh
   command:
     - "-c"
-    - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull mistral:7b"
+    - "sleep 3; OLLAMA_HOST=ollama:11434 ollama pull qwen2.5:7b-instruct-q4_K_M; OLLAMA_HOST=ollama:11434 ollama pull nomic-embed-text; OLLAMA_HOST=ollama:11434 ollama pull mistral:7b"
 
 services:
   flowise:
     image: flowiseai/flowise
     restart: unless-stopped
     container_name: flowise
+    ports:
+      - "${FLOWISE_PORT:-8001}:3001"
     expose:
       - 3001/tcp
     environment:
@@ -91,7 +93,7 @@ services:
     expose:
       - 8080/tcp
     ports:
-      - 0.0.0.0:8090:8080
+      - "${OPEN_WEBUI_PORT:-8050}:8080"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
@@ -113,6 +115,8 @@ services:
     <<: *service-n8n
     container_name: n8n
     restart: unless-stopped
+    ports:
+      - "${N8N_PORT:-8002}:5678"
     expose:
       - 5678/tcp
     volumes:
@@ -127,6 +131,9 @@ services:
     image: qdrant/qdrant
     container_name: qdrant
     restart: unless-stopped
+    ports:
+      - "${QDRANT_HTTP_PORT:-8003}:6333"
+      - "${QDRANT_GRPC_PORT:-8004}:6334"
     expose:
       - 6333/tcp
       - 6334/tcp
@@ -154,10 +161,10 @@ services:
     image: docker.io/library/caddy:2-alpine
     restart: unless-stopped
     ports:
-      - 80:80/tcp
-      - 443:443/tcp
-      - 8111:8111/tcp
-      - 0.0.0.0:18080:18080
+      - "8081:80"
+      - "8444:443"
+      - "8111:8111"
+      - "0.0.0.0:18080:18080"
     expose:
       - 2019/tcp
       - 443/tcp
@@ -363,6 +370,8 @@ services:
     container_name: searxng
     image: docker.io/searxng/searxng:latest
     restart: unless-stopped
+    ports:
+      - "8081:8080"
     expose:
       - 8080/tcp
     volumes:

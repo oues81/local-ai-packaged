@@ -13,7 +13,7 @@
 | **Name** | local-ai-packaged |
 | **Path** | `~/projects/local-ai-packaged` |
 | **Primary Specs** | SPEC 001 (MCP server integration) |
-| **Ports** | 3000, 5678, 8030, 3001, 6333, 7474, 8081, 3002 |
+| **Ports** | 8050, 8002, 8030, 8001, 8003, 8004, 8005, 8006, 8008, 3002, 8081, 8444 |
 | **Integration** | MCP, HTTP, Docker |
 | **Parent System** | Infrastructure layer |
 | **Role** | Local AI stack (Ollama, OpenWebUI, n8n, Supabase, etc.) |
@@ -36,14 +36,15 @@ Docker Compose template that bootstraps a fully-featured **local AI and low-code
 
 | Service | Port | Purpose |
 |---------|------|---------|
-| Open WebUI | 3000 | ChatGPT-like interface |
-| n8n | 5678 | Workflow automation |
+| Open WebUI | 8050 | ChatGPT-like interface |
+| n8n | 8002 | Workflow automation |
 | Supabase Studio | 8030 | Database & auth UI |
-| Flowise | 3001 | AI agent builder |
-| Qdrant | 6333 | Vector store |
-| Neo4j | 7474 | Knowledge graph |
-| SearXNG | 8081 | Metasearch engine |
+| Flowise | 8001 | AI agent builder |
+| Qdrant | 8003 / 8004 | Vector store |
+| Neo4j | 8005 / 8006 | Knowledge graph |
+| SearXNG | 8008 | Metasearch engine |
 | Langfuse | 3002 | LLM observability |
+| Caddy | 8081 / 8444 | Reverse proxy entrypoint |
 
 ### 1.3 Key Directories
 
@@ -90,8 +91,8 @@ docker-compose logs -f [service]
 ### 2.3 Health Checks
 ```bash
 # Quick check
-curl http://localhost:3000/health  # Open WebUI
-curl http://localhost:5678/health  # n8n
+curl http://localhost:8050/health  # Open WebUI
+curl http://localhost:8002/health  # n8n
 curl http://localhost:8030         # Supabase
 
 # All services
