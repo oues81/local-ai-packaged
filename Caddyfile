@@ -30,10 +30,10 @@
 #     reverse_proxy ollama:11434
 # }
 
-# Supabase
-{$SUPABASE_HOSTNAME} {
-    reverse_proxy kong:8000
-}
+# Supabase (disabled - not enabled in docker-compose.yml)
+# {$SUPABASE_HOSTNAME} {
+#     reverse_proxy kong:8000
+# }
 
 # Neo4j
 {$NEO4J_HOSTNAME} {

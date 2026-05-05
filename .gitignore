@@ -7,3 +7,33 @@ shared-backup/
 searxng/settings.yml
 searxng/uwsgi*
 .backup-pre-upstream-20260418-224503/
+
+# Agent configs
+.codex/
+
+# OpenCode config
+opencode.json
+
+# Caddy configs (local)
+caddy-config/
+Caddyfile.local
+
+# ClickHouse local configs
+clickhouse-config/wsl2-*.xml
+clickhouse-users/
+
+# Docker backups
+docker-compose.yml.backup
+docker-compose.yml.bak
+
+# Monitoring (local)
+monitoring/
+
+# Scripts (local)
+scripts/
+
+# Contracts (generated)
+contracts/
+
+# Tests (local)
+tests/
