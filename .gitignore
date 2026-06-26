@@ -22,7 +22,16 @@ Caddyfile.local
 clickhouse-config/wsl2-*.xml
 clickhouse-users/
 
+# Python virtual environments & caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
 # Docker backups
+*.bak
+*.bak2
+*.backup
 docker-compose.yml.backup
 docker-compose.yml.bak
 
