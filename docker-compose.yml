@@ -213,6 +213,41 @@ services:
           cpus: '0.5'
           memory: 512M
 
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile.mcp
+    container_name: laip-mcp-server
+    restart: unless-stopped
+    networks:
+      - laip_ai_network
+    ports:
+      - "${MCP_SERVER_PORT:-8009}:8000"
+    expose:
+      - 8000/tcp
+    environment:
+      - MCP_SERVER_HOST=0.0.0.0
+      - MCP_SERVER_PORT=8000
+      - N8N_BASE_URL=http://n8n:5678
+      - N8N_API_KEY=${N8N_API_KEY:-}
+    depends_on:
+      n8n:
+        condition: service_healthy
+    healthcheck:
+      test: curl -f http://localhost:8000/health || exit 1
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
   qdrant:
     image: qdrant/qdrant
     container_name: laip-qdrant
@@ -524,7 +559,7 @@ services:
     user: root
     restart: unless-stopped
     ports:
-      - "8088:8080"
+      - "${SEARXNG_PORT:-8008}:8080"
     expose:
       - 8080/tcp
     volumes:

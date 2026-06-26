@@ -29,8 +29,8 @@ quickly get started with building self-hosted AI workflows.
 ✅ [**Self-hosted n8n**](https://n8n.io/) - Low-code platform with over 400
 integrations and advanced AI components
 
-✅ [**Supabase**](https://supabase.com/) - Open source database as a service -
-most widely used database for AI agents
+✅ [**Supabase**](https://supabase.com/) - Open source database as a service
+(local stack disabled; use the Supabase cloud instance from archon-v2)
 
 ✅ [**Ollama**](https://ollama.com/) - Cross-platform LLM platform to install
 and run the latest local LLMs
@@ -53,6 +53,29 @@ results from up to 229 search services. Users are neither tracked nor profiled, 
 ✅ [**Caddy**](https://caddyserver.com/) - Managed HTTPS/TLS for custom domains
 
 ✅ [**Langfuse**](https://langfuse.com/) - Open source LLM engineering platform for agent observability
+
+✅ **MCP Server** - Programmatic bridge exposing n8n workflow execution over the Model Context Protocol (SSE transport on port 8009)
+
+## Services and ports
+
+The following services are started by `docker-compose.yml` and their default
+external ports (customisable via `.env`):
+
+| Service | Internal name | External port | Notes |
+|---|---|---|---|
+| n8n | `n8n` | `8002` | Low-code workflow editor |
+| Open WebUI | `open-webui` | `8050` | Chat interface for local models |
+| Flowise | `flowise` | `8001` | Visual AI agent builder |
+| Qdrant | `qdrant` | `8003` (HTTP), `8004` (gRPC) | Vector database |
+| Neo4j | `neo4j` | `8005` (HTTP), `8006` (Bolt) | Knowledge graph |
+| SearXNG | `searxng` | `8008` | Privacy metasearch engine |
+| Langfuse | `langfuse-web` | `3002` (default) | LLM observability; `.env` can override via `LANGFUSE_PORT` |
+| Caddy | `caddy` | `8081` (HTTP), `8444` (HTTPS) | Reverse proxy / TLS |
+| Ollama | `ollama` | `11434` | Requires `--profile cpu`, `gpu-nvidia` or `gpu-amd` |
+| MCP Server | `mcp-server` | `8009` | SSE endpoint at `/sse`, health at `/health` |
+
+> [!NOTE]
+> Supabase local is **intentionally disabled** in this configuration. Use the Supabase cloud instance from archon-v2 instead.
 
 ## Prerequisites
 
