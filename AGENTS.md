@@ -50,12 +50,30 @@ docker compose -f supabase/docker/docker-compose.yml up -d
 | n8n | 8002 |
 | Open WebUI | 8050 |
 | Flowise | 8001 |
-| Supabase Studio | 8030 |
+| Supabase Studio | 8030 (Caddy) / 3000 (internal) |
 | Qdrant | 8003 / 8004 |
 | Neo4j | 8005 / 8006 |
 | SearXNG | 8008 |
 | Langfuse | 3002 |
 | Caddy | 8081 / 8444 |
+
+## Supabase port mapping (D18-C)
+
+Supabase runs in `supabase/docker/` with port modifications to avoid conflicts:
+
+| Supabase Service | Host Port → Container Port | Notes |
+|-----------------|---------------------------|-------|
+| Kong API gateway | 18000 → 8000 | API endpoint for archon-v2 (SUPABASE_URL) |
+| Kong HTTPS | 18443 → 8443 | |
+| Supavisor (PG pool) | 5433 → 5432 | PostgreSQL access via pooler |
+| Supavisor transaction | 6543 → 6543 | Transaction mode proxy |
+| Studio | (internal) → 3000 | No host bind — accessed via Kong |
+| PostgreSQL DB | (internal) → 5432 | Direct access only within Docker network |
+
+**Start**: `docker compose -f supabase/docker/docker-compose.yml up -d`
+**Connections**:
+- `archon-v2 SUPABASE_URL`: `http://host.docker.internal:18000`
+- `direct PG`: `host.docker.internal:5433` (user: postgres, pw: from .env)
 
 ## Agent behavior
 
