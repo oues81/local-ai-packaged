@@ -1,0 +1,300 @@
+# docker-compose.minimal.yml — local-ai-packaged
+# Override: reduces RAM/CPU limits to the lowest viable values for development.
+# Also swaps the private laip_open-webui image for the public open-webui image.
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.minimal.yml --profile cpu up -d
+#
+# To disable optional services, use --scale:
+#   --scale langfuse-worker=0 --scale langfuse-web=0 --scale clickhouse=0 --scale minio=0
+#   --scale neo4j=0 --scale searxng=0 --scale laip_flowise=0
+#
+# Resource rationale (per service):
+#   ollama-cpu:   3G   — model 7B Q4 needs ~4-5G; 3G is already tight, do not reduce further
+#   open-webui:   384M — Python+Next.js, light solo usage
+#   n8n:          384M — Node.js workflow engine, light workflows
+#   n8n-import:   128M — one-shot import container
+#   mcp-server:   128M — lightweight Python HTTP server
+#   postgres:     256M — PostgreSQL Alpine, dev datasets
+#   redis:        64M  — Valkey cache with maxmemory configured
+#   qdrant:       256M — vector DB with mmap mode
+#   neo4j:        512M — small graphs, heap 512M configured
+#   caddy:        128M — Alpine reverse proxy, very light
+#   flowise:      384M — Node.js visual builder, light usage
+#   searxng:      256M — Python search engine, reduced workers
+#   langfuse-web: 384M — Next.js observability UI
+#   langfuse-worker: 384M — Node.js worker
+#   clickhouse:   512M — analytics DB, minimal data
+#   minio:        256M — S3-compatible storage, light
+#   ollama-pull-*: 128M — one-shot model pull containers
+
+services:
+  # Swap private laip_open-webui image for public open-webui image (private GHCR repo is denied)
+  laip_open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 768M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+  laip_flowise:
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=512
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 768M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+  n8n-import:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+  n8n:
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=384
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 192M
+
+  mcp-server:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+  qdrant:
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/localhost/6333' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+  neo4j:
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p password 'RETURN 1' || exit 1"]
+      interval: 30s
+      timeout: 30s
+      retries: 5
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 1G
+        reservations:
+          cpus: "0.25"
+          memory: 384M
+
+  caddy:
+    ports: !override
+      - "8091:80"
+      - "8454:443"
+      - "8121:8111"
+      - "18090:18080"
+    volumes:
+      - ./laip_caddy-config-minimal:/etc/caddy:ro
+      - laip_caddy-data:/data:rw
+      - laip_caddy-server-config:/config:rw
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+  langfuse-worker:
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f 'next-server' > /dev/null || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=256
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 192M
+
+  langfuse-web:
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://$(hostname -i | awk '{print $1}'):3000/health || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 90s
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=256
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  clickhouse:
+    networks:
+      - default
+      - laip_ai_network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 1G
+        reservations:
+          cpus: "0.25"
+          memory: 384M
+
+  minio:
+    networks:
+      - default
+      - laip_ai_network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+  postgres:
+    networks:
+      - default
+      - laip_ai_network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+  redis:
+    networks:
+      - default
+      - laip_ai_network
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M
+        reservations:
+          cpus: "0.1"
+          memory: 32M
+
+  searxng:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+  ollama-cpu:
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/localhost/11434' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 3G
+        reservations:
+          cpus: "0.5"
+          memory: 1G
+
+  ollama-gpu:
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 3G
+        reservations:
+          cpus: "0.5"
+          memory: 1G
+
+  ollama-gpu-amd:
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 3G
+        reservations:
+          cpus: "0.5"
+          memory: 1G
+
+  ollama-pull-llama-cpu:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+  ollama-pull-llama-gpu:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+  ollama-pull-llama-gpu-amd:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M

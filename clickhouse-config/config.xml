@@ -17,7 +17,7 @@
     <zookeeper>
         <node>
             <host>localhost</host>
-            <port>2181</port>
+            <port>9181</port>
         </node>
     </zookeeper>
     <macros>

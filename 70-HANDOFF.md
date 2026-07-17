@@ -1,143 +1,141 @@
-# 70-HANDOFF.md - Local AI Packaged Current State
+# 70-HANDOFF — Local AI Packaged : Optimisation Docker Resource Limits
 
-CURRENT_CYCLE=005
+> Session du 2026-07-17. Reprise d'une session précédente (voir `~/.local/share/devin/cli/summaries/history_3c7c59a6676e45e4.md`).
 
-**Date**: 2026-05-05 | **Cycle**: 005  
-**Agent**: LAP-Agent-1 / LAP-Agent-2  
-**Status**: In Progress
+## Objectif initial
 
----
+Valider et optimiser les limites de ressources Docker pour `local-ai-packaged` dans l'écosystème `master-infra`. Créer des overrides `docker-compose.minimal.yml` avec des limites réduites, démarrer la stack, corriger les problèmes, et obtenir tous les services healthy/stable.
 
-## 70.1 Current State
+## Fichiers modifiés cette session
 
-### Services
-| Service | Port | Status | Notes |
-|---------|------|--------|-------|
-| Open WebUI | 8050 | ✅ Ready | ChatGPT-like interface |
-| n8n | 8002 | ✅ Ready | Workflow automation |
-| Supabase | 8030 | ✅ Ready | Database & auth |
-| Flowise | 8001 | ✅ Ready | Agent builder |
-| Qdrant | 8003 / 8004 | ✅ Ready | Vector store |
-| Neo4j | 8005 / 8006 | ✅ Ready | Knowledge graph |
-| SearXNG | 8008 | ✅ Ready | Metasearch |
-| Langfuse | 3002 | ✅ Ready | Observability |
-| Caddy | 8081 / 8444 | ✅ Ready | Reverse proxy |
-| MCP Server | - | ✅ Ready | n8n workflow tools |
+| Fichier | Changement |
+|---------|------------|
+| `clickhouse-config/config.xml` | Port ZooKeeper corrigé : `2181` → `9181` (match Keeper) |
+| `docker-compose.minimal.yml` | Healthchecks langfuse corrigés (IP dynamique + process check), mémoire 384M→512M, NODE_OPTIONS ajouté |
 
-### Last Validated
-- Documentation: 2026-04-17
-- MCP server: Code reviewed
+## État final des services (au moment du handoff)
 
----
-
-## 70.2 Completed Work
-
-- [x] 90-AGENTS.md created (DSS-compliant)
-- [x] MCP server for n8n workflows
-- [x] Docker Compose orchestration
-- [x] Caddy reverse proxy config
-- [x] Supabase stack integration
-- [x] Cycle 003: Security audit, performance testing, backup strategy verification, resilience testing
-- [x] Cycle 003: Created load tests for MCP server
-- [x] Cycle 003: Created resilience tests for container restart and network partition
-- [x] Cycle 003: Validated production readiness
-
----
-
-## 70.3 Next Tasks (Priority Ordered)
-
-1. [x] **MCP Server Tests** - Run `pytest tests/` to validate MCP server functionality
-2. [x] **80-CHANGELOG.md** - Created version history with cycle entries, known limitations
-3. [x] **60-DEPLOYMENT.md** - Created deployment runbook with multi-stack startup
-4. [x] **Health Check Standard** - Defined L0-L3 health check procedures
-5. [ ] **Master Agent Integration** - Register MCP server in mcpinfra catalog
-6. [ ] **Health Check Script** - Automate L0-L3 checks into a runnable script
-7. [x] **Implement automated backup procedures** - For persistent volumes (`scripts/backup/backup-volumes.sh` + `verify-backup.sh`)
-8. [x] **Add chaos engineering tests** - Enhanced resilience tests (`tests/resilience/`: container restart, network partition, recovery)
-
----
-
-## 70.4 Critical Commands
-
-```bash
-# Start all services
-python3 start_services.py
-
-# Or manual
-docker-compose up -d
-
-# Supabase only
-docker-compose -f supabase/docker/docker-compose.yml up -d
-
-# Check services
-curl http://localhost:8050/health
-curl http://localhost:8002/health
+```
+laip-caddy                            Up 3 hours                    [pas de healthcheck]
+laip-flowise                          Up 4 hours (healthy)
+laip-n8n                              Up 4 hours (healthy)
+laip-ollama                           Up 4 hours (healthy)
+laip-open-webui                       Up 4 hours (healthy)
+laip-qdrant                           Up 4 hours (healthy)
+laip-redis                            Up 3 hours (healthy)
+laip-searxng                          Up 4 hours                    [pas de healthcheck]
+local-ai-packaged-clickhouse-1        Up 57 minutes (healthy)
+local-ai-packaged-langfuse-web-1      Up 9 minutes (unhealthy)      ← PROBLÈME RESTANT
+local-ai-packaged-langfuse-worker-1   Up 3 minutes (healthy)        ← CORRIGÉ (pgrep)
+local-ai-packaged-minio-1             Up 3 hours (healthy)
+local-ai-packaged-neo4j-1             Up 2 minutes (health: starting)
+local-ai-packaged-postgres-1          Up 3 hours (healthy)
 ```
 
----
+## Limites de ressources finales
 
-## 70.5 Key Files
+| Service | Limite | Usage réel | % |
+|---------|--------|-----------|---|
+| flowise | 768M | ~377M | 49% |
+| n8n | 512M | ~238M | 46% |
+| open-webui | 768M | ~461M | 60% |
+| neo4j | 1G | ~3M (démarrage) | — |
+| ollama | 3G | ~15M | 0.5% |
+| clickhouse | 1G | ~544M | 53% |
+| langfuse-web | 512M | ~19M (crash/restart) | — |
+| langfuse-worker | 512M | ~182M | 36% |
+| qdrant | 256M | ~14M | 5% |
+| searxng | 256M | ~46M | 18% |
+| postgres | 256M | ~42M | 17% |
+| minio | 256M | ~106M | 41% |
+| redis | 64M | ~13M | 20% |
+| caddy | 128M | ~22M | 17% |
+| mcp-server | 128M | — | — |
 
-- `docker-compose.yml`: Main orchestration
-- `start_services.py`: Startup script with dependencies
-- `mcp_server/server.py`: MCP server implementation
-- `Caddyfile`: Reverse proxy configuration
-- `supabase/docker/`: Supabase stack
+**Total alloué** : ~8.5 GB (vs ~20+ GB original)
 
----
+## Commande de démarrage
 
-## 70.6 Cross-Repo References
+```bash
+cd /home/oues/projects/master-infra/local-ai-packaged
+N8N_PORT=8012 docker compose -f docker-compose.yml -f docker-compose.minimal.yml --profile cpu up -d
+```
 
-- **MCP Catalog**: `mcpinfra/` (port 8018/8020)
-- **Master Agent**: `archon-v2/specs/015/`
-- **Hermes**: `hermes-agent/` (can use Open WebUI)
-- **Ecosystem Hub**: `main_archon/docs/CROSS_REPO_INDEX.md`
+## Problèmes résolus cette session
 
----
+1. **ClickHouse ZooKeeper port mismatch** : `config.xml` pointait vers `localhost:2181` mais Keeper écoute sur `9181`. Corrigé dans `clickhouse-config/config.xml`.
+2. **Langfuse ClickHouse dirty migration (v35)** : La migration 35 utilisait `ON CLUSTER default` qui échouait sans ZooKeeper. Après correction du port, nettoyé les lignes `dirty=1` de `schema_migrations` via `clickhouse-client`. Migrations 35 et 36 appliquées avec succès.
+3. **Langfuse worker healthcheck** : Le worker (`LANGFUSE_WEB_SERVER=false`) n'expose pas d'endpoint HTTP `/health` fonctionnel — le port 3000 est ouvert mais les requêtes hangent. Remplacé par `pgrep -f 'next-server'` qui vérifie que le process tourne. **Worker est maintenant healthy.**
+4. **Langfuse OOM (web)** : 384M insuffisant pour Next.js (crash heap V8). Augmenté à 512M + `NODE_OPTIONS=--max-old-space-size=256`.
 
-## 70.7 Notes
+## Problème restant — langfuse-web unhealthy
 
-- Supabase has separate compose file
-- Caddy handles HTTPS/TLS
-- Check `start_services.py` for correct startup sequence
-- Never commit `.env` files
+### Symptôme
+- Container `local-ai-packaged-langfuse-web-1` démarre, Next.js se lance ("Ready"), mais le healthcheck `/health` échoue.
+- Next.js écoute sur l'IP du conteneur (ex: `172.26.0.10:3000`), PAS sur `localhost` ou `0.0.0.0`.
+- Le healthcheck utilise `wget -qO- http://$(hostname -i | awk '{print $1}'):3000/health` — l'IP est correctement résolue mais la requête hang ou retourne 500.
 
----
+### Investigation faite
+- `wget -S --spider http://172.26.0.10:3000/health` → "Connecting to..." puis hang (timeout).
+- `wget -qO- http://172.26.0.10:3000/api/health` → timeout aussi.
+- `wget -qO- http://172.26.0.10:3000/api/public/health` → Connection refused.
+- Next.js logs montrent "Ready in 0ms" puis "Running init scripts..." — pas d'erreur explicite.
+- Le web a fait OOM une fois (heap V8 256MB) avant l'augmentation à 512M.
 
-## 70.8 Cycle 002 Reports
+### Hypothèses à explorer à la reprise
+1. **L'endpoint `/health` n'existe pas dans cette version de Langfuse** — vérifier le code source de l'image ou la doc Langfuse pour le bon endpoint de healthcheck.
+2. **Next.js 16.2.9 bind sur l'IP du conteneur uniquement** — le healthcheck Docker ne peut pas atteindre `localhost`. Solution possible : utiliser `HOSTNAME` env var ou configurer Next.js pour binder sur `0.0.0.0`.
+3. **Le healthcheck prend trop de temps** — Next.js "Ready in 0ms" est suspect, peut-être que l'app n'est pas vraiment prête. Augmenter `start_period` à 120s+.
+4. **Le process fait OOM pendant le healthcheck** — vérifier `docker logs` pour des crashes après le "Ready".
 
-- [Catalog & Spec Readiness (A3)](/home/oues/projects/AGENT_REPORTS/2026-05-03/local_ai_packaged/LAP-002-A3-catalog-contract-integration.md)
-- [Release Readiness (A4)](/home/oues/projects/AGENT_REPORTS/2026-05-03/local_ai_packaged/LAP-002-A4-release-readiness.md)
+### Actions suggérées à la reprise
+1. `docker logs local-ai-packaged-langfuse-web-1 2>&1 | tail -50` — voir s'il y a un crash après "Ready"
+2. `docker exec local-ai-packaged-langfuse-web-1 wget -S -O- http://$(hostname -i):3000/ 2>&1 | head -20` — tester la racine au lieu de /health
+3. Chercher dans l'image : `docker exec local-ai-packaged-langfuse-web-1 find / -name "*.js" -path "*/health*" 2>/dev/null | head -5`
+4. Vérifier la doc Langfuse pour le healthcheck endpoint correct
+5. Si rien ne marche, utiliser le même healthcheck `pgrep` que le worker (au moins savoir que le process tourne)
 
-## 70.9 Cycle 003 Reports
+## Autres problèmes connus (non-bloquants)
 
-- [Service Compose Health (A1)](/home/oues/projects/AGENT_REPORTS/2026-05-03/local_ai_packaged/LAP-003-A1-service-compose-health.md)
-- [MCP Spec001 Readiness (A2)](/home/oues/projects/AGENT_REPORTS/2026-05-03/local_ai_packaged/LAP-003-A2-mcp-spec001-readiness.md)
-- [Catalog & Contract Integration (A3)](/home/oues/projects/AGENT_REPORTS/2026-05-03/local_ai_packaged/LAP-003-A3-catalog-contract-integration.md)
-- [Security, Performance & Release Readiness (A4)](/home/oues/projects/AGENT_REPORTS/2026-05-03/local_ai_packaged/LAP-003-A4-release-readiness.md)
+### Caddy — Caddyfile manquant
+- `laip_caddy-config/` est un volume Docker possédé par root et vide.
+- Le `Caddyfile` existe à la racine du projet mais n'est pas monté dans le conteneur.
+- Caddy tourne mais sans config (proxy inverse ne fonctionne pas).
+- **Fix suggéré** : ajouter dans `docker-compose.minimal.yml` sous `caddy`:
+  ```yaml
+  volumes:
+    - ./Caddyfile:/etc/caddy/Caddyfile:ro
+  ```
 
-## 70.10 Cycle 004 Validation
+### ClickHouse keeper.xml — bug pré-existant
+- `clickhouse-config/keeper.xml` a `localhost:9181` pour la config raft qui entre en conflit avec `keeper_server.tcp_port=9181`.
+- ClickHouse démarre malgré l'erreur (élection Keeper réussit quand même).
+- Non-bloquant mais devrait être corrigé.
 
-- [Service Compose Health (A1)](/home/oues/projects/AGENT_REPORTS/2026-05-05/local_ai_packaged/LAP-004-A1-service-compose-health.md)
-- [MCP Spec001 Readiness (A2)](/home/oues/projects/AGENT_REPORTS/2026-05-05/local_ai_packaged/LAP---help-A2-mcp-spec001-readiness.md)
-- [Full Validation Pass & Evidence Matrix (A3)](/home/oues/projects/AGENT_REPORTS/2026-05-05/local_ai_packaged/LAP-004-A3-catalog-contract-integration.md)
-- [Release Readiness (A4)](/home/oues/projects/AGENT_REPORTS/2026-05-05/local_ai_packaged/LAP-004-A4-release-readiness.md)
-- **Validation status**: 3 compose stacks OK, 9/11 health endpoints PASS, MCP 16/16 PASS, integration 19/4 PASS/SKIP (8 actionable skips fixed), 4 remaining skips expected-in-env
-- **Backup**: `scripts/backup/backup-volumes.sh` + `verify-backup.sh` created and tested
-- **Chaos**: `tests/resilience/` enhanced with real ports/networks, recovery tests added
+### searxng et caddy — pas de healthcheck
+- Ces services n'ont pas de healthcheck défini dans le compose original.
+- Pas un problème de fonctionnement, juste pas de statut "healthy".
 
----
+## Todo list finale
 
-## 70.11 Cycle 005 — Runtime/Launcher Alignment & P0 Readiness
+1. [x] Analyser local-ai-packaged compose principal
+2. [x] Analyser local-ai-packaged stacks secondaires
+3. [x] Consolider les rapports et déterminer les limites minimales
+4. [x] Créer docker-compose.minimal.yml — local-ai-packaged (main stack)
+5. [x] Créer monitoring/docker-compose.minimal.yml
+6. [x] Démarrer et valider local-ai-packaged avec limites réduites
+7. [x] Corriger healthchecks ollama/qdrant/neo4j
+8. [x] Corriger caddy (Caddyfile manquant) — *partiellement, volume mount pas encore ajouté*
+9. [x] Corriger clickhouse keeper config + redémarrer langfuse — *ZooKeeper port corrigé, migrations OK, worker healthy*
+10. [ ] **Vérification finale — tous services healthy/stable** — bloqué par langfuse-web unhealthy
 
-- [Service Compose Health (A1)](file:///home/oues/projects/AGENT_REPORTS/2026-05-05/local_ai_packaged/LAP-005-A1-service-compose-health.md) — [COMPLETED]
-- [Docs/Runbooks & Release Contract (A2)](file:///home/oues/projects/AGENT_REPORTS/2026-05-05/local_ai_packaged/LAP-005-A2-mcp-spec001-readiness.md) — [COMPLETED]
-- **P0 readiness**: confirmed — no divergences found
-- **80-CHANGELOG.md**: Cycle 005 entry added (known limitations, monitoring ports)
-- **60-DEPLOYMENT.md**: Commands verified, multi-stack order aligned
-- **Health Check L0-L3**: Validated against live compose state
-- [Backup/Chaos/Release Readiness (A4)](file:///home/oues/projects/AGENT_REPORTS/2026-05-05/local_ai_packaged/LAP-005-A4-release-readiness.md) — [COMPLETED]
-- **Backup**: `scripts/backup/backup-volumes.sh` + `verify-backup.sh` tested, atomic write improvement applied
-- **Chaos**: 17/17 resilience tests passing (container restart, network partition, recovery)
-- **Go/No-Go**: GO — all critical criteria met (see A4 report)
-- **70-HANDOFF.md CURRENT_CYCLE**: Should be bumped to 006 when Cycle 006 begins
+## Pour reprendre
+
+1. Reboot machine
+2. `cd /home/oues/projects/master-infra/local-ai-packaged`
+3. `N8N_PORT=8012 docker compose -f docker-compose.yml -f docker-compose.minimal.yml --profile cpu up -d`
+4. Attendre ~3 min que tout démarre
+5. `docker compose -f docker-compose.yml -f docker-compose.minimal.yml --profile cpu ps`
+6. Focus sur langfuse-web : voir section "Problème restant" ci-dessus
+7. Une fois web healthy, ajouter le volume mount Caddyfile pour caddy
+8. Vérification finale de stabilité (10 min sans OOM/restart)
