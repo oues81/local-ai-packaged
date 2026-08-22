@@ -1,0 +1,933 @@
+{
+  "ssotVersion": "1.9.0",
+  "schemaNotes": "Projection objects support two optional boolean fields: 'legacy' (default false) marks outputs superseded by a newer surface, and 'desktopOnly' (default false) marks surfaces available only in the desktop variant of a client (not the CLI).",
+  "projectName": "local-ai-packaged",
+  "canonicalContextFile": ".ssot/agents/context/AGENTS.src.md",
+  "protectedPathsFile": ".ssot/protected-paths.json",
+  "instructionFiles": [
+    ".ssot/constitution.md",
+    ".ssot/architecture.md",
+    ".ssot/decisions.md",
+    ".ssot/status.md",
+    ".ssot/handoff.md",
+    ".ssot/infrastructure.md"
+  ],
+  "scopes": [],
+  "adapters": [],
+  "ecosystemRole": "satellite",
+  "ecosystemParent": {
+    "path": "master-infra"
+  },
+  "acosSource": {
+    "type": "local-checkout",
+    "path": "acos-mcp-launcher-work"
+  },
+  "clients": {
+    "claude": {
+      "label": "Claude Code",
+      "nativeContext": [
+        ".ssot/agents/context/AGENTS.src.md",
+        ".ssot/agents/context/CLAUDE.src.md"
+      ],
+      "generatedFiles": [
+        "AGENTS.md",
+        "CLAUDE.md",
+        ".claude/skills/*/SKILL.md",
+        ".claude/commands/*.md",
+        ".claude/rules/*.md",
+        ".claude/agents/*.md",
+        ".claude/settings.json",
+        ".mcp.json",
+        ".claude/workflows/*.js",
+        ".claude-plugin/plugin.json",
+        ".claude/output-styles/*.md"
+      ],
+      "sourceFile": ".ssot/agents/context/CLAUDE.src.md",
+      "pointerFile": "CLAUDE.md",
+      "settingsFile": ".mcp.json",
+      "projections": {
+        "instructions": {
+          "mode": "native",
+          "surface": "CLAUDE.md project memory pointing to AGENTS.md",
+          "outputs": [
+            "CLAUDE.md",
+            "AGENTS.md"
+          ]
+        },
+        "rules": {
+          "mode": "native",
+          "surface": "Claude Code project rules in .claude/rules/*.md",
+          "outputs": [
+            ".claude/rules/*.md"
+          ]
+        },
+        "hooks": {
+          "mode": "native",
+          "surface": "Claude Code settings.json hooks array",
+          "outputs": [
+            ".claude/settings.json"
+          ]
+        },
+        "commands": {
+          "mode": "native",
+          "surface": "Claude Code slash commands in .claude/commands/",
+          "outputs": [
+            ".claude/commands/*.md"
+          ]
+        },
+        "skills": {
+          "mode": "native",
+          "surface": "Claude Code Agent Skills directories",
+          "outputs": [
+            ".claude/skills/*/SKILL.md"
+          ]
+        },
+        "workflows": {
+          "mode": "native",
+          "surface": "Claude Code dynamic workflows in .claude/workflows/*.js (v2.1.154+)",
+          "outputs": [
+            ".claude/workflows/*.js"
+          ]
+        },
+        "fileReferences": {
+          "mode": "native",
+          "surface": "Markdown file references resolved from the project root",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "mcp": {
+          "mode": "native",
+          "surface": "Claude Code MCP configuration in .mcp.json",
+          "outputs": [
+            ".mcp.json"
+          ]
+        },
+        "agents": {
+          "mode": "native",
+          "surface": "Claude Code agents in .claude/agents/*.md",
+          "outputs": [
+            ".claude/agents/*.md"
+          ]
+        },
+        "plugins": {
+          "mode": "native",
+          "surface": "Claude Code plugin system via .claude-plugin/plugin.json",
+          "outputs": [
+            ".claude-plugin/plugin.json"
+          ]
+        },
+        "outputStyles": {
+          "mode": "native",
+          "surface": "Claude Code output styles in .claude/output-styles/*.md",
+          "outputs": [
+            ".claude/output-styles/*.md"
+          ]
+        }
+      },
+      "compatibility": {
+        "tier": 1,
+        "status": "certified",
+        "verifiedAt": "2026-06-29",
+        "verificationTtlDays": 90,
+        "versionRange": {
+          "status": "tested",
+          "minimum": "2.1.187",
+          "maximum": "2.1.191"
+        },
+        "documentation": "https://code.claude.com/docs/en/skills",
+        "notes": "Claude Code auto-updated to 2.1.196 after the 2026-06-29 live session. The tested range remains 2.1.187–2.1.191; `npm run native:check` now reports observedNewer=true and warns instead of failing or resetting the range. July 2026 audit: dynamic workflows, plugins, and output-styles surfaces added."
+      },
+      "launchModes": {
+        "headless": {
+          "binary": "claude",
+          "invoke": "claude --prompt-file <prompt> --model <model> -p",
+          "promptMode": "file",
+          "outputMode": "stdout",
+          "approvalFlag": "--dangerously-skip-permissions",
+          "notes": "Pipe stdout to capture output. -p = print mode (non-interactive). Supports claude-opus-4-5, claude-sonnet-4-5, claude-haiku-4-5."
+        },
+        "interactive": {
+          "binary": "claude",
+          "invoke": "claude --prompt-file <prompt> --model <model>",
+          "promptMode": "file",
+          "wrapper": "wt | tmux",
+          "notes": "Drops -p for interactive chat session."
+        }
+      }
+    },
+    "cursor": {
+      "label": "Cursor",
+      "nativeContext": [
+        ".ssot/agents/context/AGENTS.src.md"
+      ],
+      "generatedFiles": [
+        "AGENTS.md",
+        ".cursor/rules/acos.mdc",
+        ".cursor/commands/*.md",
+        ".cursor/skills/*/SKILL.md",
+        ".cursor/agents/*.md",
+        ".cursor/hooks.json",
+        ".cursor/mcp.json",
+        ".cursor/permissions.json",
+        ".cursor/cli.json",
+        ".cursor-plugin/plugin.json"
+      ],
+      "ruleFile": ".cursor/rules/acos.mdc",
+      "settingsFile": ".cursor/mcp.json",
+      "projections": {
+        "instructions": {
+          "mode": "native",
+          "surface": "AGENTS.md read directly by Cursor",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "rules": {
+          "mode": "native",
+          "surface": "Project rule file with alwaysApply",
+          "outputs": [
+            ".cursor/rules/acos.mdc"
+          ]
+        },
+        "hooks": {
+          "mode": "native",
+          "surface": "Cursor hooks.json",
+          "outputs": [
+            ".cursor/hooks.json"
+          ]
+        },
+        "commands": {
+          "mode": "native",
+          "surface": "Cursor project commands",
+          "outputs": [
+            ".cursor/commands/*.md"
+          ]
+        },
+        "skills": {
+          "mode": "native",
+          "surface": "Cursor Agent Skills in .cursor/skills/",
+          "outputs": [
+            ".cursor/skills/*/SKILL.md"
+          ]
+        },
+        "workflows": {
+          "mode": "emulated",
+          "surface": "Lifecycle workflows projected as commands",
+          "outputs": [
+            ".cursor/commands/140-execute.md"
+          ]
+        },
+        "fileReferences": {
+          "mode": "native",
+          "surface": "Markdown file references resolved from the project root",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "mcp": {
+          "mode": "native",
+          "surface": "Cursor MCP configuration in .cursor/mcp.json",
+          "outputs": [
+            ".cursor/mcp.json"
+          ]
+        },
+        "agents": {
+          "mode": "native",
+          "surface": "Cursor agents in .cursor/agents/*.md",
+          "outputs": [
+            ".cursor/agents/*.md"
+          ]
+        },
+        "permissions": {
+          "mode": "native",
+          "surface": "Cursor permissions in .cursor/permissions.json",
+          "outputs": [
+            ".cursor/permissions.json"
+          ]
+        },
+        "cliConfig": {
+          "mode": "native",
+          "surface": "Cursor CLI config in .cursor/cli.json (permissions only at project level)",
+          "outputs": [
+            ".cursor/cli.json"
+          ]
+        },
+        "plugins": {
+          "mode": "native",
+          "surface": "Cursor plugin system via .cursor-plugin/plugin.json",
+          "outputs": [
+            ".cursor-plugin/plugin.json"
+          ]
+        }
+      },
+      "compatibility": {
+        "tier": 1,
+        "status": "certified",
+        "verifiedAt": "2026-07-13",
+        "verificationTtlDays": 90,
+        "versionRange": {
+          "status": "tested",
+          "minimum": "3.8.23",
+          "maximum": "3.8.23"
+        },
+        "documentation": "https://cursor.com/docs/skills",
+        "notes": "Verified native Windows 2026-07-13: cursor-agent installs via irm 'https://cursor.com/install?win32=true' | iex to %LOCALAPPDATA%\\cursor-agent\\. wave-dispatch.mjs calls node.exe + index.js directly (bypassing .cmd wrapper). No WSL required on Windows. Interactive mode: cmd /c start \"\" wt.exe (App Execution Alias workaround). Headless: -p + --trust + --force + --output-format stream-json. July 2026 audit: permissions, sandbox, CLI config, and plugin surfaces added."
+      },
+      "launchModes": {
+        "headless": {
+          "binary": "node <cursor-agent>/index.js",
+          "invoke": "node <cursor-agent>/index.js -p <prompt-text> --trust --force --model <model> --workspace <workspace> --output-format stream-json",
+          "promptMode": "positional",
+          "outputMode": "stream-json",
+          "approvalFlag": "--force",
+          "notes": "No --prompt-file; pass prompt text positionally. Resolve node.exe + index.js from %LOCALAPPDATA%/cursor-agent/versions/<latest>."
+        },
+        "interactive": {
+          "binary": "node <cursor-agent>/index.js",
+          "invoke": "node <cursor-agent>/index.js <prompt-text> --force --model <model> --workspace <workspace>",
+          "promptMode": "positional",
+          "wrapper": "wt | tmux",
+          "notes": "Drops -p, --trust, --output-format for interactive chat."
+        }
+      }
+    },
+    "kilocode": {
+      "label": "Kilo Code",
+      "nativeContext": [
+        ".ssot/agents/context/AGENTS.src.md"
+      ],
+      "generatedFiles": [
+        "AGENTS.md",
+        "kilo.jsonc",
+        ".kilo/skills/*/SKILL.md",
+        ".kilo/commands/*.md",
+        ".kilo/rules/*.md",
+        ".kilo/agents/*.md",
+        ".kilo/plugin/acos-hooks.ts",
+        ".kilo/tools/*.ts"
+      ],
+      "ruleFile": ".kilocode/rules/acos.md",
+      "settingsFile": "kilo.jsonc",
+      "projections": {
+        "instructions": {
+          "mode": "native",
+          "surface": "AGENTS.md read directly by Kilo Code",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "rules": {
+          "mode": "native",
+          "surface": "Kilo Code project rules in .kilo/rules/*.md loaded via kilo.jsonc instructions; .kilocode/rules/acos.md retained as legacy",
+          "outputs": [
+            "kilo.jsonc",
+            ".kilo/rules/*.md"
+          ]
+        },
+        "hooks": {
+          "mode": "native",
+          "surface": "Kilo Code hooks via plugin system in .kilo/plugin/*.ts (see DD-014)",
+          "outputs": [
+            ".kilo/plugin/acos-hooks.ts"
+          ]
+        },
+        "commands": {
+          "mode": "native",
+          "surface": "Current Kilo project commands (slash commands), with legacy-compatible workflows retained for older extension surfaces",
+          "outputs": [
+            ".kilo/commands/*.md"
+          ]
+        },
+        "skills": {
+          "mode": "native",
+          "surface": "Kilo Code Agent Skills in .kilo/skills/",
+          "outputs": [
+            ".kilo/skills/*/SKILL.md"
+          ]
+        },
+        "fileReferences": {
+          "mode": "native",
+          "surface": "Markdown file references resolved from the project root",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "mcp": {
+          "mode": "native",
+          "surface": "Kilo Code MCP configuration in kilo.jsonc",
+          "outputs": [
+            "kilo.jsonc"
+          ]
+        },
+        "agents": {
+          "mode": "native",
+          "surface": "Kilo Code agents in .kilo/agents/*.md",
+          "outputs": [
+            ".kilo/agents/*.md"
+          ]
+        },
+        "plugins": {
+          "mode": "native",
+          "surface": "Kilo Code plugin system in .kilo/plugin/*.ts",
+          "outputs": [
+            ".kilo/plugin/*.ts"
+          ]
+        },
+        "tools": {
+          "mode": "native",
+          "surface": "Kilo Code custom tools in .kilo/tools/*.ts",
+          "outputs": [
+            ".kilo/tools/*.ts"
+          ]
+        },
+        "workflows": {
+          "mode": "emulated",
+          "surface": "Kilo Code workflows via .kilo/commands (workflows are projected as commands in Kilo Code)",
+          "outputs": [
+            ".kilo/commands/[0-9][0-9][0-9]-*.md"
+          ]
+        }
+      },
+      "compatibility": {
+        "tier": 1,
+        "status": "certified",
+        "verifiedAt": "2026-06-30",
+        "verificationTtlDays": 90,
+        "versionRange": {
+          "status": "tested",
+          "minimum": "7.3.54",
+          "maximum": "7.3.54"
+        },
+        "documentation": "https://kilo.ai/docs/llms.txt",
+        "notes": "040-resume live session completed; process exit uses a 120-second timeout wrapper because the Kilo CLI does not return cleanly after skill steps. July 2026 audit: DD-010 invalidated — Kilo has hooks via plugin system (DD-014); .kilocode/ paths marked legacy."
+      },
+      "launchModes": {
+        "headless": {
+          "binary": "kilocode",
+          "invoke": "kilocode run --command <name> --dir <workspace>",
+          "promptMode": "positional",
+          "outputMode": "stdout",
+          "approvalFlag": "(via --command)",
+          "notes": "Headless via @kilocode/cli. Prompt is a command name, not a file."
+        }
+      }
+    },
+    "opencode": {
+      "label": "OpenCode",
+      "nativeContext": [
+        ".ssot/agents/context/AGENTS.src.md"
+      ],
+      "generatedFiles": [
+        "AGENTS.md",
+        "opencode.json",
+        ".opencode/commands/*.md",
+        ".opencode/skills/*/SKILL.md",
+        ".agents/skills/*/SKILL.md",
+        ".opencode/rules/*.md",
+        ".opencode/agents/*.md",
+        ".opencode/plugins/acos-hooks.ts",
+        ".opencode/tools/*.ts"
+      ],
+      "settingsFile": "opencode.json",
+      "projections": {
+        "instructions": {
+          "mode": "native",
+          "surface": "AGENTS.md read directly by OpenCode",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "rules": {
+          "mode": "native",
+          "surface": "opencode.json instructions array plus .opencode/rules/*.md",
+          "outputs": [
+            "opencode.json",
+            ".opencode/rules/*.md"
+          ]
+        },
+        "hooks": {
+          "mode": "native",
+          "surface": "OpenCode hooks via plugin system in .opencode/plugins/*.ts (see DD-014)",
+          "outputs": [
+            ".opencode/plugins/acos-hooks.ts"
+          ]
+        },
+        "commands": {
+          "mode": "native",
+          "surface": "OpenCode project commands",
+          "outputs": [
+            ".opencode/commands/*.md"
+          ]
+        },
+        "skills": {
+          "mode": "native",
+          "surface": "OpenCode Agent Skills in .opencode/skills/ plus shared .agents/skills/",
+          "outputs": [
+            ".opencode/skills/*/SKILL.md",
+            ".agents/skills/*/SKILL.md"
+          ]
+        },
+        "workflows": {
+          "mode": "emulated",
+          "surface": "Lifecycle workflows projected as commands",
+          "outputs": [
+            ".opencode/commands/140-execute.md"
+          ]
+        },
+        "fileReferences": {
+          "mode": "native",
+          "surface": "Markdown file references resolved from the project root",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "mcp": {
+          "mode": "native",
+          "surface": "OpenCode MCP configuration in opencode.json",
+          "outputs": [
+            "opencode.json"
+          ]
+        },
+        "agents": {
+          "mode": "native",
+          "surface": "OpenCode agents in .opencode/agents/*.md",
+          "outputs": [
+            ".opencode/agents/*.md"
+          ]
+        },
+        "plugins": {
+          "mode": "native",
+          "surface": "OpenCode plugin system in .opencode/plugins/*.ts",
+          "outputs": [
+            ".opencode/plugins/*.ts"
+          ]
+        },
+        "tools": {
+          "mode": "native",
+          "surface": "OpenCode custom tools in .opencode/tools/*.ts",
+          "outputs": [
+            ".opencode/tools/*.ts"
+          ]
+        }
+      },
+      "compatibility": {
+        "tier": 1,
+        "status": "certified",
+        "verifiedAt": "2026-06-29",
+        "verificationTtlDays": 90,
+        "versionRange": {
+          "status": "tested",
+          "minimum": "1.3.17",
+          "maximum": "1.17.10"
+        },
+        "documentation": "https://open-code.ai/en/docs/skills",
+        "notes": "July 2026 audit: DD-009 invalidated — OpenCode has hooks via plugin system (DD-014)."
+      },
+      "launchModes": {
+        "headless": {
+          "binary": "opencode",
+          "invoke": "opencode --prompt-file <prompt>",
+          "promptMode": "file",
+          "outputMode": "stdout",
+          "notes": "Also supports serve API on localhost:<port>."
+        }
+      }
+    },
+    "devin": {
+      "label": "Devin",
+      "nativeContext": [
+        ".ssot/agents/context/AGENTS.src.md"
+      ],
+      "generatedFiles": [
+        "AGENTS.md",
+        ".devin/rules/acos.md",
+        ".devin/skills/*/SKILL.md",
+        ".agents/skills/*/SKILL.md",
+        ".windsurf/workflows/*.md",
+        ".devin/hooks.v1.json",
+        ".devin/config.json",
+        ".devin/agents/*/AGENT.md",
+        ".agents/agents/*/AGENT.md",
+        ".devin-plugin/plugin.json",
+        ".devin/mcp_config.json"
+      ],
+      "ruleFile": ".devin/rules/acos.md",
+      "settingsFile": ".devin/config.json",
+      "legacyStoragePaths": [
+        ".windsurf/workflows",
+        ".windsurf/hooks.json"
+      ],
+      "deprecated": false,
+      "projections": {
+        "instructions": {
+          "mode": "native",
+          "surface": "AGENTS.md read directly by Devin",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "rules": {
+          "mode": "emulated",
+          "surface": "Canonical rules delivered via AGENTS.md (CLI) and .devin/rules/*.md (Desktop) — see DD-013",
+          "outputs": [
+            ".devin/rules/acos.md"
+          ],
+          "legacy": false
+        },
+        "hooks": {
+          "mode": "native",
+          "surface": "Devin hooks.v1.json",
+          "outputs": [
+            ".devin/hooks.v1.json"
+          ]
+        },
+        "commands": {
+          "mode": "emulated",
+          "surface": "Entrypoints invoked as Devin CLI skills",
+          "outputs": [
+            ".devin/skills/060-route/SKILL.md"
+          ]
+        },
+        "skills": {
+          "mode": "native",
+          "surface": "Devin CLI Agent Skills plus shared .agents/skills/",
+          "outputs": [
+            ".devin/skills/*/SKILL.md",
+            ".agents/skills/*/SKILL.md"
+          ]
+        },
+        "workflows": {
+          "mode": "emulated",
+          "surface": "Devin Desktop/Cascade workflows using legacy .windsurf storage path; Devin CLI does NOT import workflows — see DD-011",
+          "outputs": [
+            ".windsurf/workflows/*.md"
+          ],
+          "desktopOnly": true
+        },
+        "fileReferences": {
+          "mode": "native",
+          "surface": "Markdown file references resolved from the project root",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "mcp": {
+          "mode": "native",
+          "surface": "Devin MCP configuration in .devin/config.json",
+          "outputs": [
+            ".devin/config.json"
+          ]
+        },
+        "agents": {
+          "mode": "native",
+          "surface": "Devin CLI custom subagent profiles (experimental) in .devin/agents/<name>/AGENT.md plus shared .agents/agents/",
+          "outputs": [
+            ".devin/agents/*/AGENT.md",
+            ".agents/agents/*/AGENT.md"
+          ]
+        },
+        "plugins": {
+          "mode": "native",
+          "surface": "Devin CLI plugin system (beta) via .devin-plugin/plugin.json",
+          "outputs": [
+            ".devin-plugin/plugin.json"
+          ]
+        },
+        "mcpConfig": {
+          "mode": "native",
+          "surface": "Devin MCP configuration in .devin/mcp_config.json (v3000.3+ split from .devin/config.json)",
+          "outputs": [
+            ".devin/mcp_config.json"
+          ]
+        }
+      },
+      "cliVsDesktop": {
+        "cli": {
+          "rules": ".devin/rules/*.md (native since v3000.x)",
+          "workflows": "not supported",
+          "agents": ".devin/agents/<name>/AGENT.md (experimental)"
+        },
+        "desktop": {
+          "rules": ".devin/rules/*.md",
+          "workflows": ".windsurf/workflows/*.md or .devin/workflows/*.md"
+        }
+      },
+      "compatibility": {
+        "tier": 1,
+        "status": "certified",
+        "verifiedAt": "2026-06-29",
+        "verificationTtlDays": 90,
+        "versionRange": {
+          "status": "tested",
+          "minimum": "2026.4.27-0",
+          "maximum": "2026.8.18"
+        },
+        "documentation": "https://docs.devin.ai/cli/extensibility/skills/overview.md",
+        "notes": "Desktop Cascade workflows documented at https://docs.devin.ai/desktop/cascade/workflows.md still require the legacy .windsurf storage path. July 2026 audit: .devin/rules/ is Desktop-only (DD-013), .windsurf/workflows/ is Desktop-only (DD-011), .devin/agents/ added as experimental native surface."
+      },
+      "launchModes": {
+        "headless": {
+          "binary": "devin",
+          "invoke": "devin --prompt-file <prompt> -p --permission-mode dangerous --export <log>",
+          "promptMode": "file",
+          "outputMode": "export-log",
+          "approvalFlag": "--permission-mode dangerous",
+          "notes": "Use --prompt-file not inline -p to avoid shell-quoting. Linux: ~/.devin-server/bin/.../devin. Windows: %LOCALAPPDATA%/devin/cli/bin/devin.exe. Do NOT use Devin Desktop/IDE for headless dispatch."
+        },
+        "interactive": {
+          "binary": "devin",
+          "invoke": "devin --prompt-file <prompt> --permission-mode dangerous --export <log>",
+          "promptMode": "file",
+          "outputMode": "export-log",
+          "wrapper": "wt | tmux",
+          "notes": "Same flags as headless but launched in a visible terminal pane for human supervision."
+        }
+      },
+      "compat": {
+        "preV3000_3": false
+      }
+    },
+    "codex": {
+      "label": "OpenAI Codex",
+      "nativeContext": [
+        ".ssot/agents/context/AGENTS.src.md"
+      ],
+      "generatedFiles": [
+        "AGENTS.md",
+        ".agents/skills/*/SKILL.md",
+        ".codex/skills/*/SKILL.md",
+        ".codex/agents/*.toml",
+        ".codex/hooks.json",
+        ".codex/config.toml",
+        ".codex/rules/*.rules",
+        ".codex-plugin/plugin.json"
+      ],
+      "settingsFile": ".codex/config.toml",
+      "projections": {
+        "instructions": {
+          "mode": "native",
+          "surface": "AGENTS.md read directly by Codex",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "rules": {
+          "mode": "native",
+          "surface": "Codex exec-policy rules in .codex/rules/*.rules (Starlark format)",
+          "outputs": [
+            ".codex/rules/*.rules"
+          ]
+        },
+        "hooks": {
+          "mode": "native",
+          "surface": "Codex hooks.json",
+          "outputs": [
+            ".codex/hooks.json"
+          ]
+        },
+        "commands": {
+          "mode": "emulated",
+          "surface": "Entrypoints invoked as Codex Agent Skills",
+          "outputs": [
+            ".agents/skills/060-route/SKILL.md",
+            {
+              "path": ".codex/skills/060-route/SKILL.md",
+              "legacy": true
+            }
+          ]
+        },
+        "skills": {
+          "mode": "native",
+          "surface": "Codex Agent Skills in .agents/skills/ (primary) and .codex/skills/ (legacy, DD-012)",
+          "outputs": [
+            ".agents/skills/*/SKILL.md",
+            {
+              "path": ".codex/skills/*/SKILL.md",
+              "legacy": true
+            }
+          ]
+        },
+        "workflows": {
+          "mode": "emulated",
+          "surface": "Lifecycle workflows projected as skills",
+          "outputs": [
+            ".agents/skills/140-execute/SKILL.md",
+            {
+              "path": ".codex/skills/140-execute/SKILL.md",
+              "legacy": true
+            }
+          ]
+        },
+        "fileReferences": {
+          "mode": "native",
+          "surface": "Markdown file references resolved from the project root",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "mcp": {
+          "mode": "native",
+          "surface": "OpenAI Codex MCP configuration in .codex/config.toml",
+          "outputs": [
+            ".codex/config.toml"
+          ]
+        },
+        "agents": {
+          "mode": "native",
+          "surface": "OpenAI Codex agents in .codex/agents/*.toml",
+          "outputs": [
+            ".codex/agents/*.toml"
+          ]
+        },
+        "plugins": {
+          "mode": "native",
+          "surface": "Codex plugin system via .codex-plugin/plugin.json",
+          "outputs": [
+            ".codex-plugin/plugin.json"
+          ]
+        }
+      },
+      "compatibility": {
+        "tier": 1,
+        "status": "certified",
+        "verifiedAt": "2026-06-29",
+        "verificationTtlDays": 90,
+        "versionRange": {
+          "status": "tested",
+          "minimum": "0.142.0",
+          "maximum": "0.142.0"
+        },
+        "documentation": "https://developers.openai.com/codex/skills",
+        "notes": "July 2026 audit: .codex/skills/ deprecated in favor of .agents/skills/ (DD-012); .codex/rules/*.rules added as native Starlark surface; .agents/agents/ NOT read by Codex (use .codex/agents/*.toml)."
+      },
+      "launchModes": {
+        "headless": {
+          "binary": "codex",
+          "invoke": "codex exec --skip-git-repo-check - < <prompt>",
+          "promptMode": "stdin",
+          "outputMode": "stdout",
+          "notes": "Pipe prompt via stdin. --model flag varies by version. Slash commands do not work in codex exec; use $acos:<entrypoint>."
+        },
+        "interactive": {
+          "binary": "codex",
+          "invoke": "codex",
+          "promptMode": "positional",
+          "wrapper": "wt | tmux",
+          "notes": "Interactive chat mode."
+        }
+      }
+    },
+    "eve": {
+      "label": "Eve",
+      "nativeContext": [
+        ".ssot/agents/context/AGENTS.src.md"
+      ],
+      "generatedFiles": [
+        "AGENTS.md",
+        "agent/instructions/*.md",
+        "agent/skills/*/SKILL.md",
+        "agent/connections/*.ts",
+        "agent/hooks/acos-*.ts",
+        "agent/sandbox/workspace/.ssot-seed-manifest.json",
+        "agent/tools/*.ts",
+        "agent/subagents/*/"
+      ],
+      "projections": {
+        "instructions": {
+          "mode": "native",
+          "surface": "Eve agent instructions in agent/instructions/*.md with zero-padded numeric prefixes",
+          "outputs": [
+            "agent/instructions/*.md",
+            "AGENTS.md"
+          ]
+        },
+        "rules": {
+          "mode": "native",
+          "surface": "Eve rules projected as instruction file agent/instructions/010-rules.md",
+          "outputs": [
+            "agent/instructions/010-rules.md"
+          ]
+        },
+        "hooks": {
+          "mode": "emulated",
+          "surface": "Eve hooks are post-event observers; lifecycle requirements projected as instructions, optional audit hooks in agent/hooks/",
+          "outputs": [
+            "agent/instructions/020-lifecycle.md"
+          ],
+          "notes": "Eve hooks cannot implement pre-action gates (before-mutation, before-completion). Lifecycle requirements are projected as always-on instructions instead."
+        },
+        "commands": {
+          "mode": "emulated",
+          "surface": "Eve has no native command surface; ACOS entrypoints projected as skills",
+          "outputs": [
+            "agent/skills/*/SKILL.md"
+          ]
+        },
+        "skills": {
+          "mode": "native",
+          "surface": "Eve skills in agent/skills/*/SKILL.md following Agent Skills standard",
+          "outputs": [
+            "agent/skills/*/SKILL.md"
+          ]
+        },
+        "workflows": {
+          "mode": "emulated",
+          "surface": "Eve has no native workflow surface; ACOS workflows projected as skills",
+          "outputs": [
+            "agent/skills/*/SKILL.md"
+          ]
+        },
+        "fileReferences": {
+          "mode": "native",
+          "surface": "Eve file references via AGENTS.md pointer to .ssot/",
+          "outputs": [
+            "AGENTS.md"
+          ]
+        },
+        "mcp": {
+          "mode": "native",
+          "surface": "Eve MCP connections as TypeScript modules in agent/connections/*.ts using defineMcpClientConnection",
+          "outputs": [
+            "agent/connections/*.ts"
+          ],
+          "notes": "HTTP/SSE only. Stdio servers reported as unsupported, never silently omitted."
+        },
+        "agents": {
+          "mode": "emulated",
+          "surface": "Eve subagents are a different concept; ACOS agent projections don't map. Emulated with canonical-instructions pointer.",
+          "outputs": [
+            "agent/instructions/000-agents.md"
+          ]
+        },
+        "tools": {
+          "mode": "native",
+          "surface": "Eve custom tools in agent/tools/*.ts (see https://eve.dev/docs/tools)",
+          "outputs": [
+            "agent/tools/*.ts"
+          ]
+        },
+        "subagents": {
+          "mode": "native",
+          "surface": "Eve subagents in agent/subagents/*/ (see https://eve.dev/docs/subagents)",
+          "outputs": [
+            "agent/subagents/*/"
+          ]
+        }
+      },
+      "compatibility": {
+        "tier": 1,
+        "status": "supported",
+        "verifiedAt": "2026-07-26",
+        "verificationTtlDays": 90,
+        "versionRange": {
+          "status": "tested",
+          "minimum": "0.24.6",
+          "maximum": "0.27.6"
+        },
+        "documentation": "https://vercel.com/docs/eve",
+        "notes": "Supported status. Network isolation probe (UD-005) verified empirically with eve@0.27.6 on 2026-07-26 (see docs/native-verification-checklist.md). Full compatibility spike (instruction ordering, skill discovery, eve build end-to-end) per spec 010 Phase 4 remains pending. Instructions directory form (agent/instructions/) is documented at https://eve.dev/docs/instructions."
+      }
+    }
+  }
+}

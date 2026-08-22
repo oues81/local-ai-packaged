@@ -1,0 +1,254 @@
+---
+description: Migration router — determines the correct migration path based on project state (new install, version upgrade, structural reconciliation, or ecosystem batch migration)
+---
+
+<!-- ACOS-ORIENTATION:START -->
+> **Orientation**: Read `.ssot/context-index.md`, `.ssot/status.md`, and
+> `.ssot/handoff.md` before proceeding. Full reference:
+> `.ssot/agents/context/orientation.md`.
+<!-- ACOS-ORIENTATION:END -->
+
+Treat the user's accompanying text as the migration objective. Minimize questions.
+
+## ⚠️ Autonomy directive — READ BEFORE PROCEEDING
+
+You are an autonomous agent performing a migration. **You decide, you don't ask.**
+
+- **DO**: Read the codebase, analyze legacy files, compare with the template, and make informed
+  decisions about entrypoint classification, skill audit, client rule audit, and canonical
+  mappings. You have the full project context — use it.
+- **DO**: Resolve duplicates by choosing the best version. Convert legacy content to canonical
+  format. Merge complementary content. Classify skills individually (not as a block).
+- **DO NOT**: Ask the user to "confirm or adjust" each decision. That is your job.
+- **DO NOT**: Present each finding one-by-one and ask for approval. Make all decisions, then
+  present the COMPLETE plan at the gate for a single approval.
+- **ASK THE USER ONLY**: When you have exhausted all analysis avenues and genuinely cannot
+  determine the right course of action. This should be rare.
+
+## ⚠️ READ THIS FIRST — Migration router
+
+ACOS has **7 migration-related entrypoints**. Using the wrong one is the #1 cause of failed
+migrations. Before doing anything, determine which path applies by checking the project state.
+
+### Decision tree
+
+```
+Is .ssot/agents/ present in the target project?
+│
+├─ NO → NEW INSTALLATION (this entrypoint, steps 1-14 below)
+│        Project has never had ACOS. Run the migration generator + init --adopt.
+│
+├─ YES → Is ssotVersion < CURRENT_SSOT_VERSION?
+│   │
+│   ├─ YES → VERSION UPGRADE needed
+│   │   │
+│   │   ├─ Is ecosystemRole === "container" with ecosystemChildren?
+│   │   │   ├─ YES → Use 1180-migrate-ecosystem (batch: container + satellites)
+│   │   │   └─ NO  → Use 1140-migrate-workflow (full 5-phase hybrid workflow)
+│   │   │            └─ Analysis only? → 1120-migrate-analyze (stops after analysis)
+│   │   │
+│   └─ NO → Is acos --check reporting drift?
+│       │
+│       ├─ YES → STRUCTURAL RECONCILIATION needed
+│       │        Use --reconcile mode (see "Reconciliation mode" below)
+│       │        OR 0660-sync if only projections are stale
+│       │
+│       └─ NO → NO MIGRATION NEEDED
+│                Project is up to date. Run 0660-sync to confirm projections.
+│
+└─ After ANY migration → Run migration-step-verify (see "Final verification" below)
+```
+
+### Quick reference table
+
+| Situation | Entrypoint | Key command |
+|-----------|------------|-------------|
+| New project (no `.ssot/agents/`) | **1100-migrate** (this file) | `acos-migration-generator` + `acos init --adopt` |
+| Version upgrade (existing project) | **1140-migrate-workflow** | `acos-migrate --apply` |
+| Analysis only (no mutation) | **1120-migrate-analyze** | `migration-analysis.mjs` (read-only) |
+| Container + satellites batch | **1180-migrate-ecosystem** | `acos-migrate --ecosystem --apply` |
+| Semantic ref updates post-migration | **1240-migrate-refs** | agent-assisted, after `--apply` |
+| Verify migration is complete | **1160-migration-verify** | `migration-verify.mjs` |
+| Regenerate projections only | **0660-sync** | `acos --fix` + `acos --check` |
+
+### ⚠️ Critical warnings (read before proceeding)
+
+1. **`--bump-ssot-version` is NOT a migration.** It only changes the version number in
+   version-bearing files. It does NOT rename entrypoints, backfill state files, or regenerate
+   projections. Using it instead of `acos-migrate --apply` leaves the project structurally
+   broken. The version bump happens automatically as part of `acos-migrate --apply`.
+
+2. **`acos-migrate` without `--apply` is a DRY-RUN.** It prints a plan and exits. It does NOT
+   modify the project. Always pass `--apply` to execute. The output ends with
+   `(dry-run — pass --apply to execute the migration)` as a reminder.
+
+3. **Stale ACOS code = broken migration.** The migration engine runs from the ACOS code in
+   `node_modules/@acos/core` (npm) or `acosSource.path` (local-checkout). Changing the version
+   number in `package.json` does NOT update the code. Before migrating:
+   - npm: `npm install --save-dev git+https://github.com/oues81/acos.git#main`
+   - local-checkout: `git -C <path> pull` and verify `CURRENT_SSOT_VERSION` matches target
+
+4. **Skipping `acos --fix` after migration = stale projections.** The migration engine renames
+   entrypoints and updates SSOT state, but does NOT regenerate client projections. You MUST run
+   `acos --fix` after `acos-migrate --apply` to regenerate projections.
+
+5. **Skipping verification = unproven migration.** After every migration, run
+   `node <acos-path>/scripts/audit/migration-step-verify.mjs --root <project> --acos-path <path>`
+   to mechanically prove the migration is complete. This script checks version coherence,
+   entrypoint completeness, projection sync, stale references, and state file presence. It
+   cannot be fooled — it reads the actual project state, not agent claims.
+
+---
+
+## NEW INSTALLATION procedure (when `.ssot/agents/` does NOT exist)
+
+This section applies when the target project has never had ACOS installed. If `.ssot/agents/`
+already exists, use the decision tree above to route to the correct entrypoint.
+
+1. Identify the target project root from the user's request. If not provided, ask for it.
+2. Verify the target project exists and is accessible.
+3. Confirm the project is **not** already ACOS-initialized (`.ssot/agents/` must not exist). If it is, stop and use the decision tree above to route to the correct entrypoint.
+4. **⚠️ Verify the ACOS code is up to date.** The migration generator runs from the ACOS code in `node_modules/@acos/core` (npm) or `acosSource.path` (local-checkout). If this code is stale, the generated playbook will reference outdated template structure. If the user provides an ACOS source path, verify it is at the latest commit before proceeding.
+5. Check whether an **ecosystem-specific migration skill** exists (e.g., `.ssot/skills/acos-migrate-<ecosystem>/` in the project or an inherited ecosystem parent). If one exists, note it and plan to apply it after the native generator, because it will contain project-specific patterns, rules, and protected paths the generic generator cannot know about.
+6. Run the deterministic ACOS migration generator:
+   - Resolve the ACOS code path: read `.ssot/agents/clients.json` → `acosSource`. If `type: "npm"`, use `<project-root>/node_modules/@acos/core`. If `type: "local-checkout"`, resolve `acosSource.path` relative to the project root. If `acosSource` is absent or the path is invalid, ask the user for the ACOS code path.
+   - `node <acos-path>/scripts/lifecycle/acos-migration-generator.mjs --root <target-project>`
+   - Optionally add `--with-skill` to also generate a reusable migration skill under `.ssot/skills/acos-migrate-<project>/`.
+   - Pass `--help` to see all available options.
+7. Read the generated `ACOS_MIGRATION_PLAYBOOK.md` and the underlying `ACOS_PRE_INIT_AUDIT.md` plus `ACOS_MIGRATION_PLAN.json`.
+8. Perform a semantic review of the findings and the actual legacy files. Pay specific attention to:
+   - **Entrypoint validation**: ensure any proposed entrypoint IDs are `>= 0`, multiples of 20, and within a valid family range (0xx–12xx core, 1500+ project-specific, 13xx–14xx ecosystem-specific). See `docs/specs/000-numbering-conventions/spec.md`.
+     When classifying a detected need:
+     - First check whether it matches an existing core category — if so, use the core entrypoint rather than creating a new one.
+     - If the project is or will be a satellite with an `ecosystemParent` in `clients.json` and the need is shared across satellites, prefer a 13xx–14xx ecosystem entrypoint declared at the container.
+     - Otherwise, place the entrypoint in 1500+ (project-specific).
+     - Never place a project/ecosystem entrypoint in 0xx–12xx or in the core-reserved slots 1300, 1320, 1340, 1360, 1380, 1400, 1420, or 1440.
+   - **Entrypoint category warnings**: the pre-init audit flags custom entrypoints in 0xx–12xx and ecosystem entrypoints in 13xx–14xx. Move them to 1500+ or confirm the project is a satellite.
+   - **Legacy skill audit**: do not protect skills as a block; classify each as duplicate of an entrypoint, duplicate of an ecosystem parent skill, obsolete, or project-specific.
+   - **Legacy client rule audit**: `.kilo/rules/*.md`, `.cursor/rules/*.md`, and `.claude/rules/*.md` will be overwritten by `acos --fix`; merge unique content into canonical rules or archive explicitly.
+   Correct any discrepancies in the generated playbook.
+9. **Gate 1 — Analysis approval**: Present a concise summary to the user:
+   - number of files at risk;
+   - invalid entrypoints, skill audit findings, and client rule audit findings;
+   - suggested canonical mappings;
+   - required business decisions.
+   Pause for explicit approval before generating or refining the migration skill.
+10. If `--with-skill` was requested, generate the skill skeleton under `.ssot/skills/acos-migrate-<project>/`. Otherwise, only the playbook is the deliverable.
+11. **Gate 2 — Playbook approval**: Present the migration playbook and any generated skill. Explain every planned mutation. Pause for explicit approval before execution.
+12. **Gate 3 — Projection approval**: Back up high-risk files, then run `npx acos init --adopt` only after approval. After init, present the result and ask for approval before running `npx acos --fix`.
+13. **Gate 4 — Final approval**: Run `npx acos --validate` and `npx acos --check`. Present the final state. Ask for approval before cleanup, commit, or push.
+14. Record all durable decisions in the target project's `.ssot/decisions.md` and update `.ssot/status.md` and `.ssot/handoff.md`.
+15. Return only decisions that genuinely require the user, followed by the next concrete action.
+
+Never mutate the target project before explicit approval. Never run `acos init --adopt`, `acos --fix`, or destructive cleanup autonomously.
+
+## Final verification (MANDATORY after any migration)
+
+After any migration (new install, version upgrade, ecosystem batch, or reconciliation), you MUST
+run the migration step verifier to mechanically prove the migration is complete:
+
+```bash
+node <acos-path>/scripts/audit/migration-step-verify.mjs --root <target-project> --acos-path <acos-path>
+```
+
+This script checks:
+1. **Version coherence** — all version-bearing files match `CURRENT_SSOT_VERSION`
+2. **Entrypoints complete** — all template entrypoints present in the project
+3. **Projections in sync** — `acos --check` reports no drift
+4. **No stale references** — no 3-digit refs to renamed entrypoints in `.ssot/`
+5. **package.json coherent** — `@acos/core` version matches target
+6. **State files present** — all expected version-bearing files exist
+
+The script exits with code 0 (PASS) or 1 (FAIL with gap details). **You must report the full
+output to the user.** If any check fails, you must fix the gap before declaring the migration
+complete. Do not claim "migration done" without a PASS from this script.
+
+### Completion checklist
+
+Before declaring the migration complete, verify each item:
+
+- [ ] `acos-migrate --apply` was run (not just `--bump-ssot-version`)
+- [ ] `acos --fix` was run (projections regenerated)
+- [ ] `acos --check` was run (no drift reported)
+- [ ] `acos --validate` was run (schemas valid)
+- [ ] `migration-step-verify.mjs` was run and reports PASS
+- [ ] `.ssot/decisions.md` updated with migration decision
+- [ ] `.ssot/status.md` updated with new version
+- [ ] `.ssot/handoff.md` updated with next action
+
+If any item is unchecked, the migration is NOT complete. Do not tell the user it is.
+
+## Ecosystem setup (container + satellites)
+
+An ecosystem is a container project with one or more satellite sub-projects. Each project has its
+own independent `.ssot/`, but they share the ACOS code location and optionally some canonical files.
+
+### How to set up an ecosystem
+
+1. **Install ACOS in the container** (this entrypoint, steps 1-14 above).
+2. **Configure the container** — in `.ssot/agents/clients.json`:
+   ```json
+   {
+     "ecosystemRole": "container",
+     "ecosystemChildren": [
+       { "path": "api", "role": "satellite" },
+       { "path": "web", "role": "satellite" }
+     ]
+   }
+   ```
+3. **Install ACOS in each satellite** — run `acos init --adopt` in each sub-project directory.
+4. **Configure each satellite** — in the satellite's `.ssot/agents/clients.json`:
+   ```json
+   {
+     "ecosystemRole": "satellite",
+     "ecosystemParent": {
+       "path": "..",
+       "inherited": [".ssot/agents/context/AGENTS.src.md"],
+       "overridden": [".ssot/agents/context/CLAUDE.src.md"]
+     }
+   }
+   ```
+5. **Run `acos --fix` on each satellite** — this propagates `acosSource` from the container and copies inherited files.
+
+### What is shared vs independent
+
+| | Container | Satellite |
+|---|-----------|-----------|
+| `.ssot/` | Own, complete | Own, complete (independent) |
+| `acosSource` (code ACOS) | Declared here | **Inherited automatically** — no `node_modules` needed in satellite |
+| `inherited` files | Source of truth | Copied from container at each `acos --fix` (edits overwritten) |
+| `overridden` files | Not propagated | Satellite manages its own version |
+| Entrypoints, workflows, status, decisions | Own | Own (fully independent) |
+| Projections (`.claude/`, `.cursor/`, etc.) | Own | Own (fully independent) |
+
+**Key points:**
+- Each satellite is a complete ACOS project with its own `.ssot/`. The ecosystem relationship only
+  controls which canonical files are synchronized from the container.
+- `acosSource` is propagated automatically — satellites don't need their own `node_modules` or
+  `package.json` with `@acos/core`. They use the container's ACOS code.
+- `inherited: []` makes a satellite 100% independent (only shares `acosSource`).
+- A file cannot be in both `inherited` and `overridden` — `240-doctor` verifies this.
+
+### Ecosystem migration
+
+If the target project is a **container** (`.ssot/agents/clients.json` has `ecosystemRole: "container"` with `ecosystemChildren`), the migration affects all satellites too:
+
+- **Batch migration**: use `acos-migrate --root <container-root> --ecosystem --apply` to migrate the container and all satellites atomically. Without `--ecosystem`, only the container is migrated — satellites must be migrated individually.
+- **Version drift detection**: run `acos-migrate --root <container-root> --reconcile` (dry-run) to check for structural drift across the ecosystem. The migration-analysis scanner reports `ecosystemVersionDrift[]` entries when satellites are at a different version than the container.
+- **Migration order**: the container is always migrated first, then satellites in sequence. If a satellite migration fails, remaining satellites are still attempted (best-effort) so the operator can fix the failing one without re-running everything.
+
+For the full ecosystem migration procedure, use `1180-migrate-ecosystem` which orchestrates the batch with per-project status reporting.
+
+## Reconciliation mode (--reconcile)
+
+The `--reconcile` flag performs structural reconciliation between a project's SSOT state and the canonical ACOS template, independent of version-based migrations. It detects:
+
+- **Missing template entrypoints**: entrypoints present in the template but absent from the project.
+- **Stale template content**: template-sourced entrypoints whose file content has drifted from the template (e.g. the project was created from an older template version). With `--apply`, these files are refreshed to the current template content. Custom entrypoints (orphans) are never touched.
+- **Orphaned custom entrypoints**: project-specific entrypoints not in the template — preserved, never deleted. Those colliding with template orders are renumbered to 1500+.
+- **Target configuration drift**: projection targets in `workflows.json` that differ from the template.
+- **Slug collisions**: custom entrypoints whose slug collides with a template entrypoint — auto-resolvable with `--resolve-slug-collisions`.
+
+Run `acos-migrate --root . --reconcile` for a dry-run plan, then `acos-migrate --root . --reconcile --apply` to execute. Pass `--help` to see all available options.
+
+After reconciliation, run `acos --fix` to regenerate projections, then run the final verification script above.

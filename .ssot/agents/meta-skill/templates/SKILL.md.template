@@ -1,0 +1,82 @@
+---
+name: acos-migrate-<PROJECT_NAME>
+description: Migrate <PROJECT_NAME> to ACOS v0.4.0+ while preserving project-specific infrastructure.
+---
+
+<objective>
+Migrate <PROJECT_NAME> from its legacy AI/editor configuration to ACOS v0.4.0+. The migration preserves project-specific invariants: <INVARIANTS>. This skill is a guided playbook, not an unattended script: it performs read-only steps autonomously but stops for explicit human approval before any destructive or business-critical mutation.
+</objective>
+
+<quick_start>
+1. Ensure the project worktree is clean and the `acos-migration` branch exists or can be created.
+2. Run the analysis workflow or the full migration workflow as needed.
+3. Approve each of the four decision gates before proceeding.
+</quick_start>
+
+<essential_principles>
+<principle name="human_in_the_loop">
+High-risk mutations stop for explicit approval. The four mandatory decision gates are: (1) after the audit plan is generated, (2) after merging agents/rules/hooks/ACP, (3) after ACOS validation passes, and (4) before the final cleanup commit.
+</principle>
+
+<principle name="ssot_source_of_truth">
+After migration, `.ssot/agents/` is the only source of truth. Edit canonical files there, then run `npx --no-install acos --fix` and `npx --no-install acos --check`.
+</principle>
+
+<principle name="preserve_non_acos">
+<NON_ACOS_FILES> must be preserved or explicitly merged, not deleted by `--fix` or cleanup. Mark them as protected paths when needed.
+</principle>
+
+<principle name="expected_warnings">
+Some ACOS warnings are expected during a migration and do not indicate failure:
+- `.windsurf/workflows` is flagged as a legacy path because it is the Devin Desktop projection namespace.
+- `npx acos-doctor` may report `status: warn` solely because the worktree has many in-progress Git changes.
+- Files marked `managed: false` are reported as externally managed.
+Only `status: fail` or explicit blocking errors require stopping and repairing.
+</principle>
+</essential_principles>
+
+<intake>
+Ask the user:
+
+**What would you like to do for <PROJECT_NAME>?**
+1. **Full guided migration** — run the complete ACOS migration with human approval at each decision gate.
+2. **Audit only** — generate the migration plan and stop; no file changes.
+3. **Fix a failed validation** — validation or `--check` failed after init; diagnose and repair.
+
+Wait for the response before proceeding.
+</intake>
+
+<routing>
+| Response | Workflow |
+|---|---|
+| 1, "full", "guided", "migrate" | `workflows/migrate.md` |
+| 2, "audit", "preview", "plan only" | `workflows/audit.md` |
+| 3, "fix", "repair", "validation failed" | `workflows/repair-validation.md` |
+| other | Clarify, then select. |
+
+After reading the chosen workflow, follow it exactly and load all required references before executing steps.
+</routing>
+
+<reference_index>
+**Mappings and conventions:** `references/legacy-mappings.md`
+**ACOS CLI outputs and troubleshooting:** `references/acos-cli-guide.md`
+**Human decision gates and questions:** `references/decision-gates.md`
+<ACP_REGISTRY_REF>
+</reference_index>
+
+<workflows_index>
+| Workflow | Purpose |
+|---|---|
+| `workflows/migrate.md` | End-to-end guided migration with all decision gates. |
+| `workflows/audit.md` | Read-only audit and plan generation. |
+| `workflows/repair-validation.md` | Diagnose and fix `npx acos --validate` / `--check` failures. |
+</workflows_index>
+
+<success_criteria>
+This skill is used correctly when:
+- The migration workflow is chosen according to the user's intent.
+- All four human decision gates are respected and explicitly answered.
+- The project ends with `npx acos --validate` and `npx acos --check` passing, `npx acos-doctor` reporting all ACOS checks pass, and no orphaned or changed files.
+- Project-specific infrastructure is preserved or explicitly documented in `.ssot/decisions.md`.
+- No secrets, `.zip` backups, or `.ssot.legacy` directories are committed to Git.
+</success_criteria>

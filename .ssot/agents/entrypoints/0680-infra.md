@@ -1,0 +1,53 @@
+---
+description: Discover and use the existing development infrastructure without recreating it
+---
+
+<!-- ACOS-ORIENTATION:START -->
+> **Orientation**: Read `.ssot/context-index.md`, `.ssot/status.md`, and
+> `.ssot/handoff.md` before proceeding. Full reference:
+> `.ssot/agents/context/orientation.md`.
+<!-- ACOS-ORIENTATION:END -->
+
+Read `.ssot/infrastructure.md` and treat the shared development platform as an external existing system. If `.ssot/infrastructure-profile.json` does not exist, say so and stop here — infrastructure is unconfigured for this project.
+
+1. Run the packaged read-only discovery adapter: `npx --no-install acos-infra --profile .ssot/infrastructure-profile.json --output text`. It reports, per logical service declared in the profile, whether it is present-and-healthy, present-but-unhealthy/starting, or absent from the live snapshot — treat absence as current fact, not as a configuration error to fix.
+2. Read the profile's `mcpManagement` block to learn the actual control plane for this platform. Most MCP infrastructure already provides its own registry/catalogue; do not assume a separate dedicated client-management tool exists unless the profile names one.
+3. Resolve registry, cache, MCP server/catalogue, and agent-tool capabilities only from what discovery actually confirmed reachable and healthy this run. The profile's optional `registry` and `caches` entries each name a `policy` (what to pull and from where) and an `authReference` (how authentication works) — both are descriptions, never credentials, and the discovery report resolves their live health from the same snapshot. An empty or absent `caches` list means no cache is confirmed configured; do not assume one.
+4. Use existing authentication mechanisms (SSH keys, agents) referenced by the profile's `transport` block; never read, copy, or persist their contents in ACOS files. `acos --validate` rejects any credential-shaped key found inside the profile.
+5. Prefer the existing registry, mirrors, and caches when project policy permits.
+6. If the platform's MCP control plane supports client reconciliation, delegate to it; do not hand-maintain divergent per-client MCP configuration files as the default workflow.
+7. To see what MCP tools/servers the control plane actually offers, run `npx --no-install acos-infra --operation list-mcp-tools --profile .ssot/infrastructure-profile.json`, supplying any required credential through `ACOS_MCP_TOKEN` or the explicit `--token` option — never through a profile field or committed file. This call only reads; it never writes a client's MCP configuration. If a client genuinely needs to be pointed at a discovered tool, follow the manual recipe in `docs/mcp-client-wiring.md` (or this project's equivalent) — that step is an explicit operator action, not something this entrypoint or `acos --fix` performs automatically.
+8. Report capability availability, provenance, observation time, and missing configuration separately — never merge a dated observation with a live guarantee.
+
+Never deploy replacements, create registries, duplicate the MCP catalogue, or bypass the platform's own control plane unless explicitly requested.
+
+## Devin Desktop IDE MCP isolation workaround
+
+The Devin Desktop IDE (Windsurf-based) reads MCP server configuration only from the global
+`~/.codeium/windsurf/mcp_config.json` and ignores per-project `.devin/config.json` for MCP. When an
+agent is launched from that IDE, project-local MCP servers declared in `.ssot/agents/mcp.json` or
+`.devin/config.json` are not loaded. The packaged `acos-mcp-launcher` bridges this: install it with
+`npx --no-install acos-mcp-launcher --install` (Windows only), point the global `mcp_config.json`
+`acos` entry at the generated `~/.acos/bin/mcp-launcher.cmd`, and register ACOS with the IDE's ACP
+registry via `npx --no-install acos-mcp-launcher --register-acp`. The wrapper detects the active
+project at runtime and reads the project's own MCP projection in priority order
+(`.devin/config.json`, `.mcp.json`, `.ssot/agents/mcp.json`) — it never creates or persists a
+configuration file. See `docs/mcp-client-wiring.md` → "Devin Desktop IDE (Windsurf)" for the full
+recipe.
+
+## `.ssot/agents/mcp.json` ssotVersion requirement
+
+`.ssot/agents/mcp.json` must carry `"ssotVersion": "1.1.0"` alongside `mcpServers`. The schema
+`schemas/mcp-servers.json` enforces this. If the field is missing or set to a different value,
+add it manually:
+
+```json
+{
+  "ssotVersion": "1.1.0",
+  "mcpServers": {}
+}
+```
+
+`acos --fix` does **not** modify `mcp.json` (it is not a generated projection); the `ssotVersion`
+field is an operator-maintained contract. Validate with `npx --no-install acos --validate` after
+editing.

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.1.0",
+  "profileId": "mco-default",
+  "displayName": "MCP Cycle Orchestrator (MCO) Default Profile",
+  "description": "Default configuration for connecting to MCO — an external, independently-running orchestration service for coding agents.",
+  "mcpEndpoint": "http://localhost:8080/mcp",
+  "endpointScope": "loopback",
+  "eveMutatingTools": false,
+  "repository": "github.com/oues81/mcpco",
+  "pinnedRef": "main",
+  "license": "TBD (MCO project license — verify at source)",
+  "runtimePrerequisites": [
+    "Python 3.11+",
+    "MCO HTTP endpoint reachable (default: http://localhost:8080/mcp)",
+    "Optional: MCP_API_KEY environment variable if authentication is enabled"
+  ],
+  "note": "This profile is a template. Per-project instances should override mcpEndpoint with their own MCO deployment URL and set MCP_API_KEY in .env if required."
+}

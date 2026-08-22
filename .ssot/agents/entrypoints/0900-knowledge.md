@@ -1,0 +1,75 @@
+---
+description: Declare and initialize the OKF knowledge layer (.ssot/knowledge/)
+---
+
+<!-- ACOS-ORIENTATION:START -->
+> **Orientation**: Read `.ssot/context-index.md`, `.ssot/status.md`, and
+> `.ssot/handoff.md` before proceeding. Full reference:
+> `.ssot/agents/context/orientation.md`.
+<!-- ACOS-ORIENTATION:END -->
+
+Treat the user's accompanying text as the knowledge-layer objective. Minimize questions.
+
+1. **Check for an existing knowledge profile.** Read `.ssot/knowledge-profile.json` if it exists.
+   - If it exists, verify `okfVersion` is `"0.1"` and `reservedFilenames` includes `"index.md"` and
+     `"log.md"`. If the profile is malformed or the OKF version is wrong, report the issue and ask
+     the user before proceeding (FM-005 — do not silently upgrade or downgrade).
+   - If it does not exist, create it with the canonical defaults:
+     ```json
+     {
+       "okfVersion": "0.1",
+       "bundleRoots": [],
+       "reservedFilenames": ["index.md", "log.md"],
+       "ssotVersion": "<current template ssotVersion>"
+     }
+     ```
+     Use the `ssotVersion` from `.ssot/agents/clients.json` or `.ssot/agents/workflows.json` for
+     consistency with sibling profiles.
+
+2. **Check for an existing `.ssot/knowledge/` directory.**
+   - If it exists, verify it contains `index.md` and `log.md` at the root level. If either is
+     missing, create it (see step 3). Do NOT overwrite existing content.
+   - If it does not exist, create `.ssot/knowledge/`.
+
+3. **Create root `index.md` if absent.** The root `index.md` is a progressive-disclosure catalog
+   of the knowledge layer's bundles and concepts. Initially it should contain:
+   ```markdown
+   # Knowledge Index
+
+   This is the progressive-disclosure catalog for `.ssot/knowledge/`.
+   Each bundle root lists its concept pages here.
+
+   ## Bundles
+
+   _(No bundles declared yet. Add bundle roots to `.ssot/knowledge-profile.json` and
+   run `0920-knowledge-ingest` to populate concept pages.)_
+   ```
+
+4. **Create root `log.md` if absent.** The root `log.md` is an append-only chronological change
+   history. Initially it should contain:
+   ```markdown
+   # Knowledge Change Log
+
+   Append-only chronological history of changes to `.ssot/knowledge/`.
+
+   ## Entries
+
+   _(No entries yet. `0920-knowledge-ingest` and `0940-knowledge-query` append entries here.)_
+   ```
+
+5. **Validate.** Run the knowledge adapter's `validateBundle` against each declared bundle root in
+   `.ssot/knowledge-profile.json`. If `bundleRoots` is empty, validation is a no-op (the skeleton
+   is valid by construction). Report any validation errors to the user.
+
+6. **Idempotency.** Re-running this entrypoint on a project that already has a valid
+   `.ssot/knowledge-profile.json` and `.ssot/knowledge/` with `index.md` and `log.md` is a no-op
+   beyond validation. Do NOT overwrite existing files. Do NOT duplicate entries.
+
+7. **Boundary.** Do NOT touch `.ssot/decisions.md`, `.ssot/status.md`, `.ssot/handoff.md`, or
+   `.ssot/context-index.md`. The knowledge layer is additive and separate (REQ-003, REQ-012). A
+   project without `.ssot/knowledge/` behaves exactly as it does today (AC-011).
+
+8. **Update `.ssot/context-index.md`** orientation if the knowledge layer is newly initialized —
+   add a one-line reference to `.ssot/knowledge/` so future sessions know it exists. Use
+   `npx --no-install acos --fix` to regenerate projections after editing the canonical
+   `context-index.md`.

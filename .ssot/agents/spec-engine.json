@@ -1,0 +1,246 @@
+{
+  "ssotVersion": "1.9.0",
+  "name": "acos-spec-engine",
+  "description": "Native ACOS specification engine: structured, dependency-free spec-driven development lifecycle.",
+  "lifecycle": {
+    "constitution": {
+      "id": "constitution",
+      "name": "Constitution",
+      "description": "Establish project principles, constraints, and authority boundaries before writing specifications.",
+      "artifact": "constitution.md",
+      "entrypoint": "project.constitution",
+      "optional": false
+    },
+    "specify": {
+      "id": "specify",
+      "name": "Specify",
+      "description": "Convert objectives into a structured spec with stories, requirements, scope, failure modes, and acceptance criteria.",
+      "artifact": "specs/<feature-id>/spec.md",
+      "entrypoint": "delivery.spec"
+    },
+    "clarify": {
+      "id": "clarify",
+      "name": "Clarify",
+      "description": "Resolve ambiguities, contradictions, and unresolved decisions in the spec before planning.",
+      "artifact": "specs/<feature-id>/spec.md",
+      "entrypoint": "delivery.clarify"
+    },
+    "plan": {
+      "id": "plan",
+      "name": "Plan",
+      "description": "Produce a dependency-aware implementation plan grounded in repository evidence and the spec.",
+      "artifact": "specs/<feature-id>/plan.md",
+      "entrypoint": "delivery.plan"
+    },
+    "data-model": {
+      "id": "data-model",
+      "name": "Data Model",
+      "description": "Define entities, relations, invariants, and API contracts implied by the spec and plan.",
+      "artifact": "specs/<feature-id>/data-model.md",
+      "entrypoint": "delivery.datamodel"
+    },
+    "checklist": {
+      "id": "checklist",
+      "name": "Checklist",
+      "description": "Generate quality checklists for completeness, clarity, consistency, security, and testing.",
+      "artifact": "specs/<feature-id>/checklist.md",
+      "entrypoint": "delivery.checklist"
+    },
+    "tasks": {
+      "id": "tasks",
+      "name": "Tasks",
+      "description": "Break the plan into actionable, tracked tasks with dependencies, estimates, and owners.",
+      "artifact": "specs/<feature-id>/tasks.md",
+      "entrypoint": "delivery.tasks"
+    },
+    "analyze": {
+      "id": "analyze",
+      "name": "Analyze",
+      "description": "Cross-artifact consistency analysis: spec, plan, data model, tasks, and checklist must agree.",
+      "artifact": "specs/<feature-id>/",
+      "entrypoint": "delivery.analyze"
+    },
+    "wave-plan": {
+      "id": "wave-plan",
+      "name": "Wave Plan",
+      "description": "Generate a wave-config from structured tasks for parallel agent dispatch.",
+      "artifact": "specs/<feature-id>/wave-config.json",
+      "entrypoint": "delivery.execute",
+      "optional": true
+    },
+    "implement": {
+      "id": "implement",
+      "name": "Implement",
+      "description": "Execute the approved tasks with bounded autonomy, updating artifacts as decisions change.",
+      "artifact": "specs/<feature-id>/tasks.md",
+      "entrypoint": "delivery.implement"
+    },
+    "review": {
+      "id": "review",
+      "name": "Review",
+      "description": "Post-implementation code review for bugs, security, quality, and spec coherence. Produces specs/<feature-id>/review.md.",
+      "artifact": "specs/<feature-id>/review.md",
+      "entrypoint": "delivery.review"
+    },
+    "tests": {
+      "id": "tests",
+      "name": "Tests",
+      "description": "Detect test framework, generate tests from acceptance criteria, and run them. Produces specs/<feature-id>/tests.md.",
+      "artifact": "specs/<feature-id>/tests.md",
+      "entrypoint": "delivery.tests"
+    },
+    "lint": {
+      "id": "lint",
+      "name": "Lint",
+      "description": "Detect linter, run it, and auto-fix fixable issues. Produces specs/<feature-id>/lint-report.md.",
+      "artifact": "specs/<feature-id>/lint-report.md",
+      "entrypoint": "delivery.lint"
+    },
+    "security": {
+      "id": "security",
+      "name": "Security",
+      "description": "STRIDE-driven security review of the implemented change. Produces specs/<feature-id>/security-review.md.",
+      "artifact": "specs/<feature-id>/security-review.md",
+      "entrypoint": "delivery.security"
+    },
+    "verify": {
+      "id": "verify",
+      "name": "Verify",
+      "description": "Run acceptance criteria, checklists, static checks, and tests independently from implementation.",
+      "artifact": "specs/<feature-id>/",
+      "entrypoint": "delivery.verify"
+    },
+    "converge": {
+      "id": "converge",
+      "name": "Converge",
+      "description": "Gap analysis between spec/plan/tasks and actual implementation before delivery.",
+      "artifact": "specs/<feature-id>/convergence.md",
+      "entrypoint": "delivery.converge"
+    },
+    "ship": {
+      "id": "ship",
+      "name": "Ship",
+      "description": "Prepare the verified change for delivery without assuming publish authority.",
+      "artifact": "specs/<feature-id>/",
+      "entrypoint": "delivery.ship"
+    }
+  },
+  "featureIdRules": {
+    "maxLength": 64,
+    "pattern": "^[0-9]{3}-[a-z0-9]+(?:-[a-z0-9]+)*$",
+    "description": "Zero-padded three-digit serial number followed by a short kebab-case name, e.g. '001-native-auth', '042-batch-import'. The same ID is used for the spec directory, branch, and worktree names."
+  },
+  "branchAndWorktree": {
+    "useFeatureId": true,
+    "description": "The feature ID is the canonical branch name and worktree directory name."
+  },
+  "qualityGates": [
+    {
+      "id": "completeness",
+      "name": "Completeness",
+      "checks": [
+        "Every requirement has an acceptance criterion.",
+        "Every acceptance criterion has a verification method.",
+        "All known failure modes are documented.",
+        "Dependencies and blockers are explicit."
+      ]
+    },
+    {
+      "id": "clarity",
+      "name": "Clarity",
+      "checks": [
+        "User stories name a stakeholder and observable outcome.",
+        "No ambiguous pronouns or undefined terms in acceptance criteria.",
+        "Scope and non-goals are distinguishable."
+      ]
+    },
+    {
+      "id": "consistency",
+      "name": "Consistency",
+      "checks": [
+        "Spec, plan, data model, tasks, and checklists do not contradict each other.",
+        "Terminology matches repository and architecture conventions.",
+        "Stable IDs and file references are correct."
+      ]
+    },
+    {
+      "id": "security",
+      "name": "Security",
+      "checks": [
+        "Trust boundaries are identified for every affected surface.",
+        "Input validation, auth, and authz are covered.",
+        "No credentials or secrets are written to specs or plans."
+      ]
+    },
+    {
+      "id": "tests",
+      "name": "Tests",
+      "checks": [
+        "Each acceptance criterion maps to at least one test or check.",
+        "Failure-mode tests are included where practical.",
+        "Test commands are recorded and runnable."
+      ]
+    }
+  ],
+  "defaultSections": {
+    "spec": [
+      "user-stories",
+      "requirements",
+      "scope",
+      "non-goals",
+      "acceptance-criteria",
+      "failure-modes",
+      "dependencies",
+      "unresolved-decisions"
+    ],
+    "plan": [
+      "summary",
+      "phases",
+      "milestones",
+      "stack-choices",
+      "risks",
+      "verification",
+      "rollback"
+    ],
+    "data-model": [
+      "entities",
+      "relations",
+      "invariants",
+      "api-contracts",
+      "migration-notes"
+    ],
+    "tasks": [
+      "overview",
+      "task-list",
+      "dependencies",
+      "estimates",
+      "owners"
+    ],
+    "checklist": [
+      "completeness",
+      "clarity",
+      "consistency",
+      "security",
+      "tests"
+    ],
+    "convergence": [
+      "summary",
+      "gaps",
+      "resolved-decisions",
+      "unresolved-decisions",
+      "delivery-readiness"
+    ]
+  },
+  "lightweightTrack": {
+    "description": "A spec may substitute an approved action-plan document for plan+data-model+checklist+tasks. The spec.md MUST declare the lightweight track in its Status field and reference the substituting document. The action-plan document MUST be approved before implementation begins.",
+    "substitutedPhases": [
+      "plan",
+      "data-model",
+      "checklist",
+      "tasks"
+    ],
+    "requiredDeclaration": "spec.md Status field must say 'lightweight track \u2014 see [document path]'",
+    "gate": "The substituting document must be committed and referenced before the implement phase."
+  },
+  "qualityGatesNote": "qualityGates are textual checks on spec.md (static, pre-implementation). They are orthogonal to the tests/security entrypoints which run executable checks on implemented code (dynamic, post-implementation)."
+}

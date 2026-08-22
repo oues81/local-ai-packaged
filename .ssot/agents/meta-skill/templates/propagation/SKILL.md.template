@@ -1,0 +1,65 @@
+---
+name: acos-propagate-<PROJECT_NAME>
+description: Propagate entrypoint renames for <PROJECT_NAME> across in-scope and out-of-scope references.
+---
+
+<objective>
+Propagate pending entrypoint renames (route: <ROUTE_SUMMARY>) for <PROJECT_NAME> across all reference locations, including those outside the deterministic scanner's `.ssot/` root. This skill is analysis output made actionable: it does not widen the agent's write authority (REQ-055) and does not mutate any file outside the skill directory during generation.
+</objective>
+
+<when_to_load>
+- When `530-migrate-refs` is dispatched and this skill exists at `.ssot/skills/acos-propagate-<PROJECT_NAME>/` (REQ-053).
+- Before updating any reference to a renamed entrypoint.
+- When a fresh agent arrives on an already-initialized project with a pending version migration.
+</when_to_load>
+
+<essential_principles>
+<principle name="rename_mapping_first">
+Read `references/rename-mapping.md` before touching any reference. The mapping defines old→new visible prefix, stable ID, and slug.
+</principle>
+
+<principle name="in_scope_advisory">
+In-scope references (under `.ssot/`) in `references/ref-report.md` are an advisory snapshot. Refresh at dispatch time with `acos --check --refs-only` (REQ-054).
+</principle>
+
+<principle name="out_of_scope_enumerated">
+Out-of-scope references are enumerated in `references/out-of-scope-locations.md` with a per-location classification. This is content the generic dispatch payload cannot produce.
+</principle>
+
+<principle name="preserve_verbatim">
+Locations classified `preserve-verbatim` MUST NOT be modified (REQ-055). They are historical or explanatory references that intentionally name an old prefix.
+</principle>
+
+<principle name="no_widened_authority">
+Out-of-scope updates require explicit human approval. The post-agent diff check (REQ-026) still governs in-scope references. Generating this skill did not update any reference in the target project.
+</principle>
+
+<principle name="freshness">
+Verify freshness via `provenance.json` before acting. If the project changed after generation, request regeneration.
+</principle>
+</essential_principles>
+
+<reference_index>
+- `references/rename-mapping.md` — old→new prefixes, stable IDs, slugs.
+- `references/ref-report.md` — in-scope references (advisory snapshot).
+- `references/out-of-scope-locations.md` — references outside `.ssot/` with classification.
+- `references/conventions.md` — how this project references entrypoints.
+- `references/protected-paths.md` — paths that must not be modified.
+- `references/decisions.md` — durable project decisions.
+</reference_index>
+
+<workflows_index>
+| Workflow | Purpose |
+|---|---|
+| `workflows/propagate.md` | Step-by-step propagation procedure. |
+</workflows_index>
+
+<success_criteria>
+This skill is used correctly when:
+- All in-scope references refreshed and updated deterministically.
+- Out-of-scope `update` locations updated with explicit human approval.
+- `preserve-verbatim` locations left untouched.
+- `needs-human-judgment` locations presented for review and resolved.
+- Post-agent diff check (REQ-026) passes.
+- `npx acos --validate` and `npx acos --check` pass.
+</success_criteria>

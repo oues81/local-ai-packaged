@@ -1,0 +1,15 @@
+{
+  "ssotVersion": "1.9.0",
+  "runtimes": [
+    {
+      "runtimeId": "fabric-staging",
+      "type": "fabric",
+      "syncPolicy": "PreferRemote",
+      "description": "Example Fabric runtime for the staging environment. Git is the SSOT; the runtime is derived from it.",
+      "driftCheckCommand": "fabric status --commit",
+      "healthCheckCommand": "fabric health",
+      "syncCommand": "fabric deploy --confirm",
+      "timeoutSeconds": 60
+    }
+  ]
+}

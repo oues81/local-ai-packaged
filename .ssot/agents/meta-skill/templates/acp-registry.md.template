@@ -1,0 +1,54 @@
+:<# Reference: ACP Registry Correction
+
+<overview>
+The ACP registry is not an ACOS-native file. During migration it must be corrected so that it points to the new script location and does not reference agents that no longer exist. Use this reference in `workflows/migrate.md` Phase 3.
+</overview>
+
+## 1. Corrected registry template
+
+```json
+{
+  "version": "1.0.0",
+  "project": "<PROJECT_NAME>",
+  "agents": [
+    {
+      "id": "<agent-id>",
+      "name": "<agent-id>",
+      "version": "1.0.0",
+      "distribution": {
+        "binary": {
+          "windows-x86_64": {
+            "cmd": "python",
+            "args": ["-u", ".ssot/agents/scripts/<script>.py"]
+          }
+        }
+      }
+    }
+  ]
+}
+```
+
+## 2. When to keep, remove, or create agents
+
+| Situation | Action | Documentation |
+|---|---|---|
+| Agent script exists in `.ssot/agents/scripts/<name>.py` | Keep it. Update the path to `.ssot/agents/scripts/...`. | None required. |
+| Agents are referenced but their scripts do not exist | Remove them from the registry **or** create stubs and ask the user. | Record the decision in `.ssot/decisions.md`. |
+| Agents are wrappers around PowerShell scripts | Leave them as PowerShell scripts outside the ACP registry unless the user wants Python equivalents. | Ask the user. |
+
+## 3. Validation
+
+After updating the registry, verify that:
+
+- JSON is valid (`python -m json.tool .acp/registry.json` or equivalent).
+- Every `args` path points to an existing file.
+- The `project` field matches the project directory name.
+- No duplicate `id` values exist.
+
+<warning>
+Do not commit an ACP registry that points to non-existent scripts. The ACP launcher will fail at runtime.
+</warning>
+
+<note>
+PowerShell scripts (e.g., `.codex/agents/agent-*.ps1`) are not Python ACP agents. They do not belong in the ACP registry unless the user explicitly creates Python ACP equivalents.
+</note>

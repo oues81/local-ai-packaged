@@ -1,0 +1,110 @@
+# Reference: Human Decision Gates
+
+<overview>
+This migration is semi-autonomous. Read-only and mechanical steps can run without approval, but high-risk or business-critical mutations stop for explicit human confirmation. This reference lists the four mandatory decision gates, the question to ask, and the conditions for proceeding.
+</overview>
+
+<rule>
+The default answer at every gate is **STOP**. If the user is unclear, asks for more information, or declines, do not proceed. Only continue on explicit approval.
+</rule>
+
+## Gate 1 — Audit plan approval
+
+**When:** After `pre-init-audit` generated `ACOS_PRE_INIT_AUDIT.md` and `ACOS_MIGRATION_PLAN.json`.
+
+**Question to ask:**
+
+> I have generated the ACOS migration plan for `<PROJECT_NAME>`. Summary:
+> - Number of files to move: `<N>`
+> - Number of files to merge: `<N>`
+> - Number of files to preserve: `<N>`
+> - Number of reviews required: `<N>`
+> - Main risks identified: `<list>`
+>
+> Do you approve the plan and authorize me to proceed with Phase 2 (initialize ACOS and apply mappings)?
+> Reply **yes** to continue, **no** to stop, or ask for details on any item.
+
+**What to present before asking:**
+- A 3-5 bullet summary of the audit.
+- The list of files that will be moved/merged/preserved.
+- Any unexpected items (for example, multiple workflows describing the same pipeline).
+
+**Proceed if:** User replies `yes`, `approved`, `continue`, or equivalent.
+
+## Gate 2 — Merge and registry approval
+
+**When:** After initializing the canonical ACOS structure (`npx acos init --adopt`) and after moving/merging rules, agents, workflows, hooks, and ACP registry, but before `npx acos --fix`.
+
+**Question to ask:**
+
+> Phase 2 and 3 are complete. Before generating projections, please review the following merged/corrected files:
+> <MERGED_FILES_LIST>
+>
+> Do you approve these merged files and authorize me to run `npx acos --fix`?
+> Reply **yes** to continue, **no** to stop, or request changes.
+
+**What to present before asking:**
+- A short description of each merge decision.
+- The canonical workflow chosen if there were duplicates.
+- The ACP agents kept/removed.
+- A note about any files placed under protected paths.
+
+**Proceed if:** User replies `yes`, `approved`, `continue`, or explicitly approves after requesting changes.
+
+## Gate 3 — Validation approval
+
+**When:** After `npx acos --validate`, `npx acos --check`, and `npx acos-doctor` all pass.
+
+**Question to ask:**
+
+> ACOS validation passed for `<PROJECT_NAME>`:
+> - `npx acos --validate` → `Validation passed`
+> - `npx acos --check` → `0 missing / 0 changed / 0 orphaned`
+> - `npx acos-doctor` → all ACOS checks pass
+>
+> I am ready to delete `.ssot.legacy/` and the temporary audit reports (`ACOS_MIGRATION_PLAN.json`, `ACOS_PRE_INIT_AUDIT.md`, `ACOS_ADOPTION_REPORT.md`).
+>
+> Do you approve the cleanup and authorize me to proceed to the final commit?
+> Reply **yes** to continue, **no** to stop.
+
+**What to present before asking:**
+- The exact validation output.
+- A list of files that will be deleted.
+- A confirmation that non-ACOS critical files are still intact.
+
+**Proceed if:** User replies `yes`, `approved`, `continue`, or explicitly approves.
+
+## Gate 4 — Final commit approval
+
+**When:** After cleanup, before `git commit` and `git push`.
+
+**Question to ask:**
+
+> Final diff is ready for `<PROJECT_NAME>` on branch `acos-migration`.
+>
+> Summary of changes:
+> - New ACOS structure under `.ssot/agents/`
+> - Merged/corrected agent, rule, hook, and registry files
+> - Deleted `.ssot.legacy/` and temporary audit reports
+> - Updated `.ssot/decisions.md`, `.ssot/status.md`, `.ssot/handoff.md`
+>
+> Do you approve the final diff and authorize me to commit and push?
+> Reply **yes** to commit and push, **yes but I push** to commit only, or **no** to stop.
+
+**What to present before asking:**
+- `git diff --stat`.
+- `git status` showing no untracked `.zip` or `.ssot.legacy` files.
+- The proposed commit message.
+
+**Proceed if:** User replies `yes`, `yes but I push`, or explicitly approves.
+
+## Non-blocking clarifications
+
+Between gates, the user may ask questions, request more details, or ask you to modify a merged file. Treat these as **clarifications**, not as approval to proceed to the next gate. Return to the current gate question once the clarification is resolved.
+
+## Escalation
+
+Escalate to the user immediately (do not proceed to the next gate) if:
+- `npx acos --validate` or `--check` fails and cannot be repaired within two attempts.
+- A protected file is accidentally overwritten by `--fix` and cannot be restored from the backup.
+- The user disagrees with a merge decision that has already been committed to `.ssot/agents/`.

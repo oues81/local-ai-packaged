@@ -1,0 +1,195 @@
+# Workflow: Migrate <PROJECT_NAME> to ACOS
+
+<required_reading>
+**Read these reference files before executing any step:**
+1. `references/legacy-mappings.md` — what to move, merge, preserve, or archive.
+2. `references/acos-cli-guide.md` — expected CLI outputs and how to interpret failures.
+3. `references/decision-gates.md` — exact human-approval questions and when to ask them.
+<ACP_REGISTRY_READING>
+</required_reading>
+
+<process>
+## Phase 0 — Pre-flight checks
+
+1. Verify the current directory is the project root:
+   ```bash
+   git rev-parse --show-toplevel
+   ```
+   Expected output: `<PROJECT_ROOT>`.
+
+2. Verify the worktree is clean or that all pending changes are committed and pushed.
+
+3. Create or switch to the `acos-migration` branch:
+   ```bash
+   git checkout -b acos-migration
+   ```
+
+4. Check prerequisites:
+   - Node.js >= 20 (`node -v`).
+   - Access to the ACOS repository.
+   - The project is **not** already ACOS-initialized (no `.ssot/agents/` directory).
+
+## Phase 1 — Backup and audit (read-only)
+
+5. Create an off-Git backup of all legacy infrastructure files:
+   ```powershell
+   $date = Get-Date -Format "yyyyMMdd-HHmmss"
+   $archive = "acos-migration-backup-$date.zip"
+   $paths = @(<BACKUP_PATHS>)
+   Compress-Archive -Path $paths -DestinationPath $archive -Force
+   ```
+   Ensure the `.zip` is **not** added to Git.
+
+6. Create a Git rollback branch from the current HEAD:
+   ```bash
+   git branch pre-acos-migration-$(date +%Y%m%d-%H%M%S)
+   ```
+
+7. Rename the legacy `.ssot` directory so `pre-init-audit` treats the project as non-ACOS:
+   ```bash
+   mv .ssot .ssot.legacy
+   ```
+
+8. Install ACOS locally (dev mode) and run the pre-migration audit:
+   ```bash
+   npm install --save-dev git+https://github.com/oues81/acos.git#main
+   node node_modules/@acos/core/scripts/pre-init-audit.mjs --root . --migration-plan
+   ```
+
+9. Read the generated reports:
+   - `ACOS_PRE_INIT_AUDIT.md`
+   - `ACOS_MIGRATION_PLAN.json`
+
+10. **Decision Gate 1 — audit approval.** Ask the questions from `references/decision-gates.md` § Gate 1. Do not proceed until explicitly approved.
+
+## Phase 2 — Initialize canonical ACOS structure
+
+11. Run ACOS adoption:
+    ```bash
+    npx acos init --adopt
+    ```
+
+12. Verify the generated structure includes `agents/`, `entrypoints/`, `rules/`, `context/`, `clients.json`, `hooks.json`, `workflows.json`.
+
+## Phase 3 — Apply project-specific mappings
+
+13. Apply the mappings from `references/legacy-mappings.md`:
+    <PROJECT_SPECIFIC_MAPPINGS>
+
+14. Configure `.ssot/agents/clients.json`:
+    ```json
+    {
+      "ecosystemRole": "<ECOSYSTEM_ROLE>"
+    }
+    ```
+
+15. Handle hooks and protected paths:
+    <HOOKS_AND_PROTECTED_PATHS_STEPS>
+
+16. Correct the ACP registry if applicable:
+    <ACP_REGISTRY_STEPS>
+
+17. Update `.ssot/decisions.md` with all recorded choices.
+
+18. **Decision Gate 2 — merge approval.** Ask the questions from `references/decision-gates.md` § Gate 2. Do not proceed until explicitly approved.
+
+## Phase 4 — Remove legacy projections before generating new ones
+
+19. Delete legacy client-side files that are now duplicates of the canonical sources:
+    <LEGACY_PROJECTIONS_TO_DELETE>
+
+    Do not delete protected non-ACOS files.
+
+## Phase 5 — Generate projections
+
+20. Generate ACOS projections:
+    ```bash
+    npx acos --fix
+    ```
+    Inspect the diff carefully. If `--fix` overwrites protected files, restore them from the off-Git backup and add them to `.ssot/protected-paths.json`.
+
+## Phase 6 — Validate
+
+21. Run the validation suite:
+    ```bash
+    npx acos --validate
+    npx acos --check
+    npx acos-doctor
+    ```
+    Expected results are documented in `references/acos-cli-guide.md`. Stop and use `workflows/repair-validation.md` if any command reports a blocking failure.
+
+22. Verify critical non-ACOS files are still intact:
+    <CRITICAL_FILES_CHECKLIST>
+
+23. **Decision Gate 3 — validation approval.** Ask the questions from `references/decision-gates.md` § Gate 3. Do not proceed until explicitly approved.
+
+## Phase 7 — Cleanup and final commit
+
+24. Before deleting anything, produce a final diff review:
+    ```bash
+    git diff --name-status
+    git diff --stat
+    ```
+
+25. Remove `.ssot.legacy` and temporary reports only after explicit approval from Decision Gate 3:
+    ```bash
+    rm -rf .ssot.legacy
+    rm -f ACOS_MIGRATION_PLAN.json ACOS_PRE_INIT_AUDIT.md ACOS_ADOPTION_REPORT.md
+    ```
+
+26. Ensure no `.zip` backup or temporary report is staged:
+    ```bash
+    git status
+    ```
+
+27. Update ACOS status files:
+    - `.ssot/decisions.md`
+    - `.ssot/status.md`
+    - `.ssot/handoff.md`
+
+28. **Decision Gate 4 — final commit approval.** Ask the questions from `references/decision-gates.md` § Gate 4. Show the final `git diff` before committing.
+
+29. Commit. Ask the user whether to push or leave it for them:
+
+    - If the user approves push:
+      ```bash
+      git add -A
+      git commit -m "chore(acos): migrate <PROJECT_NAME> to ACOS v0.4.0+
+
+      - Adopt ACOS with <ECOSYSTEM_ROLE> ecosystem role
+      - Preserve project-specific infrastructure
+      - Merge legacy agents and rules into canonical ACOS templates
+      - Archive redundant workflows
+
+      Generated with [Devin](https://devin.ai)
+      Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>"
+      git push origin acos-migration
+      ```
+
+    - If the user wants to push manually:
+      ```bash
+      git add -A
+      git commit -m "chore(acos): migrate <PROJECT_NAME> to ACOS v0.4.0+
+
+      - Adopt ACOS with <ECOSYSTEM_ROLE> ecosystem role
+      - Preserve project-specific infrastructure
+      - Merge legacy agents and rules into canonical ACOS templates
+      - Archive redundant workflows
+
+      Generated with [Devin](https://devin.ai)
+      Co-Authored-By: Devin <158243242+devin-ai-integration[bot]@users.noreply.github.com>"
+      ```
+      Then tell the user: *The migration is committed locally on `acos-migration`. You can push when ready.*
+</process>
+
+<success_criteria>
+This workflow is complete when:
+- The project has a valid ACOS structure under `.ssot/agents/`.
+- `npx acos --validate` reports `Validation passed`.
+- `npx acos --check` reports `0 missing / 0 changed / 0 orphaned`.
+- `npx acos-doctor` reports all ACOS checks pass.
+- Project-specific infrastructure is preserved and functional.
+- `.ssot/decisions.md`, `.ssot/status.md`, and `.ssot/handoff.md` are updated.
+- All four decision gates were explicitly approved by the user.
+- The migration branch is committed and pushed, with no `.zip`, `.ssot.legacy`, or temporary audit files in Git.
+</success_criteria>

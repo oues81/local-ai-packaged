@@ -1,0 +1,37 @@
+---
+description: Route a task, specification, or question through the appropriate workflow
+---
+
+<!-- ACOS-ORIENTATION:START -->
+> **Orientation**: Read `.ssot/context-index.md`, `.ssot/status.md`, and
+> `.ssot/handoff.md` before proceeding. Full reference:
+> `.ssot/agents/context/orientation.md`.
+<!-- ACOS-ORIENTATION:END -->
+
+Use the user's accompanying text as the complete request. This is the default single-command
+orchestrator for a complete engineering cycle; never require the user to invoke each delivery
+entrypoint separately.
+
+1. Classify the request as a question, diagnosis, specification, implementation, verification, or delivery task.
+2. Load only the required durable context. If project state is uncertain or stale, apply `project.resume` first without asking the user to repeat the request.
+3. For a question or diagnosis, inspect evidence and answer without mutating files unless a fix was also requested.
+4. If the task is ambiguous or needs structured refinement, route through the ACOS spec lifecycle: `delivery.spec` (specify/clarify), `delivery.plan`, `delivery.datamodel` (`0180-data-model`), `delivery.checklist`, then `delivery.execute` as needed.
+5. For implementation work, apply `delivery.spec` to create or reconcile acceptance criteria, then apply `delivery.plan` to produce a dependency-aware plan grounded in repository evidence.
+6. Present the proposed plan and pause for one explicit user approval before the first implementation mutation. Clarifications that materially change scope belong before this approval.
+7. After approval, continue the same request autonomously through `delivery.execute`, `delivery.analyze`, and `delivery.verify`. Do not ask the user to re-invoke `0260-execute` or `0300-verify`.
+8. After implementation and before verification, run the quality gates: `delivery.review`, `delivery.tests`, `delivery.lint`, and `delivery.security`. Skip a gate if its tool is absent (FM-001). The gate artifacts (`review.md`, `tests.md`, `lint-report.md`, `security-review.md`) feed `delivery.converge`.
+9. If verification fails, diagnose and repair in scope, then re-run the relevant verification. Stop only for a product decision, missing authority, or external blocker that cannot be resolved safely.
+10. Apply `delivery.converge` before `delivery.ship` to produce a gap analysis and delivery-readiness checklist. The convergence analysis incorporates the quality-gate findings.
+11. Apply `delivery.ship` only to prepare delivery. Commit, push, publish, deploy, merge, or external messaging still require explicit authority.
+12. Update `.ssot/status.md` and `.ssot/handoff.md` after meaningful changes, preserving exact verification evidence and residual risks.
+
+The public invocation remains the numbered client projection (`0040-route`). Internal routing uses
+stable semantic IDs and MUST NOT expose an unnumbered replacement command.
+
+## Ecosystem routing
+
+After step 1 (classification), check `.ssot/agents/clients.json` for `ecosystemRole`:
+
+- If `ecosystemRole === "container"` and the task involves **migration** or **version upgrade**: route to `migration.ecosystem` / `1180-migrate-ecosystem` instead of `migration.workflow` / `1140-migrate-workflow`. The ecosystem entrypoint handles batch migration of the container + all satellites. If the task is not migration-related, continue with the normal routing — the container's own SSOT is independent.
+- If `ecosystemRole === "satellite"`: proceed normally. The satellite's SSOT is independent. If the task requires ecosystem-wide changes, advise the user to run from the container root instead.
+- If `ecosystemRole === "standalone"` or absent: proceed normally. No ecosystem routing needed.

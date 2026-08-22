@@ -1,0 +1,48 @@
+---
+description: Trigger an agent cycle for a project via MCPCO
+---
+
+<!-- ACOS-ORIENTATION:START -->
+> **Orientation**: Read `.ssot/context-index.md`, `.ssot/status.md`, and
+> `.ssot/handoff.md` before proceeding. Full reference:
+> `.ssot/agents/context/orientation.md`.
+<!-- ACOS-ORIENTATION:END -->
+
+Trigger an agent cycle for a project using the MCPCO `trigger_agent_cycle` tool.
+
+## MCPCO tool
+
+`trigger_agent_cycle(project: str, target: str | None = None, orientation_preamble: str | None = None) -> dict`
+
+- `project` — the project name (resolved via project aliases).
+- `target` — optional specific agent target (`"A1"`, `"A2"`, `"A3"`, or `"A4"`); if omitted, all
+  configured agents are launched (`mcp_server.py:986,1034-1036`).
+- `orientation_preamble` — optional preamble text passed to the launched session(s).
+
+The tool re-checks dependencies before launching and refuses if `dependency_status` is `"pending"`
+(`mcp_server.py:1019-1030`). It is annotated `MUTATING` (`readOnlyHint=False, destructiveHint=True`,
+`mcp_server.py:40,985`).
+
+## Authority
+
+Seeing this skill means both gate conditions already hold: the project's `clients.json` declares an
+`ecosystemParent` whose manifest includes this entrypoint's slug, and the corresponding profile file
+(`.ssot/mco-profile.json`) exists.
+
+### Interactive path (REQ-010)
+
+Call the MCPCO MCP tool `trigger_agent_cycle` directly. The client's own annotation-driven approval
+UI is the gate — the `MUTATING` annotation triggers the client's native confirmation prompt. ACOS adds
+no duplicate confirmation layer.
+
+### Non-interactive path (REQ-010)
+
+Go through the numbered binding `1380-mco-trigger-cycle` in `entrypoint-bindings.mjs`, which dispatches
+`mco-adapter.mjs --operation invoke --capability trigger-agent-cycle`. The adapter requires
+`--authorized` (`adapter-contract.mjs:87`); without it, the capability refuses to run.
+
+## Cycle-control request artifact (REQ-012)
+
+If you are an in-cycle agent (role R3) writing a cycle-control request artifact to
+`.mco/requests/<cycle>-<agent>-<n>.json`, you MUST `git add` the file so it survives the Eve patch
+round-trip. Unstaged files do not survive `git diff HEAD --binary` (UNVERIFIED-3, settled by T-023).

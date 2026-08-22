@@ -1,0 +1,204 @@
+{
+  "ssotVersion": "1.9.0",
+  "description": "Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints.",
+  "lifecycleHooks": {
+    "BeforeMutation": {
+      "description": "Inspect protected paths and the authority boundary before file mutations (writes/edits only — not shell commands).",
+      "prompt": "ACOS lifecycle hook: BeforeMutation. SCOPE GUARD: If the target file is OUTSIDE the project root (e.g. ~/.claude/projects/, ~/.cursor/), skip — this hook does not apply. For files inside the project: check .ssot/protected-paths.json for a rule whose `path` glob matches the target AND whose `actions` includes the action (write|edit|delete). If a matching `level: deny` or `level: ask` rule covers the action, stop and ask the user. Otherwise proceed — protected-paths.json is the sole gate. Do NOT invent criteria (sensitivity, permission_mode, content subject). The user's task is sufficient authority. Do NOT block based on permission_mode or bypassPermissions. If ecosystemParent is declared in clients.json, also check the parent's protected-paths.json."
+    },
+    "AfterMutation": {
+      "description": "Advisory post-mutation check for code files and SSOT drift (writes/edits only — not shell commands).",
+      "prompt": "ACOS lifecycle hook: AfterMutation. Advisory, not blocking. After editing a file: (1) code file (Py/JS/TS) with linter/tests configured → run smallest relevant check (ruff/mypy/pytest for one file); (2) file under .ssot/ → run `npx --no-install acos --check` only if acos is locally installed, skip silently on E404 or command-not-found; (3) markdown/docs/config/specs → no check, proceed. If no check applies, continue without hesitation."
+    },
+    "BeforeCompletion": {
+      "description": "Persist .ssot/status.md and .ssot/handoff.md; run acos --check only when the harness is locally installed.",
+      "prompt": "ACOS lifecycle hook: BeforeCompletion. Before ending the session: update .ssot/status.md with progress and write .ssot/handoff.md if this is a session boundary. Optionally run `npx --no-install acos --check` ONLY if acos is locally installed — skip silently on E404 or command-not-found (acos is not published to npm). Do NOT block session end on a missing or failing acos command."
+    },
+    "OnSessionResume": {
+      "description": "Read durable status and handoff before selecting the next action.",
+      "prompt": "ACOS lifecycle hook: OnSessionResume. Read .ssot/status.md and .ssot/handoff.md, inspect git status, and use the recorded context to choose the smallest justified next action. If the project declares an ecosystemParent in clients.json, also read the parent's .ssot/handoff.md in addition to the local one."
+    },
+    "OnInfrastructureUse": {
+      "description": "Discover the configured external profile first; never deploy a substitute because discovery failed.",
+      "prompt": "ACOS lifecycle hook: OnInfrastructureUse. Before using shared infrastructure, read .ssot/infrastructure.md and run the configured discovery adapter. Use only the configured logical services; do not fall back to a substitute or create a new deployment because discovery failed."
+    },
+    "OnNativeClientVerification": {
+      "description": "Prefer mechanical checks over live sessions; warn the user and obtain explicit approval before launching more than one live 040-resume session in a batch; record the date, client, and version in the native verification checklist after any live session.",
+      "prompt": "ACOS lifecycle hook: OnNativeClientVerification. Prefer mechanical verification (npm run native:check) over live native-client sessions. If a live 040-resume session is required, warn the user and obtain explicit approval before launching more than one in a batch. Record the date, client, and version in docs/native-verification-checklist.md after any live session."
+    },
+    "OnEcosystemAccess": {
+      "description": "Fires when an agent accesses files outside the project root but inside a declared ecosystemParent or ecosystemChildren path.",
+      "prompt": "ACOS lifecycle hook: OnEcosystemAccess. When accessing files outside the project root, verify the target path is inside a declared ecosystemParent or ecosystemChildren path from clients.json. If it is, proceed safely — the access is expected. If the path is outside both the project root and any declared ecosystem path, stop and ask the user for explicit authority before proceeding."
+    }
+  },
+  "clients": {
+    "claude": {
+      "file": ".claude/settings.json",
+      "format": "settings",
+      "events": [
+        {
+          "event": "SessionStart",
+          "matcher": "UserPrompt",
+          "type": "prompt",
+          "hook": "OnSessionResume"
+        },
+        {
+          "event": "PreToolUse",
+          "matcher": "Write|Edit",
+          "type": "prompt",
+          "hook": "BeforeMutation"
+        },
+        {
+          "event": "PostToolUse",
+          "matcher": "Write|Edit",
+          "type": "prompt",
+          "hook": "AfterMutation"
+        },
+        {
+          "event": "SessionEnd",
+          "matcher": "UserPrompt",
+          "type": "prompt",
+          "hook": "BeforeCompletion"
+        },
+        {
+          "event": "SessionStart",
+          "matcher": "UserPrompt",
+          "type": "prompt",
+          "hook": "OnNativeClientVerification"
+        }
+      ]
+    },
+    "cursor": {
+      "file": ".cursor/hooks.json",
+      "format": "hooks",
+      "events": {
+        "sessionStart": {
+          "type": "prompt",
+          "hook": "OnSessionResume"
+        },
+        "preToolUse": {
+          "type": "prompt",
+          "hook": "BeforeMutation"
+        },
+        "postToolUse": {
+          "type": "prompt",
+          "hook": "AfterMutation"
+        },
+        "beforeShellExecution": {
+          "type": "prompt",
+          "hook": "OnInfrastructureUse"
+        },
+        "sessionEnd": {
+          "type": "command",
+          "command": "npx --no-install acos --check",
+          "hook": "BeforeCompletion"
+        },
+        "onNativeClientVerification": {
+          "type": "prompt",
+          "hook": "OnNativeClientVerification"
+        }
+      }
+    },
+    "codex": {
+      "file": ".codex/hooks.json",
+      "format": "codex-hooks",
+      "events": {
+        "Stop": {
+          "type": "command",
+          "command": "npx --no-install acos --check",
+          "hook": "BeforeCompletion"
+        }
+      }
+    },
+    "devin": {
+      "file": ".devin/hooks.v1.json",
+      "format": "hooks",
+      "events": {
+        "SessionStart": {
+          "type": "prompt",
+          "hook": "OnSessionResume"
+        },
+        "PreToolUse": {
+          "type": "prompt",
+          "hook": "BeforeMutation"
+        },
+        "PostToolUse": {
+          "type": "prompt",
+          "hook": "AfterMutation"
+        },
+        "PostCompaction": {
+          "type": "prompt",
+          "hook": "OnInfrastructureUse"
+        },
+        "SessionEnd": {
+          "type": "command",
+          "command": "npx --no-install acos --check",
+          "hook": "BeforeCompletion"
+        },
+        "OnNativeClientVerification": {
+          "type": "prompt",
+          "hook": "OnNativeClientVerification"
+        }
+      }
+    },
+    "kilocode": {
+      "file": ".kilo/plugin/acos-hooks.ts",
+      "format": "plugin",
+      "events": {
+        "tool.execute.before": {
+          "type": "prompt",
+          "hook": "BeforeMutation"
+        },
+        "tool.execute.after": {
+          "type": "prompt",
+          "hook": "AfterMutation"
+        },
+        "session.end": {
+          "type": "prompt",
+          "hook": "BeforeCompletion"
+        },
+        "session.start": {
+          "type": "prompt",
+          "hook": "OnSessionResume"
+        }
+      }
+    },
+    "opencode": {
+      "file": ".opencode/plugins/acos-hooks.ts",
+      "format": "plugin",
+      "events": {
+        "tool.execute.before": {
+          "type": "prompt",
+          "hook": "BeforeMutation"
+        },
+        "tool.execute.after": {
+          "type": "prompt",
+          "hook": "AfterMutation"
+        },
+        "session.end": {
+          "type": "prompt",
+          "hook": "BeforeCompletion"
+        },
+        "session.start": {
+          "type": "prompt",
+          "hook": "OnSessionResume"
+        }
+      }
+    }
+  },
+  "emulated": {
+    "eve": {
+      "surface": "agent/instructions/020-lifecycle.md",
+      "notes": "Eve hooks are post-event observers and cannot implement pre-action gates (BeforeMutation, BeforeCompletion). All lifecycle requirements are projected as always-on instructions instead. See clients.json eve.projections.hooks.",
+      "hooks": [
+        "BeforeMutation",
+        "AfterMutation",
+        "BeforeCompletion",
+        "OnSessionResume",
+        "OnInfrastructureUse",
+        "OnNativeClientVerification",
+        "OnEcosystemAccess"
+      ]
+    }
+  }
+}

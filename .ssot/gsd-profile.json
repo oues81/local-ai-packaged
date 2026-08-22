@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.0.0",
+  "profileId": "acos.gsd-core.v1-5-0",
+  "displayName": "GSD Core v1.5.0",
+  "provenance": "Pinned by ACOS from GitHub release metadata and npm registry, verified 2026-06-24.",
+  "upstream": {
+    "repository": "open-gsd/gsd-core",
+    "release": "v1.5.0",
+    "commit": "e67b1d7f91e87fc1b04fc6a69e505579fef5f107",
+    "package": "@opengsd/gsd-core@1.5.0",
+    "integrity": "sha512-Q3aDGKrdREEcDSUfmj8B8ntDvbwPdbfhd+/2YDTalGM9XnASYO7trZcSGl5eMC4swGSg2vVudHsAWohQoWjxsQ==",
+    "license": "MIT"
+  },
+  "runtime": {
+    "nodeVersion": ">=22.0.0",
+    "npmVersion": ">=10.0.0"
+  },
+  "enabledClients": ["claude", "cursor", "devin", "kilocode", "opencode", "codex"],
+  "ownedPaths": [".acos/gsd-core/"],
+  "capabilityMap": {
+    "delivery.spec": { "gsdCapabilities": ["gsd:discuss-phase", "gsd:spec-phase"], "version": "1.0.0" },
+    "delivery.plan": { "gsdCapabilities": ["gsd:plan-phase"], "version": "1.0.0" },
+    "delivery.execute": { "gsdCapabilities": ["gsd:execute-phase"], "version": "1.0.0" },
+    "delivery.verify": { "gsdCapabilities": ["gsd:verify-work"], "version": "1.0.0" },
+    "delivery.ship": { "gsdCapabilities": ["gsd:ship"], "version": "1.0.0" }
+  },
+  "installPolicy": {
+    "isolatedRoot": ".acos/gsd-core/",
+    "allowGlobalMutation": false
+  },
+  "capabilityMap": {
+    "delivery.spec": { "gsdCapabilities": ["gsd.discuss-phase", "gsd.spec-phase"], "version": "1.0.0" },
+    "delivery.plan": { "gsdCapabilities": ["gsd.plan-phase"], "version": "1.0.0" },
+    "delivery.execute": { "gsdCapabilities": ["gsd.execute-phase"], "version": "1.0.0" },
+    "delivery.verify": { "gsdCapabilities": ["gsd.validate-phase"], "version": "1.0.0" },
+    "delivery.ship": { "gsdCapabilities": ["gsd.ship"], "version": "1.0.0" }
+  }
+}

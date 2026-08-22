@@ -1,0 +1,576 @@
+{
+  "ssotVersion": "1.9.0",
+  "enforcement": {
+    "defaultMode": "advisory",
+    "failClosed": false,
+    "notes": "ACOS projects policy to every client. Hard enforcement depends on native client hooks and is never implied when unavailable."
+  },
+  "rules": [
+    {
+      "path": ".ssot/**",
+      "level": "ask",
+      "actions": [
+        "delete"
+      ],
+      "reason": "Canonical ACOS state may be edited deliberately but must not be deleted casually.",
+      "managed": true
+    },
+    {
+      "path": "AGENTS.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed projection of .ssot/agents/context/AGENTS.src.md."
+    },
+    {
+      "path": "CLAUDE.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed projection of .ssot/agents/context/CLAUDE.src.md."
+    },
+    {
+      "path": ".claude/skills/[0-9][0-9][0-9]-*/**",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS skill projection."
+    },
+    {
+      "path": ".claude/commands/[0-9][0-9][0-9]-*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS command projection for Claude Code."
+    },
+    {
+      "path": ".cursor/commands/[0-9][0-9][0-9]-*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS command projection."
+    },
+    {
+      "path": ".cursor/skills/*/**",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS skill projection for Cursor."
+    },
+    {
+      "path": ".cursor/rules/acos.mdc",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS rule projection."
+    },
+    {
+      "path": ".kilo/skills/[0-9][0-9][0-9]-*/**",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS skill projection for Kilo Code."
+    },
+    {
+      "path": ".kilo/commands/[0-9][0-9][0-9]-*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS command projection for current Kilo surfaces."
+    },
+    {
+      "path": ".kilocode/workflows/[0-9][0-9][0-9]-*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS workflow projection."
+    },
+    {
+      "path": ".kilocode/rules/acos.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS rule projection."
+    },
+    {
+      "path": ".opencode/commands/[0-9][0-9][0-9]-*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS command projection."
+    },
+    {
+      "path": ".opencode/skills/*/**",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS skill projection for OpenCode."
+    },
+    {
+      "path": ".claude/rules/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS rule projection for Claude Code."
+    },
+    {
+      "path": ".kilo/rules/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS rule projection for current Kilo Code surfaces."
+    },
+    {
+      "path": "kilo.jsonc",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS Kilo Code config projection."
+    },
+    {
+      "path": ".opencode/rules/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS rule projection for OpenCode."
+    },
+    {
+      "path": "opencode.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS OpenCode config projection."
+    },
+    {
+      "path": ".devin/skills/[0-9][0-9][0-9]-*/**",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS skill projection for Devin CLI."
+    },
+    {
+      "path": ".windsurf/workflows/[0-9][0-9][0-9]-*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS workflow projection for Devin Desktop using its legacy storage namespace."
+    },
+    {
+      "path": ".agents/skills/[0-9][0-9][0-9]-*/**",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS skill projection."
+    },
+    {
+      "path": ".codex/skills/[0-9][0-9][0-9]-*/**",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS skill projection for OpenAI Codex."
+    },
+    {
+      "path": ".claude/agents/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS agent projection for Claude Code."
+    },
+    {
+      "path": ".cursor/agents/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS agent projection for Cursor."
+    },
+    {
+      "path": ".codex/agents/*.toml",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS agent projection for OpenAI Codex."
+    },
+    {
+      "path": ".opencode/agents/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS agent projection for OpenCode."
+    },
+    {
+      "path": ".kilo/agents/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS agent projection for Kilo Code."
+    },
+    {
+      "path": ".claude/settings.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS hooks projection for Claude Code."
+    },
+    {
+      "path": ".cursor/hooks.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS hooks projection for Cursor."
+    },
+    {
+      "path": ".codex/hooks.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS hooks projection for OpenAI Codex."
+    },
+    {
+      "path": ".devin/hooks.v1.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS hooks projection for Devin."
+    },
+    {
+      "path": ".mcp.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS MCP projection for Claude Code."
+    },
+    {
+      "path": ".cursor/mcp.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS MCP projection for Cursor."
+    },
+    {
+      "path": ".devin/config.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS MCP projection for Devin."
+    },
+    {
+      "path": ".codex/config.toml",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS MCP projection for OpenAI Codex."
+    },
+    {
+      "path": "ACOS_RUNTIME_SYNC_REPORT.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Generated by acos-runtime-sync; refresh it with the command, do not edit manually."
+    },
+    {
+      "path": ".env*",
+      "level": "deny",
+      "actions": [
+        "read",
+        "write",
+        "delete"
+      ],
+      "reason": "Potential secrets and environment variables."
+    },
+    {
+      "path": "agent/instructions/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS projection for Eve.",
+      "managed": true
+    },
+    {
+      "path": "agent/skills/*/SKILL.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS projection for Eve.",
+      "managed": true
+    },
+    {
+      "path": "agent/connections/*.ts",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS projection for Eve.",
+      "managed": true
+    },
+    {
+      "path": "agent/hooks/acos-*.ts",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS projection for Eve.",
+      "managed": true
+    },
+    {
+      "path": "agent/sandbox/workspace/.ssot-seed-manifest.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS projection for Eve.",
+      "managed": true
+    },
+    {
+      "path": ".devin/agents/*/AGENT.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS agent projection for Devin."
+    },
+    {
+      "path": ".agents/agents/*/AGENT.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS agent projection (shared .agents standard)."
+    },
+    {
+      "path": ".devin-plugin/plugin.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS plugin projection for Devin."
+    },
+    {
+      "path": ".codex/rules/*.rules",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS rules projection for OpenAI Codex."
+    },
+    {
+      "path": ".codex-plugin/plugin.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS plugin projection for OpenAI Codex."
+    },
+    {
+      "path": ".kilo/plugin/acos-hooks.ts",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS hooks projection for Kilo Code."
+    },
+    {
+      "path": ".kilo/tools/*.ts",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS tools projection for Kilo Code."
+    },
+    {
+      "path": ".opencode/plugins/acos-hooks.ts",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS hooks projection for OpenCode."
+    },
+    {
+      "path": ".opencode/tools/*.ts",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS tools projection for OpenCode."
+    },
+    {
+      "path": ".claude/workflows/*.js",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS workflow projection for Claude Code."
+    },
+    {
+      "path": ".claude-plugin/plugin.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS plugin projection for Claude Code."
+    },
+    {
+      "path": ".claude/output-styles/*.md",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS output-style projection for Claude Code."
+    },
+    {
+      "path": ".cursor/permissions.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS permissions projection for Cursor."
+    },
+    {
+      "path": ".cursor/cli.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS CLI config projection for Cursor."
+    },
+    {
+      "path": ".cursor-plugin/plugin.json",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS plugin projection for Cursor."
+    },
+    {
+      "path": "agent/tools/*.ts",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS tools projection for Eve.",
+      "managed": true
+    },
+    {
+      "path": "agent/subagents/*/**",
+      "level": "deny",
+      "actions": [
+        "write",
+        "delete"
+      ],
+      "reason": "Managed ACOS subagent projection for Eve.",
+      "managed": true
+    },
+    {
+      "path": ".ssot/knowledge/**",
+      "level": "ask",
+      "actions": [
+        "delete"
+      ],
+      "reason": "OKF knowledge layer concept pages — canonical content, do not delete casually.",
+      "managed": false
+    },
+    {
+      "path": ".ssot/knowledge-profile.json",
+      "level": "ask",
+      "actions": [
+        "delete"
+      ],
+      "reason": "OKF knowledge layer profile — canonical configuration.",
+      "managed": false
+    }
+  ]
+}

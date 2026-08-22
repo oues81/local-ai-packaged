@@ -1,0 +1,766 @@
+{
+  "ssotVersion": "1.9.0",
+  "entrypointSourceDir": ".ssot/agents/entrypoints",
+  "entrypoints": [
+    {
+      "id": "project.new",
+      "order": 0,
+      "slug": "new",
+      "description": "Initialize a new project and its durable ACOS context",
+      "source": "0000-new.md",
+      "category": "onboarding"
+    },
+    {
+      "id": "project.resume",
+      "order": 20,
+      "slug": "resume",
+      "description": "Recover project state and continue from the best next action",
+      "source": "0020-resume.md",
+      "category": "onboarding"
+    },
+    {
+      "id": "project.route",
+      "order": 40,
+      "slug": "route",
+      "description": "Route a task, specification, or question through the appropriate workflow",
+      "source": "0040-route.md",
+      "category": "onboarding"
+    },
+    {
+      "id": "project.constitution",
+      "order": 60,
+      "slug": "constitution",
+      "description": "Establish or update the project constitution — principles, constraints, and authority boundaries",
+      "source": "0060-constitution.md",
+      "category": "onboarding"
+    },
+    {
+      "id": "delivery.spec",
+      "order": 100,
+      "slug": "spec",
+      "description": "Create or reconcile executable specifications under specs/<feature-id>/",
+      "source": "0100-spec.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.clarify",
+      "order": 120,
+      "slug": "clarify",
+      "description": "Resolve ambiguities and unresolved decisions in an existing spec",
+      "source": "0120-clarify.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.plan",
+      "order": 140,
+      "slug": "plan",
+      "description": "Create or update a dependency-aware implementation plan",
+      "source": "0140-plan.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.waveplanprep",
+      "order": 160,
+      "source": "0160-wave-plan-prep.md",
+      "slug": "wave-plan-prep",
+      "category": "delivery",
+      "description": "Frontier model strategic analysis and wave decomposition prep"
+    },
+    {
+      "id": "delivery.datamodel",
+      "order": 180,
+      "slug": "data-model",
+      "description": "Generate or update the data model for a feature",
+      "source": "0180-data-model.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.frontierconsult",
+      "order": 200,
+      "source": "0200-frontier-consult.md",
+      "slug": "frontier-consult",
+      "category": "delivery",
+      "description": "Invoke a frontier model via one of the ACOS client CLIs for strategic analysis"
+    },
+    {
+      "id": "delivery.checklist",
+      "order": 220,
+      "slug": "checklist",
+      "description": "Generate a quality checklist for a spec or plan",
+      "source": "0220-checklist.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.tasks",
+      "order": 240,
+      "slug": "tasks",
+      "description": "Generate an actionable, dependency-ordered tasks.md for the feature",
+      "source": "0240-tasks.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.execute",
+      "order": 260,
+      "slug": "execute",
+      "description": "Execute the current approved plan with bounded autonomy",
+      "source": "0260-execute.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.implement",
+      "order": 280,
+      "slug": "implement",
+      "description": "Execute the approved tasks with bounded autonomy",
+      "source": "0280-implement.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.verify",
+      "order": 300,
+      "slug": "verify",
+      "description": "Verify behavior, tests, specifications, and operational readiness",
+      "source": "0300-verify.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.review",
+      "order": 320,
+      "source": "0320-review.md",
+      "slug": "review",
+      "category": "delivery",
+      "description": "Post-implementation code review for bugs, security, quality, and spec coherence"
+    },
+    {
+      "id": "delivery.tests",
+      "order": 340,
+      "source": "0340-tests.md",
+      "slug": "tests",
+      "category": "delivery",
+      "description": "Detect test framework, generate tests from acceptance criteria, and run them"
+    },
+    {
+      "id": "delivery.lint",
+      "order": 360,
+      "source": "0360-lint.md",
+      "slug": "lint",
+      "category": "delivery",
+      "description": "Detect linter, run it, and auto-fix fixable issues"
+    },
+    {
+      "id": "delivery.security",
+      "order": 380,
+      "source": "0380-security.md",
+      "slug": "security",
+      "category": "delivery",
+      "description": "STRIDE-driven security review of the implemented change"
+    },
+    {
+      "id": "delivery.analyze",
+      "order": 400,
+      "slug": "analyze",
+      "description": "Cross-artifact consistency analysis",
+      "source": "0400-analyze.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.converge",
+      "order": 420,
+      "slug": "converge",
+      "description": "Gap analysis after implementation",
+      "source": "0420-converge.md",
+      "category": "delivery"
+    },
+    {
+      "id": "delivery.ship",
+      "order": 440,
+      "slug": "ship",
+      "description": "Prepare a verified change for delivery without assuming publish authority",
+      "source": "0440-ship.md",
+      "category": "delivery"
+    },
+    {
+      "id": "git.layout",
+      "order": 500,
+      "slug": "git-layout",
+      "description": "Read-only audit of repository layout, remotes, branches, and working-tree state",
+      "source": "0500-git-layout.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.debug",
+      "order": 520,
+      "source": "0520-debug.md",
+      "slug": "debug",
+      "category": "maintenance",
+      "description": "Systematic debugging with persistent state across sessions"
+    },
+    {
+      "id": "git.acp",
+      "order": 540,
+      "slug": "git-acp",
+      "description": "Add, commit, and push with STOP guards for secrets, conflicts, hooks, and merge state",
+      "source": "0540-git-acp.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.docs",
+      "order": 560,
+      "source": "0560-docs.md",
+      "slug": "docs",
+      "category": "maintenance",
+      "description": "Generate or update project documentation verified against the codebase"
+    },
+    {
+      "id": "git.pr",
+      "order": 580,
+      "slug": "git-pr",
+      "description": "Manage pull requests with gh — create, review, CI status, and merge",
+      "source": "0580-git-pr.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.changelog",
+      "order": 600,
+      "source": "0600-changelog.md",
+      "slug": "changelog",
+      "category": "maintenance",
+      "description": "Generate release notes and changelog from git log and completed specs"
+    },
+    {
+      "id": "git.cleanup",
+      "order": 620,
+      "slug": "git-cleanup",
+      "description": "Prune merged branches, manage stashes, and remove dead worktrees with confirmation",
+      "source": "0620-git-cleanup.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.doctor",
+      "order": 640,
+      "slug": "doctor",
+      "description": "Diagnose environment, dependencies, ACOS integrity, and drift",
+      "source": "0640-doctor.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.sync",
+      "order": 660,
+      "slug": "sync",
+      "description": "Regenerate and verify all managed client projections",
+      "source": "0660-sync.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.infrastructure",
+      "order": 680,
+      "slug": "infra",
+      "description": "Discover and use the existing development infrastructure without recreating it",
+      "source": "0680-infra.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.envsetup",
+      "order": 700,
+      "source": "0700-env-setup.md",
+      "slug": "env-setup",
+      "category": "maintenance",
+      "description": "Detect and set up the project development environment"
+    },
+    {
+      "id": "maintenance.gsd",
+      "order": 720,
+      "slug": "gsd",
+      "description": "Set up the GSD Core adapter for isolated planning and execution",
+      "source": "0720-gsd.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.deps",
+      "order": 740,
+      "source": "0740-deps.md",
+      "slug": "deps",
+      "category": "maintenance",
+      "description": "Batch upgrade dependencies with safety checks and atomic commits"
+    },
+    {
+      "id": "maintenance.runtimesync",
+      "order": 760,
+      "slug": "runtime-sync",
+      "description": "Check external runtime drift and sync only when explicitly requested",
+      "source": "0760-runtime-sync.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.docker",
+      "order": 780,
+      "source": "0780-docker.md",
+      "slug": "docker",
+      "category": "maintenance",
+      "description": "Docker compose lifecycle with mutation gates"
+    },
+    {
+      "id": "maintenance.acp",
+      "order": 800,
+      "slug": "acp",
+      "description": "Integrate or explain the Agent Client Protocol (ACP) adapter for ACOS",
+      "source": "0800-acp.md",
+      "category": "maintenance"
+    },
+    {
+      "id": "maintenance.codebasemap",
+      "order": 820,
+      "source": "0820-codebase-map.md",
+      "slug": "codebase-map",
+      "category": "maintenance",
+      "description": "Map codebase architecture, modules, dependencies, and conventions"
+    },
+    {
+      "id": "knowledge.init",
+      "order": 900,
+      "slug": "knowledge",
+      "description": "Declare and initialize the OKF knowledge layer (.ssot/knowledge/)",
+      "source": "0900-knowledge.md",
+      "category": "knowledge"
+    },
+    {
+      "id": "knowledge.ingest",
+      "order": 920,
+      "slug": "knowledge-ingest",
+      "description": "Ingest a source into the OKF knowledge layer as concept pages",
+      "source": "0920-knowledge-ingest.md",
+      "category": "knowledge"
+    },
+    {
+      "id": "knowledge.query",
+      "order": 940,
+      "slug": "knowledge-query",
+      "description": "Query the OKF knowledge layer and synthesize a cited answer",
+      "source": "0940-knowledge-query.md",
+      "category": "knowledge"
+    },
+    {
+      "id": "knowledge.lint",
+      "order": 960,
+      "slug": "knowledge-lint",
+      "description": "Lint the OKF knowledge layer for contradictions, staleness, orphans, and missing cross-refs",
+      "source": "0960-knowledge-lint.md",
+      "category": "knowledge"
+    },
+    {
+      "id": "session.brief",
+      "order": 1000,
+      "slug": "brief",
+      "description": "Build the smallest sufficient context brief for the current task",
+      "source": "1000-brief.md",
+      "category": "session"
+    },
+    {
+      "id": "session.handoff",
+      "order": 1020,
+      "slug": "handoff",
+      "description": "Persist a factual end-of-session handoff",
+      "source": "1020-handoff.md",
+      "category": "session"
+    },
+    {
+      "id": "session.bridge",
+      "order": 1040,
+      "slug": "session-bridge",
+      "description": "Prepare the next session prompt for an automated improvement cycle",
+      "source": "1040-session-bridge.md",
+      "category": "session"
+    },
+    {
+      "id": "session.compact",
+      "order": 1060,
+      "slug": "compact",
+      "description": "Compress durable context without losing decisions or blockers",
+      "source": "1060-compact.md",
+      "category": "session"
+    },
+    {
+      "id": "project.crosshandoff",
+      "order": 1080,
+      "slug": "cross-handoff",
+      "description": "Produce a cross-project handoff report for declared dependencies",
+      "source": "1080-cross-handoff.md",
+      "category": "session"
+    },
+    {
+      "id": "project.migrate",
+      "order": 1100,
+      "slug": "migrate",
+      "description": "Migration router — determines the correct migration path based on project state (new install, version upgrade, structural reconciliation, or ecosystem batch migration)",
+      "source": "1100-migrate.md",
+      "category": "project"
+    },
+    {
+      "id": "migration.analyze",
+      "order": 1120,
+      "slug": "migrate-analyze",
+      "source": "1120-migrate-analyze.md",
+      "category": "project",
+      "description": "Perform pre-migration analysis to identify custom content, missing state files, semantic references, and non-conformities before the deterministic migration apply"
+    },
+    {
+      "id": "migration.workflow",
+      "order": 1140,
+      "slug": "migrate-workflow",
+      "source": "1140-migrate-workflow.md",
+      "category": "project",
+      "description": "Orchestrate the full 5-phase hybrid migration workflow — analysis, agent prep, deterministic apply, post-merge agent, verify — with human gates between each phase"
+    },
+    {
+      "id": "project.migrate.verify",
+      "order": 1160,
+      "slug": "migration-verify",
+      "description": "Verify post-migration coverage by comparing the legacy backup against the current ACOS state, or by checking projection-gap resolutions against the analysis artifact (spec 012)",
+      "source": "1160-migration-verify.md",
+      "category": "project"
+    },
+    {
+      "id": "migration.ecosystem",
+      "order": 1180,
+      "slug": "migrate-ecosystem",
+      "source": "1180-migrate-ecosystem.md",
+      "category": "project",
+      "description": "Migrate a container project and all its satellites to a target ssotVersion atomically — batch migration with per-project status reporting"
+    },
+    {
+      "id": "project.metaskill",
+      "order": 1200,
+      "slug": "metaskill",
+      "description": "Generate a project-specific ACOS skill by analyzing the target project and producing a custom migration or workflow skill",
+      "source": "1200-metaskill.md",
+      "category": "project"
+    },
+    {
+      "id": "project.personalize",
+      "order": 1220,
+      "slug": "personalize",
+      "description": "Analyze an initialized ACOS project and personalize its SSOT items based on the project's actual codebase, architecture, conventions, and current client best practices",
+      "source": "1220-personalize.md",
+      "category": "project"
+    },
+    {
+      "id": "migration.migraterefs",
+      "order": 1240,
+      "slug": "migrate-refs",
+      "description": "Dispatch an agent for semantic reference updates after a deterministic ACOS migration",
+      "source": "1240-migrate-refs.md",
+      "category": "project"
+    },
+    {
+      "id": "meta.promoteskill",
+      "order": 1260,
+      "slug": "promote-skill",
+      "description": "Promote a reusable project-specific skill to canonical ACOS through scan, generalization, approval, and write",
+      "source": "1260-promote-skill.md",
+      "category": "project"
+    },
+    {
+      "id": "ecosystem.mco.relaunch",
+      "order": 1300,
+      "slug": "mco-relaunch-agent",
+      "description": "Force relaunch a specific agent (1-4) for a project's latest cycle via MCPCO",
+      "source": "1300-mco-relaunch-agent.md",
+      "category": "ecosystem"
+    },
+    {
+      "id": "ecosystem.mco.abandon",
+      "order": 1320,
+      "slug": "mco-abandon-cycle",
+      "description": "Mark a project's latest cycle as abandoned via MCPCO",
+      "source": "1320-mco-abandon-cycle.md",
+      "category": "ecosystem"
+    },
+    {
+      "id": "ecosystem.mco.override",
+      "order": 1340,
+      "slug": "mco-override-dependency",
+      "description": "Override the dependency check for a project's latest cycle via MCPCO",
+      "source": "1340-mco-override-dependency.md",
+      "category": "ecosystem"
+    },
+    {
+      "id": "ecosystem.mco.prepare",
+      "order": 1360,
+      "slug": "mco-prepare-cycle",
+      "description": "Prepare the next cycle for a project via MCPCO",
+      "source": "1360-mco-prepare-cycle.md",
+      "category": "ecosystem"
+    },
+    {
+      "id": "ecosystem.mco.trigger",
+      "order": 1380,
+      "slug": "mco-trigger-cycle",
+      "description": "Trigger an agent cycle for a project via MCPCO",
+      "source": "1380-mco-trigger-cycle.md",
+      "category": "ecosystem"
+    },
+    {
+      "id": "ecosystem.mco.analysis",
+      "order": 1400,
+      "slug": "mco-force-analysis",
+      "description": "Force cycle analysis for a project via MCPCO",
+      "source": "1400-mco-force-analysis.md",
+      "category": "ecosystem"
+    },
+    {
+      "id": "ecosystem.mco.openpr",
+      "order": 1420,
+      "slug": "mco-open-pr",
+      "description": "Open a pull request for a project's cycle via MCPCO",
+      "source": "1420-mco-open-pr.md",
+      "category": "ecosystem"
+    },
+    {
+      "id": "ecosystem.mco.authorizemerge",
+      "order": 1440,
+      "slug": "mco-authorize-merge",
+      "description": "Authorize merging a cycle's PR with two-factor confirmation via MCPCO",
+      "source": "1440-mco-authorize-merge.md",
+      "category": "ecosystem"
+    }
+  ],
+  "targets": [
+    {
+      "client": "claude",
+      "dir": ".claude/skills",
+      "surface": "skill",
+      "format": "skill"
+    },
+    {
+      "client": "claude",
+      "dir": ".claude/commands",
+      "surface": "command",
+      "format": "frontmatter"
+    },
+    {
+      "client": "cursor",
+      "dir": ".cursor/skills",
+      "surface": "skill",
+      "format": "cursor-skill"
+    },
+    {
+      "client": "cursor",
+      "dir": ".cursor/commands",
+      "surface": "command",
+      "format": "frontmatter"
+    },
+    {
+      "client": "opencode",
+      "dir": ".opencode/skills",
+      "surface": "skill",
+      "format": "opencode-skill"
+    },
+    {
+      "client": "opencode",
+      "dir": ".agents/skills",
+      "surface": "skill",
+      "format": "skill"
+    },
+    {
+      "client": "kilocode",
+      "dir": ".kilo/skills",
+      "surface": "skill",
+      "format": "skill"
+    },
+    {
+      "client": "kilocode",
+      "dir": ".kilo/commands",
+      "surface": "command",
+      "format": "frontmatter"
+    },
+    {
+      "client": "kilocode",
+      "dir": ".kilocode/workflows",
+      "surface": "workflow",
+      "format": "plain"
+    },
+    {
+      "client": "opencode",
+      "dir": ".opencode/commands",
+      "surface": "command",
+      "format": "frontmatter"
+    },
+    {
+      "client": "claude",
+      "dir": ".claude/rules",
+      "surface": "rule",
+      "format": "plain"
+    },
+    {
+      "client": "kilocode",
+      "dir": ".kilo/rules",
+      "surface": "rule",
+      "format": "plain"
+    },
+    {
+      "client": "opencode",
+      "dir": ".opencode/rules",
+      "surface": "rule",
+      "format": "plain"
+    },
+    {
+      "client": "devin",
+      "dir": ".devin/skills",
+      "surface": "skill",
+      "format": "skill"
+    },
+    {
+      "client": "devin",
+      "dir": ".agents/skills",
+      "surface": "skill",
+      "format": "skill"
+    },
+    {
+      "client": "devin",
+      "dir": ".windsurf/workflows",
+      "surface": "workflow",
+      "format": "plain"
+    },
+    {
+      "client": "codex",
+      "dir": ".agents/skills",
+      "surface": "skill",
+      "format": "skill"
+    },
+    {
+      "client": "codex",
+      "dir": ".codex/skills",
+      "surface": "skill",
+      "format": "skill"
+    },
+    {
+      "client": "claude",
+      "dir": ".claude/agents",
+      "surface": "agent",
+      "format": "agent"
+    },
+    {
+      "client": "cursor",
+      "dir": ".cursor/agents",
+      "surface": "agent",
+      "format": "agent"
+    },
+    {
+      "client": "codex",
+      "dir": ".codex/agents",
+      "surface": "agent",
+      "format": "toml"
+    },
+    {
+      "client": "opencode",
+      "dir": ".opencode/agents",
+      "surface": "agent",
+      "format": "agent"
+    },
+    {
+      "client": "kilocode",
+      "dir": ".kilo/agents",
+      "surface": "agent",
+      "format": "agent"
+    },
+    {
+      "client": "claude",
+      "dir": ".claude",
+      "surface": "hooks",
+      "format": "settings"
+    },
+    {
+      "client": "cursor",
+      "dir": ".cursor",
+      "surface": "hooks",
+      "format": "hooks"
+    },
+    {
+      "client": "codex",
+      "dir": ".codex",
+      "surface": "hooks",
+      "format": "hooks"
+    },
+    {
+      "client": "devin",
+      "dir": ".devin",
+      "surface": "hooks",
+      "format": "hooks"
+    },
+    {
+      "client": "eve",
+      "dir": "agent/instructions",
+      "surface": "instructions",
+      "format": "plain"
+    },
+    {
+      "client": "eve",
+      "dir": "agent/skills",
+      "surface": "skill",
+      "format": "skill"
+    },
+    {
+      "client": "eve",
+      "dir": "agent/connections",
+      "surface": "mcp",
+      "format": "connection"
+    },
+    {
+      "client": "eve",
+      "dir": "agent/hooks",
+      "surface": "hooks",
+      "format": "hooks"
+    },
+    {
+      "client": "devin",
+      "dir": ".devin/agents",
+      "surface": "agent",
+      "format": "agent"
+    },
+    {
+      "client": "devin",
+      "dir": ".agents/agents",
+      "surface": "agent",
+      "format": "agent"
+    },
+    {
+      "client": "codex",
+      "dir": ".codex/rules",
+      "surface": "rule",
+      "format": "starlark"
+    },
+    {
+      "client": "kilocode",
+      "dir": ".kilo/plugin",
+      "surface": "plugin",
+      "format": "typescript"
+    },
+    {
+      "client": "opencode",
+      "dir": ".opencode/plugins",
+      "surface": "plugin",
+      "format": "typescript"
+    },
+    {
+      "client": "claude",
+      "dir": ".claude/workflows",
+      "surface": "workflow",
+      "format": "javascript"
+    },
+    {
+      "client": "cursor",
+      "dir": ".cursor",
+      "surface": "permissions",
+      "format": "json"
+    },
+    { "client": "claude", "dir": ".claude-plugin", "surface": "pluginManifest", "format": "json" },
+    { "client": "cursor", "dir": ".cursor-plugin", "surface": "pluginManifest", "format": "json" },
+    { "client": "devin", "dir": ".devin-plugin", "surface": "pluginManifest", "format": "json" },
+    { "client": "codex", "dir": ".codex-plugin", "surface": "pluginManifest", "format": "json" },
+    { "client": "cursor", "dir": ".cursor", "surface": "cliConfig", "format": "json" },
+    { "client": "kilocode", "dir": ".kilo/tools", "surface": "tool", "format": "typescript" },
+    { "client": "opencode", "dir": ".opencode/tools", "surface": "tool", "format": "typescript" },
+    { "client": "devin", "dir": ".devin", "surface": "mcpConfig", "format": "json" },
+    { "client": "eve", "dir": "agent/tools", "surface": "tool", "format": "typescript" },
+    { "client": "eve", "dir": "agent/subagents", "surface": "subagent", "format": "eve-subagent" }
+  ]
+}

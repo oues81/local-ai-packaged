@@ -1,0 +1,117 @@
+# Reference: ACOS CLI Commands and Expected Outputs
+
+<overview>
+This reference documents the ACOS commands used during migration, what a successful run looks like, and how to interpret common failures for <PROJECT_NAME>.
+</overview>
+
+## 1. Pre-migration audit
+
+```bash
+node node_modules/@acos/core/scripts/pre-init-audit.mjs --root . --migration-plan
+```
+
+**Expected outputs:**
+- `ACOS_PRE_INIT_AUDIT.md` — human-readable inventory and risk list.
+- `ACOS_MIGRATION_PLAN.json` — structured plan with buckets: `backups`, `moves`, `adoptions`, `preserves`, `reviews`.
+
+**What to check:**
+- The number of `reviews` should be small and expected.
+- Any item in `preserves` that is actually project-specific should be handled manually.
+- The plan is generic; it must be adapted with project-specific rules before execution.
+
+## 2. Initialize and adopt
+
+```bash
+npx acos init --adopt
+```
+
+**Expected behavior:**
+- Creates `.ssot/agents/` structure.
+- Generates ACOS templates: `agents/`, `rules/`, `entrypoints/`, `clients.json`, `hooks.json`, etc.
+
+**Common failures:**
+- `Project already initialized` — you forgot to rename `.ssot` to `.ssot.legacy` first.
+- `Cannot resolve @acos/core` — the dependency was not installed correctly.
+
+## 3. Generate projections
+
+```bash
+npx acos --fix
+```
+
+**Expected behavior:**
+- Writes derived files from `.ssot/agents/` to client directories.
+- Overwrites only files that are **not** protected.
+
+**What to watch:**
+- If `--fix` overwrites a protected file, restore it from the off-Git backup and verify the protected path is correctly marked `managed: false`.
+
+## 4. Validate structure
+
+```bash
+npx acos --validate
+```
+
+**Expected output:**
+```text
+Validation passed
+```
+
+**Common failures:**
+- `ecosystemRole must be standalone` — you set `satellite` before the parent is ACOS.
+- `parent .ssot/agents/clients.json not found` — same reason; keep `standalone` until the parent is migrated.
+- `missing required agent file` — an ACOS template references a file that was not generated. Run `npx acos --fix` again.
+- `category must be equal to one of the allowed values` — invalid `category` in `workflows.json`. Allowed: `onboarding`, `delivery`, `maintenance`, `session`.
+- `entrypoint <id>: source description differs from workflows.json` — mismatch between entrypoint YAML frontmatter and `workflows.json`. Make them identical.
+
+## 5. Check drift
+
+```bash
+npx acos --check
+```
+
+**Expected output:**
+```text
+Unchanged: N
+```
+
+**Interpretation:**
+- `missing` — ACOS expects a file in `.ssot/agents/` that does not exist. Add it or remove the reference.
+- `changed` — a derived/projected file differs from the canonical source. Run `npx acos --fix` and verify.
+- `orphaned` — a file exists in `.ssot/agents/` but is not referenced by ACOS. Remove it or add it to the configuration if intentional.
+
+## 6. Doctor
+
+```bash
+npx acos-doctor
+```
+
+**Expected output:**
+```json
+{ "status": "pass" }
+```
+
+**Common non-blocking warnings:**
+- `.windsurf/workflows/` legacy files present — expected if Devin Desktop is a target; ACOS projects workflows there.
+- `git.status: warn` — many Git changes in progress; expected during migration.
+- Files marked as `managed: false` are reported as externally managed.
+
+**Blocking failures:**
+- `status: fail` — read the detailed list and fix each item before continuing.
+
+## 7. Repair workflow
+
+If validation fails, follow this order before editing anything:
+
+1. Read the exact error message and the file/line reference if present.
+2. Identify whether the failure is:
+   - **ACOS structural** — missing template, wrong `clients.json`, etc. → fix in `.ssot/agents/`.
+   - **Project-specific** — protected file overwritten, missing rule, etc. → restore from backup and add protection.
+   - **Business decision** — duplicate workflows, agents to keep/remove, etc. → ask the user (see `decision-gates.md`).
+3. Apply the smallest possible fix.
+4. Re-run `npx acos --fix && npx acos --validate && npx acos --check`.
+5. If the same error persists after two repair attempts, escalate to the user and consider rolling back to `pre-acos-migration-<timestamp>`.
+
+<warning>
+Do not run `npx acos --fix` blindly after a failure. It may overwrite manually merged files. Always inspect the diff first.
+</warning>

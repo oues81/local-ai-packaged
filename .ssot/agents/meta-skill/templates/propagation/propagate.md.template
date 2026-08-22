@@ -1,0 +1,61 @@
+# Workflow: Propagate renames for <PROJECT_NAME>
+
+**Pending route:** <ROUTE_SUMMARY>
+
+<required_reading>
+1. `references/rename-mapping.md`
+2. `references/ref-report.md`
+3. `references/out-of-scope-locations.md`
+4. `references/conventions.md`
+5. `references/protected-paths.md`
+6. `references/decisions.md`
+</required_reading>
+
+## Step 1 — Verify freshness
+
+Read `provenance.json`. If the project changed after generation (version mismatch or ref-report hash drift), stop and request regeneration:
+
+```bash
+node scripts/lifecycle/acos-migration-generator.mjs --root . --with-skill
+```
+
+A dispatched agent MUST verify freshness and refuse or request regeneration when the project changed after generation in a way that invalidates the out-of-scope map (REQ-054).
+
+## Step 2 — Refresh in-scope ref report
+
+The in-scope report in `references/ref-report.md` is advisory. Refresh it:
+
+```bash
+npx acos --check --refs-only
+```
+
+## Step 3 — Update in-scope deterministic references
+
+Apply deterministic updates to references under `.ssot/` per the rename mapping in `references/rename-mapping.md`. Use the refreshed ref report. Do not modify generated projections directly — edit canonical sources under `.ssot/agents/` and regenerate with `npx acos --fix`.
+
+## Step 4 — Review out-of-scope locations
+
+Open `references/out-of-scope-locations.md`. For each location:
+
+- **update**: apply the rename. Present for explicit human approval before writing.
+- **preserve-verbatim**: DO NOT modify. Skip. These are historical/explanatory references.
+- **needs-human-judgment**: present to the user and ask how to proceed.
+
+## Step 5 — Respect protected paths and conventions
+
+Check `references/protected-paths.md` before writing to any file. Follow `references/conventions.md` for how this project formats references in each surface (specs, code, docs, projections, agent instructions).
+
+## Step 6 — Honor durable decisions
+
+Read `references/decisions.md`. Any decision that constrains reference updates (e.g. "keep legacy naming in historical reports") must be respected.
+
+## Step 7 — Post-agent diff check
+
+Verify only lines containing references to renamed entrypoints were modified (REQ-026). Out-of-scope changes are flagged for human review. No `preserve-verbatim` location should appear in the diff.
+
+## Success criteria
+
+- No `preserve-verbatim` location was modified.
+- All out-of-scope writes had explicit human approval.
+- `npx acos --validate` and `npx acos --check` pass.
+- The rename mapping was applied consistently across in-scope and approved out-of-scope locations.

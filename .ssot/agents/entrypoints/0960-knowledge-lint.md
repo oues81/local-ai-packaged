@@ -1,0 +1,119 @@
+---
+description: Lint the OKF knowledge layer for contradictions, staleness, orphans, and missing cross-refs
+---
+
+<!-- ACOS-ORIENTATION:START -->
+> **Orientation**: Read `.ssot/context-index.md`, `.ssot/status.md`, and
+> `.ssot/handoff.md` before proceeding. Full reference:
+> `.ssot/agents/context/orientation.md`.
+<!-- ACOS-ORIENTATION:END -->
+
+Treat the user's accompanying text as the lint scope (a specific bundle root, or all declared
+bundles if unspecified). Minimize questions.
+
+## Prerequisites
+
+1. Verify `.ssot/knowledge-profile.json` exists and `.ssot/knowledge/` has been initialized (run
+   `0900-knowledge` first if not).
+2. If no bundle roots are declared or the knowledge layer is empty, report that there is nothing to
+   lint and suggest running `0920-knowledge-ingest` first.
+
+## Procedure
+
+1. **Load all declared bundles.** For each bundle root in `.ssot/knowledge-profile.json`'s
+   `bundleRoots`, call `knowledge-adapter.mjs`'s `loadBundle`. Collect all concepts, links, and
+   errors across bundles. Also call `validateBundle` to catch schema-level issues.
+
+2. **Scan for contradictions.** Compare concept pages within and across bundles for contradictory
+   claims — e.g., two pages that describe the same mechanism differently, or a page that claims
+   something is "shipped" while another claims it is "in progress". Use the `resource` frontmatter
+   field to trace claims back to their source when possible.
+
+3. **Scan for stale claims.** Check the `timestamp` field on each concept page. A concept page is
+   stale if its `timestamp` is significantly older than the source it references (e.g., a concept
+   page about `decisions.md` with a timestamp from months ago, while `decisions.md` has been
+   updated since). Flag pages with missing `timestamp` as a lower-severity finding.
+
+4. **Scan for orphaned pages.** A concept page is orphaned if it has no inbound cross-links from
+   `index.md` or from any other concept page. Use the `links` array returned by `loadBundle` to
+   build the inbound link graph and identify pages with zero inbound links.
+
+5. **Scan for missing cross-refs.** If a concept page mentions another concept by name but does not
+   link to it, flag a missing cross-ref. This is lower severity than a contradiction or staleness.
+
+6. **Spec Status consistency (lintOnlyRoot: `docs/specs`).** For each spec directory under
+   `docs/specs/`, read its `spec.md` frontmatter `Phase` field. If the Phase declares `execute`,
+   verify that implementation evidence exists (e.g., `tasks.md` or referenced implementation files).
+   If the Phase says `execute` but no implementation files are present, report a mismatch. Use
+   `knowledge-adapter.mjs`'s `readLintOnlyFile` to read from the `docs/specs` lint-only root — never
+   write to it. Report mismatches as findings (severity: `warning`).
+
+7. **Cross-repo ssotVersion drift (lintOnlyRoot: `.ssot`).** Read
+   `.ssot/agents/dependencies.json` and extract each declared companion repo. For each companion
+   repo, read its `.ssot/agents/workflows.json` `ssotVersion` field and compare it against the
+   `CURRENT_SSOT_VERSION` (from `.ssot/knowledge-profile.json`'s `ssotVersion`). Report any delta as
+   a finding (severity: `warning` for minor/patch drift, `critical` for major drift). Use
+   `knowledge-adapter.mjs`'s `readLintOnlyFile` to read from the `.ssot` lint-only root — never
+   write to it.
+
+8. **Stale client-count references (lintOnlyRoots: `.ssot` and `docs`).** Scan all `.md` files under
+   `.ssot/` and `docs/` for references to "six" (or "6") clients that should now be "seven" (or "7").
+   The required client set is Claude Code, Cursor, Devin, Kilo Code, OpenCode, OpenAI Codex, and Eve
+   — seven clients. Report any stale "six"/"6" client-count reference as a finding (severity:
+   `warning`). Use `knowledge-adapter.mjs`'s `readLintOnlyFile` for reads — never write to these
+   lint-only roots.
+
+9. **Cross-repo version-drift lint (lintOnlyRoot: `.ssot`).** Read
+   `.ssot/agents/dependencies.json` and extract each declared companion repo. For each
+   companion repo, read its `.ssot/agents/workflows.json` `ssotVersion` field and its
+   installed `@acos/core` version (from `node_modules/@acos/core/package.json`), then
+   compare both against `CURRENT_SSOT_VERSION` (from `.ssot/knowledge-profile.json`'s
+   `ssotVersion`, or the ACOS package version if the profile omits it). Also compare the
+   companion's entrypoint ID set against the packaged template's entrypoint ID set and
+   report any IDs present in the template but missing from the companion. Delegate the
+   mechanical comparison to `scripts/audit/cross-repo-drift.mjs`'s
+   `detectCrossRepoDrift(dependenciesJsonPath, templateEntrypointIds, currentSsotVersion)`,
+   which returns `{ drifts, clean }`. Each drift finding carries `repo`,
+   `ssotVersionDelta`, `coreVersionDelta`, and `missingEntrypointIds`. Report any non-clean
+   result as a finding (severity: `warning` for minor/patch drift or missing entrypoints,
+   `critical` for major drift). This step is **read-only** — use `knowledge-adapter.mjs`'s
+   `readLintOnlyFile` for every read from a companion repo and NEVER write to a companion
+   repo. If a companion repo path does not exist or a required file is unreadable, the
+   helper reports it as a drift finding rather than crashing (a missing companion is itself
+   drift the lint must surface).
+
+10. **Produce a structured findings report.** Mirror the shape of
+   `docs/ecosystem-audit-2026-07-18.md`'s findings list. Each finding has:
+   - **severity**: `critical` | `warning` | `info`
+   - **finding**: short description of the issue
+   - **location**: the concept page path(s) involved
+   - **suggested fix**: a concrete recommendation
+
+   Example:
+   ```markdown
+   ## Findings
+
+   | # | Severity | Finding | Location | Suggested fix |
+   |---|----------|---------|----------|---------------|
+   | 1 | critical | Contradiction: page A claims "shipped", page B claims "in progress" | architecture/eve-status.md, specs/eve-backend.md | Reconcile against .ssot/decisions.md D-xxx and update both pages |
+   | 2 | warning | Stale timestamp: page last verified 2026-01-15, source updated 2026-07-18 | architecture/projection-pipeline.md | Re-read source, update content and timestamp |
+   | 3 | info | Orphaned page: no inbound cross-links | concepts/okf-format.md | Add a cross-link from index.md or a related concept page |
+   ```
+
+11. **Suggest but do NOT apply fixes.** For each finding, provide a suggested fix but do NOT
+   automatically apply it. Mutation stays agent-decided — the user or a subsequent agent session
+   decides whether to act on the findings. This is consistent with ACOS's hybrid
+   deterministic/agent split (REQ-011).
+
+## Boundary
+
+- The lint is agent-assisted — the adapter (`loadBundle`, `validateBundle`, `readLintOnlyFile`)
+  provides the raw data; the agent performs the semantic analysis (contradiction detection,
+  staleness assessment).
+- Do NOT automatically mutate concept pages. Suggestions only (REQ-011).
+- Do NOT touch `.ssot/decisions.md`, `.ssot/status.md`, `.ssot/handoff.md`, or
+  `.ssot/context-index.md`.
+- `lintOnlyRoots` (`.ssot`, `docs/specs`) are read-only — the adapter enforces a read-only contract
+  and path-traversal guard for these roots. Never write to them.
+- Verification of this entrypoint is deferred to Wave 3 (needs real bootstrapped content with
+  injected staleness — that's the AC-009 gate).

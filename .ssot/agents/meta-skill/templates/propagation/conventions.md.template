@@ -1,0 +1,24 @@
+# Reference conventions — <PROJECT_NAME>
+
+> Describe how this project references entrypoints in each surface.
+> Fill the placeholders below from project analysis at generation time.
+
+## Specs / planning documents
+
+- _Placeholder: document how specs reference entrypoints (stable ID, visible prefix, slug)._
+
+## Code
+
+- _Placeholder: document any code references to entrypoint IDs or paths._
+
+## Docs
+
+- _Placeholder: document how `docs/` references entrypoints._
+
+## Projections
+
+- _Placeholder: document projection-path references (`.claude/skills/`, etc.)._
+
+## Agent instructions
+
+- _Placeholder: document how `AGENTS.md` / `CLAUDE.md` reference entrypoints._

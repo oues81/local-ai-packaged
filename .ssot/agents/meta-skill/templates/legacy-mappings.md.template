@@ -1,0 +1,80 @@
+# Reference: Legacy-to-ACOS Mappings for <PROJECT_NAME>
+
+<overview>
+This reference lists every category of legacy file found in <PROJECT_NAME> and states whether it should be moved, merged, preserved, or archived during ACOS migration.
+</overview>
+
+<core_rule>
+When in doubt, **preserve** non-ACOS infrastructure. ACOS owns `.ssot/agents/` and its projections; everything else is the project's responsibility.
+</core_rule>
+
+## 1. Rules
+
+| Source legacy | ACOS target | Action | Notes |
+|---|---|---|---|
+<RULES_TABLE>
+
+## 2. Workflows / entrypoints
+
+| Source legacy | ACOS target | Action | Notes |
+|---|---|---|---|
+<WORKFLOWS_TABLE>
+
+### Workflow duplicates
+
+If multiple workflow files describe the same pipeline, use this resolution framework:
+
+1. List all candidate files.
+2. Score each file by recency, completeness, and deprecation status.
+3. Select one canonical file and move it to `.ssot/agents/entrypoints/`.
+4. Register it in `.ssot/agents/workflows.json` with an allowed `category` (`onboarding`, `delivery`, `maintenance`, `session`). Ensure the `description` matches the entrypoint YAML frontmatter exactly.
+5. Archive the rejected files under `.ssot.legacy/archived-workflows/` or delete them after user approval.
+6. Record the decision in `.ssot/decisions.md`.
+
+## 3. Agents
+
+| Source legacy | ACOS target | Action | Notes |
+|---|---|---|---|
+<AGENTS_TABLE>
+
+### Agent collisions
+
+If an ACOS template and a legacy file share the same basename, merge the legacy content into the ACOS canonical file. Never create parallel files with suffixes like `-legacy` or `-comet`.
+
+Merge strategy:
+1. Read the ACOS template first to know its structure and required frontmatter.
+2. Append or merge the legacy-specific rules and examples.
+3. Keep the ACOS YAML frontmatter unchanged.
+4. Remove duplicate or contradictory instructions.
+
+## 4. Scripts and ACP
+
+| Source legacy | ACOS target | Action | Notes |
+|---|---|---|---|
+<SCRIPTS_TABLE>
+
+## 5. Configuration and indexing
+
+| Source legacy | ACOS target | Action | Notes |
+|---|---|---|---|
+<CONFIG_TABLE>
+
+## 6. Editor and non-ACOS tooling
+
+| Source legacy | ACOS target | Action | Notes |
+|---|---|---|---|
+<EDITOR_TABLE>
+
+## 7. Hooks
+
+| Source legacy | ACOS target | Action | Notes |
+|---|---|---|---|
+<HOOKS_TABLE>
+
+## 8. Directories that should always be archived, not deleted
+
+<ARCHIVE_LIST>
+
+<warning>
+Never commit the off-Git `.zip` backup or the `.ssot.legacy` directory. They are intentionally outside the final ACOS structure.
+</warning>
