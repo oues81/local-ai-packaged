@@ -16,7 +16,7 @@
   "adapters": [],
   "ecosystemRole": "satellite",
   "ecosystemParent": {
-    "path": "master-infra"
+    "path": ".."
   },
   "acosSource": {
     "type": "local-checkout",

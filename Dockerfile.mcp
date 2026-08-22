@@ -1,25 +1,63 @@
-FROM python:3.11-slim
+# =============================================================================
+# MCP Server Dockerfile — follows docker-build-standards
+# See: docs/docker-build-standards/README.md §3.1
+# =============================================================================
+
+# Stage 1: dependencies (cached unless requirements.txt changes)
+FROM python:3.11-slim-bookworm AS deps
+
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# System deps with apt cache mount
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-RUN pip install --no-cache-dir \
-    mcp>=1.2.0 \
-    httpx>=0.24.0 \
-    pydantic>=2.0.0 \
-    starlette>=0.40.0 \
-    uvicorn[standard]>=0.24.0
+# Create virtual environment
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Copy MCP server code
+# Copy requirements FIRST (before source — enables layer caching)
+COPY requirements.txt ./
+
+# Install Python dependencies with pip cache mount
+# No --no-cache-dir: the cache mount persists downloads across builds
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install -r requirements.txt
+
+# Stage 2: runner (minimal image, source changes don't invalidate deps layer)
+FROM python:3.11-slim-bookworm AS runner
+
+WORKDIR /app
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app \
+    PATH="/opt/venv/bin:$PATH"
+
+# Install curl for healthcheck
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy virtual environment from deps stage
+COPY --from=deps /opt/venv /opt/venv
+
+# Copy MCP server source
 COPY mcp_server/ ./mcp_server/
 
-# Set environment variables
-ENV PYTHONPATH=/app
-ENV PYTHONUNBUFFERED=1
+# Create non-root user
+RUN groupadd --system --gid 1001 mcp && \
+    useradd --system --uid 1001 --gid mcp --home-dir /app --shell /usr/sbin/nologin mcp
+
+USER mcp
 
 # Expose MCP server port
 EXPOSE 8000

@@ -23,5 +23,9 @@
   "OnNativeClientVerification": {
     "type": "prompt",
     "prompt": "ACOS lifecycle hook: OnNativeClientVerification. Prefer mechanical verification (npm run native:check) over live native-client sessions. If a live 040-resume session is required, warn the user and obtain explicit approval before launching more than one in a batch. Record the date, client, and version in docs/native-verification-checklist.md after any live session."
+  },
+  "OnEcosystemAccess": {
+    "type": "prompt",
+    "prompt": "ACOS lifecycle hook: OnEcosystemAccess. When accessing files outside the project root, verify the target path is inside a declared ecosystemParent or ecosystemChildren path from clients.json. If it is, proceed safely — the access is expected. If the path is outside both the project root and any declared ecosystem path, stop and ask the user for explicit authority before proceeding."
   }
 }

@@ -19,7 +19,7 @@ volumes:
   laip_ollama_models:
 
 x-n8n: &service-n8n
-  image: n8nio/n8n:latest
+  image: n8nio/n8n:1.81.0
   environment:
     - DB_TYPE=postgresdb
     - DB_POSTGRESDB_HOST=postgres
@@ -34,7 +34,7 @@ x-n8n: &service-n8n
     - WEBHOOK_URL=${N8N_HOSTNAME:+https://}${N8N_HOSTNAME:-http://localhost:5678}
 
 x-ollama: &service-ollama
-  image: ollama/ollama:latest
+  image: ollama/ollama:0.32.14
   container_name: laip-ollama
   restart: unless-stopped
   networks:
@@ -68,7 +68,7 @@ x-ollama: &service-ollama
         memory: 1G
 
 x-init-ollama: &init-ollama
-  image: ollama/ollama:latest
+  image: ollama/ollama:0.32.14
   container_name: laip-ollama-pull-llama
   networks:
     - laip_ai_network
@@ -105,7 +105,7 @@ x-langfuse-common: &langfuse-common
 
 services:
   laip_flowise:
-    image: flowiseai/flowise
+    image: flowiseai/flowise:3.1.4
     restart: unless-stopped
     container_name: laip-flowise
     ports:
@@ -249,7 +249,7 @@ services:
           memory: 256M
 
   qdrant:
-    image: qdrant/qdrant
+    image: qdrant/qdrant:v1.18.3
     container_name: laip-qdrant
     restart: unless-stopped
     ports:
@@ -276,7 +276,7 @@ services:
           memory: 512M
 
   neo4j:
-    image: neo4j:latest
+    image: neo4j:5.26.29
     command: ["bash", "-lc", "exec /var/lib/neo4j/bin/neo4j console"]
     volumes:
       - ./neo4j/logs:/logs
@@ -437,7 +437,7 @@ services:
           memory: 512M
 
   clickhouse:
-    image: clickhouse/clickhouse-server
+    image: clickhouse/clickhouse-server:25.8.28.1
     restart: unless-stopped
     user: "101:101"
     expose:
@@ -468,7 +468,7 @@ services:
             memory: 512M
 
   minio:
-    image: minio/minio
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
     restart: unless-stopped
     entrypoint: sh
     # create the 'langfuse' bucket before starting the service
@@ -555,7 +555,7 @@ services:
 
   searxng:
     container_name: laip-searxng
-    image: docker.io/searxng/searxng:latest
+    image: docker.io/searxng/searxng:2026.8.5-1689cb1b5
     user: root
     restart: unless-stopped
     ports:

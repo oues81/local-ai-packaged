@@ -1,0 +1,7 @@
+# MCP server dependencies — pinned for reproducible builds
+# See: docs/docker-build-standards/README.md §3.1
+mcp==1.29.0
+httpx==0.28.1
+pydantic==2.11.10
+starlette==0.41.3
+uvicorn[standard]==0.32.1

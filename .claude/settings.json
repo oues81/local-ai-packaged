@@ -25,6 +25,15 @@
             "prompt": "ACOS lifecycle hook: BeforeMutation. SCOPE GUARD: If the target file is OUTSIDE the project root (e.g. ~/.claude/projects/, ~/.cursor/), skip — this hook does not apply. For files inside the project: check .ssot/protected-paths.json for a rule whose `path` glob matches the target AND whose `actions` includes the action (write|edit|delete). If a matching `level: deny` or `level: ask` rule covers the action, stop and ask the user. Otherwise proceed — protected-paths.json is the sole gate. Do NOT invent criteria (sensitivity, permission_mode, content subject). The user's task is sufficient authority. Do NOT block based on permission_mode or bypassPermissions. If ecosystemParent is declared in clients.json, also check the parent's protected-paths.json."
           }
         ]
+      },
+      {
+        "matcher": "Read|Write|Edit|Shell",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "ACOS lifecycle hook: OnEcosystemAccess. When accessing files outside the project root, verify the target path is inside a declared ecosystemParent or ecosystemChildren path from clients.json. If it is, proceed safely — the access is expected. If the path is outside both the project root and any declared ecosystem path, stop and ask the user for explicit authority before proceeding."
+          }
+        ]
       }
     ],
     "PostToolUse": [

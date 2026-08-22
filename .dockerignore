@@ -1,0 +1,126 @@
+# =============================================================================
+# .dockerignore — follows docker-build-standards §4
+# See: docs/docker-build-standards/README.md §4
+# =============================================================================
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# Build artifacts
+node_modules/
+dist/
+build/
+.next/
+*.egg-info/
+__pycache__/
+*.pyc
+*.pyo
+.ruff_cache/
+.pytest_cache/
+coverage/
+
+# Docker (avoid recursive context)
+Dockerfile*
+docker-compose*
+.dockerignore
+docker-bake*
+
+# Environment and secrets
+.env*
+*.log*
+*.tmp
+*.swp
+*~
+
+# Documentation (not needed in image)
+docs/
+specs/
+*.md
+
+# Agent/ACOS config (not needed in image)
+.ssot/
+.codex/
+.claude/
+.cursor/
+.devin/
+.windsurf/
+.agents/
+.opencode/
+.kilo/
+.kilocode/
+.specify/
+.claude-plugin/
+.cursor-plugin/
+.codex-plugin/
+.devin-plugin/
+
+# Tests (not needed in production image)
+tests/
+__tests__/
+*.test.*
+*.spec.*
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# =============================================================================
+# Project-specific additions
+# =============================================================================
+
+# Supabase stack (large directory, not needed for MCP build)
+supabase/
+
+# n8n workflow backups (not needed for MCP build)
+n8n/
+n8n-tool-workflows/
+
+# Flowise JSON configs (not needed for MCP build)
+flowise/
+
+# Assets (gifs, not needed for build)
+assets/
+
+# Neo4j data (large, not needed for build)
+neo4j/
+
+# Caddy configs (not needed for MCP build)
+caddy-config/
+caddy-addon/
+laip_caddy-config/
+laip_caddy-config-minimal/
+
+# ClickHouse configs (not needed for MCP build)
+clickhouse-config/
+clickhouse-config-users/
+clickhouse-users/
+
+# SearXNG configs (not needed for MCP build)
+searxng/
+
+# Monitoring (not needed for build)
+monitoring/
+
+# Scripts (not needed for build)
+scripts/
+
+# Contracts (generated, not needed for build)
+contracts/
+
+# Agent reports (not needed for build)
+AGENT_REPORTS/
+
+# Backup files
+.backup-pre-upstream-*/
+*.bak
+*.bak2
+*.backup
+
+# Misc project files not needed for MCP build
+start_services.py
+n8n_pipe.py
+Local_RAG_AI_Agent_n8n_Workflow.json
+Caddyfile
+LICENSE
