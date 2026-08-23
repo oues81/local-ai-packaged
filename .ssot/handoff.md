@@ -1,21 +1,28 @@
 # Session Handoff
 
-Date: 2026-08-22
+Date: 2026-08-23
 
-- Last session: 2026-08-22 (ACOS initialization + 0840 docker build standards)
-- Completed: ACOS v1.9.0 initialized as satellite of master-infra. Docker build standards (0840) applied: Dockerfile.mcp refactored with multi-stage build and cache mounts, .dockerignore created, docker-bake.hcl created with mcp-server target, :latest tags audited in docker-compose.yml. ACOS personalize (1220) run: architecture.md, infrastructure.md, constitution.md, decisions.md populated from actual codebase analysis.
+- Last session: 2026-08-23 (Langfuse memory fix + SSOT personalize)
+- Completed:
+  - Langfuse-web healthcheck fixed: endpoint /health → /api/public/health, localhost → dynamic container IP, format → CMD-SHELL, start_period 40s→60s (commit `9fa4fcd`)
+  - Langfuse memory limits fixed in docker-compose.minimal.yml: heap 256→512 for web and worker, memory limits 512M→768M (web) and 512M→640M (worker) (commit `9b28b5a`)
+  - SSOT personalized via 1220-personalize: architecture.md, infrastructure.md, constitution.md, decisions.md populated from codebase (commit `b49dfe6`)
+  - Container verified healthy after restart with adequate memory
+- Previous: ACOS init + 0840 docker build standards (2026-08-22)
 - In progress: nothing
-- Verification: ACOS projections in sync. No tests to run (infrastructure project).
+- Verification: ACOS projections in sync; docker compose config --quiet passes; langfuse-web verified healthy
 - Blockers: none
 - Known issues:
-  1. Langfuse-web healthcheck unhealthy (Next.js "Ready" but healthcheck endpoint issues)
-  2. Some :latest tags may remain in docker-compose.yml (pinned where stable versions could be verified, TODO comments left where not)
-  3. Supabase stack intentionally disabled in main compose (uses cloud instance from archon-v2)
-  4. No tests directory — project is infrastructure, not application code
-  5. No ACOS personalize run yet — architecture.md and infrastructure.md still have template content
-- Next action: (a) Fix Langfuse-web healthcheck, (b) Verify remaining :latest tags and pin them, (c) Consider adding healthchecks and resource limits to all services, (d) Mount Caddyfile into Caddy container in minimal override
+  1. Some :latest tags may remain in docker-compose.yml (pinned where stable versions could be verified)
+  2. Supabase stack intentionally disabled (uses cloud from archon-v2)
+  3. No tests (infrastructure project)
+- Next action:
+  1. Verify minimal compose starts correctly with new memory limits: `docker compose -f docker-compose.yml -f docker-compose.minimal.yml up -d`
+  2. Pin remaining :latest tags if any
+  3. Consider adding healthchecks to services that don't have them
 - Resume commands:
   - `cd /home/oues/projects/master-infra/local-ai-packaged`
   - Build MCP server: `docker buildx bake --load`
   - Start services: `python3 start_services.py`
+  - Minimal compose: `docker compose -f docker-compose.yml -f docker-compose.minimal.yml config --quiet`
   - ACOS check: `npx --no-install acos --check`
