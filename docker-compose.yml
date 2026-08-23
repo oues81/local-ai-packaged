@@ -422,11 +422,11 @@ services:
     networks:
       - laip_ai_network
     healthcheck:
-      test: wget -qO- http://localhost:3000/health || exit 1
+      test: ["CMD-SHELL", "wget -qO- http://$(hostname -i | awk '{print $1}'):3000/api/public/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
+      start_period: 60s
     deploy:
       resources:
         limits:
