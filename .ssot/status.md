@@ -15,7 +15,7 @@
   4. No tests directory — project is infrastructure, not application code
 - Native client hooks: projected for Claude Code, Cursor, OpenAI Codex, and Devin
 - MCP configuration: projected for Claude Code, Cursor, Devin, OpenAI Codex, OpenCode, and Kilo Code
-- Last updated: 2026-08-22 (ACOS initialization + 0840 docker build standards)
+- Last updated: 2026-08-22 (ACOS personalize — architecture.md, infrastructure.md, constitution.md, decisions.md populated from codebase)
 
 ## Project identity
 

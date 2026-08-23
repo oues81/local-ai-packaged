@@ -3,7 +3,7 @@
 Date: 2026-08-22
 
 - Last session: 2026-08-22 (ACOS initialization + 0840 docker build standards)
-- Completed: ACOS v1.9.0 initialized as satellite of master-infra. Docker build standards (0840) applied: Dockerfile.mcp refactored with multi-stage build and cache mounts, .dockerignore created, docker-bake.hcl created with mcp-server target, :latest tags audited in docker-compose.yml.
+- Completed: ACOS v1.9.0 initialized as satellite of master-infra. Docker build standards (0840) applied: Dockerfile.mcp refactored with multi-stage build and cache mounts, .dockerignore created, docker-bake.hcl created with mcp-server target, :latest tags audited in docker-compose.yml. ACOS personalize (1220) run: architecture.md, infrastructure.md, constitution.md, decisions.md populated from actual codebase analysis.
 - In progress: nothing
 - Verification: ACOS projections in sync. No tests to run (infrastructure project).
 - Blockers: none
@@ -13,7 +13,7 @@ Date: 2026-08-22
   3. Supabase stack intentionally disabled in main compose (uses cloud instance from archon-v2)
   4. No tests directory — project is infrastructure, not application code
   5. No ACOS personalize run yet — architecture.md and infrastructure.md still have template content
-- Next action: (a) Run 1220-personalize to customize SSOT items based on actual codebase, (b) Fix Langfuse-web healthcheck, (c) Verify remaining :latest tags and pin them, (d) Consider adding healthchecks and resource limits to all services
+- Next action: (a) Fix Langfuse-web healthcheck, (b) Verify remaining :latest tags and pin them, (c) Consider adding healthchecks and resource limits to all services, (d) Mount Caddyfile into Caddy container in minimal override
 - Resume commands:
   - `cd /home/oues/projects/master-infra/local-ai-packaged`
   - Build MCP server: `docker buildx bake --load`
