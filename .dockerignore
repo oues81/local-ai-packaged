@@ -10,6 +10,7 @@
 
 # Build artifacts
 node_modules/
+**/node_modules/
 dist/
 build/
 .next/
@@ -17,9 +18,25 @@ build/
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
 .ruff_cache/
 .pytest_cache/
+.mypy_cache/
+.hypothesis/
+.tox/
+htmlcov/
+.coverage
+.coverage.*
+.cache
 coverage/
+coverage.json
+*.cover
+coverage.xml
+nosetests.xml
 
 # Docker (avoid recursive context)
 Dockerfile*

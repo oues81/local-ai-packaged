@@ -1,0 +1,19 @@
+[project]
+name = "mcp-server"
+version = "0.1.0"
+description = "MCP Server for local-ai-packaged service operations"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "mcp==1.29.0",
+    "httpx==0.28.1",
+    "pydantic==2.11.10",
+    "starlette==0.41.3",
+    "uvicorn[standard]==0.32.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["mcp_server"]

@@ -35,8 +35,8 @@ target "mcp-server" {
   dockerfile = "Dockerfile.mcp"
   platforms  = ["linux/amd64"]
   pull       = true
-  cache-from = ["type=local,src=${CACHE_DIR}/mcp-server"]
-  cache-to   = ["type=local,dest=${CACHE_DIR}/mcp-server,mode=max"]
+  cache-from = ["type=registry,ref=${CACHE_NS}/mcp-server"]
+  cache-to   = ["type=registry,ref=${CACHE_NS}/mcp-server,mode=max"]
   tags = [
     "${REGISTRY}/${PROJECT}/mcp-server:${TAG}",
   ]
