@@ -1,0 +1,184 @@
+# Resource override for local-ai-packaged — tighter per-service limits
+# based on actual docker stats usage (2026 audit).
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.override.yml --profile cpu up -d
+#
+# Changes (memory limits):
+#   laip_open-webui:   1G  → 384M  (uses ~71MiB)
+#   laip_flowise:      1G  → 384M
+#   n8n:               1G  → 384M
+#   n8n-import:        1G  → 128M  (one-shot container)
+#   mcp-server:        512M → 128M
+#   qdrant:            1G  → 256M
+#   neo4j:             1G  → 768M  (uses 791MiB, 77% — heap config preserved)
+#   caddy:             1G  → 128M
+#   langfuse-worker:   1G  → 512M
+#   langfuse-web:      1G  → 512M  (uses 71MiB, 3.5%)
+#   clickhouse:        1G  → 512M
+#   minio:             1G  → 256M
+#   postgres:          1G  → 256M
+#   redis:             1G  → 64M   (uses 12MiB)
+#   searxng:           1G  → 256M
+#   ollama-cpu:        3G  (kept — model loading needs it)
+
+services:
+  laip_open-webui:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 384M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  laip_flowise:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 384M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  n8n:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 384M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  n8n-import:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+  mcp-server:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+  qdrant:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+  neo4j:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 768M
+        reservations:
+          cpus: "0.25"
+          memory: 384M
+
+  caddy:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 128M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+  langfuse-worker:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 192M
+
+  langfuse-web:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
+  clickhouse:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+  minio:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+  postgres:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+  redis:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M
+        reservations:
+          cpus: "0.1"
+          memory: 32M
+
+  searxng:
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 128M
+
+  ollama-cpu:
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 3G
+        reservations:
+          cpus: "0.5"
+          memory: 1G
