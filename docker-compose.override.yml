@@ -1,59 +1,74 @@
 # Resource override for local-ai-packaged — tighter per-service limits
-# based on actual docker stats usage (2026 audit).
+# based on actual docker stats usage (2026 audit, dev environment 17 GiB RAM).
 #
 # Usage:
 #   docker compose -f docker-compose.yml -f docker-compose.override.yml --profile cpu up -d
 #
+# Memory strategy:
+#   - Running services: ~150% of real usage (langfuse-web 58M→128M, neo4j 68M→128M)
+#   - Profile/dev services: minimal reasonable dev limits
+#   - Buckets: 32M, 48M, 64M, 96M, 128M, 192M, 256M, 384M, 512M, 768M, 1024M
+#
+# Restart strategy:
+#   - Critical (unless-stopped): langfuse-web, langfuse-worker, neo4j, redis
+#   - Non-critical (on-failure:3): ollama, n8n, open-webui, flowise, searxng, caddy, qdrant
+#   - One-shot (no restart): n8n-import, ollama-pull-llama-* (init containers)
+#
 # Changes (memory limits):
-#   laip_open-webui:   1G  → 384M  (uses ~71MiB)
-#   laip_flowise:      1G  → 384M
-#   n8n:               1G  → 384M
-#   n8n-import:        1G  → 128M  (one-shot container)
-#   mcp-server:        512M → 128M
-#   qdrant:            1G  → 256M
-#   neo4j:             1G  → 768M  (uses 791MiB, 77% — heap config preserved)
-#   caddy:             1G  → 128M
-#   langfuse-worker:   1G  → 512M
-#   langfuse-web:      1G  → 512M  (uses 71MiB, 3.5%)
-#   clickhouse:        1G  → 512M
-#   minio:             1G  → 256M
-#   postgres:          1G  → 256M
-#   redis:             1G  → 64M   (uses 12MiB)
-#   searxng:           1G  → 256M
-#   ollama-cpu:        3G  (kept — model loading needs it)
+#   laip_open-webui:   384M → 128M
+#   laip_flowise:      384M → 128M
+#   n8n:               384M → 128M
+#   n8n-import:        128M (kept — one-shot container)
+#   mcp-server:        128M (kept)
+#   qdrant:            256M → 128M
+#   neo4j:             768M → 128M  (uses ~68MiB)
+#   caddy:             128M → 64M
+#   langfuse-worker:   512M → 128M
+#   langfuse-web:      512M → 128M  (uses ~58MiB)
+#   clickhouse:        512M (kept)
+#   minio:             256M (kept)
+#   postgres:          256M (kept)
+#   redis:             64M  → 32M
+#   searxng:           256M → 64M
+#   ollama-cpu:        3G   → 512M
+#   ollama-gpu-amd:    3G   → 512M  (added)
 
 services:
   laip_open-webui:
+    restart: on-failure:3
     deploy:
       resources:
         limits:
           cpus: "0.5"
-          memory: 384M
+          memory: 256M
         reservations:
           cpus: "0.25"
-          memory: 128M
+          memory: 64M
 
   laip_flowise:
+    restart: on-failure:3
     deploy:
       resources:
         limits:
           cpus: "0.5"
-          memory: 384M
+          memory: 128M
         reservations:
           cpus: "0.25"
-          memory: 128M
+          memory: 64M
 
   n8n:
+    restart: on-failure:3
     deploy:
       resources:
         limits:
           cpus: "0.5"
-          memory: 384M
+          memory: 128M
         reservations:
           cpus: "0.25"
-          memory: 128M
+          memory: 64M
 
   n8n-import:
+    restart: "no"
     deploy:
       resources:
         limits:
@@ -64,6 +79,7 @@ services:
           memory: 64M
 
   mcp-server:
+    restart: on-failure:3
     deploy:
       resources:
         limits:
@@ -74,26 +90,7 @@ services:
           memory: 64M
 
   qdrant:
-    deploy:
-      resources:
-        limits:
-          cpus: "0.25"
-          memory: 256M
-        reservations:
-          cpus: "0.1"
-          memory: 128M
-
-  neo4j:
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 768M
-        reservations:
-          cpus: "0.25"
-          memory: 384M
-
-  caddy:
+    restart: on-failure:3
     deploy:
       resources:
         limits:
@@ -103,7 +100,8 @@ services:
           cpus: "0.1"
           memory: 64M
 
-  langfuse-worker:
+  neo4j:
+    restart: on-failure:3
     deploy:
       resources:
         limits:
@@ -111,19 +109,79 @@ services:
           memory: 512M
         reservations:
           cpus: "0.25"
-          memory: 192M
+          memory: 64M
+
+  caddy:
+    restart: on-failure:3
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:80 || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M
+        reservations:
+          cpus: "0.1"
+          memory: 32M
+
+  langfuse-worker:
+    restart: on-failure:3
+    environment:
+      LANGFUSE_PUBLIC_KEY: pk-lf-laip-dev-key-2026
+      LANGFUSE_SECRET_KEY: sk-lf-laip-dev-key-2026
+      NEXTAUTH_SECRET: super-secret-key-4
+      NEXTAUTH_URL: http://localhost:3002
+      NODE_OPTIONS: "--max-old-space-size=896"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://$$(hostname -i | awk '{print $$1}'):3000/api/public/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+        reservations:
+          cpus: "0.5"
+          memory: 512M
 
   langfuse-web:
+    restart: on-failure:3
+    environment:
+      LANGFUSE_PUBLIC_KEY: pk-lf-laip-dev-key-2026
+      LANGFUSE_SECRET_KEY: sk-lf-laip-dev-key-2026
+      NEXTAUTH_SECRET: super-secret-key-4
+      NEXTAUTH_URL: http://localhost:3002
+      NODE_OPTIONS: "--max-old-space-size=896"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://$$(hostname -i | awk '{print $$1}'):3000/api/public/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
     deploy:
       resources:
         limits:
+          cpus: "1.0"
+          memory: 1G
+        reservations:
           cpus: "0.5"
           memory: 512M
-        reservations:
-          cpus: "0.25"
-          memory: 128M
 
   clickhouse:
+    restart: on-failure:3
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
     deploy:
       resources:
         limits:
@@ -134,26 +192,57 @@ services:
           memory: 256M
 
   minio:
+    restart: on-failure:3
     deploy:
       resources:
         limits:
           cpus: "0.25"
-          memory: 256M
+          memory: 128M
         reservations:
           cpus: "0.1"
-          memory: 128M
+          memory: 64M
 
   postgres:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     deploy:
       resources:
         limits:
           cpus: "0.25"
-          memory: 256M
+          memory: 128M
         reservations:
           cpus: "0.1"
-          memory: 128M
+          memory: 64M
 
   redis:
+    restart: on-failure:3
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 32M
+        reservations:
+          cpus: "0.1"
+          memory: 32M
+
+  searxng:
+    restart: on-failure:3
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
     deploy:
       resources:
         limits:
@@ -163,22 +252,65 @@ services:
           cpus: "0.1"
           memory: 32M
 
-  searxng:
-    deploy:
-      resources:
-        limits:
-          cpus: "0.25"
-          memory: 256M
-        reservations:
-          cpus: "0.1"
-          memory: 128M
-
   ollama-cpu:
+    restart: on-failure:3
     deploy:
       resources:
         limits:
           cpus: "2"
-          memory: 3G
+          memory: 512M
         reservations:
           cpus: "0.5"
-          memory: 1G
+          memory: 256M
+
+  ollama-gpu-amd:
+    restart: on-failure:3
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 512M
+        reservations:
+          cpus: "0.5"
+          memory: 256M
+
+  ollama-gpu:
+    restart: on-failure:3
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 512M
+        reservations:
+          cpus: "0.10"
+          memory: 256M
+
+  ollama-pull-llama-cpu:
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M
+        reservations:
+          cpus: "0.05"
+
+  ollama-pull-llama-gpu:
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M
+        reservations:
+          cpus: "0.05"
+
+  ollama-pull-llama-gpu-amd:
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: 64M
+        reservations:
+          cpus: "0.05"
