@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.0",
+  "ssotVersion": "1.9.1",
   "entrypointSourceDir": ".ssot/agents/entrypoints",
   "entrypoints": [
     {
@@ -752,15 +752,65 @@
       "surface": "permissions",
       "format": "json"
     },
-    { "client": "claude", "dir": ".claude-plugin", "surface": "pluginManifest", "format": "json" },
-    { "client": "cursor", "dir": ".cursor-plugin", "surface": "pluginManifest", "format": "json" },
-    { "client": "devin", "dir": ".devin-plugin", "surface": "pluginManifest", "format": "json" },
-    { "client": "codex", "dir": ".codex-plugin", "surface": "pluginManifest", "format": "json" },
-    { "client": "cursor", "dir": ".cursor", "surface": "cliConfig", "format": "json" },
-    { "client": "kilocode", "dir": ".kilo/tools", "surface": "tool", "format": "typescript" },
-    { "client": "opencode", "dir": ".opencode/tools", "surface": "tool", "format": "typescript" },
-    { "client": "devin", "dir": ".devin", "surface": "mcpConfig", "format": "json" },
-    { "client": "eve", "dir": "agent/tools", "surface": "tool", "format": "typescript" },
-    { "client": "eve", "dir": "agent/subagents", "surface": "subagent", "format": "eve-subagent" }
+    {
+      "client": "claude",
+      "dir": ".claude-plugin",
+      "surface": "pluginManifest",
+      "format": "json"
+    },
+    {
+      "client": "cursor",
+      "dir": ".cursor-plugin",
+      "surface": "pluginManifest",
+      "format": "json"
+    },
+    {
+      "client": "devin",
+      "dir": ".devin-plugin",
+      "surface": "pluginManifest",
+      "format": "json"
+    },
+    {
+      "client": "codex",
+      "dir": ".codex-plugin",
+      "surface": "pluginManifest",
+      "format": "json"
+    },
+    {
+      "client": "cursor",
+      "dir": ".cursor",
+      "surface": "cliConfig",
+      "format": "json"
+    },
+    {
+      "client": "kilocode",
+      "dir": ".kilo/tools",
+      "surface": "tool",
+      "format": "typescript"
+    },
+    {
+      "client": "opencode",
+      "dir": ".opencode/tools",
+      "surface": "tool",
+      "format": "typescript"
+    },
+    {
+      "client": "devin",
+      "dir": ".devin",
+      "surface": "mcpConfig",
+      "format": "json"
+    },
+    {
+      "client": "eve",
+      "dir": "agent/tools",
+      "surface": "tool",
+      "format": "typescript"
+    },
+    {
+      "client": "eve",
+      "dir": "agent/subagents",
+      "surface": "subagent",
+      "format": "eve-subagent"
+    }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.0",
+  "ssotVersion": "1.9.1",
   "description": "Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints.",
   "lifecycleHooks": {
     "BeforeMutation": {

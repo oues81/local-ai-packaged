@@ -2,8 +2,8 @@
 
 - Lifecycle: adopted
 - Current objective: Self-hosted AI stack — Docker Compose template with n8n, Ollama, Open WebUI, Flowise, Qdrant, Neo4j, SearXNG, Langfuse, Caddy, and custom MCP server
-- Active milestone: Docker build standards (0840) applied + SSOT personalized + Langfuse healthcheck and memory fixed
-- Verification: ACOS projections in sync (2026-08-23); docker compose config --quiet passes
+- Active milestone: Docker build standards (0840) applied + SSOT personalized (docs + entrypoint cycle) + Langfuse healthcheck and memory fixed
+- Verification: ACOS projections in sync (2026-08-30, `sync-clients.mjs --check` clean; 1 pre-existing informational warning: template entrypoint `1840-auto-improve.md` not present in this project — out of scope for this session)
 - Ecosystem role: satellite of master-infra (container)
 - Test suite: no tests (infrastructure project, Docker Compose template)
 - Docker setup: 6 compose files (main, minimal, 3 overrides, supabase), 1 custom Dockerfile (Dockerfile.mcp), 15+ services
@@ -17,7 +17,7 @@
   4. Some :latest tags may remain in docker-compose.yml (pinned where stable versions verified)
 - Native client hooks: projected for Claude Code, Cursor, OpenAI Codex, and Devin
 - MCP configuration: projected for Claude Code, Cursor, Devin, OpenAI Codex, OpenCode, and Kilo Code
-- Last updated: 2026-08-23
+- Last updated: 2026-08-30
 
 ## Project identity
 

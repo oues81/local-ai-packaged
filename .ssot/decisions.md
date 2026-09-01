@@ -115,3 +115,43 @@ Record accepted decisions as stable entries containing date, status, context, de
   explicit changes to `docker-compose.yml`. Some images (Langfuse `3`,
   Caddy `2-alpine`) use major-version tags where minor updates are
   considered safe.
+
+## D-007 — Entrypoint personalization (1220-personalize, entrypoint-body cycle)
+
+- **Date**: 2026-08-30
+- **Status**: accepted
+- **Context**: A prior `1220-personalize` run (commit `b49dfe6`, 2026-08-23) populated
+  project-specific SSOT documents (`architecture.md`, `infrastructure.md`,
+  `constitution.md`, `decisions.md`) but left every entrypoint body at the generic ACOS
+  template — 0/65 entrypoints carried `personalized: true`, and `0020-resume.md` (the
+  entrypoint invoked at the start of every session) contained no project-specific
+  orientation, diagnostic commands, or ecosystem-satellite guidance.
+- **Decision**: Personalize the active-cycle entrypoint bodies for this Docker-Compose
+  infrastructure project (no test suite; Docker Compose validity + container health is the
+  verification signal):
+  - `0020-resume.md` — added a "Project-specific orientation" section (compose validity
+    checks, MCP server build command, registry, ecosystem-satellite pointer to the parent's
+    status, and a note that `.ssot/agents/runtimes.json` still holds the stale template
+    `fabric-staging` example rather than a real runtime) and pointed step 6's generic
+    "environment checks" at the concrete `docker compose config --quiet` command.
+  - `1020-handoff.md` — added a project-specific verification paragraph requiring
+    `docker compose config --quiet` (and container health where relevant) instead of a
+    generic test-suite claim.
+  - `0780-docker.md` — documented the project's actual six-compose-file layout (base,
+    minimal, four overrides incl. the disabled Supabase override), the `docker buildx bake`
+    build path for the custom MCP image, and the `ai_network` external network requirement.
+  - All three now carry `personalized: true` in frontmatter, protecting body + description
+    from `acos-migrate --reconcile --apply --refresh-bodies` template overwrite.
+  - Deterministic script `ssot-personalization.mjs --focus entrypoints` produced zero
+    mechanical recommendations (it does not deep-analyze entrypoint body content) —
+    confirming this pass was agent-judgment-led per the 1220-personalize procedure.
+  - Left `0680-infra.md` untouched (correctly reports infrastructure as unconfigured — no
+    `.ssot/infrastructure-profile.json` exists) and did not touch the stale
+    `.ssot/agents/context/CLAUDE.src.md` "My Project" placeholder or the stale
+    `fabric-staging` runtimes.json entry, both flagged by the deterministic scan but out of
+    scope for this entrypoint-focused pass — noted here for a future personalization run.
+- **Consequences**: `0020-resume`, `1020-handoff`, and `0780-docker` now give an agent
+  concrete, evidence-based project commands instead of generic ACOS boilerplate. Future
+  `acos-migrate --reconcile --apply --refresh-bodies` runs will preserve these three bodies.
+  Remaining personalization gaps (CLAUDE.src.md placeholder, stale runtimes.json example)
+  are deferred, not silently dropped.

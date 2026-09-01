@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.0",
+  "ssotVersion": "1.9.1",
   "name": "acos-spec-engine",
   "description": "Native ACOS specification engine: structured, dependency-free spec-driven development lifecycle.",
   "lifecycle": {
@@ -239,7 +239,7 @@
       "checklist",
       "tasks"
     ],
-    "requiredDeclaration": "spec.md Status field must say 'lightweight track \u2014 see [document path]'",
+    "requiredDeclaration": "spec.md Status field must say 'lightweight track — see [document path]'",
     "gate": "The substituting document must be committed and referenced before the implement phase."
   },
   "qualityGatesNote": "qualityGates are textual checks on spec.md (static, pre-implementation). They are orthogonal to the tests/security entrypoints which run executable checks on implemented code (dynamic, post-implementation)."

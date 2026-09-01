@@ -40,6 +40,38 @@ Source: .ssot/agents/entrypoints/0020-resume.md
 
 Treat the user's accompanying text as the current objective.
 
+## Project-specific orientation (local-ai-packaged)
+
+`local-ai-packaged` is a Docker Compose–based self-hosted AI stack (Ollama, Open WebUI, n8n,
+Flowise, Qdrant, Neo4j, SearXNG, Langfuse, Caddy, and a custom Python MCP server) — an
+**infrastructure project, not an application with a test suite**. There is no `npm test` /
+`pytest` equivalent to run on resume; treat Docker Compose validity and container health as
+the primary "is it working" signal instead.
+
+- **Cheap validity check** (read-only, safe to always run): `docker compose config --quiet`
+  (add `-f docker-compose.yml -f docker-compose.minimal.yml` or the other override combination
+  named in `.ssot/status.md`/`.ssot/handoff.md` if the session concerns that variant). A
+  non-zero exit means the compose graph itself is broken — surface this before anything else.
+- **Live health check** (only if containers are expected to be running — do not start the
+  stack yourself just to check): `docker compose ps` and `docker ps --filter
+  network=ai_network` to see which services are up; do not conclude a service is broken from
+  compose config alone.
+- **MCP server**: source is `mcp_server/` (Python 3.11, `mcp`/`httpx`/`pydantic`/`starlette`/
+  `uvicorn`, built via `Dockerfile.mcp` and `docker-bake.hcl`). If the objective touches it,
+  `docker buildx bake --load` rebuilds it; there is no separate unit-test command for it.
+- **Registry**: images build to `registry.lan.local:8444/local-ai-packaged/` — do not assume a
+  public registry.
+- **Ecosystem**: this is a **satellite** of `master-infra` (`.ssot/agents/clients.json` →
+  `ecosystemParent.path: ".."`) using the shared external Docker network `ai_network`
+  (`laip_ai_network` alias in compose files). Read the parent's `.ssot/status.md` for
+  ecosystem-wide state (step 9 below) before assuming this project's Supabase, network, or
+  registry setup is self-contained — Supabase is intentionally disabled here in favor of the
+  cloud instance provisioned by `archon-v2` (see `.ssot/decisions.md`).
+- **`.ssot/agents/runtimes.json`** currently only declares an example `fabric-staging` runtime
+  left over from the ACOS template — it does not describe a real runtime for this project.
+  Treat step 10 below as a no-op until a real runtime is declared or the stale entry is
+  removed; do not run `acos-runtime-sync` against it as if it were live.
+
 ## Fast-path: automated improvement cycle
 
 If the user's intent is to launch an automated improvement cycle (text mentions
@@ -117,7 +149,12 @@ detected).
       migration work, in which case it becomes a blocker that must be resolved first.
 4. If a specific spec or task is requested, read only that spec's `spec.md` and `tasks.md` rather than all specs.
 5. Inspect Git status and recent history without discarding or rewriting existing changes.
-6. Run the cheapest useful environment and dependency checks; use `maintenance.doctor` if drift is suspected and `maintenance.infrastructure` when shared platform state matters.
+6. Run the cheapest useful environment and dependency checks — for this project that is
+   `docker compose config --quiet` plus, if containers are expected to be running,
+   `docker compose ps` (see "Project-specific orientation" above; there is no test suite to
+   run). Use `maintenance.doctor` if drift is suspected and `maintenance.infrastructure` when
+   shared platform state matters (note: no `.ssot/infrastructure-profile.json` exists yet, so
+   `0680-infra` will report infrastructure as unconfigured — this is expected, not a bug).
 7. Compare claimed state with repository evidence and identify stale documentation or incomplete work.
    Use `npx --no-install acos-handoff-check --root .`; if it reports `review` or `stale`, follow its
    recovery evidence before trusting the recorded next action.

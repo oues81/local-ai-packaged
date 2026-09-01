@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.0",
+  "ssotVersion": "1.9.1",
   "enforcement": {
     "defaultMode": "advisory",
     "failClosed": false,

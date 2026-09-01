@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.0",
+  "ssotVersion": "1.9.1",
   "schemaNotes": "Projection objects support two optional boolean fields: 'legacy' (default false) marks outputs superseded by a newer surface, and 'desktopOnly' (default false) marks surfaces available only in the desktop variant of a client (not the CLI).",
   "projectName": "local-ai-packaged",
   "canonicalContextFile": ".ssot/agents/context/AGENTS.src.md",

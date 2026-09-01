@@ -1,7 +1,13 @@
 {
   "okfVersion": "0.1",
   "bundleRoots": [],
-  "reservedFilenames": ["index.md", "log.md"],
-  "ssotVersion": "1.9.0",
-  "lintOnlyRoots": [".ssot", "docs/specs"]
+  "reservedFilenames": [
+    "index.md",
+    "log.md"
+  ],
+  "ssotVersion": "1.9.1",
+  "lintOnlyRoots": [
+    ".ssot",
+    "docs/specs"
+  ]
 }

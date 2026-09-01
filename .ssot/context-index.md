@@ -2,7 +2,7 @@
 
 # Context Index
 
-SSOT version: `1.9.0` · Content hash: `b6beaa745f50f6474f0ddf0a73e51ae5d3cc8f183fe0384ac6760d81fc000fe7`
+SSOT version: `1.9.1` · Content hash: `c662211fb0572d75b7ad623c766dc1d9bdc4ea3a8620fed89cedafa6f07237ab`
 
 ## Quick reference
 
@@ -98,7 +98,7 @@ SSOT version: `1.9.0` · Content hash: `b6beaa745f50f6474f0ddf0a73e51ae5d3cc8f18
 - **description**: Recover project state and continue from the best next action
 - **source**: `.ssot/agents/entrypoints/0020-resume.md`
 - **projections**: `.agents/skills/0020-resume/SKILL.md`, `.claude/commands/0020-resume.md`, `.claude/rules/acos.md`, `.claude/skills/0020-resume/SKILL.md`, `.claude/workflows/0020-resume.md`, `.codex/rules/acos.md`, `.codex/skills/0020-resume/SKILL.md`, `.cursor/commands/0020-resume.md`, `.cursor/skills/0020-resume/SKILL.md`, `.devin/skills/0020-resume/SKILL.md`, `.kilo/commands/0020-resume.md`, `.kilo/rules/acos.md`, `.kilo/skills/0020-resume/SKILL.md`, `.kilocode/workflows/0020-resume.md`, `.opencode/commands/0020-resume.md`, `.opencode/rules/acos.md`, `.opencode/skills/0020-resume/SKILL.md`, `.windsurf/workflows/0020-resume.md`, `agent/skills/0020-resume/SKILL.md`
-- **contentHash**: `6d73548ef2ed1bdfba3dcfd67eb077364acab9c178826addbbbafd54b2c65b10`
+- **contentHash**: `a7e82e974d4e9717fef4af31e22c43c09222c1216b15476d5118839aeae2d675`
 
 ### 0040-route
 - **stableId**: `project.route`
@@ -413,7 +413,7 @@ SSOT version: `1.9.0` · Content hash: `b6beaa745f50f6474f0ddf0a73e51ae5d3cc8f18
 - **description**: Docker compose lifecycle with mutation gates
 - **source**: `.ssot/agents/entrypoints/0780-docker.md`
 - **projections**: `.agents/skills/0780-docker/SKILL.md`, `.claude/commands/0780-docker.md`, `.claude/rules/acos.md`, `.claude/skills/0780-docker/SKILL.md`, `.claude/workflows/0780-docker.md`, `.codex/rules/acos.md`, `.codex/skills/0780-docker/SKILL.md`, `.cursor/commands/0780-docker.md`, `.cursor/skills/0780-docker/SKILL.md`, `.devin/skills/0780-docker/SKILL.md`, `.kilo/commands/0780-docker.md`, `.kilo/rules/acos.md`, `.kilo/skills/0780-docker/SKILL.md`, `.kilocode/workflows/0780-docker.md`, `.opencode/commands/0780-docker.md`, `.opencode/rules/acos.md`, `.opencode/skills/0780-docker/SKILL.md`, `.windsurf/workflows/0780-docker.md`, `agent/skills/0780-docker/SKILL.md`
-- **contentHash**: `a6c4bf73c8675518ebc97a0a3d79c8a7c80e9cc469dcdfdba3b1afcd8fc2c49d`
+- **contentHash**: `89b793f2f4d1493996e5b5efe3b37fd719611488332b893930ad8216928b469f`
 
 ### 0800-acp
 - **stableId**: `maintenance.acp`
@@ -485,7 +485,7 @@ SSOT version: `1.9.0` · Content hash: `b6beaa745f50f6474f0ddf0a73e51ae5d3cc8f18
 - **description**: Persist a factual end-of-session handoff
 - **source**: `.ssot/agents/entrypoints/1020-handoff.md`
 - **projections**: `.agents/skills/1020-handoff/SKILL.md`, `.claude/commands/1020-handoff.md`, `.claude/rules/acos.md`, `.claude/skills/1020-handoff/SKILL.md`, `.claude/workflows/1020-handoff.md`, `.codex/rules/acos.md`, `.codex/skills/1020-handoff/SKILL.md`, `.cursor/commands/1020-handoff.md`, `.cursor/skills/1020-handoff/SKILL.md`, `.devin/skills/1020-handoff/SKILL.md`, `.kilo/commands/1020-handoff.md`, `.kilo/rules/acos.md`, `.kilo/skills/1020-handoff/SKILL.md`, `.kilocode/workflows/1020-handoff.md`, `.opencode/commands/1020-handoff.md`, `.opencode/rules/acos.md`, `.opencode/skills/1020-handoff/SKILL.md`, `.windsurf/workflows/1020-handoff.md`, `agent/skills/1020-handoff/SKILL.md`
-- **contentHash**: `03fae474a1cbd2dbbaf30cca84c26936cdc5f69cce7aa7b6d1701d1b519979d2`
+- **contentHash**: `a2bf12c59f6e559dabf7533c74fb5e5a07d913b2ca600c7307ffcd2ebd42ef48`
 
 ### 1040-session-bridge
 - **stableId**: `session.bridge`
@@ -701,7 +701,7 @@ SSOT version: `1.9.0` · Content hash: `b6beaa745f50f6474f0ddf0a73e51ae5d3cc8f18
 - **description**: Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints.
 - **source**: `.ssot/agents/hooks.json`
 - **projections**: *(none)*
-- **contentHash**: `40d5e4812f236331f1b5d59e444fde2aab6984440254fab89821a9850933ed0e`
+- **contentHash**: `01dd47e9c9873762f4d7b46a74be4813c2c189b8868697fb07a1cee7b6beed9c`
 
 ### mcp
 - **stableId**: null
@@ -710,7 +710,7 @@ SSOT version: `1.9.0` · Content hash: `b6beaa745f50f6474f0ddf0a73e51ae5d3cc8f18
 - **description**: MCP server configuration (0 servers) at .ssot/agents/mcp.json.
 - **source**: `.ssot/agents/mcp.json`
 - **projections**: *(none)*
-- **contentHash**: `48c06b1b1f72ff5029bb15ac921a85186f0d1fac0b3ada76e23f72fae7cd3849`
+- **contentHash**: `4d4e76db40ef72285212e929a12d85527eab27b1049838b6895191790eb0f685`
 
 ### workflows
 - **stableId**: null
@@ -719,4 +719,4 @@ SSOT version: `1.9.0` · Content hash: `b6beaa745f50f6474f0ddf0a73e51ae5d3cc8f18
 - **description**: Entrypoint workflow registry (65 entrypoints) at .ssot/agents/workflows.json.
 - **source**: `.ssot/agents/workflows.json`
 - **projections**: *(none)*
-- **contentHash**: `581bdeb71fe1f490c365ed9b93db65c06f448bced72f3f299dfe80a0474120f1`
+- **contentHash**: `f6a49ca7148f86830df0ebf8f121dfeb787913e38ea855f9d480fa0142de60fe`

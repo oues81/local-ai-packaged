@@ -1,0 +1,66 @@
+{
+  "specId": "ecosystem-integration",
+  "project": "local-ai-packaged",
+  "cycle": "auto-improve-2026-08-31",
+  "lane": "C11",
+  "waves": [
+    {
+      "wave": 1,
+      "name": "diagnose",
+      "type": "read-only",
+      "executor": "subagent",
+      "lanes": [
+        {
+          "lane": "C11",
+          "name": "fr-017-dcycle-004-audit",
+          "workdir": "/home/oues/projects/master-infra/local-ai-packaged",
+          "promptFile": "specs/ecosystem-integration/waves/wave-1-diagnose/diagnose.md",
+          "reportFile": "AGENT_REPORTS/2026-08-31/auto-improve/wave-3/C11-spec-local-ai-packaged-report.md",
+          "statusFile": "AGENT_REPORTS/2026-08-31/auto-improve/wave-3/C11-spec-local-ai-packaged-status.json"
+        }
+      ]
+    },
+    {
+      "wave": 2,
+      "name": "fix",
+      "type": "mutating",
+      "executor": "subagent",
+      "lanes": [
+        {
+          "lane": "C11",
+          "name": "mem-limit-and-restart-fix",
+          "workdir": "/home/oues/projects/master-infra/local-ai-packaged",
+          "promptFile": "specs/ecosystem-integration/waves/wave-2-fix/fix.md"
+        }
+      ]
+    },
+    {
+      "wave": 3,
+      "name": "validate",
+      "type": "read-only",
+      "executor": "subagent",
+      "lanes": [
+        {
+          "lane": "C11",
+          "name": "mechanical-verification",
+          "workdir": "/home/oues/projects/master-infra/local-ai-packaged",
+          "promptFile": "specs/ecosystem-integration/waves/wave-3-validate/validate.md"
+        }
+      ]
+    },
+    {
+      "wave": 4,
+      "name": "ship",
+      "type": "mutating",
+      "executor": "subagent",
+      "lanes": [
+        {
+          "lane": "C11",
+          "name": "acos-check-and-report",
+          "workdir": "/home/oues/projects/master-infra/local-ai-packaged",
+          "promptFile": "specs/ecosystem-integration/waves/wave-4-ship/ship.md"
+        }
+      ]
+    }
+  ]
+}
