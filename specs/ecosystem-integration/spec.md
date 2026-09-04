@@ -8,18 +8,22 @@ local-ai-packaged fournit les **services AI locaux** de l'écosystème master-in
 
 local-ai-packaged est un **satellite ACOS v1.9.1**.
 
-local-ai-packaged est un **tool provider d'infrastructure AI locale** derrière le Master Agent Control Plane (`:9999`, archon-v2, Spec 015), routé via la routing table configurable, Master Agent exposé dans `.ssot/agents/mcp.json`, Portkey Gateway (`:8787`) enable le multi-client.
+local-ai-packaged est un **provider d'infrastructure** (link_class: `infrastructure`) — consommé par les services runtime, **non routé via le hub**. Le Master Agent Control Plane est un système composite (UD-006) : REST surface (`:9999`) pour l'orchestration, MCP surface (`:8051`) pour la découverte d'outils. Les providers d'infrastructure sont consommés directement, pas routés via le hub. Le registre canonique des membres de l'écosystème est `.ssot/routing-table.json` (UD-009).
 
 ## Boundary contracts
 
 | Contrat | Input | Output | API | Contraintes |
 |---------|-------|--------|-----|-------------|
-| Neo4j | Cypher queries | graph data | HTTP 8350 / Bolt 8351 | Utilisé par mcpinfra knowledge_graph |
-| Qdrant | vector search | embeddings results | HTTP 8360 | Utilisé par mcpinfra vectorstore |
+| Neo4j | Cypher queries | graph data | HTTP 8005 / Bolt 8006 | Utilisé par mcpinfra knowledge_graph |
+| Qdrant | vector search | embeddings results | HTTP 8003 / gRPC 8004 | Utilisé par mcpinfra vectorstore |
 | Ollama | LLM prompts | générations locales | HTTP (port 11434) | LLM local, pas de coût API |
-| Langfuse | LLM traces | observabilité | HTTP (port 3000) | Tracing LLM |
+| Langfuse | LLM traces | observabilité | HTTP (port 3002) | Tracing LLM |
 | Supabase Kong API | HTTP requests | API endpoint | HTTP (port 18000) | Endpoint API pour archon-v2 (`SUPABASE_URL`) |
-| Supabase Supavisor | PG connections | PostgreSQL pool | PG wire (port 5433) | Accès PostgreSQL via pooler |
+| Supabase Kong HTTPS | HTTPS requests | API endpoint HTTPS | HTTPS (port 18443) | TLS endpoint |
+| Supabase Supavisor PG | PG connections | PostgreSQL pool | PG wire (port 5433) | Accès PostgreSQL via pooler (session mode) |
+| Supabase Supavisor transaction | PG connections (transaction mode) | PostgreSQL pool | PG wire (port 6543) | Transaction mode pooling |
+| Supabase Studio | UI | admin dashboard | HTTP (internal only) | Non exposé externement |
+| Supabase PostgreSQL | SQL queries | database | PG wire (internal only) | Non exposé externement |
 | n8n | workflows | automation | HTTP (port 8002) | Low-code workflows |
 | Open WebUI | UI | chat interface | HTTP (port 8050) | Interface chat LLM |
 | Flowise | chatflows | flow builder | HTTP (port 8001) | Chatflow configurations |
@@ -30,8 +34,8 @@ local-ai-packaged est un **tool provider d'infrastructure AI locale** derrière 
 
 | Projet | Service | Port | Contrat |
 |--------|---------|------|---------|
-| mcpinfra | Neo4j | 8350/8351 | `bolt://neo4j:7687` pour knowledge_graph |
-| mcpinfra | Qdrant | 8360 | vectorstore backend |
+| mcpinfra | Neo4j | 8005/8006 | `bolt://neo4j:7687` pour knowledge_graph |
+| mcpinfra | Qdrant | 8003/8004 | vectorstore backend |
 | mcpinfra | `local-ai-packaged-mcp` | 8409 (host) → 8000 (container), profile `lai-us5` | MCP server wrapper (container `mcpinfra-local-ai-packaged-mcp-1`) |
 | docker-infrastructures | (shared network) | — | Réseau Docker partagé |
 | archon-v2 | Supabase Kong | 18000 | `SUPABASE_URL=http://host.docker.internal:18000` (documenté dans AGENTS.md) |
@@ -45,11 +49,11 @@ local-ai-packaged est un **tool provider d'infrastructure AI locale** derrière 
 
 | Service | Port | Healthcheck | Notes |
 |---------|------|-------------|-------|
-| Neo4j | 8350 (HTTP), 8351 (Bolt) | `curl /` | Graph database |
-| Qdrant | 8360 | `curl /` | Vector store |
+| Neo4j | 8005 (HTTP), 8006 (Bolt) | `curl /` | Graph database |
+| Qdrant | 8003 (HTTP), 8004 (gRPC) | `curl /` | Vector store |
 | Ollama | 11434 | `curl /api/tags` | LLM local |
-| Langfuse | 3000 | `curl /api/public/health` | LLM observabilité |
-| Supabase (suite complète) | Kong 18000, Supavisor 5433, Studio 3000 | `curl http://localhost:18000` | Postgres, Kong API gateway, Studio, Auth |
+| Langfuse | 3002 | `curl /api/public/health` | LLM observabilité |
+| Supabase (suite complète) | Kong 18000, Kong HTTPS 18443, Supavisor PG 5433, Supavisor transaction 6543, Studio (internal), PostgreSQL (internal) | `curl http://localhost:18000` | Postgres, Kong API gateway, Studio, Auth — separate compose file (`supabase/docker/docker-compose.yml`), commented out in main docker-compose.yml |
 | n8n | 8002 | `curl /healthz` | Low-code workflows |
 | Open WebUI | 8050 | `curl /` | Interface chat LLM |
 | Flowise | 8001 | `curl /` | Chatflow configurations |
@@ -75,9 +79,9 @@ Réseau : `ai_network`, `mcpinfra` (external).
    `server_type: "tool"`, `pre_provisioned: false`, `trust_level: "trusted"`).
    No duplicate found. The entry is internal to the mcpinfra catalog and
    correctly references this project's MCP server (SSE transport, port 8000).
-7. **Supabase absent de la spec** — présent dans `AGENTS.md` et `supabase/docker/docker-compose.yml` mais non documenté dans les boundary contracts.
-8. **Incohérence de ports** entre cette spec (Neo4j `:8350/8351`, Qdrant `:8360`, Langfuse `:3000`) et `AGENTS.md` (Neo4j `:8005/8006`, Qdrant `:8003/8004`, Langfuse `:3002`). À réconcilier.
-9. **Absence de référence au Master Agent Control Plane** (:9999), à la routing table, à `.ssot/agents/mcp.json`, à Portkey Gateway.
+7. **Supabase dans un compose file séparé** : Supabase est présent dans `supabase/docker/docker-compose.yml` (documenté dans les boundary contracts ci-dessus), mais **commenté out par défaut** dans le `docker-compose.yml` principal. Nécessite uncomment + plus de RAM pour démarrer.
+8. **Port consistency entre spec et compose defaults** : les ports ont été alignés sur les compose defaults (Neo4j `:8005/8006`, Qdrant `:8003/8004`, Langfuse `:3002`). Vérifier que les compose files restent en sync avec cette spec.
+9. **Référence au registre canonique** : le registre canonique des membres de l'écosystème est `.ssot/routing-table.json` (UD-009). local-ai-packaged y est listé comme `infrastructure`, `routable: false` (consommé, non routé via le hub).
 
 ## FR-017 compliance status (Wave 1 A3 audit, 2026-08-31)
 
@@ -102,3 +106,4 @@ Réseau : `ai_network`, `mcpinfra` (external).
 - `local-ai-packaged/.ssot/status.md`
 - `local-ai-packaged/specs/` (1 spec interne)
 - `local-ai-packaged/README.md`
+- `.ssot/routing-table.json` (UD-009 — canonical member registry, local-ai listé comme `infrastructure`, `routable: false`)
