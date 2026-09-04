@@ -4,9 +4,11 @@
 active
 
 ## Rôle dans l'écosystème
-local-ai-packaged fournit les **services AI locaux** de l'écosystème master-infra : Ollama (LLM local), Neo4j (graph database), Langfuse (observabilité LLM), et Qdrant (vector store). Ces services sont consommés par MCPInfra (knowledge_graph via Neo4j, vectorstore via Qdrant) et potentiellement par d'autres composants pour l'inférence locale.
+local-ai-packaged fournit les **services AI locaux** de l'écosystème master-infra : Ollama (LLM local), Neo4j (graph database), Langfuse (observabilité LLM), Qdrant (vector store), et Supabase (Postgres, Kong API gateway, Studio, Auth). Ces services sont consommés par MCPInfra (knowledge_graph via Neo4j, vectorstore via Qdrant) et potentiellement par d'autres composants pour l'inférence locale.
 
 local-ai-packaged est un **satellite ACOS v1.9.1**.
+
+local-ai-packaged est un **tool provider d'infrastructure AI locale** derrière le Master Agent Control Plane (`:9999`, archon-v2, Spec 015), routé via la routing table configurable, Master Agent exposé dans `.ssot/agents/mcp.json`, Portkey Gateway (`:8787`) enable le multi-client.
 
 ## Boundary contracts
 
@@ -16,6 +18,13 @@ local-ai-packaged est un **satellite ACOS v1.9.1**.
 | Qdrant | vector search | embeddings results | HTTP 8360 | Utilisé par mcpinfra vectorstore |
 | Ollama | LLM prompts | générations locales | HTTP (port 11434) | LLM local, pas de coût API |
 | Langfuse | LLM traces | observabilité | HTTP (port 3000) | Tracing LLM |
+| Supabase Kong API | HTTP requests | API endpoint | HTTP (port 18000) | Endpoint API pour archon-v2 (`SUPABASE_URL`) |
+| Supabase Supavisor | PG connections | PostgreSQL pool | PG wire (port 5433) | Accès PostgreSQL via pooler |
+| n8n | workflows | automation | HTTP (port 8002) | Low-code workflows |
+| Open WebUI | UI | chat interface | HTTP (port 8050) | Interface chat LLM |
+| Flowise | chatflows | flow builder | HTTP (port 8001) | Chatflow configurations |
+| SearXNG | search queries | search results | HTTP (port 8008) | Meta-search engine |
+| Caddy | HTTP/HTTPS | reverse proxy | HTTP 8081 / HTTPS 8444 | Reverse proxy avec TLS |
 
 ## Dependencies
 
@@ -23,7 +32,9 @@ local-ai-packaged est un **satellite ACOS v1.9.1**.
 |--------|---------|------|---------|
 | mcpinfra | Neo4j | 8350/8351 | `bolt://neo4j:7687` pour knowledge_graph |
 | mcpinfra | Qdrant | 8360 | vectorstore backend |
+| mcpinfra | `local-ai-packaged-mcp` | 8409 (host) → 8000 (container), profile `lai-us5` | MCP server wrapper (container `mcpinfra-local-ai-packaged-mcp-1`) |
 | docker-infrastructures | (shared network) | — | Réseau Docker partagé |
+| archon-v2 | Supabase Kong | 18000 | `SUPABASE_URL=http://host.docker.internal:18000` (documenté dans AGENTS.md) |
 
 ## ACOS integration
 - **Satellite** : oui, v1.9.1
@@ -38,6 +49,12 @@ local-ai-packaged est un **satellite ACOS v1.9.1**.
 | Qdrant | 8360 | `curl /` | Vector store |
 | Ollama | 11434 | `curl /api/tags` | LLM local |
 | Langfuse | 3000 | `curl /api/public/health` | LLM observabilité |
+| Supabase (suite complète) | Kong 18000, Supavisor 5433, Studio 3000 | `curl http://localhost:18000` | Postgres, Kong API gateway, Studio, Auth |
+| n8n | 8002 | `curl /healthz` | Low-code workflows |
+| Open WebUI | 8050 | `curl /` | Interface chat LLM |
+| Flowise | 8001 | `curl /` | Chatflow configurations |
+| SearXNG | 8008 | `curl /` | Meta-search engine |
+| Caddy | 8081 (HTTP), 8444 (HTTPS) | `curl /` | Reverse proxy avec TLS |
 
 Réseau : `ai_network`, `mcpinfra` (external).
 
@@ -46,6 +63,21 @@ Réseau : `ai_network`, `mcpinfra` (external).
 2. **Neo4j initialization** : schema à initialiser pour mcpinfra knowledge_graph.
 3. **Langfuse integration** : pas encore wireé dans tous les composants LLM.
 4. **8 test files** détectés.
+5. **MCP wrapper container not running (Wave 4 audit, 2026-09-04)** :
+   `mcpinfra-local-ai-packaged-mcp-1` is NOT running (absent from `docker ps`
+   output). The wrapper is gated behind the `lai-us5` profile and must be started
+   explicitly:
+   `docker compose --profile lai-us5 up -d local-ai-packaged-mcp`.
+   Not started in this wave — noted as a known issue per audit rules.
+6. **Catalog entry confirmed (Wave 4 audit, 2026-09-04)** : Catalog entry
+   `local-ai-packaged-mcp` exists in
+   `mcpinfra/catalog_entries/local_ai_packaged.json` (v1.0.0,
+   `server_type: "tool"`, `pre_provisioned: false`, `trust_level: "trusted"`).
+   No duplicate found. The entry is internal to the mcpinfra catalog and
+   correctly references this project's MCP server (SSE transport, port 8000).
+7. **Supabase absent de la spec** — présent dans `AGENTS.md` et `supabase/docker/docker-compose.yml` mais non documenté dans les boundary contracts.
+8. **Incohérence de ports** entre cette spec (Neo4j `:8350/8351`, Qdrant `:8360`, Langfuse `:3000`) et `AGENTS.md` (Neo4j `:8005/8006`, Qdrant `:8003/8004`, Langfuse `:3002`). À réconcilier.
+9. **Absence de référence au Master Agent Control Plane** (:9999), à la routing table, à `.ssot/agents/mcp.json`, à Portkey Gateway.
 
 ## FR-017 compliance status (Wave 1 A3 audit, 2026-08-31)
 
