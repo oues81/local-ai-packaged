@@ -1,4 +1,29 @@
 {
   "ssotVersion": "1.9.1",
-  "specifications": []
+  "specifications": [
+    {
+      "id": "mcp.server.integration",
+      "source": "specs/001-mcp-server-integration/spec.md",
+      "maxAgeDays": 365,
+      "implementation": [
+        "specs/001-mcp-server-integration/"
+      ],
+      "verification": [
+        "specs/001-mcp-server-integration/spec.md"
+      ],
+      "verifiedAt": "2026-09-05"
+    },
+    {
+      "id": "ecosystem.integration",
+      "source": "specs/ecosystem-integration/spec.md",
+      "maxAgeDays": 365,
+      "implementation": [
+        "specs/ecosystem-integration/"
+      ],
+      "verification": [
+        "specs/ecosystem-integration/spec.md"
+      ],
+      "verifiedAt": "2026-09-05"
+    }
+  ]
 }
