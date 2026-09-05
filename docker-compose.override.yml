@@ -186,10 +186,10 @@ services:
       resources:
         limits:
           cpus: "0.5"
-          memory: 512M
+          memory: 768M
         reservations:
           cpus: "0.25"
-          memory: 256M
+          memory: 384M
 
   minio:
     restart: on-failure:3
@@ -230,10 +230,10 @@ services:
       resources:
         limits:
           cpus: "0.25"
-          memory: 32M
+          memory: 128M
         reservations:
           cpus: "0.1"
-          memory: 32M
+          memory: 64M
 
   searxng:
     restart: on-failure:3
@@ -258,10 +258,10 @@ services:
       resources:
         limits:
           cpus: "2"
-          memory: 512M
+          memory: 3G
         reservations:
           cpus: "0.5"
-          memory: 256M
+          memory: 1G
 
   ollama-gpu-amd:
     restart: on-failure:3
@@ -269,10 +269,10 @@ services:
       resources:
         limits:
           cpus: "2"
-          memory: 512M
+          memory: 3G
         reservations:
           cpus: "0.5"
-          memory: 256M
+          memory: 1G
 
   ollama-gpu:
     restart: on-failure:3
@@ -280,10 +280,10 @@ services:
       resources:
         limits:
           cpus: "0.50"
-          memory: 512M
+          memory: 3G
         reservations:
           cpus: "0.10"
-          memory: 256M
+          memory: 1G
 
   ollama-pull-llama-cpu:
     restart: "no"
@@ -294,6 +294,7 @@ services:
           memory: 64M
         reservations:
           cpus: "0.05"
+          memory: 32M
 
   ollama-pull-llama-gpu:
     restart: "no"
@@ -304,6 +305,7 @@ services:
           memory: 64M
         reservations:
           cpus: "0.05"
+          memory: 32M
 
   ollama-pull-llama-gpu-amd:
     restart: "no"
@@ -314,3 +316,4 @@ services:
           memory: 64M
         reservations:
           cpus: "0.05"
+          memory: 32M

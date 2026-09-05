@@ -28,7 +28,7 @@ local-ai-packaged est un **provider d'infrastructure** (link_class: `infrastruct
 | Open WebUI | UI | chat interface | HTTP (port 8050) | Interface chat LLM |
 | Flowise | chatflows | flow builder | HTTP (port 8001) | Chatflow configurations |
 | SearXNG | search queries | search results | HTTP (port 8008) | Meta-search engine |
-| Caddy | HTTP/HTTPS | reverse proxy | HTTP 8081 / HTTPS 8444 | Reverse proxy avec TLS |
+| Caddy | HTTP/HTTPS | reverse proxy | HTTP 8081 / HTTPS 8444 | Reverse proxy avec TLS. **Note**: port 8444 entre en collision avec Harbor HTTPS 8444 (docker-infrastructures) si les deux stacks tournent simultanément sur le même hôte. En pratique, local-ai et Harbor sont sur des réseaux Docker séparés ; vérifier l'absence de conflit avant de démarrer les deux stacks ensemble. |
 
 ## Dependencies
 

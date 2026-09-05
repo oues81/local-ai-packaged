@@ -1,9 +1,9 @@
 services:
-  flowise:
+  laip_flowise:
     ports:
       - 127.0.0.1:3001:3001
 
-  open-webui:
+  laip_open-webui:
     ports:
       - 127.0.0.1:8080:8080
 
