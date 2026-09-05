@@ -1,0 +1,9 @@
+mco_registry_version: "1.0.0"
+project:
+  name: "local_ai_packaged"
+  port: 11434
+  path: "."
+  prefix: "LAI"
+  deps: []
+  wave_design: "default"
+  prompt_rules_files: []
