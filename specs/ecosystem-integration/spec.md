@@ -107,3 +107,15 @@ Réseau : `ai_network`, `mcpinfra` (external).
 - `local-ai-packaged/specs/` (1 spec interne)
 - `local-ai-packaged/README.md`
 - `.ssot/routing-table.json` (UD-009 — canonical member registry, local-ai listé comme `infrastructure`, `routable: false`)
+
+
+## Healthcheck
+
+curl http://localhost:11434/api/tags
+
+## Proof level
+
+- **Level**: `runtime_observed`
+- **Endpoint**: http://localhost:11434
+- **Last verified**: 2026-09-06
+- **Verification rule**: See `specs/ecosystem-integration/capability-evidence.json` for the canonical proof registry.
