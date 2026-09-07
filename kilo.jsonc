@@ -3,5 +3,11 @@
 {
   "instructions": [
     ".kilo/rules/*.md"
-  ]
+  ],
+  "mcp": {
+    "archon": {
+      "type": "remote",
+      "url": "http://localhost:8051/"
+    }
+  }
 }

@@ -11,12 +11,12 @@
     },
     {
       "path": ".ssot/agents/clients.json",
-      "hash": "73af461d028f5c5441568492c122130fdf347a091585865bbbb85710ab059e85"
+      "hash": "3b2672db5f105a26580792421c18d35806bd6967eae192d558e73d8d1d395ca1"
     },
     {
       "path": ".ssot/protected-paths.json",
-      "hash": "1059c529bce323a1c3a80d09d9986e08ee064e63836d6cb01b21a017b3995f8d"
+      "hash": "c0d031e3c89e61f5b3402c9effc8a01ecbabd93d5967a84e904b6d1cd075c34f"
     }
   ],
-  "ssotVersion": "1.9.1"
+  "ssotVersion": "1.9.2"
 }

@@ -2,7 +2,7 @@
 
 # Context Index
 
-SSOT version: `1.9.1` · Content hash: `c662211fb0572d75b7ad623c766dc1d9bdc4ea3a8620fed89cedafa6f07237ab`
+SSOT version: `1.9.2` · Content hash: `8940a501145c64352a70b7d2b69e7340922e3512f03ec6d2ecf6b2f9590fac30`
 
 ## Quick reference
 
@@ -60,7 +60,7 @@ SSOT version: `1.9.1` · Content hash: `c662211fb0572d75b7ad623c766dc1d9bdc4ea3a
 | 1120 | migrate-analyze | Perform pre-migration analysis to identify custom content, missing state files, semantic references, and non-conformities before the deterministic migration apply |
 | 1140 | migrate-workflow | Orchestrate the full 5-phase hybrid migration workflow — analysis, agent prep, deterministic apply, post-merge agent, verify — with human gates between each phase |
 | 1160 | migration-verify | Verify post-migration coverage by comparing the legacy backup against the current ACOS state, or by checking projection-gap resolutions against the analysis artifact (spec 012) |
-| 1180 | migrate-ecosystem | Migrate a container project and all its satellites to a target ssotVersion atomically — batch migration with per-project status reporting |
+| 1180 | migrate-ecosystem | Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting |
 | 1200 | metaskill | Generate a project-specific ACOS skill by analyzing the target project and producing a custom migration or workflow skill |
 | 1220 | personalize | Analyze an initialized ACOS project and personalize its SSOT items based on the project's actual codebase, architecture, conventions, and current client best practices |
 | 1240 | migrate-refs | Dispatch an agent for semantic reference updates after a deterministic ACOS migration |
@@ -73,12 +73,13 @@ SSOT version: `1.9.1` · Content hash: `c662211fb0572d75b7ad623c766dc1d9bdc4ea3a
 | 1400 | mco-force-analysis | Force cycle analysis for a project via MCPCO |
 | 1420 | mco-open-pr | Open a pull request for a project's cycle via MCPCO |
 | 1440 | mco-authorize-merge | Authorize merging a cycle's PR with two-factor confirmation via MCPCO |
+| 1840 | auto-improve | Automated improvement cycle — diagnose, plan, execute, verify, hand off |
 | — | planner | Architecture and planning subagent that produces dependency-aware implementation plans. |
 | — | reviewer | Code review subagent focused on correctness, safety, and maintainability. |
 | — | verifier | Verification subagent that runs acceptance checks and reports evidence. |
 | — | hooks | Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints. |
-| — | mcp | MCP server configuration (0 servers) at .ssot/agents/mcp.json. |
-| — | workflows | Entrypoint workflow registry (65 entrypoints) at .ssot/agents/workflows.json. |
+| — | mcp | MCP server configuration (1 server) at .ssot/agents/mcp.json. |
+| — | workflows | Entrypoint workflow registry (66 entrypoints) at .ssot/agents/workflows.json. |
 
 ## Detailed
 
@@ -554,10 +555,10 @@ SSOT version: `1.9.1` · Content hash: `c662211fb0572d75b7ad623c766dc1d9bdc4ea3a
 - **stableId**: `migration.ecosystem`
 - **category**: project
 - **type**: entrypoint
-- **description**: Migrate a container project and all its satellites to a target ssotVersion atomically — batch migration with per-project status reporting
+- **description**: Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting
 - **source**: `.ssot/agents/entrypoints/1180-migrate-ecosystem.md`
 - **projections**: `.agents/skills/1180-migrate-ecosystem/SKILL.md`, `.claude/commands/1180-migrate-ecosystem.md`, `.claude/rules/acos.md`, `.claude/skills/1180-migrate-ecosystem/SKILL.md`, `.claude/workflows/1180-migrate-ecosystem.md`, `.codex/rules/acos.md`, `.codex/skills/1180-migrate-ecosystem/SKILL.md`, `.cursor/commands/1180-migrate-ecosystem.md`, `.cursor/skills/1180-migrate-ecosystem/SKILL.md`, `.devin/skills/1180-migrate-ecosystem/SKILL.md`, `.kilo/commands/1180-migrate-ecosystem.md`, `.kilo/rules/acos.md`, `.kilo/skills/1180-migrate-ecosystem/SKILL.md`, `.kilocode/workflows/1180-migrate-ecosystem.md`, `.opencode/commands/1180-migrate-ecosystem.md`, `.opencode/rules/acos.md`, `.opencode/skills/1180-migrate-ecosystem/SKILL.md`, `.windsurf/workflows/1180-migrate-ecosystem.md`, `agent/skills/1180-migrate-ecosystem/SKILL.md`
-- **contentHash**: `2f7db5369316f114468b882d5681d2dcce63863d4c368c11750d34ef970915f0`
+- **contentHash**: `b2f96a88a7e6daa7b8cf43e128c545056c8e72b1ae856027ad2bda73825687c7`
 
 ### 1200-metaskill
 - **stableId**: `project.metaskill`
@@ -667,6 +668,15 @@ SSOT version: `1.9.1` · Content hash: `c662211fb0572d75b7ad623c766dc1d9bdc4ea3a
 - **projections**: `.agents/skills/1440-mco-authorize-merge/SKILL.md`, `.claude/commands/1440-mco-authorize-merge.md`, `.claude/rules/acos.md`, `.claude/skills/1440-mco-authorize-merge/SKILL.md`, `.claude/workflows/1440-mco-authorize-merge.md`, `.codex/rules/acos.md`, `.codex/skills/1440-mco-authorize-merge/SKILL.md`, `.cursor/commands/1440-mco-authorize-merge.md`, `.cursor/skills/1440-mco-authorize-merge/SKILL.md`, `.devin/skills/1440-mco-authorize-merge/SKILL.md`, `.kilo/commands/1440-mco-authorize-merge.md`, `.kilo/rules/acos.md`, `.kilo/skills/1440-mco-authorize-merge/SKILL.md`, `.kilocode/workflows/1440-mco-authorize-merge.md`, `.opencode/commands/1440-mco-authorize-merge.md`, `.opencode/rules/acos.md`, `.opencode/skills/1440-mco-authorize-merge/SKILL.md`, `.windsurf/workflows/1440-mco-authorize-merge.md`, `agent/skills/1440-mco-authorize-merge/SKILL.md`
 - **contentHash**: `6acf1aca2bac537b55a8197349f756cfaaec1200a388f3353df98c53b604216b`
 
+### 1840-auto-improve
+- **stableId**: `project.autoimprove`
+- **category**: project
+- **type**: entrypoint
+- **description**: Automated improvement cycle — diagnose, plan, execute, verify, hand off
+- **source**: `.ssot/agents/entrypoints/1840-auto-improve.md`
+- **projections**: `.agents/skills/1840-auto-improve/SKILL.md`, `.claude/commands/1840-auto-improve.md`, `.claude/rules/acos.md`, `.claude/skills/1840-auto-improve/SKILL.md`, `.claude/workflows/1840-auto-improve.md`, `.codex/rules/acos.md`, `.codex/skills/1840-auto-improve/SKILL.md`, `.cursor/commands/1840-auto-improve.md`, `.cursor/skills/1840-auto-improve/SKILL.md`, `.devin/skills/1840-auto-improve/SKILL.md`, `.kilo/commands/1840-auto-improve.md`, `.kilo/rules/acos.md`, `.kilo/skills/1840-auto-improve/SKILL.md`, `.kilocode/workflows/1840-auto-improve.md`, `.opencode/commands/1840-auto-improve.md`, `.opencode/rules/acos.md`, `.opencode/skills/1840-auto-improve/SKILL.md`, `.windsurf/workflows/1840-auto-improve.md`, `agent/skills/1840-auto-improve/SKILL.md`
+- **contentHash**: `31ddd3190ff6b5be19fae8a702d6744530b61c326ebacf24b71e198b77f63914`
+
 ### planner
 - **stableId**: null
 - **category**: null
@@ -701,22 +711,22 @@ SSOT version: `1.9.1` · Content hash: `c662211fb0572d75b7ad623c766dc1d9bdc4ea3a
 - **description**: Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints.
 - **source**: `.ssot/agents/hooks.json`
 - **projections**: *(none)*
-- **contentHash**: `01dd47e9c9873762f4d7b46a74be4813c2c189b8868697fb07a1cee7b6beed9c`
+- **contentHash**: `7e7f30ed84b0074498e087968e4a14d154cc064bcfe97e7c1a7c0fe18ab33976`
 
 ### mcp
 - **stableId**: null
 - **category**: null
 - **type**: mcp
-- **description**: MCP server configuration (0 servers) at .ssot/agents/mcp.json.
+- **description**: MCP server configuration (1 server) at .ssot/agents/mcp.json.
 - **source**: `.ssot/agents/mcp.json`
 - **projections**: *(none)*
-- **contentHash**: `4d4e76db40ef72285212e929a12d85527eab27b1049838b6895191790eb0f685`
+- **contentHash**: `28bb07392e7849ea6150b6e672d9180da144840c416bf7fc6b72558d1a7ae2ba`
 
 ### workflows
 - **stableId**: null
 - **category**: null
 - **type**: workflow
-- **description**: Entrypoint workflow registry (65 entrypoints) at .ssot/agents/workflows.json.
+- **description**: Entrypoint workflow registry (66 entrypoints) at .ssot/agents/workflows.json.
 - **source**: `.ssot/agents/workflows.json`
 - **projections**: *(none)*
-- **contentHash**: `f6a49ca7148f86830df0ebf8f121dfeb787913e38ea855f9d480fa0142de60fe`
+- **contentHash**: `d210f0a493aa87538b6c86111d4ba9b58707a027181747f97a6bea2d2e59bab4`

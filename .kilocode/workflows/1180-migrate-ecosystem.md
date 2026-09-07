@@ -4,7 +4,7 @@ Source: .ssot/agents/entrypoints/1180-migrate-ecosystem.md
 
 # 1180-migrate-ecosystem
 
-> Migrate a container project and all its satellites to a target ssotVersion atomically — batch migration with per-project status reporting
+> Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.

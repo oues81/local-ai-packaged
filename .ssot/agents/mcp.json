@@ -1,4 +1,9 @@
 {
-  "ssotVersion": "1.9.1",
-  "mcpServers": {}
+  "ssotVersion": "1.9.2",
+  "mcpServers": {
+    "archon": {
+      "type": "http",
+      "url": "http://localhost:8051/"
+    }
+  }
 }

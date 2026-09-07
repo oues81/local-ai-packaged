@@ -1,6 +1,6 @@
 ---
 name: 1180-migrate-ecosystem
-description: "Migrate a container project and all its satellites to a target ssotVersion atomically — batch migration with per-project status reporting"
+description: "Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting"
 disable-model-invocation: true
 ---
 

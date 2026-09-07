@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.1",
+  "ssotVersion": "1.9.2",
   "entrypointSourceDir": ".ssot/agents/entrypoints",
   "entrypoints": [
     {
@@ -424,7 +424,7 @@
       "slug": "migrate-ecosystem",
       "source": "1180-migrate-ecosystem.md",
       "category": "project",
-      "description": "Migrate a container project and all its satellites to a target ssotVersion atomically — batch migration with per-project status reporting"
+      "description": "Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting"
     },
     {
       "id": "project.metaskill",
@@ -521,6 +521,14 @@
       "description": "Authorize merging a cycle's PR with two-factor confirmation via MCPCO",
       "source": "1440-mco-authorize-merge.md",
       "category": "ecosystem"
+    },
+    {
+      "id": "project.autoimprove",
+      "order": 1840,
+      "slug": "auto-improve",
+      "description": "Automated improvement cycle — diagnose, plan, execute, verify, hand off",
+      "source": "1840-auto-improve.md",
+      "category": "project"
     }
   ],
   "targets": [
