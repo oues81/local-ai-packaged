@@ -7,3 +7,4 @@ project:
   deps: []
   wave_design: "default"
   prompt_rules_files: []
+  role: "infrastructure"
