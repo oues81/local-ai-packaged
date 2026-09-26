@@ -76,26 +76,71 @@ the primary "is it working" signal instead.
   Treat step 10 below as a no-op until a real runtime is declared or the stale entry is
   removed; do not run `acos-runtime-sync` against it as if it were live.
 
+## Standard ACOS cycle
+
+The standard ACOS session cycle chains entrypoints to form a complete workflow:
+
+```
+Session start:
+  0020-resume          → recover state, orient, select next action
+
+During session:
+  0040-route           → route to the appropriate entrypoint (spec, migrate, personalize, etc.)
+  OR 1840-auto-improve → diagnose → C1 critique → plan → gate → execute → verify
+
+Session end:
+  1020-handoff         → status.md + handoff.md + H1 next-cycle-hypothesis.md
+  1040-session-bridge  → next-session-prompt.md (thin bridge; mandatory after handoff)
+
+Next session:
+  0020-resume          → consumes prompt → launches 1840 (C1 mandatory) → ...
+```
+
+Spec: `../acos-mcp-launcher-work/docs/specs/019-cycle-continuity/spec.md` (H1 / C1 / G1 / B1 / X1).
+
+The cycle is **composable**: entrypoints assemble into chains that cover different workflows:
+
+- **Improvement cycle**: `0020 → 1840 → 1020 → 1040 → 0020` (repeat; autocritique each loop)
+- **Spec cycle**: `0020 → 0040 → 0100-spec → 0140-plan → 0180-data-model → 0220-checklist → 0260-execute → 0300-verify → 1020`
+- **Migration cycle**: `0020 → 0040 → 1100-migrate → 1120-migrate-analyze → 1140-migrate-workflow → 1160-verify → 1020`
+- **Personalization cycle**: `0020 → 0040 → 1220-personalize → 1020`
+
+Each entrypoint in a chain knows its successors and predecessors. `1220-personalize` should
+specialize the entrypoints in the cycles the project actually uses (Phase 0e of 1220-personalize).
+
 ## Fast-path: automated improvement cycle
 
 If the user's intent is to launch an automated improvement cycle (text mentions
-"auto-improve", "cycle", "frontier-consult", or `.ssot/next-session-prompt.md` exists),
+"auto-improve", "cycle", or `.ssot/next-session-prompt.md` exists),
 skip the full drift/diagnostic battery below and fast-path to the cycle:
 
-1. Read `.ssot/handoff.md` and `.ssot/status.md` only (steps 2, 7 below — lightweight).
-2. If `.ssot/next-session-prompt.md` exists: launch `0200-frontier-consult --consumer <id>`
-   with the question it contains. The frontier model produces the plan, hands off to the
-   consumer entrypoint (e.g. `1840-auto-improve`), which generates the wave-config and
-   presents it for approval (the single human gate).
-3. If no session-bridge prompt but the user named a consumer entrypoint (e.g.
-   "auto-improve", "1960-auto-improve-consat"): launch `0200-frontier-consult --consumer
-   <that-id>` with the user's text as the question.
-4. Do NOT run version drift, structural drift, runtime drift, ecosystem drift, or
+1. Read `AGENTS.md` for the project's operating contract and conventions (most clients
+   auto-load it, but sub-agents and some workflows may not — read it if in doubt).
+2. Read `.ssot/handoff.md` and `.ssot/status.md` only (steps 2, 7 below — lightweight).
+3. If `.ssot/next-session-prompt.md` exists: read the **whole** file (Action, Consumer,
+   Objective, Hypothesis, Constraints, Context) — not the objective line alone. Launch
+   the consumer (default: `1840-auto-improve`) with that full contract. The consumer MUST
+   run diagnose + **C1** hypothesis critique before planning and the human gate.
+   - **Delete the prompt after launching the consumer** (one-shot consume — **X1**).
+   - **Frontier-consult is optional.** Starting from ACOS 1.9.0, `0200-frontier-consult`
+     is NOT invoked automatically by the fast-path. The consumer produces its own plan
+     after C1 by default. Frontier-consult is only invoked if the user explicitly requests
+     it (e.g. "use a frontier model", or the prompt `## Action` says `--frontier`).
+   - If the user explicitly requests frontier-consult: the consumer produces diagnose + C1
+     + internal plan first, then launches `0200-frontier-consult --consumer <id>` with the
+     objective AND the internal plan as context. After approval, continue with
+     `--from-frontier`.
+4. If no session-bridge prompt but the user named a consumer entrypoint (e.g.
+   "auto-improve", "1840-auto-improve"): launch that entrypoint directly with the user's
+   text as the objective. Do NOT invoke frontier-consult unless the user explicitly asks
+   for it.
+5. Do NOT run version drift, structural drift, runtime drift, ecosystem drift, or
    handoff-check in fast-path mode — these are background concerns that can run after the
    cycle or on the next plain resume. The cycle is the priority.
 
 The full procedure below runs when the user wants a plain resume (no cycle intent
 detected).
+
 
 ## Full procedure
 
@@ -177,17 +222,19 @@ detected).
    run runtime drift/health commands automatically from `0020-resume`.
 11. Select the smallest next action that advances the user's objective.
 12. **Check for a session-bridge prompt** — if `.ssot/next-session-prompt.md` exists, it was
-    prepared by `1040-session-bridge` at the end of the previous session. Read it and show
-    the user: the consumer entrypoint ID, the question, and the context summary. Ask the
-    user: "A session-bridge prompt was found. Launch the automated cycle now? This will
-    invoke a frontier model and consume quota." Do NOT launch anything without explicit
-    user approval. If the user approves, launch `0200-frontier-consult --consumer <id>`
-    with the question. After the frontier model produces the plan and the user approves,
-    hand off to the consumer entrypoint with `--from-frontier`. Delete
-    `.ssot/next-session-prompt.md` after the cycle is launched (one-shot — if the cycle
-    fails or is interrupted, the user can re-run `1040-session-bridge` to prepare a new
-    one). If the user declines, keep the file for a future session.
-13. Continue directly when intent is clear; ask only when a missing decision materially changes the result.
+    prepared by `1040-session-bridge` at the end of the previous session. Read the **whole**
+    file (Action, Consumer, Objective, Hypothesis, Constraints, Context). Show the user the
+    consumer, objective, and H1 path. Ask: "A session-bridge prompt was found. Launch the
+    automated cycle now?" Do NOT launch without explicit user approval.
+    - **Default path (no frontier-consult)**: if the user approves, launch the consumer with
+      the **full contract**. `1840` must run diagnose + **C1** before plan/gate (**G1** =
+      approve or amend only).
+    - **Frontier-consult path (opt-in only)**: if the user or prompt requests `--frontier`,
+      the consumer produces diagnose + C1 + internal plan first, then
+      `0200-frontier-consult --consumer <id>`, then `--from-frontier`.
+    - Delete `.ssot/next-session-prompt.md` after the cycle is launched (one-shot — **X1**).
+      If the user declines, keep the file for a future session.
+13. Continue directly when intent is clear; ask only when a missing decision materially changes the result. When a question or ambiguity arises, first attempt to resolve it through codebase exploration, documentation, or web research (rule 8). Only ask the user as a last resort, with structured options and justified recommendations.
 14. Update durable status and handoff facts after meaningful progress.
 
 Report recovered state, inconsistencies, action taken, and remaining blocker in compact form.

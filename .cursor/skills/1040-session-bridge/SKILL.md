@@ -37,94 +37,154 @@ Source: .ssot/agents/entrypoints/1040-session-bridge.md
 
 Run this **after** `1020-handoff` at the end of a session. It prepares a prompt file that
 `0020-resume` will find at the start of the next session and use to launch an automated
-improvement cycle: frontier model plans → consumer entrypoint executes.
+improvement cycle via `1840-auto-improve`.
+
+Spec: `docs/specs/019-cycle-continuity/spec.md` — invariant **B1** (thin bridge).
+Deep next-cycle analysis belongs in H1 (`.session/next-cycle-hypothesis.md`), not here.
 
 ## The chain
 
 ```
 End of current session:
-  1020-handoff        → writes status.md + handoff.md
-  1030-session-bridge → writes .ssot/next-session-prompt.md
+  1020-handoff         → status.md + handoff.md + H1 next-cycle-hypothesis.md
+  1040-session-bridge  → next-session-prompt.md (thin) + copy-paste snippet
 
 Next session:
-  0020-resume         → finds next-session-prompt.md → launches the cycle
-  0200 --consumer <id> → frontier model (Codex, Opus, etc.) produces the plan
-  consumer --from-frontier → cheap models execute the plan
+  0020-resume          → consumes prompt → launches 1840-auto-improve
+  1840-auto-improve    → diagnose → C1 critique → plan → gate → execute → verify → handoff
 ```
+
+> **Personalization note**: `1840-auto-improve`'s diagnostic commands (step 3) are generic by
+> default. The `1220-personalize` skill SHOULD have specialized them for this project (replacing
+> generic `npm test`/`npm run build` with the project's actual test, build, lint, and scan
+> commands). If the diagnostic step runs generic commands, consider running `1220-personalize`
+> to specialize the cycle before the next session.
+
+`0200-frontier-consult` is **optional**. Starting from ACOS 1.9.0, the default chain does
+NOT invoke a frontier model. `1840-auto-improve` produces its own plan internally. The
+frontier-consult path is opt-in only — the user must explicitly request it, either verbally
+("use a frontier model", "consult Opus/Codex first") or by setting `--frontier` in the
+prompt file's `## Action` section.
 
 ## Inputs
 
-- `--consumer <entrypoint-id>` (required) — the entrypoint that will execute the plan
-  produced by the frontier model. Must declare a `planConsumer` section in its frontmatter.
-- `--question <text>` (optional) — the question for the frontier model. If not provided,
-  the skill derives it from the handoff's "Next recommended action".
+- `--consumer <entrypoint-id>` (optional, default: `1840-auto-improve`) — the entrypoint
+  that will execute the cycle. Must exist in `.ssot/agents/workflows.json`.
+- `--question <text>` (optional) — the objective for the cycle. If not provided, the skill
+  derives it from the handoff's "Next recommended action" and H1.
+- `--frontier` (optional) — flag the prompt file to request a frontier-model plan before
+  execution. When set, `0020-resume` will invoke `0200-frontier-consult --consumer <id>`
+  instead of launching the consumer directly. If the consumer declares a `planConsumer`
+  section in its frontmatter, the frontier model's plan is persisted to that location.
+  If not, the frontier model's output is advisory only.
 
 ## Procedure
 
 1. **Verify handoff exists** — read `.ssot/handoff.md`. If it's missing or empty, stop and
    tell the user to run `1020-handoff` first.
 
-2. **Read the next action** — extract the "Next recommended action" from `.ssot/handoff.md`
-   and the current objective from `.ssot/status.md`.
+2. **Require H1 (B1)** — locate `.session/next-cycle-hypothesis.md`, or alias
+   `.session/next-cycle-analysis.md`. If neither exists (or content is only a leftover
+   sentence without candidate lanes), **stop** and tell the user to finish `1020` H1
+   first. Do not invent a deep analysis here.
 
-3. **Build the question** — if `--question` was provided, use it verbatim. Otherwise,
-   reformulate the handoff's next action as an open-ended question for the frontier model.
-   The question should describe **what** needs to be done, not **how** — the frontier model
-   decides how. For example:
-   - Handoff says: "Next: fix the 8 KPIs in ERROR state"
-   - Question becomes: "Diagnose the 8 KPIs currently in ERROR state and produce a
-     correction plan"
+3. **Read the next action** — extract the "Next recommended action" from `.ssot/handoff.md`
+   and the current objective from `.ssot/status.md`. Cross-check against H1 candidate lanes.
 
-4. **Verify the consumer** — resolve `--consumer <entrypoint-id>` in
-   `.ssot/agents/workflows.json`, read the entrypoint file, and confirm it has a
-   `planConsumer` section in its frontmatter. If not, stop and tell the user: "Consumer
-   <id> does not declare a planConsumer section. The frontier model's output won't be
-   consumable by this entrypoint."
+4. **Build the objective** — if `--question` was provided, use it verbatim. Otherwise,
+   reformulate the handoff next action + H1 into a clear cycle objective (**what**, not a
+   full execution plan — C1 + plan happen in the next `1840`).
 
-5. **Write the prompt file** — write `.ssot/next-session-prompt.md` with this structure:
+5. **Resolve the consumer** — resolve `--consumer <entrypoint-id>` (default:
+   `1840-auto-improve`) in `.ssot/agents/workflows.json`. Read the entrypoint file to
+   confirm it exists. If the consumer is not `1840-auto-improve` and does not declare a
+   `planConsumer` section in its frontmatter, warn the user (only relevant if `--frontier`
+   is set): "Consumer <id> does not declare a planConsumer section. The frontier model's
+   output will be advisory only and won't be auto-persisted."
+
+6. **Write the prompt file** — write `.ssot/next-session-prompt.md` with this structure:
 
    ```markdown
-   # Next session — automated improvement cycle
+   # Next session — auto-improve cycle
 
    ## Action
-   Launch `0200-frontier-consult --consumer <entrypoint-id>` with the question below.
+   Launch `1840-auto-improve` directly after reprise.
+   <!-- If --frontier was set, replace the line above with: -->
+   <!-- Launch `0200-frontier-consult --consumer 1840-auto-improve` with the objective below, then hand off to `1840-auto-improve --from-frontier`. -->
 
    ## Consumer
    <entrypoint-id>
 
-   ## Question
-   <the question from step 3>
+   ## Objective
+   <the objective from step 4>
+
+   ## Hypothesis
+   `.session/next-cycle-hypothesis.md`
+   <!-- or `.session/next-cycle-analysis.md` if that alias was used -->
+
+   ## Constraints
+   - Run diagnose, then **C1** (`.session/hypothesis-critique.md`) before planning.
+   - Human gate = one recommended plan; **approve or amend only** (no skip/reject menus).
+   - Do not trust prior claims without live revalidation.
+   - Do not push or deploy without explicit authorization.
 
    ## Context summary
    <2-3 lines from status.md: current objective, active milestone, key blockers>
-
-   ## After frontier-consult
-   The frontier model will produce a plan. After user approval, hand off to
-   `<entrypoint-id> --from-frontier` to execute with cheap models.
    ```
 
-6. **Tell the user** — report:
+7. **Produce the copy-paste snippet** — generate a self-contained snippet the user can
+   copy-paste at the start of the next session. Format:
+
+   ```
+   /0020-resume
+
+   Project: <absolute project path>
+   Read AGENTS.md (or CLAUDE.md / .cursor/rules/acos.mdc depending on the client) for
+   project rules, then read .ssot/next-session-prompt.md and launch 1840-auto-improve.
+   Run acos --check before completion. Do not push or deploy without explicit authorization.
+   ```
+
+   If `--frontier` was set, the snippet's last line becomes:
+   ```
+   Read .ssot/next-session-prompt.md and launch 0200-frontier-consult --consumer 1840-auto-improve with the internal plan as context, then hand off to 1840-auto-improve --from-frontier.
+   ```
+
+   Print the snippet to the user in a copy-paste code block. Tell the user: "Paste this
+   snippet at the start of the next session. 0020-resume will orient from the project
+   rules and status files, then launch the cycle."
+
+8. **Tell the user** — report:
    - The prompt file path (`.ssot/next-session-prompt.md`)
+   - The H1 path used
    - The consumer entrypoint that will be used
-   - The question that will be sent to the frontier model
-   - "At the next session, 0020-resume will find this prompt and launch the cycle
-     automatically."
+   - The objective that will be sent to the consumer
+   - Whether frontier-consult is enabled or disabled (default: disabled)
+   - The copy-paste snippet (from step 7)
+   - "At the next session, paste the snippet. `0020-resume` will find the prompt file and
+     launch the cycle. `1840` will revalidate and critique H1 (C1) before the gate."
 
 ## What 0020-resume does with this file
 
 When `0020-resume` runs at the start of the next session, it checks for
 `.ssot/next-session-prompt.md`. If found, it:
-1. Reads the consumer ID and question
-2. Launches `0200-frontier-consult --consumer <id>` with the question
-3. After the frontier model produces the plan and the user approves, hands off to the
-   consumer entrypoint with `--from-frontier`
-4. Deletes `.ssot/next-session-prompt.md` after the cycle is launched (one-shot)
+1. Reads the **whole** file (Action, Consumer, Objective, Hypothesis, Constraints, Context)
+2. **Default path (no frontier)**: launches the consumer entrypoint directly
+   (`1840-auto-improve`) with the full contract as input
+3. **Frontier path (opt-in)**: if the prompt file's `## Action` section says `--frontier`,
+   launches `0200-frontier-consult --consumer <id>` with the objective, then hands off to
+   the consumer with `--from-frontier`
+4. Deletes `.ssot/next-session-prompt.md` after the cycle is launched (one-shot) — **X1**:
+   this is the only delete of the consumed prompt; the new prompt written by a later `1040`
+   must not be deleted by `1840`
 
 This is a one-shot mechanism. The prompt file is consumed and deleted. If the cycle fails
-or is interrupted, the user can re-run `1030-session-bridge` to prepare a new one.
+or is interrupted, the user can re-run `1040-session-bridge` to prepare a new one.
 
 ## Authority
 
-- This entrypoint is **read-only** — it writes only `.ssot/next-session-prompt.md`.
-- It does not invoke the frontier model. That happens in the next session via `0200`.
+- This entrypoint is **read-only** except for writing `.ssot/next-session-prompt.md`.
+- It does **not** replace H1 with a new deep analysis (**B1**).
+- It does not invoke the frontier model. That happens in the next session only if the user
+  explicitly opts in.
 - It does not execute the plan. That happens via the consumer entrypoint.
+- It does not push or deploy anything.

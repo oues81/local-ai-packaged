@@ -2,7 +2,7 @@
 
 # Context Index
 
-SSOT version: `1.9.2` · Content hash: `8940a501145c64352a70b7d2b69e7340922e3512f03ec6d2ecf6b2f9590fac30`
+SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f31507da4ac6f60ce401dfcfbe8d`
 
 ## Quick reference
 
@@ -73,7 +73,7 @@ SSOT version: `1.9.2` · Content hash: `8940a501145c64352a70b7d2b69e7340922e3512
 | 1400 | mco-force-analysis | Force cycle analysis for a project via MCPCO |
 | 1420 | mco-open-pr | Open a pull request for a project's cycle via MCPCO |
 | 1440 | mco-authorize-merge | Authorize merging a cycle's PR with two-factor confirmation via MCPCO |
-| 1840 | auto-improve | Automated improvement cycle — diagnose, plan, execute, verify, hand off |
+| 1840 | auto-improve | Automated improvement cycle — diagnose, critique, plan, execute, verify, hand off |
 | — | planner | Architecture and planning subagent that produces dependency-aware implementation plans. |
 | — | reviewer | Code review subagent focused on correctness, safety, and maintainability. |
 | — | verifier | Verification subagent that runs acceptance checks and reports evidence. |
@@ -99,7 +99,7 @@ SSOT version: `1.9.2` · Content hash: `8940a501145c64352a70b7d2b69e7340922e3512
 - **description**: Recover project state and continue from the best next action
 - **source**: `.ssot/agents/entrypoints/0020-resume.md`
 - **projections**: `.agents/skills/0020-resume/SKILL.md`, `.claude/commands/0020-resume.md`, `.claude/rules/acos.md`, `.claude/skills/0020-resume/SKILL.md`, `.claude/workflows/0020-resume.md`, `.codex/rules/acos.md`, `.codex/skills/0020-resume/SKILL.md`, `.cursor/commands/0020-resume.md`, `.cursor/skills/0020-resume/SKILL.md`, `.devin/skills/0020-resume/SKILL.md`, `.kilo/commands/0020-resume.md`, `.kilo/rules/acos.md`, `.kilo/skills/0020-resume/SKILL.md`, `.kilocode/workflows/0020-resume.md`, `.opencode/commands/0020-resume.md`, `.opencode/rules/acos.md`, `.opencode/skills/0020-resume/SKILL.md`, `.windsurf/workflows/0020-resume.md`, `agent/skills/0020-resume/SKILL.md`
-- **contentHash**: `a7e82e974d4e9717fef4af31e22c43c09222c1216b15476d5118839aeae2d675`
+- **contentHash**: `e3ed38a92b9922c0ac63feff025249cdd9aa16ed1a3b8b8511337b2d5176dcfa`
 
 ### 0040-route
 - **stableId**: `project.route`
@@ -486,7 +486,7 @@ SSOT version: `1.9.2` · Content hash: `8940a501145c64352a70b7d2b69e7340922e3512
 - **description**: Persist a factual end-of-session handoff
 - **source**: `.ssot/agents/entrypoints/1020-handoff.md`
 - **projections**: `.agents/skills/1020-handoff/SKILL.md`, `.claude/commands/1020-handoff.md`, `.claude/rules/acos.md`, `.claude/skills/1020-handoff/SKILL.md`, `.claude/workflows/1020-handoff.md`, `.codex/rules/acos.md`, `.codex/skills/1020-handoff/SKILL.md`, `.cursor/commands/1020-handoff.md`, `.cursor/skills/1020-handoff/SKILL.md`, `.devin/skills/1020-handoff/SKILL.md`, `.kilo/commands/1020-handoff.md`, `.kilo/rules/acos.md`, `.kilo/skills/1020-handoff/SKILL.md`, `.kilocode/workflows/1020-handoff.md`, `.opencode/commands/1020-handoff.md`, `.opencode/rules/acos.md`, `.opencode/skills/1020-handoff/SKILL.md`, `.windsurf/workflows/1020-handoff.md`, `agent/skills/1020-handoff/SKILL.md`
-- **contentHash**: `a2bf12c59f6e559dabf7533c74fb5e5a07d913b2ca600c7307ffcd2ebd42ef48`
+- **contentHash**: `a13a92e639b6e066ed7aefe4d58a71d03f84d440052da086a9d97f5ccc61f699`
 
 ### 1040-session-bridge
 - **stableId**: `session.bridge`
@@ -495,7 +495,7 @@ SSOT version: `1.9.2` · Content hash: `8940a501145c64352a70b7d2b69e7340922e3512
 - **description**: Prepare the next session prompt for an automated improvement cycle
 - **source**: `.ssot/agents/entrypoints/1040-session-bridge.md`
 - **projections**: `.agents/skills/1040-session-bridge/SKILL.md`, `.claude/commands/1040-session-bridge.md`, `.claude/rules/acos.md`, `.claude/skills/1040-session-bridge/SKILL.md`, `.claude/workflows/1040-session-bridge.md`, `.codex/rules/acos.md`, `.codex/skills/1040-session-bridge/SKILL.md`, `.cursor/commands/1040-session-bridge.md`, `.cursor/skills/1040-session-bridge/SKILL.md`, `.devin/skills/1040-session-bridge/SKILL.md`, `.kilo/commands/1040-session-bridge.md`, `.kilo/rules/acos.md`, `.kilo/skills/1040-session-bridge/SKILL.md`, `.kilocode/workflows/1040-session-bridge.md`, `.opencode/commands/1040-session-bridge.md`, `.opencode/rules/acos.md`, `.opencode/skills/1040-session-bridge/SKILL.md`, `.windsurf/workflows/1040-session-bridge.md`, `agent/skills/1040-session-bridge/SKILL.md`
-- **contentHash**: `52a331454aac735c94e7f38b55f1bccb214e57afe0ce36074f6190ef32f22f8d`
+- **contentHash**: `700e2cf43e1c7dd1d4bc30dd7e5bda3cd80cc197ea8b158b12ed910d1dd5657b`
 
 ### 1060-compact
 - **stableId**: `session.compact`
@@ -672,10 +672,10 @@ SSOT version: `1.9.2` · Content hash: `8940a501145c64352a70b7d2b69e7340922e3512
 - **stableId**: `project.autoimprove`
 - **category**: project
 - **type**: entrypoint
-- **description**: Automated improvement cycle — diagnose, plan, execute, verify, hand off
+- **description**: Automated improvement cycle — diagnose, critique, plan, execute, verify, hand off
 - **source**: `.ssot/agents/entrypoints/1840-auto-improve.md`
 - **projections**: `.agents/skills/1840-auto-improve/SKILL.md`, `.claude/commands/1840-auto-improve.md`, `.claude/rules/acos.md`, `.claude/skills/1840-auto-improve/SKILL.md`, `.claude/workflows/1840-auto-improve.md`, `.codex/rules/acos.md`, `.codex/skills/1840-auto-improve/SKILL.md`, `.cursor/commands/1840-auto-improve.md`, `.cursor/skills/1840-auto-improve/SKILL.md`, `.devin/skills/1840-auto-improve/SKILL.md`, `.kilo/commands/1840-auto-improve.md`, `.kilo/rules/acos.md`, `.kilo/skills/1840-auto-improve/SKILL.md`, `.kilocode/workflows/1840-auto-improve.md`, `.opencode/commands/1840-auto-improve.md`, `.opencode/rules/acos.md`, `.opencode/skills/1840-auto-improve/SKILL.md`, `.windsurf/workflows/1840-auto-improve.md`, `agent/skills/1840-auto-improve/SKILL.md`
-- **contentHash**: `31ddd3190ff6b5be19fae8a702d6744530b61c326ebacf24b71e198b77f63914`
+- **contentHash**: `507c936d8c179439950345869f29f8efdc0f6dd2586c06acc915f9ba2ccc374d`
 
 ### planner
 - **stableId**: null
@@ -729,4 +729,4 @@ SSOT version: `1.9.2` · Content hash: `8940a501145c64352a70b7d2b69e7340922e3512
 - **description**: Entrypoint workflow registry (66 entrypoints) at .ssot/agents/workflows.json.
 - **source**: `.ssot/agents/workflows.json`
 - **projections**: *(none)*
-- **contentHash**: `d210f0a493aa87538b6c86111d4ba9b58707a027181747f97a6bea2d2e59bab4`
+- **contentHash**: `271203007e4db10cd391d5a5ce86fc2730534877b3c2d61aa8aa5f5ab4f60795`

@@ -6,7 +6,7 @@ Source: .ssot/agents/entrypoints/1840-auto-improve.md
 
 # 1840-auto-improve
 
-> Automated improvement cycle — diagnose, plan, execute, verify, hand off
+> Automated improvement cycle — diagnose, critique, plan, execute, verify, hand off
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.
@@ -38,22 +38,24 @@ Source: .ssot/agents/entrypoints/1840-auto-improve.md
 Launch an autonomous auto-improvement cycle on the project. This entrypoint is triggered by
 `0020-resume` when it finds `.ssot/next-session-prompt.md`, or directly by the user.
 
+Spec: `docs/specs/019-cycle-continuity/spec.md` — invariants **C1**, **G1**, **H1**, **X1**.
+
 ## The chain
 
 ```
 End of current session:
-  1020-handoff         → writes status.md + handoff.md
-  1040-session-bridge  → writes .ssot/next-session-prompt.md (with copy-paste snippet)
+  1020-handoff         → status.md + handoff.md + H1 hypothesis
+  1040-session-bridge  → next-session-prompt.md (thin)
 
 Next session:
-  0020-resume          → finds next-session-prompt.md → launches 1840-auto-improve
-  1840-auto-improve    → diagnose → plan → gate → execute → verify → handoff
+  0020-resume          → consumes prompt → launches 1840-auto-improve
+  1840-auto-improve    → diagnose → C1 critique → plan → gate → execute → verify → handoff
 ```
 
 `0200-frontier-consult` is **optional**. If the user explicitly requests a frontier-model
-critique before execution, 1840-auto-improve produces its own plan internally (step 4), then
-sends that plan to `0200-frontier-consult` for validation, critique, and improvement. The
-frontier model does NOT create the plan from scratch — it reviews and improves the plan
+critique before execution, 1840-auto-improve produces its own plan internally (after C1),
+then sends that plan to `0200-frontier-consult` for validation, critique, and improvement.
+The frontier model does NOT create the plan from scratch — it reviews and improves the plan
 already produced by this entrypoint. Otherwise, 1840-auto-improve produces its own plan
 internally and proceeds directly. The frontier-consult path is never the default — it is
 opt-in only.
@@ -61,40 +63,49 @@ opt-in only.
 ## Inputs
 
 - The user's accompanying text is the **objective** of the cycle.
-- If `.ssot/next-session-prompt.md` exists, its `## Objective` section is the objective.
+- If `.ssot/next-session-prompt.md` exists, read the **whole** file (Objective, Hypothesis,
+  Constraints, Context) — not the objective line alone.
+- Prior hypothesis (H1): `.session/next-cycle-hypothesis.md` or alias
+  `.session/next-cycle-analysis.md` (search order: hypothesis → analysis → handoff-only
+  degraded).
 - `--from-frontier` (optional) — indicates a frontier-model critique already exists at the
   `planConsumer.specPath`/`planFile` location. The internal plan was produced, sent to the
   frontier model for critique, and the improved plan was written back. Read the improved plan
   and skip re-planning. This flag is only set when `0200-frontier-consult --consumer
   1840-auto-improve` was invoked after the internal plan was produced.
 - `--frontier` (optional) — explicitly request a frontier-model critique of the internal plan
-  before execution. This produces the internal plan (step 4), then invokes
-  `0200-frontier-consult --consumer 1840-auto-improve` with the objective + the internal plan
-  as context for critique. After the frontier model improves the plan and the user approves,
-  continue with `--from-frontier` semantics.
+  before execution. Produce diagnose + C1 + internal plan first, then invoke
+  `0200-frontier-consult --consumer 1840-auto-improve`. After the frontier model improves the
+  plan and the user approves, continue with `--from-frontier` semantics.
 
 ## Procedure
 
-1. **Read the objective** — if `.ssot/next-session-prompt.md` exists, read it and extract
-   the `## Objective` section. Otherwise, use the user's accompanying text. If neither
+1. **Read the cycle contract** — if `.ssot/next-session-prompt.md` exists, read the whole
+   file. Also read H1 if present. Otherwise, use the user's accompanying text. If neither
    provides a clear objective, ask the user what they want to improve.
 
 2. **Frontier-consult gate (optional)** — if `--frontier` was provided OR the user
    explicitly asks for a frontier-model critique:
-   - **Produce the internal plan first** (step 4 below), then return here.
+   - **Produce diagnose + C1 + internal plan first** (steps 3–5 below), then return here.
    - Launch `0200-frontier-consult --consumer 1840-auto-improve` with the objective AND
      the internal plan as context. The frontier model validates, critiques, and improves
      the plan — it does NOT create one from scratch.
    - After the frontier model returns the improved plan and the user approves it, continue
      with `--from-frontier` semantics (the improved plan file is pre-existing).
    - If the user did NOT request frontier-consult, skip this step entirely and use the
-     internal plan directly (step 4).
+     internal plan directly (step 5).
 
 3. **Diagnose the real state** — run the project's standard verification commands to
    establish a baseline. This is project-specific and SHOULD be personalized by the
    `1220-personalize` skill. Two modes:
 
    **Single-project mode** (default — standalone project or satellite):
+   - Read `AGENTS.md` for the project's operating contract, build/test commands, and
+     conventions. Verify that the Build, Test, Conventions, and Boundaries sections are
+     populated and match the actual codebase. If `AGENTS.md` still contains placeholder
+     text (`_Run 1220-personalize to populate..._`) or references stale commands, flag
+     this as a personalization gap and add "run `1220-personalize`" to the improvement
+     plan.
    - Read `.ssot/status.md` and `.ssot/handoff.md` for the last known state.
    - Run the project's test suite (detect the framework: `npm test`, `pytest`, `go test`,
      `cargo test`, etc.).
@@ -124,16 +135,37 @@ opt-in only.
      with a per-satellite table.
    - If the diagnostic reveals a need for wave decomposition (multi-satellite,
      multi-domain work), invoke `0160-wave-plan-prep` to prepare a structured wave plan
-     before proceeding to step 4.
+     before proceeding to planning.
    - If tests or build fail on any satellite: that satellite becomes a **correction
      priority** in the plan.
 
-4. **Plan** — produce a short plan in `.session/plan.md`:
+4. **C1 — Critique the previous hypothesis (mandatory)** — write
+   `.session/hypothesis-critique.md` **before** planning or the human gate.
+
+   For each material claim or candidate lane in H1 (or, if H1 is missing, from handoff +
+   prompt — mark `degraded_input: true`):
+
+   | Field | Meaning |
+   |-------|---------|
+   | `claim` | What session N asserted or proposed |
+   | `live_check` | What was re-verified this session |
+   | `verdict` | `keep` \| `amend` \| `drop` \| `blocked` |
+   | `enrichment` | What to add or correct for the plan |
+   | `evidence` | Path, command, or observation |
+
+   Rules:
+   - Prefer live evidence over prior narrative (**autocritique**).
+   - Do not copy H1 unchanged into the plan. At least one amend/drop/enrichment **or**
+     explicit "all keep" with revalidation evidence is required.
+   - Do not present the human gate until this file exists.
+
+5. **Plan** — produce a **single recommended** plan in `.session/plan.md` derived from C1
+   (not a menu of peer strategies):
    - If `--from-frontier` was set: read the improved plan from
      `<specPath>/<planFile>` (declared in the `planConsumer` frontmatter) and use it
      directly. Skip internal planning — the plan was already produced internally and
      improved by the frontier model.
-   - Otherwise: based on the diagnostic, identify what to do:
+   - Otherwise: based on diagnostic + C1, identify what to do:
      - **If things are green**: identify improvements (design, performance, security,
        technical debt, UX, missing tests, documentation gaps). Prioritize by impact.
      - **If things are red**: identify the corrections needed. Prioritize by severity.
@@ -154,12 +186,17 @@ opt-in only.
        verification command, `Parallelizable: true|false`, `Lane` assignment.
      - Max 5 parallel lanes per wave (coordination cost).
 
-5. **Human gate** — present the plan to the user. Wait for approval before executing.
-   Do NOT execute blindly. This is the single human gate in the cycle.
-   - If the user modifies the plan, update `.session/plan.md` accordingly.
-   - If the user rejects the plan, stop and ask for a new objective.
+6. **Human gate (G1)** — present **one** recommended plan to the user. Wait for approval
+   before executing. Do NOT execute blindly. This is the single human gate in the cycle.
+   - Required presentation: the plan from `.session/plan.md`, a short rationale (what C1
+     kept / amended / dropped), and ask **Approve** or **Amend** (user specifies changes).
+   - If the user amends, update `.session/plan.md` accordingly.
+   - **Forbidden**: multi-choice menus such as Approve B1 / Skip B1 / Reject cycle as peer
+     defaults. Do not ask the user to invent the plan when diagnose+C1 already produced one.
+   - Edge case only: if the user refuses the objective entirely, stop and ask for a new
+     objective — this is not a routine menu option.
 
-6. **Execute** — implement the approved tasks. Two modes:
+7. **Execute** — implement the approved tasks. Two modes:
 
    **Standard mode** (≤5 tasks, single project):
    - Implement tasks one by one or in parallel if independent.
@@ -189,23 +226,23 @@ opt-in only.
    - After each wave, the parent agent runs the relevant verification commands
      (never trust sub-agent-reported pass without re-running).
 
-7. **Verify** — re-run the same verification commands as step 3. If regressions appear,
+8. **Verify** — re-run the same verification commands as step 3. If regressions appear,
    fix them before continuing. Record results in `.session/verify.md`.
 
-8. **Handoff** — launch `1020-handoff` to close the session:
+9. **Handoff** — ensure an H1 draft is ready (or let `1020` write it), then launch
+   `1020-handoff` to close the session:
    - Update `.ssot/status.md` and `.ssot/handoff.md`.
+   - Write/refresh `.session/next-cycle-hypothesis.md` (**H1**) before `1040`.
    - Record decisions in `.ssot/decisions.md`.
    - Sync the SSOT (`0660-sync`).
    - Commit the changes (do not push without explicit authorization).
+   - `1020` invokes `1040-session-bridge` mandatorily.
 
-9. **Session bridge (mandatory)** — launch `1040-session-bridge` to write
-   `.ssot/next-session-prompt.md` and produce the copy-paste snippet for the next
-   session. This chains automatically so the user only needs to paste the snippet
-   at the start of the next session.
-
-10. **Cleanup** — delete `.ssot/next-session-prompt.md` (the cycle is consumed, one-shot).
-    If the cycle failed or was interrupted, the user can re-run `1040-session-bridge` to
-    prepare a new one.
+10. **Cleanup (X1)** — the prompt that launched this cycle was already consumed and
+    deleted by `0020-resume` at cycle start. Do **not** delete
+    `.ssot/next-session-prompt.md` after `1040` writes the **new** prompt for the next
+    session. If the cycle failed or was interrupted before `1040`, the user can re-run
+    `1040-session-bridge` to prepare a new one.
 
 ## Personalization
 
@@ -213,16 +250,20 @@ This entrypoint is project-agnostic in ACOS core. The `1220-personalize` skill S
 specialize it for each project by:
 - Replacing the generic diagnostic commands (step 3) with the project's actual test,
   build, lint, and scan commands.
-- Adding project-specific protected paths and constraints to step 6.
-- Adding project-specific improvement categories to step 4.
-- Adding project-specific verification requirements to step 7.
+- Adding project-specific protected paths and constraints to step 7.
+- Adding project-specific improvement categories to step 5.
+- Adding project-specific verification requirements to step 8.
+
+Personalization MUST NOT remove C1/G1/H1/X1 or replace the gate with a skip/reject menu.
 
 The personalized version lives in the project's `.ssot/agents/entrypoints/1840-auto-improve.md`
 and overrides the ACOS template version.
 
 ## Reminders
 
-- The cycle does NOT relaunch automatically. Wait for human validation at the end.
+- Autocritique is mandatory: never trust the previous agent's claims without live
+  revalidation (C1).
+- The cycle does NOT relaunch automatically. Wait for human validation at the gate.
 - If the diagnostic reveals a blocker (P0, external ops, human action), stop and report it.
 - Do NOT push to the remote without explicit authorization.
 - Do NOT deploy without explicit authorization.
@@ -236,8 +277,8 @@ and overrides the ACOS template version.
 
 - This entrypoint has **bounded autonomy**: it reads, writes code, runs tests, and commits,
   but does not push or deploy.
-- The human gate at step 5 is mandatory. No execution without approval.
-- The handoff at step 8 is mandatory. No session ends without a handoff.
+- C1 and the human gate (G1) are mandatory. No execution without approve/amend.
+- The handoff at step 9 is mandatory. No session ends without a handoff + H1 path to 1040.
 
 ## planConsumer (optional — only used when --frontier is set)
 
