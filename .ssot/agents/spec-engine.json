@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.2",
+  "ssotVersion": "1.9.3",
   "name": "acos-spec-engine",
   "description": "Native ACOS specification engine: structured, dependency-free spec-driven development lifecycle.",
   "lifecycle": {

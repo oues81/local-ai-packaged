@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.2",
+  "ssotVersion": "1.9.3",
   "entrypointSourceDir": ".ssot/agents/entrypoints",
   "entrypoints": [
     {
@@ -30,7 +30,7 @@
       "id": "project.constitution",
       "order": 60,
       "slug": "constitution",
-      "description": "Establish or update the project constitution \u2014 principles, constraints, and authority boundaries",
+      "description": "Establish or update the project constitution — principles, constraints, and authority boundaries",
       "source": "0060-constitution.md",
       "category": "onboarding"
     },
@@ -80,7 +80,7 @@
       "source": "0200-frontier-consult.md",
       "slug": "frontier-consult",
       "category": "delivery",
-      "description": "Invoke a frontier model via one of the ACOS client CLIs for strategic analysis"
+      "description": "Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch"
     },
     {
       "id": "delivery.checklist",
@@ -214,7 +214,7 @@
       "id": "git.pr",
       "order": 580,
       "slug": "git-pr",
-      "description": "Manage pull requests with gh \u2014 create, review, CI status, and merge",
+      "description": "Manage pull requests with gh — create, review, CI status, and merge",
       "source": "0580-git-pr.md",
       "category": "maintenance"
     },
@@ -390,7 +390,7 @@
       "id": "project.migrate",
       "order": 1100,
       "slug": "migrate",
-      "description": "Migration router \u2014 determines the correct migration path based on project state (new install, version upgrade, structural reconciliation, or ecosystem batch migration)",
+      "description": "Migration router — determines the correct migration path based on project state (new install, version upgrade, structural reconciliation, or ecosystem batch migration)",
       "source": "1100-migrate.md",
       "category": "project"
     },
@@ -408,7 +408,7 @@
       "slug": "migrate-workflow",
       "source": "1140-migrate-workflow.md",
       "category": "project",
-      "description": "Orchestrate the full 5-phase hybrid migration workflow \u2014 analysis, agent prep, deterministic apply, post-merge agent, verify \u2014 with human gates between each phase"
+      "description": "Orchestrate the full 5-phase hybrid migration workflow — analysis, agent prep, deterministic apply, post-merge agent, verify — with human gates between each phase"
     },
     {
       "id": "project.migrate.verify",
@@ -424,7 +424,7 @@
       "slug": "migrate-ecosystem",
       "source": "1180-migrate-ecosystem.md",
       "category": "project",
-      "description": "Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) \u2014 batch migration with per-project status reporting"
+      "description": "Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting"
     },
     {
       "id": "project.metaskill",
@@ -523,10 +523,18 @@
       "category": "ecosystem"
     },
     {
+      "id": "ecosystem.cycle.launch",
+      "order": 1460,
+      "slug": "ecosystem-cycle-launch",
+      "description": "Resolve and fan-out per-project ACOS cycles (0020→1840→1020) from a container across selected targets",
+      "source": "1460-ecosystem-cycle-launch.md",
+      "category": "ecosystem"
+    },
+    {
       "id": "project.autoimprove",
       "order": 1840,
       "slug": "auto-improve",
-      "description": "Automated improvement cycle \u2014 diagnose, critique, plan, execute, verify, hand off",
+      "description": "Automated improvement cycle — diagnose, critique, plan, execute, verify, hand off",
       "source": "1840-auto-improve.md",
       "category": "project"
     }

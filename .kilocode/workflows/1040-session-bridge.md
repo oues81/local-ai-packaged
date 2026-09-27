@@ -44,7 +44,7 @@ Deep next-cycle analysis belongs in H1 (`.session/next-cycle-hypothesis.md`), no
 
 ```
 End of current session:
-  1020-handoff         → status.md + handoff.md + H1 next-cycle-hypothesis.md
+  1020-handoff         → status.md + handoff.md + S1 scan + H1 next-cycle-hypothesis.md
   1040-session-bridge  → next-session-prompt.md (thin) + copy-paste snippet
 
 Next session:
@@ -93,6 +93,13 @@ prompt file's `## Action` section.
    reformulate the handoff next action + H1 into a clear cycle objective (**what**, not a
    full execution plan — C1 + plan happen in the next `1840`).
 
+4b. **Resolve the target project (containers only)** — if `clients.json` declares
+   `ecosystemChildren`, fill `## Target project` in the prompt with the satellite the
+   next session should work in: the first entry of `.session/bridge-queue.md` if that
+   queue exists, otherwise the project this session just worked in, otherwise
+   `container`. If the intent is ambiguous, ask the user. `0020-resume` uses this field
+   to re-orient into the satellite before launching the consumer.
+
 5. **Resolve the consumer** — resolve `--consumer <entrypoint-id>` (default:
    `1840-auto-improve`) in `.ssot/agents/workflows.json`. Read the entrypoint file to
    confirm it exists. If the consumer is not `1840-auto-improve` and does not declare a
@@ -113,6 +120,9 @@ prompt file's `## Action` section.
    ## Consumer
    <entrypoint-id>
 
+   ## Target project
+   <satellite path from `ecosystemChildren`, or "container">
+
    ## Objective
    <the objective from step 4>
 
@@ -128,6 +138,9 @@ prompt file's `## Action` section.
 
    ## Context summary
    <2-3 lines from status.md: current objective, active milestone, key blockers>
+
+   ## Resume snippet
+   <the copy-paste snippet produced in step 7>
    ```
 
 7. **Produce the copy-paste snippet** — generate a self-contained snippet the user can
@@ -147,9 +160,19 @@ prompt file's `## Action` section.
    Read .ssot/next-session-prompt.md and launch 0200-frontier-consult --consumer 1840-auto-improve with the internal plan as context, then hand off to 1840-auto-improve --from-frontier.
    ```
 
-   Print the snippet to the user in a copy-paste code block. Tell the user: "Paste this
-   snippet at the start of the next session. 0020-resume will orient from the project
-   rules and status files, then launch the cycle."
+   Then deliver the snippet on **three** channels (**B2**):
+   - **Persist** — write it verbatim into the prompt file's `## Resume snippet`
+     section (the file written in step 6).
+   - **Print** — show it to the user in a copy-paste code block.
+   - **Clipboard** — attempt a best-effort OS clipboard copy so the user can
+     paste directly: `clip` (Windows), `pbcopy` (macOS), `xclip`, `xsel`, or
+     `wl-copy` (Linux). Non-fatal — if no clipboard tool is available, the
+     printed block and the prompt file are the fallback. Report which channel
+     was used.
+
+   Tell the user: "Paste this snippet at the start of the next session.
+   0020-resume will orient from the project rules and status files, then
+   launch the cycle."
 
 8. **Tell the user** — report:
    - The prompt file path (`.ssot/next-session-prompt.md`)
@@ -157,7 +180,8 @@ prompt file's `## Action` section.
    - The consumer entrypoint that will be used
    - The objective that will be sent to the consumer
    - Whether frontier-consult is enabled or disabled (default: disabled)
-   - The copy-paste snippet (from step 7)
+   - The copy-paste snippet (from step 7), and whether it was persisted in
+     `## Resume snippet` and copied to the clipboard
    - "At the next session, paste the snippet. `0020-resume` will find the prompt file and
      launch the cycle. `1840` will revalidate and critique H1 (C1) before the gate."
 
@@ -165,7 +189,8 @@ prompt file's `## Action` section.
 
 When `0020-resume` runs at the start of the next session, it checks for
 `.ssot/next-session-prompt.md`. If found, it:
-1. Reads the **whole** file (Action, Consumer, Objective, Hypothesis, Constraints, Context)
+1. Reads the **whole** file (Action, Consumer, Objective, Hypothesis, Constraints,
+   Context, Resume snippet — informational only)
 2. **Default path (no frontier)**: launches the consumer entrypoint directly
    (`1840-auto-improve`) with the full contract as input
 3. **Frontier path (opt-in)**: if the prompt file's `## Action` section says `--frontier`,

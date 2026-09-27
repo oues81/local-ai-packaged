@@ -131,6 +131,24 @@ Based on 0a–0c, write down:
 This needs assessment is the **primary input** to personalization. The deterministic script
 is a secondary input that catches mechanical gaps the agent might overlook.
 
+#### 0e. Identify active entrypoint cycles
+
+Understand which entrypoint cycles the project actually uses. The standard ACOS cycle is:
+
+```
+0020-resume → 1840-auto-improve → 1020-handoff → 1040-session-bridge → (next session) 0020-resume
+```
+
+Check:
+- Does the project use the auto-improve cycle? (Look for `.session/` artifacts, references to
+  `1840-auto-improve` in decisions or handoff.)
+- Does the project use the spec engine cycle? (`0100-spec → 0140-plan → 0180-data-model → 0220-checklist → 0260-execute → 0300-verify`)
+- Does the project have custom cycles? (Custom entrypoints at 1500+ that chain together.)
+- Which entrypoints in these cycles have generic/boilerplate content that should be personalized?
+
+**Prioritize personalization of entrypoints in active cycles.** An entrypoint that is part of a
+daily cycle (0020, 1840, 1020, 1040) has more impact than one that is rarely invoked.
+
 ---
 
 ### Phase 1 — Deterministic analysis (complement to Phase 0)
@@ -153,13 +171,42 @@ mechanical issues (stack detection, schema validation, missing fields). Your Pha
 catches semantic issues (wrong descriptions, missing project-specific rules, stale context).
 Both matter. Deduplicate where they overlap.
 
+### Phase 1b — Personalization planning (agent)
+
+Before generating the report, prioritize the merged findings into a structured plan:
+
+1. **Sort by impact on active cycles** (Phase 0e):
+   - **Priority 1**: auto-improve cycle entrypoints (0020, 1840, 1020, 1040) — these entrypoints
+     are invoked every session.
+   - **Priority 2**: context and rules (AGENTS.src.md, common.md) — affect all agents.
+   - **Priority 3**: clients.json and protected-paths — affect projections.
+   - **Priority 4**: constitution and other entrypoints — less frequently invoked.
+
+2. **Group by category** (context, rules, clients, entrypoints, constitution):
+   - Each group can be approved/rejected independently at Phase 4.
+   - A group should not exceed 5-7 recommendations to keep the approval gate manageable.
+
+3. **Identify dependencies**:
+   - If a recommendation on `AGENTS.src.md` affects projections, note that `acos --fix` is
+     needed after.
+   - If a recommendation modifies an entrypoint body, note that `personalized: true` must be
+     added to the frontmatter (Phase 5).
+
+4. **Estimate scope**:
+   - **Light**: 1-3 files, no risk of breaking projections.
+   - **Medium**: 4-10 files, requires `acos --fix` after.
+   - **Heavy**: >10 files or structural modifications — split into sub-groups.
+
+This planning structures the report (Phase 3) and the approval gate (Phase 4) into prioritized
+and manageable groups rather than a flat list.
+
 ---
 
 ### Phase 2 — Client best-practices research (agent layer)
 
 If `--refresh-best-practices` was requested, or if any client's best-practices cache is stale
 (older than 90 days) or missing, use `web_search` to research current best practices for each
-of the 6 required clients:
+of the 7 required clients:
 
 - **Claude Code** (`claude`) — search for current Claude Code skills, rules, hooks, and MCP config
   patterns.
@@ -168,6 +215,8 @@ of the 6 required clients:
 - **Kilo Code** (`kilocode`) — search for current Kilo Code skills, commands, workflows, and rules.
 - **OpenCode** (`opencode`) — search for current OpenCode commands, skills, rules, and agents.
 - **OpenAI Codex** (`codex`) — search for current Codex agents, hooks, and config patterns.
+- **Eve** (`eve`) — search for current Eve agent instructions, skills, connections, hooks, tools,
+  and subagent patterns.
 
 Write the refreshed cache to `docs/client-best-practices/<client>.md` with frontmatter
 (`client`, `lastResearched`, `sourceUrls[]`) and a body of structured best practices. The cache
@@ -212,6 +261,9 @@ group (or all/none). The approval structure is:
 - **FM-006** (all rejected): write the report with "no changes applied" and exit cleanly.
 - Recommendations with `conflictsWith` set (contradicting an existing `D-xxx` decision) are
   automatically excluded from the apply step and noted in the report (FM-003).
+  `checkDecisionConflicts()` parses `.ssot/decisions.md`, extracts prohibition patterns
+  ("MUST NOT X", "no X", "never X") from each decision, and marks recommendations whose
+  `proposed` text affirmatively proposes a prohibited term.
 - Recommendations with `preservesCustomization: true` are automatically skipped and noted in the
   report (INV-004).
 
@@ -227,6 +279,36 @@ function. This:
   `.ssot/constitution.md`, and entrypoint files.
 - Takes an in-memory backup before any write.
 - Never edits projection files directly.
+
+**Personalization marker**: When a recommendation modifies the **body** of an entrypoint file
+(not just its frontmatter description), add `personalized: true` to that entrypoint's frontmatter.
+This marker tells the reconcile engine that the **entire entrypoint** (body + frontmatter description)
+has been intentionally customized and should not be overwritten by `acos-migrate --reconcile --apply
+--refresh-bodies`. The marker protects both the body and the description from template-driven refresh.
+
+To remove the marker (e.g. when a personalization is no longer needed), use:
+```
+npx acos-migrate --root . --reconcile --apply --unpersonalize <entrypoint-source>
+```
+
+Example — before personalization:
+```yaml
+---
+description: ...
+---
+```
+
+After personalization:
+```yaml
+---
+description: ...
+personalized: true
+---
+```
+
+Only add the marker when the **body** is modified. A frontmatter-only description update
+does not warrant the marker. The marker is optional and backward-compatible: entrypoints
+without it are treated as non-personalized (eligible for body refresh via `--refresh-bodies`).
 
 ---
 
@@ -258,6 +340,47 @@ On first run, add `ACOS_PERSONALIZATION_REPORT.md` to the project's `.gitignore`
 if none exists). The report is a transient artifact (DD-009-007); durable decisions are in
 `.ssot/decisions.md`.
 
+## Personalizing the auto-improve cycle (0020 → 1840 → 1020 → 1040)
+
+The auto-improve cycle is the primary ACOS use case. Here is how to personalize each
+entrypoint in the cycle:
+
+### 0020-resume
+
+- **Diagnostic commands**: replace generic commands with the project's actual commands
+  (tests, build, lint, scan).
+- **Ecosystem checks**: if the project is a satellite, add parent-specific checks (e.g.
+  verify inherited files are up to date).
+- **Runtime drift**: if the project has a declared runtime, add the specific check.
+
+### 1840-auto-improve
+
+- **Step 3 (Diagnose)**: replace generic commands with:
+  - The actual test command (`npm test`, `pytest`, `cargo test`, etc.).
+  - The actual build command (`npm run build`, `hugo`, `cargo build`, etc.).
+  - The actual lint command (`npm run lint`, `ruff`, `clippy`, etc.).
+  - The actual scan command (`npm audit`, `pip-audit`, `trivy`, etc.).
+  - Any other project-specific check (e.g. `hugo --gc` for a Hugo site).
+- **Step 4 (Plan)**: add project-specific improvement categories:
+  - Performance (e.g. Lighthouse for a web site, bench for Rust).
+  - Security (e.g. dependency audit, SAST scan).
+  - Technical debt (e.g. TODOs, deprecated APIs, code coverage gaps).
+  - Documentation (e.g. API docs, README, architecture diagrams).
+- **Step 6 (Execute)**: add project-specific protected paths.
+- **Step 7 (Verify)**: add project-specific verifications (e.g. smoke test after deploy).
+
+### 1020-handoff
+
+- **Cross-handoff**: if the project has dependencies, personalize the cross-project report
+  format.
+- **Session bridge**: personalize the default objective derived from the handoff.
+
+### 1040-session-bridge
+
+- **Consumer**: if the project uses a custom consumer instead of `1840-auto-improve`,
+  configure the default consumer.
+- **Objective derivation**: personalize how the objective is derived from the handoff.
+
 ## Flags
 
 - `--dry-run` — produce the report and plan without modifying any files. Verified by clean Git
@@ -285,3 +408,11 @@ best-practice sources changed — this is expected, not a bug (DD-009-008).
 - **Never propose a change without referencing the specific file, line, or pattern in the
   actual codebase that justifies it.** Generic recommendations without project-specific
   evidence are rejected.
+
+## Handoff
+
+After Phase 9 is complete, launch `1020-handoff` to persist the session state. This closes the
+personalization chain (`0020 → 0040 → 1220-personalize → 1020`). Record in the handoff:
+- which entrypoints were personalized (and now carry `personalized: true`)
+- which categories were skipped and why
+- any remaining personalization gaps for future sessions

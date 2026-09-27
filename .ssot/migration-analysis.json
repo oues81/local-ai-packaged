@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.2.0",
+  "analyzedAt": "2026-09-27T20:29:46.486Z",
+  "projectVersion": "1.9.2",
+  "targetVersion": "1.9.3",
+  "renames": [],
+  "missingStateFiles": [],
+  "semanticReferences": [],
+  "nonConformities": [],
+  "customRenumbering": [],
+  "prefixClassification": [],
+  "projectionGaps": {
+    "missingEntrypoints": [
+      {
+        "stableId": "ecosystem.cycle.launch",
+        "order": 1460,
+        "slug": "ecosystem-cycle-launch",
+        "source": "1460-ecosystem-cycle-launch.md",
+        "category": "ecosystem",
+        "description": "Resolve and fan-out per-project ACOS cycles (0020→1840→1020) from a container across selected targets"
+      }
+    ],
+    "staleEntrypoints": [],
+    "orphanedSourceFiles": [],
+    "missingTargets": [],
+    "staleClientProjections": [],
+    "staleGeneratedFiles": [
+      {
+        "clientKey": "claude",
+        "projectValue": [
+          "AGENTS.md",
+          "CLAUDE.md",
+          ".claude/skills/*/SKILL.md",
+          ".claude/commands/*.md",
+          ".claude/rules/*.md",
+          ".claude/agents/*.md",
+          ".claude/settings.json",
+          ".mcp.json",
+          ".claude/workflows/*.js",
+          ".claude-plugin/plugin.json",
+          ".claude/output-styles/*.md"
+        ],
+        "templateValue": [
+          "AGENTS.md",
+          "CLAUDE.md",
+          ".claude/skills/*/SKILL.md",
+          ".claude/commands/*.md",
+          ".claude/rules/*.md",
+          ".claude/agents/*.md",
+          ".claude/settings.json",
+          ".mcp.json",
+          ".claude/workflows/*.js",
+          ".claude-plugin/plugin.json"
+        ]
+      }
+    ],
+    "removedClientProjections": [
+      {
+        "clientKey": "claude",
+        "artifactKey": "outputStyles",
+        "projectValue": {
+          "mode": "native",
+          "surface": "Claude Code output styles in .claude/output-styles/*.md",
+          "outputs": [
+            ".claude/output-styles/*.md"
+          ]
+        }
+      }
+    ],
+    "phantomSurfaces": [],
+    "deprecatedSurfacesNotMarked": [],
+    "missingSurfaces": [],
+    "desktopOnlyMismatches": [],
+    "driftSummary": {
+      "missingEntrypointCount": 1,
+      "staleEntrypointCount": 0,
+      "orphanedFileCount": 0,
+      "missingTargetCount": 0,
+      "staleProjectionCount": 0,
+      "staleGeneratedFileCount": 1,
+      "removedProjectionCount": 1,
+      "phantomSurfaceCount": 0,
+      "deprecatedSurfaceCount": 0,
+      "missingSurfaceCount": 0,
+      "desktopOnlyMismatchCount": 0
+    },
+    "warnings": []
+  },
+  "ecosystemVersionDrift": [],
+  "personalizedDrift": [
+    {
+      "stableId": "project.resume",
+      "source": "0020-resume.md",
+      "personalized": true,
+      "description": "Entrypoint project.resume (0020-resume.md) is marked personalized and its body drifts from the template. Agent-assisted merge required to integrate template improvements while preserving project customizations."
+    },
+    {
+      "stableId": "maintenance.docker",
+      "source": "0780-docker.md",
+      "personalized": true,
+      "description": "Entrypoint maintenance.docker (0780-docker.md) is marked personalized and its body drifts from the template. Agent-assisted merge required to integrate template improvements while preserving project customizations."
+    },
+    {
+      "stableId": "session.handoff",
+      "source": "1020-handoff.md",
+      "personalized": true,
+      "description": "Entrypoint session.handoff (1020-handoff.md) is marked personalized and its body drifts from the template. Agent-assisted merge required to integrate template improvements while preserving project customizations."
+    }
+  ],
+  "review": {
+    "status": "complete",
+    "reviewerType": "agent",
+    "reviewedAt": "2026-09-27T20:32:10.944Z",
+    "scannerVersion": "1.9.3",
+    "contentHashes": {
+      "workflowsJson": "271203007e4db10cd391d5a5ce86fc2730534877b3c2d61aa8aa5f5ab4f60795",
+      "clientsJson": "3b2672db5f105a26580792421c18d35806bd6967eae192d558e73d8d1d395ca1"
+    },
+    "dispositions": [
+      {
+        "findingType": "personalizedDrift",
+        "findingKey": "project.resume",
+        "decision": "accept",
+        "rationale": "personalized:true marker — intentional project customization; route 1.9.2→1.9.3 is additive (1460) and does not touch entrypoint bodies"
+      },
+      {
+        "findingType": "personalizedDrift",
+        "findingKey": "maintenance.docker",
+        "decision": "accept",
+        "rationale": "personalized:true marker — intentional project customization; route 1.9.2→1.9.3 is additive (1460) and does not touch entrypoint bodies"
+      },
+      {
+        "findingType": "personalizedDrift",
+        "findingKey": "session.handoff",
+        "decision": "accept",
+        "rationale": "personalized:true marker — intentional project customization; route 1.9.2→1.9.3 is additive (1460) and does not touch entrypoint bodies"
+      }
+    ]
+  }
+}

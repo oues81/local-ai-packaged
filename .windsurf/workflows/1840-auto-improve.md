@@ -38,14 +38,14 @@ Source: .ssot/agents/entrypoints/1840-auto-improve.md
 Launch an autonomous auto-improvement cycle on the project. This entrypoint is triggered by
 `0020-resume` when it finds `.ssot/next-session-prompt.md`, or directly by the user.
 
-Spec: `docs/specs/019-cycle-continuity/spec.md` — invariants **C1**, **G1**, **H1**, **X1**.
+Spec: `docs/specs/019-cycle-continuity/spec.md` — invariants **C1**, **G1**, **H1**, **X1**, **S1**, **B2**, **E1**.
 
 ## The chain
 
 ```
 End of current session:
-  1020-handoff         → status.md + handoff.md + H1 hypothesis
-  1040-session-bridge  → next-session-prompt.md (thin)
+  1020-handoff         → status.md + handoff.md + S1 scan + H1 hypothesis
+  1040-session-bridge  → next-session-prompt.md + snippet (thin)
 
 Next session:
   0020-resume          → consumes prompt → launches 1840-auto-improve
@@ -186,13 +186,21 @@ opt-in only.
        verification command, `Parallelizable: true|false`, `Lane` assignment.
      - Max 5 parallel lanes per wave (coordination cost).
 
-6. **Human gate (G1)** — present **one** recommended plan to the user. Wait for approval
-   before executing. Do NOT execute blindly. This is the single human gate in the cycle.
-   - Required presentation: the plan from `.session/plan.md`, a short rationale (what C1
-     kept / amended / dropped), and ask **Approve** or **Amend** (user specifies changes).
+6. **Human gate (G1)** — present **one** recommended plan to the user, backed by the
+   analysis that produced it. Wait for approval before executing. Do NOT execute blindly.
+   This is the single human gate in the cycle.
+   - Required presentation: (a) the preliminary analysis — the viable options considered
+     and the impact / trade-offs of each, including options rejected during diagnose + C1;
+     (b) the recommended plan from `.session/plan.md` with a short justification (why this
+     option, what C1 kept / amended / dropped); (c) ask **Approve** or **Amend** (user
+     specifies changes).
+   - Alternatives are **analysis, not a menu**: each is shown with its impact and why it
+     was kept or rejected. "No menus" forbids co-equal options without a recommendation —
+     it does NOT forbid showing the decision space (rule 9).
    - If the user amends, update `.session/plan.md` accordingly.
    - **Forbidden**: multi-choice menus such as Approve B1 / Skip B1 / Reject cycle as peer
-     defaults. Do not ask the user to invent the plan when diagnose+C1 already produced one.
+     defaults; a bare plan with no analysis of alternatives; asking the user to invent
+     the plan when diagnose+C1 already produced one.
    - Edge case only: if the user refuses the objective entirely, stop and ask for a new
      objective — this is not a routine menu option.
 
@@ -229,10 +237,14 @@ opt-in only.
 8. **Verify** — re-run the same verification commands as step 3. If regressions appear,
    fix them before continuing. Record results in `.session/verify.md`.
 
-9. **Handoff** — ensure an H1 draft is ready (or let `1020` write it), then launch
-   `1020-handoff` to close the session:
+9. **Handoff** — ensure the **S1** scan artifacts and an H1 draft are ready (or
+   let `1020` run the parallel scan and write it), then launch `1020-handoff`
+   to close the session:
    - Update `.ssot/status.md` and `.ssot/handoff.md`.
-   - Write/refresh `.session/next-cycle-hypothesis.md` (**H1**) before `1040`.
+   - Run / let `1020` run the parallel next-cycle scan (**S1**) into
+     `.session/next-cycle-scan/` — mandatory after a `1840` cycle.
+   - Write/refresh `.session/next-cycle-hypothesis.md` (**H1**), citing the
+     scan artifacts, before `1040`.
    - Record decisions in `.ssot/decisions.md`.
    - Sync the SSOT (`0660-sync`).
    - Commit the changes (do not push without explicit authorization).

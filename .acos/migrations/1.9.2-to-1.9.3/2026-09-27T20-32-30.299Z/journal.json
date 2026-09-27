@@ -1,0 +1,22 @@
+{
+  "state": "done",
+  "written": [
+    ".ssot/agents/entrypoints/1460-ecosystem-cycle-launch.md",
+    ".ssot/agents/workflows.json",
+    ".ssot/agents/clients.json",
+    ".ssot/agents/dependencies.json",
+    ".ssot/protected-paths.json",
+    ".ssot/specifications.json",
+    ".ssot/agents/hooks.json",
+    ".ssot/agents/mcp.json",
+    ".ssot/agents/runtimes.json",
+    ".ssot/agents/spec-engine.json",
+    ".ssot/adapter-publication.json",
+    ".ssot/context-index.json",
+    ".ssot/knowledge-profile.json",
+    "agent/sandbox/workspace/.ssot-seed-manifest.json",
+    ".ssot/agents/clients.json"
+  ],
+  "skipped": [],
+  "lockPid": 702548
+}

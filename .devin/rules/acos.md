@@ -2,6 +2,8 @@
 Source: .ssot/agents/rules/common.md and .ssot/protected-paths.json
 -->
 
+> **⚠ DESKTOP ONLY**: This projection is read by Devin Desktop/Cascade, not by Devin CLI.
+
 # ACOS Project Rules
 
 1. Canonical harness sources live under `.ssot/`; files carrying the ACOS generated banner are projections and are never edited directly.

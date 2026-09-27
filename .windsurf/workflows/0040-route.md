@@ -62,3 +62,16 @@ After step 1 (classification), check `.ssot/agents/clients.json` for `ecosystemR
 - If `ecosystemRole === "container"` and the task involves **migration** or **version upgrade**: route to `migration.ecosystem` / `1180-migrate-ecosystem` instead of `migration.workflow` / `1140-migrate-workflow`. The ecosystem entrypoint handles batch migration of the container + all satellites. If the task is not migration-related, continue with the normal routing — the container's own SSOT is independent.
 - If `ecosystemRole === "satellite"`: proceed normally. The satellite's SSOT is independent. If the task requires ecosystem-wide changes, advise the user to run from the container root instead.
 - If `ecosystemRole === "standalone"` or absent: proceed normally. No ecosystem routing needed.
+
+## Non-spec routing
+
+Not all tasks go through the spec lifecycle. After classification (step 1), route these task types to their dedicated entrypoints:
+
+- **Migration or version upgrade**: route to `project.migrate` / `1100-migrate` (the migration router). The router determines whether it's a new install, version upgrade, or reconciliation, and dispatches to `1120-migrate-analyze`, `1140-migrate-workflow`, or `1180-migrate-ecosystem` as needed.
+- **Personalization**: if the user asks to personalize, customize, or specialize the SSOT for the project (e.g. "customize entrypoints for my stack", "personalize ACOS for this project"), route to `project.personalize` / `1220-personalize`.
+- **Auto-improve cycle**: if the user's text mentions "auto-improve", "cycle", or `.ssot/next-session-prompt.md` exists, route to `project.resume` / `0020-resume` which handles the fast-path launch of `project.autoimprove` / `1840-auto-improve`.
+- **Session end / handoff**: if the user wants to end the session or write a handoff, route to `session.handoff` / `1020-handoff`.
+- **Next session preparation**: if the user wants to prepare the next session's auto-improve cycle, route to `session.bridge` / `1040-session-bridge`.
+- **Git operations**: route to `git.layout` / `0500-git-layout`, `git.acp` / `0540-git-acp`, `git.pr` / `0580-git-pr`, or `git.cleanup` / `0620-git-cleanup` as appropriate.
+- **Doctor / drift diagnosis**: route to `maintenance.doctor` / `0640-doctor`.
+- **Projection sync**: route to `maintenance.sync` / `0660-sync`.

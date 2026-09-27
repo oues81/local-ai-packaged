@@ -2,7 +2,7 @@
 
 # Context Index
 
-SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f31507da4ac6f60ce401dfcfbe8d`
+SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c9371b9cca1711840fccaa727e97`
 
 ## Quick reference
 
@@ -17,7 +17,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 | 0140 | plan | Create or update a dependency-aware implementation plan |
 | 0160 | wave-plan-prep | Frontier model strategic analysis and wave decomposition prep |
 | 0180 | data-model | Generate or update the data model for a feature |
-| 0200 | frontier-consult | Invoke a frontier model via one of the ACOS client CLIs for strategic analysis |
+| 0200 | frontier-consult | Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch |
 | 0220 | checklist | Generate a quality checklist for a spec or plan |
 | 0240 | tasks | Generate an actionable, dependency-ordered tasks.md for the feature |
 | 0260 | execute | Execute the current approved plan with bounded autonomy |
@@ -73,13 +73,14 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 | 1400 | mco-force-analysis | Force cycle analysis for a project via MCPCO |
 | 1420 | mco-open-pr | Open a pull request for a project's cycle via MCPCO |
 | 1440 | mco-authorize-merge | Authorize merging a cycle's PR with two-factor confirmation via MCPCO |
+| 1460 | ecosystem-cycle-launch | Resolve and fan-out per-project ACOS cycles (0020→1840→1020) from a container across selected targets |
 | 1840 | auto-improve | Automated improvement cycle — diagnose, critique, plan, execute, verify, hand off |
 | — | planner | Architecture and planning subagent that produces dependency-aware implementation plans. |
 | — | reviewer | Code review subagent focused on correctness, safety, and maintainability. |
 | — | verifier | Verification subagent that runs acceptance checks and reports evidence. |
 | — | hooks | Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints. |
 | — | mcp | MCP server configuration (1 server) at .ssot/agents/mcp.json. |
-| — | workflows | Entrypoint workflow registry (66 entrypoints) at .ssot/agents/workflows.json. |
+| — | workflows | Entrypoint workflow registry (67 entrypoints) at .ssot/agents/workflows.json. |
 
 ## Detailed
 
@@ -90,7 +91,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Initialize a new project and its durable ACOS context
 - **source**: `.ssot/agents/entrypoints/0000-new.md`
 - **projections**: `.agents/skills/0000-new/SKILL.md`, `.claude/commands/0000-new.md`, `.claude/rules/acos.md`, `.claude/skills/0000-new/SKILL.md`, `.claude/workflows/0000-new.md`, `.codex/rules/acos.md`, `.codex/skills/0000-new/SKILL.md`, `.cursor/commands/0000-new.md`, `.cursor/skills/0000-new/SKILL.md`, `.devin/skills/0000-new/SKILL.md`, `.kilo/commands/0000-new.md`, `.kilo/rules/acos.md`, `.kilo/skills/0000-new/SKILL.md`, `.kilocode/workflows/0000-new.md`, `.opencode/commands/0000-new.md`, `.opencode/rules/acos.md`, `.opencode/skills/0000-new/SKILL.md`, `.windsurf/workflows/0000-new.md`, `agent/skills/0000-new/SKILL.md`
-- **contentHash**: `cdcd4a11520b7c72cf2a14697cf9a5f65cd3776a0c9516a383dc663457ed1fb7`
+- **contentHash**: `d9004376f6c098c6ff20503fe67807ce7f4571590f49c5150708be78ee757a20`
 
 ### 0020-resume
 - **stableId**: `project.resume`
@@ -108,7 +109,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Route a task, specification, or question through the appropriate workflow
 - **source**: `.ssot/agents/entrypoints/0040-route.md`
 - **projections**: `.agents/skills/0040-route/SKILL.md`, `.claude/commands/0040-route.md`, `.claude/rules/acos.md`, `.claude/skills/0040-route/SKILL.md`, `.claude/workflows/0040-route.md`, `.codex/rules/acos.md`, `.codex/skills/0040-route/SKILL.md`, `.cursor/commands/0040-route.md`, `.cursor/skills/0040-route/SKILL.md`, `.devin/skills/0040-route/SKILL.md`, `.kilo/commands/0040-route.md`, `.kilo/rules/acos.md`, `.kilo/skills/0040-route/SKILL.md`, `.kilocode/workflows/0040-route.md`, `.opencode/commands/0040-route.md`, `.opencode/rules/acos.md`, `.opencode/skills/0040-route/SKILL.md`, `.windsurf/workflows/0040-route.md`, `agent/skills/0040-route/SKILL.md`
-- **contentHash**: `6645586af93b3eb34d4eabf96f90d052754ef8a3bbaeb3e81fe743bd92ff774c`
+- **contentHash**: `1fc34c14b72faf62cbe2fd00fbc73ca34d0fddf1616c30657477039980791249`
 
 ### 0060-constitution
 - **stableId**: `project.constitution`
@@ -168,10 +169,10 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **stableId**: `delivery.frontierconsult`
 - **category**: delivery
 - **type**: entrypoint
-- **description**: Invoke a frontier model via one of the ACOS client CLIs for strategic analysis
+- **description**: Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch
 - **source**: `.ssot/agents/entrypoints/0200-frontier-consult.md`
 - **projections**: `.agents/skills/0200-frontier-consult/SKILL.md`, `.claude/commands/0200-frontier-consult.md`, `.claude/rules/acos.md`, `.claude/skills/0200-frontier-consult/SKILL.md`, `.claude/workflows/0200-frontier-consult.md`, `.codex/rules/acos.md`, `.codex/skills/0200-frontier-consult/SKILL.md`, `.cursor/commands/0200-frontier-consult.md`, `.cursor/skills/0200-frontier-consult/SKILL.md`, `.devin/skills/0200-frontier-consult/SKILL.md`, `.kilo/commands/0200-frontier-consult.md`, `.kilo/rules/acos.md`, `.kilo/skills/0200-frontier-consult/SKILL.md`, `.kilocode/workflows/0200-frontier-consult.md`, `.opencode/commands/0200-frontier-consult.md`, `.opencode/rules/acos.md`, `.opencode/skills/0200-frontier-consult/SKILL.md`, `.windsurf/workflows/0200-frontier-consult.md`, `agent/skills/0200-frontier-consult/SKILL.md`
-- **contentHash**: `6950f2470716f39e54070d48de6e4d7cf3d38b335f05216f5f38f11d23670755`
+- **contentHash**: `8b848d118cf82140738c4dc7dd977a4c46d62d7123bc58ee026a21bd1fc0179e`
 
 ### 0220-checklist
 - **stableId**: `delivery.checklist`
@@ -495,7 +496,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Prepare the next session prompt for an automated improvement cycle
 - **source**: `.ssot/agents/entrypoints/1040-session-bridge.md`
 - **projections**: `.agents/skills/1040-session-bridge/SKILL.md`, `.claude/commands/1040-session-bridge.md`, `.claude/rules/acos.md`, `.claude/skills/1040-session-bridge/SKILL.md`, `.claude/workflows/1040-session-bridge.md`, `.codex/rules/acos.md`, `.codex/skills/1040-session-bridge/SKILL.md`, `.cursor/commands/1040-session-bridge.md`, `.cursor/skills/1040-session-bridge/SKILL.md`, `.devin/skills/1040-session-bridge/SKILL.md`, `.kilo/commands/1040-session-bridge.md`, `.kilo/rules/acos.md`, `.kilo/skills/1040-session-bridge/SKILL.md`, `.kilocode/workflows/1040-session-bridge.md`, `.opencode/commands/1040-session-bridge.md`, `.opencode/rules/acos.md`, `.opencode/skills/1040-session-bridge/SKILL.md`, `.windsurf/workflows/1040-session-bridge.md`, `agent/skills/1040-session-bridge/SKILL.md`
-- **contentHash**: `700e2cf43e1c7dd1d4bc30dd7e5bda3cd80cc197ea8b158b12ed910d1dd5657b`
+- **contentHash**: `48b2d42bb15688e345985ee1ac50ad8034057575dc9cf4e7ce4ea4c4f2d3511b`
 
 ### 1060-compact
 - **stableId**: `session.compact`
@@ -522,7 +523,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Migration router — determines the correct migration path based on project state (new install, version upgrade, structural reconciliation, or ecosystem batch migration)
 - **source**: `.ssot/agents/entrypoints/1100-migrate.md`
 - **projections**: `.agents/skills/1100-migrate/SKILL.md`, `.claude/commands/1100-migrate.md`, `.claude/rules/acos.md`, `.claude/skills/1100-migrate/SKILL.md`, `.claude/workflows/1100-migrate.md`, `.codex/rules/acos.md`, `.codex/skills/1100-migrate/SKILL.md`, `.cursor/commands/1100-migrate.md`, `.cursor/skills/1100-migrate/SKILL.md`, `.devin/skills/1100-migrate/SKILL.md`, `.kilo/commands/1100-migrate.md`, `.kilo/rules/acos.md`, `.kilo/skills/1100-migrate/SKILL.md`, `.kilocode/workflows/1100-migrate.md`, `.opencode/commands/1100-migrate.md`, `.opencode/rules/acos.md`, `.opencode/skills/1100-migrate/SKILL.md`, `.windsurf/workflows/1100-migrate.md`, `agent/skills/1100-migrate/SKILL.md`
-- **contentHash**: `c6b1ec9d77e35a323d74323e9bdd421c42565108f2359e37eff659177e94c9f2`
+- **contentHash**: `7a7c739da0dfcc7c06de95921e2b055cd84ba922021f0bfb5cba97e32452cc70`
 
 ### 1120-migrate-analyze
 - **stableId**: `migration.analyze`
@@ -531,7 +532,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Perform pre-migration analysis to identify custom content, missing state files, semantic references, and non-conformities before the deterministic migration apply
 - **source**: `.ssot/agents/entrypoints/1120-migrate-analyze.md`
 - **projections**: `.agents/skills/1120-migrate-analyze/SKILL.md`, `.claude/commands/1120-migrate-analyze.md`, `.claude/rules/acos.md`, `.claude/skills/1120-migrate-analyze/SKILL.md`, `.claude/workflows/1120-migrate-analyze.md`, `.codex/rules/acos.md`, `.codex/skills/1120-migrate-analyze/SKILL.md`, `.cursor/commands/1120-migrate-analyze.md`, `.cursor/skills/1120-migrate-analyze/SKILL.md`, `.devin/skills/1120-migrate-analyze/SKILL.md`, `.kilo/commands/1120-migrate-analyze.md`, `.kilo/rules/acos.md`, `.kilo/skills/1120-migrate-analyze/SKILL.md`, `.kilocode/workflows/1120-migrate-analyze.md`, `.opencode/commands/1120-migrate-analyze.md`, `.opencode/rules/acos.md`, `.opencode/skills/1120-migrate-analyze/SKILL.md`, `.windsurf/workflows/1120-migrate-analyze.md`, `agent/skills/1120-migrate-analyze/SKILL.md`
-- **contentHash**: `4234765059a1418c49a8e5f7c6709a06a5be8a66ffa3c1d92ba3c873c6207ee5`
+- **contentHash**: `24814d2e917fbff5b885ce8ebbd4603758a3c876d4d68cd0f30a221025421e44`
 
 ### 1140-migrate-workflow
 - **stableId**: `migration.workflow`
@@ -540,7 +541,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Orchestrate the full 5-phase hybrid migration workflow — analysis, agent prep, deterministic apply, post-merge agent, verify — with human gates between each phase
 - **source**: `.ssot/agents/entrypoints/1140-migrate-workflow.md`
 - **projections**: `.agents/skills/1140-migrate-workflow/SKILL.md`, `.claude/commands/1140-migrate-workflow.md`, `.claude/rules/acos.md`, `.claude/skills/1140-migrate-workflow/SKILL.md`, `.claude/workflows/1140-migrate-workflow.md`, `.codex/rules/acos.md`, `.codex/skills/1140-migrate-workflow/SKILL.md`, `.cursor/commands/1140-migrate-workflow.md`, `.cursor/skills/1140-migrate-workflow/SKILL.md`, `.devin/skills/1140-migrate-workflow/SKILL.md`, `.kilo/commands/1140-migrate-workflow.md`, `.kilo/rules/acos.md`, `.kilo/skills/1140-migrate-workflow/SKILL.md`, `.kilocode/workflows/1140-migrate-workflow.md`, `.opencode/commands/1140-migrate-workflow.md`, `.opencode/rules/acos.md`, `.opencode/skills/1140-migrate-workflow/SKILL.md`, `.windsurf/workflows/1140-migrate-workflow.md`, `agent/skills/1140-migrate-workflow/SKILL.md`
-- **contentHash**: `467b238109037c6eee235e2aefa7af9e6a1c1b0bd9010ddede4ed95bfd497623`
+- **contentHash**: `933926a630baa1ede9f176ed5648d8c67fc41c570a10c16040e8146098541a44`
 
 ### 1160-migration-verify
 - **stableId**: `project.migrate.verify`
@@ -549,7 +550,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Verify post-migration coverage by comparing the legacy backup against the current ACOS state, or by checking projection-gap resolutions against the analysis artifact (spec 012)
 - **source**: `.ssot/agents/entrypoints/1160-migration-verify.md`
 - **projections**: `.agents/skills/1160-migration-verify/SKILL.md`, `.claude/commands/1160-migration-verify.md`, `.claude/rules/acos.md`, `.claude/skills/1160-migration-verify/SKILL.md`, `.claude/workflows/1160-migration-verify.md`, `.codex/rules/acos.md`, `.codex/skills/1160-migration-verify/SKILL.md`, `.cursor/commands/1160-migration-verify.md`, `.cursor/skills/1160-migration-verify/SKILL.md`, `.devin/skills/1160-migration-verify/SKILL.md`, `.kilo/commands/1160-migration-verify.md`, `.kilo/rules/acos.md`, `.kilo/skills/1160-migration-verify/SKILL.md`, `.kilocode/workflows/1160-migration-verify.md`, `.opencode/commands/1160-migration-verify.md`, `.opencode/rules/acos.md`, `.opencode/skills/1160-migration-verify/SKILL.md`, `.windsurf/workflows/1160-migration-verify.md`, `agent/skills/1160-migration-verify/SKILL.md`
-- **contentHash**: `29e271332a2c5377603a44e35f3df2dab385d76d82878a796e797852c0cd36dd`
+- **contentHash**: `e210b80d8bbfa964e59d9df8c748c42d07ef6d54b03e2e59e6d6f3b81a2998cd`
 
 ### 1180-migrate-ecosystem
 - **stableId**: `migration.ecosystem`
@@ -576,7 +577,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Analyze an initialized ACOS project and personalize its SSOT items based on the project's actual codebase, architecture, conventions, and current client best practices
 - **source**: `.ssot/agents/entrypoints/1220-personalize.md`
 - **projections**: `.agents/skills/1220-personalize/SKILL.md`, `.claude/commands/1220-personalize.md`, `.claude/rules/acos.md`, `.claude/skills/1220-personalize/SKILL.md`, `.claude/workflows/1220-personalize.md`, `.codex/rules/acos.md`, `.codex/skills/1220-personalize/SKILL.md`, `.cursor/commands/1220-personalize.md`, `.cursor/skills/1220-personalize/SKILL.md`, `.devin/skills/1220-personalize/SKILL.md`, `.kilo/commands/1220-personalize.md`, `.kilo/rules/acos.md`, `.kilo/skills/1220-personalize/SKILL.md`, `.kilocode/workflows/1220-personalize.md`, `.opencode/commands/1220-personalize.md`, `.opencode/rules/acos.md`, `.opencode/skills/1220-personalize/SKILL.md`, `.windsurf/workflows/1220-personalize.md`, `agent/skills/1220-personalize/SKILL.md`
-- **contentHash**: `f44d85b1b229d056a85ee6fb0c256be0daec82a44b248a71af17af96c78b84c1`
+- **contentHash**: `83bfcdcc616e8815188e1a2824b3e7f599b39d3214cd972fc0147cefc38da999`
 
 ### 1240-migrate-refs
 - **stableId**: `migration.migraterefs`
@@ -668,6 +669,15 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **projections**: `.agents/skills/1440-mco-authorize-merge/SKILL.md`, `.claude/commands/1440-mco-authorize-merge.md`, `.claude/rules/acos.md`, `.claude/skills/1440-mco-authorize-merge/SKILL.md`, `.claude/workflows/1440-mco-authorize-merge.md`, `.codex/rules/acos.md`, `.codex/skills/1440-mco-authorize-merge/SKILL.md`, `.cursor/commands/1440-mco-authorize-merge.md`, `.cursor/skills/1440-mco-authorize-merge/SKILL.md`, `.devin/skills/1440-mco-authorize-merge/SKILL.md`, `.kilo/commands/1440-mco-authorize-merge.md`, `.kilo/rules/acos.md`, `.kilo/skills/1440-mco-authorize-merge/SKILL.md`, `.kilocode/workflows/1440-mco-authorize-merge.md`, `.opencode/commands/1440-mco-authorize-merge.md`, `.opencode/rules/acos.md`, `.opencode/skills/1440-mco-authorize-merge/SKILL.md`, `.windsurf/workflows/1440-mco-authorize-merge.md`, `agent/skills/1440-mco-authorize-merge/SKILL.md`
 - **contentHash**: `6acf1aca2bac537b55a8197349f756cfaaec1200a388f3353df98c53b604216b`
 
+### 1460-ecosystem-cycle-launch
+- **stableId**: `ecosystem.cycle.launch`
+- **category**: ecosystem
+- **type**: entrypoint
+- **description**: Resolve and fan-out per-project ACOS cycles (0020→1840→1020) from a container across selected targets
+- **source**: `.ssot/agents/entrypoints/1460-ecosystem-cycle-launch.md`
+- **projections**: `.agents/skills/1460-ecosystem-cycle-launch/SKILL.md`, `.claude/commands/1460-ecosystem-cycle-launch.md`, `.claude/rules/acos.md`, `.claude/skills/1460-ecosystem-cycle-launch/SKILL.md`, `.claude/workflows/1460-ecosystem-cycle-launch.md`, `.codex/rules/acos.md`, `.codex/skills/1460-ecosystem-cycle-launch/SKILL.md`, `.cursor/commands/1460-ecosystem-cycle-launch.md`, `.cursor/skills/1460-ecosystem-cycle-launch/SKILL.md`, `.devin/skills/1460-ecosystem-cycle-launch/SKILL.md`, `.kilo/commands/1460-ecosystem-cycle-launch.md`, `.kilo/rules/acos.md`, `.kilo/skills/1460-ecosystem-cycle-launch/SKILL.md`, `.kilocode/workflows/1460-ecosystem-cycle-launch.md`, `.opencode/commands/1460-ecosystem-cycle-launch.md`, `.opencode/rules/acos.md`, `.opencode/skills/1460-ecosystem-cycle-launch/SKILL.md`, `.windsurf/workflows/1460-ecosystem-cycle-launch.md`, `agent/skills/1460-ecosystem-cycle-launch/SKILL.md`
+- **contentHash**: `ad2822cb7ca716cc70021ad6934f475aa2f426ce6b0cb811c97b44fc63b8c522`
+
 ### 1840-auto-improve
 - **stableId**: `project.autoimprove`
 - **category**: project
@@ -675,7 +685,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Automated improvement cycle — diagnose, critique, plan, execute, verify, hand off
 - **source**: `.ssot/agents/entrypoints/1840-auto-improve.md`
 - **projections**: `.agents/skills/1840-auto-improve/SKILL.md`, `.claude/commands/1840-auto-improve.md`, `.claude/rules/acos.md`, `.claude/skills/1840-auto-improve/SKILL.md`, `.claude/workflows/1840-auto-improve.md`, `.codex/rules/acos.md`, `.codex/skills/1840-auto-improve/SKILL.md`, `.cursor/commands/1840-auto-improve.md`, `.cursor/skills/1840-auto-improve/SKILL.md`, `.devin/skills/1840-auto-improve/SKILL.md`, `.kilo/commands/1840-auto-improve.md`, `.kilo/rules/acos.md`, `.kilo/skills/1840-auto-improve/SKILL.md`, `.kilocode/workflows/1840-auto-improve.md`, `.opencode/commands/1840-auto-improve.md`, `.opencode/rules/acos.md`, `.opencode/skills/1840-auto-improve/SKILL.md`, `.windsurf/workflows/1840-auto-improve.md`, `agent/skills/1840-auto-improve/SKILL.md`
-- **contentHash**: `507c936d8c179439950345869f29f8efdc0f6dd2586c06acc915f9ba2ccc374d`
+- **contentHash**: `076fc2f336ad90d8170ef5fce9891facdf7d6cfa9d6f519360bc7df8a5ffec41`
 
 ### planner
 - **stableId**: null
@@ -711,7 +721,7 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints.
 - **source**: `.ssot/agents/hooks.json`
 - **projections**: *(none)*
-- **contentHash**: `7e7f30ed84b0074498e087968e4a14d154cc064bcfe97e7c1a7c0fe18ab33976`
+- **contentHash**: `0496d7ef73ac38c8cedf334608a3cbf588bdfaaecfac96495477cd9a0a0942dc`
 
 ### mcp
 - **stableId**: null
@@ -720,13 +730,13 @@ SSOT version: `1.9.2` · Content hash: `64b96c3a40c363c0041962a92ff8d3a53ec2f315
 - **description**: MCP server configuration (1 server) at .ssot/agents/mcp.json.
 - **source**: `.ssot/agents/mcp.json`
 - **projections**: *(none)*
-- **contentHash**: `28bb07392e7849ea6150b6e672d9180da144840c416bf7fc6b72558d1a7ae2ba`
+- **contentHash**: `b976e21bd22912ec7d7063d6ac6a9d2dbb9dfc6bb4e7aa714afbf26e1aaa050d`
 
 ### workflows
 - **stableId**: null
 - **category**: null
 - **type**: workflow
-- **description**: Entrypoint workflow registry (66 entrypoints) at .ssot/agents/workflows.json.
+- **description**: Entrypoint workflow registry (67 entrypoints) at .ssot/agents/workflows.json.
 - **source**: `.ssot/agents/workflows.json`
 - **projections**: *(none)*
-- **contentHash**: `271203007e4db10cd391d5a5ce86fc2730534877b3c2d61aa8aa5f5ab4f60795`
+- **contentHash**: `cccbd19acd7495494a924611c27f09af77e17e620432775237c42acbed637c0d`

@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.2",
+  "ssotVersion": "1.9.3",
   "schemaNotes": "Projection objects support two optional boolean fields: 'legacy' (default false) marks outputs superseded by a newer surface, and 'desktopOnly' (default false) marks surfaces available only in the desktop variant of a client (not the CLI).",
   "projectName": "local-ai-packaged",
   "canonicalContextFile": ".ssot/agents/context/AGENTS.src.md",
@@ -39,8 +39,7 @@
         ".claude/settings.json",
         ".mcp.json",
         ".claude/workflows/*.js",
-        ".claude-plugin/plugin.json",
-        ".claude/output-styles/*.md"
+        ".claude-plugin/plugin.json"
       ],
       "sourceFile": ".ssot/agents/context/CLAUDE.src.md",
       "pointerFile": "CLAUDE.md",
@@ -115,13 +114,6 @@
           "surface": "Claude Code plugin system via .claude-plugin/plugin.json",
           "outputs": [
             ".claude-plugin/plugin.json"
-          ]
-        },
-        "outputStyles": {
-          "mode": "native",
-          "surface": "Claude Code output styles in .claude/output-styles/*.md",
-          "outputs": [
-            ".claude/output-styles/*.md"
           ]
         }
       },
@@ -573,7 +565,8 @@
           "outputs": [
             ".devin/rules/acos.md"
           ],
-          "legacy": false
+          "legacy": false,
+          "desktopOnly": true
         },
         "hooks": {
           "mode": "native",

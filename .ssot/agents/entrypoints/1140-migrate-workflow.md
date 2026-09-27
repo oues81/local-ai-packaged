@@ -106,6 +106,7 @@ during Phase 2 enable rollback.
   the fresh structural analysis on every run. Re-running the scanner in Phase 1 step 5
   does NOT discard Phase 0 semantic decisions — it refreshes the structural data
   (renames, missingStateFiles, nonConformities) while preserving the review decisions.
+- **Do not use `npm install --package-lock-only` when switching `acosSource.type` from `npm` to `local-checkout`.** That flag skips installing optional native dependencies (e.g. rolldown bindings), breaking tools like `astro check`. Use `rm -rf node_modules && npm install` instead. See `docs/ecosystem-local-checkout.md` for details.
 
 ## Phase 0: Pre-migration analysis (agent-driven, read-only)
 
@@ -178,7 +179,7 @@ before Gate 1 approval** (REQ-069).
    - `missingProjectionTarget` (Directive 2) → add a projection target for the missing client in `workflows.json` from the ACOS template.
    Leave `warning`-severity non-conformities for the deterministic apply or human review — they do not block migration.
 5. Re-run the scanner to confirm prep resolved the issues:
-   - `node scripts/core/migration-analysis.mjs . --from=<current> --to=<target>`
+   - `node <acos-path>/scripts/core/migration-analysis.mjs . --from=<current> --to=<target>`
    - The scanner merges existing semantic review fields into the fresh structural analysis (Directive 1) — Phase 0 decisions are preserved. The updated analysis should show fewer missing files and critical non-conformities. If critical non-conformities remain, **fix them yourself** (malformed JSON → fix syntax, versionMismatch → reconcile, duplicateId → resolve by keeping the correct one). Only surface to the user if a non-conformity requires a business decision you genuinely cannot make.
 6. **Gate 2 — Prep completion**: Present to the user:
    - files created (path + one-line description of content);
@@ -221,6 +222,23 @@ the agent is responsible for ensuring no custom content is lost. These rules app
      behavior), rest assured: the current engine only touches the frontmatter description.
    - If the frontmatter description has been intentionally customized in the project, extract it
      to a snapshot before applying, then re-apply the customization after the refresh.
+   - **`--refresh-bodies` (opt-in)**: to deliberately refresh stale entrypoint bodies to match
+     the current template, pass `--refresh-bodies` to `--reconcile --apply`. With this flag:
+     - Non-personalized entrypoints (no `personalized` marker): the entire file is overwritten
+       with the template content (body + frontmatter).
+     - Personalized entrypoints (`personalized: true` in frontmatter): the **entire file is
+       preserved** — both body and frontmatter description are kept unchanged. The marker
+       signals intentional customization by `1220-personalize`.
+     - To remove the marker from an entrypoint that no longer needs customization, use
+       `--unpersonalize <source>` (comma-separated for multiple). This makes the entrypoint
+       eligible for body refresh on the next `--refresh-bodies`.
+     - The dry-run report tags personalized entrypoints with `[personalized]` and shows counts
+       of how many bodies would be refreshed vs preserved.
+     - The apply summary prints: `Refreshed N entrypoint bodies, preserved M personalized entrypoints`.
+   - **Before using `--refresh-bodies`**: review the dry-run report to confirm which entrypoints
+     carry the `personalized: true` marker. Entrypoints that were customized by `1220-personalize`
+     but do NOT yet carry the marker will be overwritten — snapshot their custom content first if
+     needed, then re-apply after the refresh.
 
 3. **Pre-apply content audit (mandatory for reconcile)**: Before running `--reconcile --apply`,
    the agent MUST compare each `staleTemplateContent` file with its template counterpart and
@@ -238,13 +256,13 @@ the agent is responsible for ensuring no custom content is lost. These rules app
    - `Stale template content` — entries whose frontmatter will be refreshed (body preserved).
    - `Orphans` — custom entrypoints that will be preserved (never deleted).
 
-1. Run the deterministic apply:
+5. Run the deterministic apply:
    - `npx acos-migrate --root . --apply`
    - This writes a content-complete backup under `.acos/migrations/` (with before/after SHA-256 hashes) and then performs the route: renames entrypoint files, updates `workflows.json`, `clients.json`, `dependencies.json`, and other SSOT-bearing documents, adds new canonical files, and applies custom renumbering per the analysis. A partial apply attempts to restore already-written files from the in-memory pre-migration state.
-2. Regenerate projections from the migrated SSOT:
+6. Regenerate projections from the migrated SSOT:
    - `npx acos --fix`
    - This writes the projected client files (`.claude/`, `.cursor/`, `.kilo/`, etc.) to match the new SSOT state.
-3. **Gate 3 — Apply completion**: Present the migration summary to the user:
+7. **Gate 3 — Apply completion**: Present the migration summary to the user:
    - renames performed (old prefix → new prefix, stable ID);
    - additions (new canonical files added);
    - renumbering (custom entrypoints moved, old order → new order, reason);
@@ -276,7 +294,7 @@ reference updates without the full hybrid workflow.
    - For each `orphanedSourceFiles[]` with `resolutionStrategy === "preserve-custom"`: present it to the operator. If they want it kept as a registered entrypoint (not just a surviving file), add a `workflows.json` entry at the next free order ≥600 — this is an explicit, human-approved out-of-scope write, the same authority pattern used for `outOfScope` semantic references.
    - For each `staleEntrypoints[]` with `resolutionStrategy === "preserve-custom"`: confirm the renumbered order (applied deterministically in Phase 2) still makes semantic sense in context; flag if not.
 6. Run the post-agent diff check (FM-020): compare agent modifications against the analysis scope to verify the agent did not over-reach. Every modified line must correspond to a custom section or semantic reference in the analysis. Out-of-scope changes are flagged for human review.
-   - `npx acos-migrate --root . --check-agent-diff <before-dir>`
+   - `npx acos-migrate --root . --check-post-agent-diff --analysis .ssot/migration-analysis.json`
 7. **Regenerate projections after post-merge modifications**: Phase 3 modified canonical sources
    under `.ssot/` (custom content merges, semantic reference updates). These changes make the
    existing client projections stale. Run `npx --no-install acos --fix` to regenerate projections
@@ -299,8 +317,10 @@ consistent state.
 
 1. Run `npx acos --check` — reports projection drift. The output must be clean (no drift). If drift
    is found, run `npx --no-install acos --fix` to regenerate projections, then re-run `acos --check`.
-   If drift persists after `acos --fix`, the migration is not complete — investigate which canonical
-   source is out of sync with its projections.
+   If drift persists after `acos --fix`, run `npx acos-migrate --root . --reconcile --apply` to fill
+   structural gaps (e.g. entrypoints added or removed in the template since the project's last
+   migration), then run `npx --no-install acos --fix` again to regenerate projections, then re-run
+   `acos --check`.
 2. Run `npx acos --validate` — validates all schemas and invariants. Must pass. Schema or invariant failures indicate the migrated SSOT is malformed.
 3. Run the project's test suite. Detect the command based on the project's tooling:
    - `npm test` (Node.js / package.json with a `test` script);
@@ -359,7 +379,7 @@ If the project is a **container** (`ecosystemRole: "container"` with `ecosystemC
 ### Phase 0 (additional): ecosystem version audit
 
 Before starting the single-project workflow, check `ecosystemVersionDrift[]` in the analysis artifact. If any satellites are at a different version:
-- Surface the drift to the user: "N satellite(s) are at a different version than the container. Use `acos-migrate --root . --ecosystem` to migrate all projects atomically."
+- Surface the drift to the user: "N satellite(s) are at a different version than the container. Use `acos-migrate --root . --ecosystem` to migrate all projects (best-effort, or `--strict` for all-or-nothing with rollback)."
 - If the user chooses batch migration, use `--ecosystem` which migrates the container first, then each satellite in sequence.
 
 ### Batch mode
@@ -381,13 +401,15 @@ command to the user — do not claim a step is done without proof.**
 - [ ] **Phase 0 analysis** — `.ssot/migration-analysis.json` exists with all review fields set
 - [ ] **Gate 1 passed** — user explicitly approved the analysis
 - [ ] **Phase 2 apply** — `acos-migrate --apply` was run (show output, NOT just `--bump-ssot-version`)
-- [ ] **Gate 2 passed** — user explicitly approved the apply result
+- [ ] **Gate 3 passed** — user explicitly approved the apply result
 - [ ] **Phase 2b projections** — `acos --fix` was run (show output)
 - [ ] **Phase 2c check** — `acos --check` was run (show output, no drift)
 - [ ] **Phase 3 refs** — `1240-migrate-refs` was dispatched (or user explicitly skipped)
+- [ ] **Gate 4 passed** — user explicitly approved the post-merge agent result
 - [ ] **Phase 4 verify** — `1160-migration-verify` was run (show output, PASS)
+- [ ] **If `--refresh-bodies` was used** — verify non-personalized bodies match template, personalized bodies preserved, `personalized: true` markers still present
 - [ ] **Final verification** — `migration-step-verify.mjs` run and reports PASS (show output)
-- [ ] **Gate 4 passed** — user explicitly approved the final state
+- [ ] **Gate 5 passed** — user explicitly approved the final state
 - [ ] `.ssot/decisions.md` updated with migration decision
 - [ ] `.ssot/status.md` updated with new version
 - [ ] `.ssot/handoff.md` updated with next action
