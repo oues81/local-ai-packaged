@@ -139,7 +139,8 @@ The user's accompanying text is the **question**. Optionally:
 - `--files <path1,path2,...>` — files to include as context (read and appended).
 - `--model <name>` — target frontier model. Advisory in self mode (you cannot switch your
   own model); applied to the spawned CLI in external mode. Do not guess model names — see
-  `docs/agent-waves/model-selection.md` for the canonical model selection strategy, or ask
+  the "Orchestrator / frontier model policy" below (canonical), and
+  `docs/model-selection.md` / `docs/agent-waves/model-selection.md` where present, or ask
   the user.
 - `--cli <name>` — dispatch to a different ACOS client CLI (default: `self`). See
   "Available CLIs" below.
@@ -216,13 +217,59 @@ The golden rule: **invest in thinking (expensive models), save on execution (fre
 models).** This entrypoint is Tier 3 — for external dispatch you want a planning-grade
 model, not an execution-grade one. But the user may override.
 
+#### Orchestrator / frontier model policy (OpenAI GPT-6 — Oct 2026)
+
+When dispatching to Codex (or whenever an OpenAI model is the consultee), the canonical
+orchestrator chain is:
+
+```
+                gpt-6.1-sol (reasoning effort: high → xhigh)
+                    ORCHESTRATEUR
+                         │
+      critique / architecture / synthèse / décomposition
+                         │
+          ┌──────────────┼──────────────┐
+          ▼              ▼              ▼
+     gpt-6-luna     gpt-6-luna     gpt-6-luna      sous-agents (recherche, exécution, analyse)
+          └──────────────┼──────────────┘
+                         ▼
+               résultats compacts → gpt-6.1-sol (synthèse / décision)
+```
+
+- **`gpt-6.1-sol`** is the primary frontier model ($2/M input, $10/M output; ~1.05M
+  context, 128K max output) for plan critique, architectural reasoning, decomposition,
+  dependency analysis, enrichment, and planning waves of sub-agents.
+- **`reasoning.effort`: `high` by default** (API default is `medium`; scale is
+  `low|medium|high|xhigh|max`). Use `xhigh` for difficult architectural decisions or
+  conflicting constraints, `max` for final review of high-stakes plans. `none`/`minimal`
+  are NOT supported on `gpt-6.1-sol`/`gpt-6-astra` (`gpt-6-luna` supports them). Codex
+  CLI: `-m gpt-6.1-sol -c model_reasoning_effort=xhigh`.
+- **Context target ≤ 200K input tokens per request** — a per-request size target, not a
+  cumulative task/token budget. Before approaching 200K, compact older context while
+  preserving requirements, decisions, unresolved issues, architecture, constraints, and
+  the references downstream agents need.
+- **Avoid crossing 272K input tokens** unless the extra context is genuinely necessary:
+  above 272K, OpenAI applies long-context pricing to the ENTIRE request, cached input
+  included (2× input & cache rates, 1.5× output).
+- **Exploit prompt caching**: keep stable instructions/context at the front of the
+  prompt; avoid unnecessary changes to the shared prefix.
+- **`gpt-6-luna`** ($0.10/M in, $0.50/M out — ~20× cheaper than Sol) is the default
+  sub-agent model: targeted, high-volume tasks that return concise findings to the
+  orchestrator. Never burn the frontier model on routine execution that can be
+  delegated.
+- **`gpt-6-astra`** ($10/M in, $50/M out — 5× Sol) is escalation-only: exceptionally
+  difficult synthesis/reasoning where Sol's result is demonstrably insufficient.
+- **`gpt-5.6-*` is previous-generation and currently costs MORE than `gpt-6.1-sol`**
+  (`gpt-5.6-sol`: $4/M in, $20/M out). Do not select 5.6 for new work.
+
 Quick reference (canonical — do not guess model names):
 
 | Use case | Model class | Examples (API ID) |
 |----------|-------------|---------|
-| **Architecture, migration strategy, critical analysis** | Top-tier planning | `claude-opus-4-8`, `gpt-5.6-terra` |
-| **Standard planning, spec review, capture d'essence** | 2nd-tier planning | `claude-sonnet-5`, `gpt-5.6-sol` |
-| **Execution of already-planned tasks** | Free/economic | `glm-5.2`, `kimi-k2-7` (Devin CLI + sous-agents `run_subagent`) — **jamais Haiku, jamais GPT 5.4** |
+| **Architecture, migration strategy, critical analysis** | Frontier orchestrator | `claude-opus-5-5`, `gpt-6.1-sol` (effort `high` → `xhigh`) |
+| **Exceptional synthesis — escalation only** | Top-tier | `claude-fable-5-1`, `gpt-6-astra` |
+| **Standard planning, spec review, capture d'essence** | 2nd-tier planning | `claude-sonnet-5-5`, `gpt-6.1-sol` (effort `high`) |
+| **Execution of already-planned tasks / sub-agents** | Free/economic | `gpt-6-luna`, `kimi-k2-7` ; sous-agents Devin CLI `run_subagent` = **`swe-2`** — **jamais Haiku, jamais GPT-5.x** |
 
 **Do not guess model names.** If unsure, ask the user which model to use rather than
 inventing an API ID. Model names change frequently; the table above is the canonical
@@ -254,11 +301,11 @@ $brief = "ACOS-FRONTIER-CONSULTEE — read '$promptFile' in this directory and a
 
 # Claude Code — interactive + bypass + initial prompt (positional)
 wt new-tab --title "Claude" --startingDirectory "$workdir" `
-  cmd /k "chcp 65001 >nul & & '%APPDATA%\npm\claude.cmd' --model claude-opus-4-8 --dangerously-skip-permissions `"$brief`""
+  cmd /k "chcp 65001 >nul & & '%APPDATA%\npm\claude.cmd' --model claude-opus-5-5 --dangerously-skip-permissions `"$brief`""
 
 # Codex — interactive + bypass + initial prompt (positional; no subcommand = TUI)
 wt new-tab --title "Codex" --startingDirectory "$workdir" `
-  cmd /k "chcp 65001 >nul & & '%APPDATA%\npm\codex.cmd' -m gpt-5.6-terra --dangerously-bypass-approvals-and-sandbox --dangerously-bypass-hook-trust `"$brief`""
+  cmd /k "chcp 65001 >nul & & '%APPDATA%\npm\codex.cmd' -m gpt-6.1-sol -c model_reasoning_effort=high --dangerously-bypass-approvals-and-sandbox --dangerously-bypass-hook-trust `"$brief`""
 
 # Devin CLI — interactive + bypass (--prompt-file delivers the prompt file directly)
 $devin = "$env:LOCALAPPDATA\devin\cli\bin\devin.exe"
@@ -289,10 +336,10 @@ prompt" in the procedure), so headless delivery needs no extra framing:
 
 ```powershell
 # Claude Code — headless + bypass
-& "$env:APPDATA\npm\claude.cmd" --model claude-opus-4-8 --dangerously-skip-permissions -p < prompt.md
+& "$env:APPDATA\npm\claude.cmd" --model claude-opus-5-5 --dangerously-skip-permissions -p < prompt.md
 
 # Codex — headless + bypass
-Get-Content prompt.md | & "$env:APPDATA\npm\codex.cmd" exec -m gpt-5.6-terra --dangerously-bypass-approvals-and-sandbox --dangerously-bypass-hook-trust -
+Get-Content prompt.md | & "$env:APPDATA\npm\codex.cmd" exec -m gpt-6.1-sol -c model_reasoning_effort=high --dangerously-bypass-approvals-and-sandbox --dangerously-bypass-hook-trust -
 
 # Devin CLI — headless + bypass (dangerous mode = auto-approve all tools)
 & "$env:LOCALAPPDATA\devin\cli\bin\devin.exe" --model kimi-k2-7 --permission-mode dangerous --prompt-file prompt.md --export export.jsonl
@@ -409,7 +456,7 @@ plan file it receives.
    to detect which client hosts the session — `self` is correct by definition.
 
 2. **Announce and proceed** — state in one line what will happen (e.g. "Self-consult —
-   analyzing in-session" or "External consult via Codex (gpt-5.6-terra) with 3 context
+   analyzing in-session" or "External consult via Codex (gpt-6.1-sol) with 3 context
    files..."), then proceed immediately. **Do NOT ask for approval** — the user's invocation
    of this entrypoint is the approval. The only exception is subagent invocation (see "Tier
    routing and budget gate" above), which requires explicit prior user approval.

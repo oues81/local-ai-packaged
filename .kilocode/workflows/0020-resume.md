@@ -85,14 +85,14 @@ During session:
   OR 1840-auto-improve → diagnose → C1 critique → plan → gate → execute → verify
 
 Session end:
-  1020-handoff         → status.md + handoff.md + H1 next-cycle-hypothesis.md
-  1040-session-bridge  → next-session-prompt.md (thin bridge; mandatory after handoff)
+  1020-handoff         → status.md + handoff.md + S1 scan + H1 next-cycle-hypothesis.md
+  1040-session-bridge  → next-session-prompt.md + copy-paste snippet (thin bridge; mandatory after handoff)
 
 Next session:
   0020-resume          → consumes prompt → launches 1840 (C1 mandatory) → ...
 ```
 
-Spec: `../acos-mcp-launcher-work/docs/specs/019-cycle-continuity/spec.md` (H1 / C1 / G1 / B1 / X1).
+Spec: `../acos-mcp-launcher-work/docs/specs/019-cycle-continuity/spec.md` (H1 / C1 / G1 / B1 / X1 / S1 / B2 / E1).
 
 The cycle is **composable**: entrypoints assemble into chains that cover different workflows:
 
@@ -114,18 +114,23 @@ skip the full drift/diagnostic battery below and fast-path to the cycle:
    auto-load it, but sub-agents and some workflows may not — read it if in doubt).
 2. Read `.ssot/handoff.md` and `.ssot/status.md` only (steps 2, 7 below — lightweight).
 3. If `.ssot/next-session-prompt.md` exists: read the **whole** file (Action, Consumer,
-   Objective, Hypothesis, Constraints, Context) — not the objective line alone. Launch
-   the consumer (default: `1840-auto-improve`) with that full contract. The consumer MUST
+   Objective, Hypothesis, Constraints, Context, Waves, Sub-agents, Resume snippet) —
+   not the objective line alone. Launch the consumer (default: `1840-auto-improve`) with that full
+   contract. The consumer MUST
    run diagnose + **C1** hypothesis critique before planning and the human gate.
-   - **Delete the prompt after launching the consumer** (one-shot consume — **X1**).
+   - **Keep the prompt file after launching the consumer** (**X1**) — it stays on
+     disk as the cycle contract for the whole session. `1040-session-bridge`
+     deletes the consumed prompt at cycle end, immediately before writing the
+     next prompt. Deleting it at launch would lose the contract if the cycle is
+     interrupted.
    - **Frontier-consult is optional.** Starting from ACOS 1.9.0, `0200-frontier-consult`
      is NOT invoked automatically by the fast-path. The consumer produces its own plan
      after C1 by default. Frontier-consult is only invoked if the user explicitly requests
      it (e.g. "use a frontier model", or the prompt `## Action` says `--frontier`).
    - If the user explicitly requests frontier-consult: the consumer produces diagnose + C1
      + internal plan first, then launches `0200-frontier-consult --consumer <id>` with the
-     objective AND the internal plan as context. After approval, continue with
-     `--from-frontier`.
+     objective AND the internal plan as context. The only approval remains G1 inside the
+     consumer, then continue with `--from-frontier`.
 4. If no session-bridge prompt but the user named a consumer entrypoint (e.g.
    "auto-improve", "1840-auto-improve"): launch that entrypoint directly with the user's
    text as the objective. Do NOT invoke frontier-consult unless the user explicitly asks
@@ -136,7 +141,6 @@ skip the full drift/diagnostic battery below and fast-path to the cycle:
 
 The full procedure below runs when the user wants a plain resume (no cycle intent
 detected).
-
 
 ## Full procedure
 
@@ -189,7 +193,7 @@ detected).
       `ecosystemVersionDrift[]` section. If any satellites are at a different `ssotVersion` than
       the container, surface them: "Ecosystem version drift detected: N satellite(s) are at a
       different version than the container: <satellite-path> (X.Y.Z vs container Z.Y.X).
-      Run `npx acos-migrate --root . --ecosystem --apply` to migrate all projects atomically."
+      Run `npx acos-migrate --root . --ecosystem --apply` to migrate all projects (best-effort, or `--strict` for all-or-nothing with rollback)."
       Do not block the resume flow — this is informational unless the user is about to start
       migration work, in which case it becomes a blocker that must be resolved first.
 4. If a specific spec or task is requested, read only that spec's `spec.md` and `tasks.md` rather than all specs.
@@ -219,17 +223,23 @@ detected).
 11. Select the smallest next action that advances the user's objective.
 12. **Check for a session-bridge prompt** — if `.ssot/next-session-prompt.md` exists, it was
     prepared by `1040-session-bridge` at the end of the previous session. Read the **whole**
-    file (Action, Consumer, Objective, Hypothesis, Constraints, Context). Show the user the
-    consumer, objective, and H1 path. Ask: "A session-bridge prompt was found. Launch the
-    automated cycle now?" Do NOT launch without explicit user approval.
-    - **Default path (no frontier-consult)**: if the user approves, launch the consumer with
+    file (Action, Consumer, Objective, Hypothesis, Constraints, Context, Waves,
+    Sub-agents, Resume snippet — the snippet section is informational: it is what
+    the user pasted to start this session). Show the user the
+    consumer, objective, wave synthesis, sub-agent synthesis, and H1 path, then launch
+    the consumer. Do not ask "launch now?": the only approval is the consumer's human
+    gate (G1).
+    - **Default path (no frontier-consult)**: launch the consumer with
       the **full contract**. `1840` must run diagnose + **C1** before plan/gate (**G1** =
-      approve or amend only).
+      approve/amend only).
     - **Frontier-consult path (opt-in only)**: if the user or prompt requests `--frontier`,
       the consumer produces diagnose + C1 + internal plan first, then
-      `0200-frontier-consult --consumer <id>`, then `--from-frontier`.
-    - Delete `.ssot/next-session-prompt.md` after the cycle is launched (one-shot — **X1**).
-      If the user declines, keep the file for a future session.
+      `0200-frontier-consult --consumer <id>`, then `--from-frontier`. There is no
+      separate frontier approval.
+    - Keep `.ssot/next-session-prompt.md` after the cycle is launched (**X1**) — it
+      remains the on-disk cycle contract until `1040` deletes it just before writing
+      the new prompt at session end. If the user refuses the later G1 gate, keep the
+      file for a future session.
 13. Continue directly when intent is clear; ask only when a missing decision materially changes the result. When a question or ambiguity arises, first attempt to resolve it through codebase exploration, documentation, or web research (rule 8). Only ask the user as a last resort, with structured options and justified recommendations.
 14. Update durable status and handoff facts after meaningful progress.
 

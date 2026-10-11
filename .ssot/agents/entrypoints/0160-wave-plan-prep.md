@@ -1,5 +1,5 @@
 ---
-description: Frontier model strategic analysis and wave decomposition prep
+description: Strategic analysis and wave decomposition prep (frontier model optional, opt-in)
 ---
 
 <!-- ACOS-ORIENTATION:START -->
@@ -8,7 +8,9 @@ description: Frontier model strategic analysis and wave decomposition prep
 > `.ssot/agents/context/orientation.md`.
 <!-- ACOS-ORIENTATION:END -->
 
-Produce a frontier-model strategic analysis that feeds the wave-plan phase.
+Produce a strategic analysis that feeds the wave-plan phase. The current agent performs
+the analysis in-session by default (per `0200-frontier-consult` self-mode semantics); a
+frontier model is invoked only if the user explicitly requests one via `--cli`/`--frontier`.
 
 1. Determine the feature ID from the user's request or the active spec.
 2. Read `specs/<feature-id>/spec.md`, `specs/<feature-id>/plan.md`, and `specs/<feature-id>/data-model.md` if present.

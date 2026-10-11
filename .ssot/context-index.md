@@ -2,7 +2,7 @@
 
 # Context Index
 
-SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c9371b9cca1711840fccaa727e97`
+SSOT version: `1.9.3` · Content hash: `9b6f09bff3114248df1a59d6942d3ddfe1e1cbb62c592ed406146dcab3a3fa83`
 
 ## Quick reference
 
@@ -15,7 +15,7 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 | 0100 | spec | Create or reconcile executable specifications under specs/<feature-id>/ |
 | 0120 | clarify | Resolve ambiguities and unresolved decisions in an existing spec |
 | 0140 | plan | Create or update a dependency-aware implementation plan |
-| 0160 | wave-plan-prep | Frontier model strategic analysis and wave decomposition prep |
+| 0160 | wave-plan-prep | Strategic analysis and wave decomposition prep (frontier model optional, opt-in) |
 | 0180 | data-model | Generate or update the data model for a feature |
 | 0200 | frontier-consult | Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch |
 | 0220 | checklist | Generate a quality checklist for a spec or plan |
@@ -100,7 +100,7 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 - **description**: Recover project state and continue from the best next action
 - **source**: `.ssot/agents/entrypoints/0020-resume.md`
 - **projections**: `.agents/skills/0020-resume/SKILL.md`, `.claude/commands/0020-resume.md`, `.claude/rules/acos.md`, `.claude/skills/0020-resume/SKILL.md`, `.claude/workflows/0020-resume.md`, `.codex/rules/acos.md`, `.codex/skills/0020-resume/SKILL.md`, `.cursor/commands/0020-resume.md`, `.cursor/skills/0020-resume/SKILL.md`, `.devin/skills/0020-resume/SKILL.md`, `.kilo/commands/0020-resume.md`, `.kilo/rules/acos.md`, `.kilo/skills/0020-resume/SKILL.md`, `.kilocode/workflows/0020-resume.md`, `.opencode/commands/0020-resume.md`, `.opencode/rules/acos.md`, `.opencode/skills/0020-resume/SKILL.md`, `.windsurf/workflows/0020-resume.md`, `agent/skills/0020-resume/SKILL.md`
-- **contentHash**: `e3ed38a92b9922c0ac63feff025249cdd9aa16ed1a3b8b8511337b2d5176dcfa`
+- **contentHash**: `2567645cac098c694008f02c55566ad781a721f683ad0aa22c386d4240dbda54`
 
 ### 0040-route
 - **stableId**: `project.route`
@@ -151,10 +151,10 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 - **stableId**: `delivery.waveplanprep`
 - **category**: delivery
 - **type**: entrypoint
-- **description**: Frontier model strategic analysis and wave decomposition prep
+- **description**: Strategic analysis and wave decomposition prep (frontier model optional, opt-in)
 - **source**: `.ssot/agents/entrypoints/0160-wave-plan-prep.md`
 - **projections**: `.agents/skills/0160-wave-plan-prep/SKILL.md`, `.claude/commands/0160-wave-plan-prep.md`, `.claude/rules/acos.md`, `.claude/skills/0160-wave-plan-prep/SKILL.md`, `.claude/workflows/0160-wave-plan-prep.md`, `.codex/rules/acos.md`, `.codex/skills/0160-wave-plan-prep/SKILL.md`, `.cursor/commands/0160-wave-plan-prep.md`, `.cursor/skills/0160-wave-plan-prep/SKILL.md`, `.devin/skills/0160-wave-plan-prep/SKILL.md`, `.kilo/commands/0160-wave-plan-prep.md`, `.kilo/rules/acos.md`, `.kilo/skills/0160-wave-plan-prep/SKILL.md`, `.kilocode/workflows/0160-wave-plan-prep.md`, `.opencode/commands/0160-wave-plan-prep.md`, `.opencode/rules/acos.md`, `.opencode/skills/0160-wave-plan-prep/SKILL.md`, `.windsurf/workflows/0160-wave-plan-prep.md`, `agent/skills/0160-wave-plan-prep/SKILL.md`
-- **contentHash**: `c594d8f4db56e68f06e576f2f63907ca8a2aa9b810411968e1aac4563eb9316c`
+- **contentHash**: `66b6e4754d6f707433279643a36bfcabc8f23baf1fd41a84c563095028cd1e5f`
 
 ### 0180-data-model
 - **stableId**: `delivery.datamodel`
@@ -172,7 +172,7 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 - **description**: Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch
 - **source**: `.ssot/agents/entrypoints/0200-frontier-consult.md`
 - **projections**: `.agents/skills/0200-frontier-consult/SKILL.md`, `.claude/commands/0200-frontier-consult.md`, `.claude/rules/acos.md`, `.claude/skills/0200-frontier-consult/SKILL.md`, `.claude/workflows/0200-frontier-consult.md`, `.codex/rules/acos.md`, `.codex/skills/0200-frontier-consult/SKILL.md`, `.cursor/commands/0200-frontier-consult.md`, `.cursor/skills/0200-frontier-consult/SKILL.md`, `.devin/skills/0200-frontier-consult/SKILL.md`, `.kilo/commands/0200-frontier-consult.md`, `.kilo/rules/acos.md`, `.kilo/skills/0200-frontier-consult/SKILL.md`, `.kilocode/workflows/0200-frontier-consult.md`, `.opencode/commands/0200-frontier-consult.md`, `.opencode/rules/acos.md`, `.opencode/skills/0200-frontier-consult/SKILL.md`, `.windsurf/workflows/0200-frontier-consult.md`, `agent/skills/0200-frontier-consult/SKILL.md`
-- **contentHash**: `8b848d118cf82140738c4dc7dd977a4c46d62d7123bc58ee026a21bd1fc0179e`
+- **contentHash**: `1185473a34921fa0f88d46903e400cbb55037468297c9cbd42f99fd33d175745`
 
 ### 0220-checklist
 - **stableId**: `delivery.checklist`
@@ -406,7 +406,7 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 - **description**: Check external runtime drift and sync only when explicitly requested
 - **source**: `.ssot/agents/entrypoints/0760-runtime-sync.md`
 - **projections**: `.agents/skills/0760-runtime-sync/SKILL.md`, `.claude/commands/0760-runtime-sync.md`, `.claude/rules/acos.md`, `.claude/skills/0760-runtime-sync/SKILL.md`, `.claude/workflows/0760-runtime-sync.md`, `.codex/rules/acos.md`, `.codex/skills/0760-runtime-sync/SKILL.md`, `.cursor/commands/0760-runtime-sync.md`, `.cursor/skills/0760-runtime-sync/SKILL.md`, `.devin/skills/0760-runtime-sync/SKILL.md`, `.kilo/commands/0760-runtime-sync.md`, `.kilo/rules/acos.md`, `.kilo/skills/0760-runtime-sync/SKILL.md`, `.kilocode/workflows/0760-runtime-sync.md`, `.opencode/commands/0760-runtime-sync.md`, `.opencode/rules/acos.md`, `.opencode/skills/0760-runtime-sync/SKILL.md`, `.windsurf/workflows/0760-runtime-sync.md`, `agent/skills/0760-runtime-sync/SKILL.md`
-- **contentHash**: `94f5a519194abb56891210f011ba017c2dfc9d5cdc757ea700220b98823c4f6f`
+- **contentHash**: `fb635fbc6dd8df68219a52e82199efe4d90cb28ed2f5cfec351d567b229228b0`
 
 ### 0780-docker
 - **stableId**: `maintenance.docker`
@@ -487,7 +487,7 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 - **description**: Persist a factual end-of-session handoff
 - **source**: `.ssot/agents/entrypoints/1020-handoff.md`
 - **projections**: `.agents/skills/1020-handoff/SKILL.md`, `.claude/commands/1020-handoff.md`, `.claude/rules/acos.md`, `.claude/skills/1020-handoff/SKILL.md`, `.claude/workflows/1020-handoff.md`, `.codex/rules/acos.md`, `.codex/skills/1020-handoff/SKILL.md`, `.cursor/commands/1020-handoff.md`, `.cursor/skills/1020-handoff/SKILL.md`, `.devin/skills/1020-handoff/SKILL.md`, `.kilo/commands/1020-handoff.md`, `.kilo/rules/acos.md`, `.kilo/skills/1020-handoff/SKILL.md`, `.kilocode/workflows/1020-handoff.md`, `.opencode/commands/1020-handoff.md`, `.opencode/rules/acos.md`, `.opencode/skills/1020-handoff/SKILL.md`, `.windsurf/workflows/1020-handoff.md`, `agent/skills/1020-handoff/SKILL.md`
-- **contentHash**: `a13a92e639b6e066ed7aefe4d58a71d03f84d440052da086a9d97f5ccc61f699`
+- **contentHash**: `c2f2a552858067ae39093fca176b31dddd911098e3c34cd6a4336a1565e109be`
 
 ### 1040-session-bridge
 - **stableId**: `session.bridge`
@@ -496,7 +496,7 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 - **description**: Prepare the next session prompt for an automated improvement cycle
 - **source**: `.ssot/agents/entrypoints/1040-session-bridge.md`
 - **projections**: `.agents/skills/1040-session-bridge/SKILL.md`, `.claude/commands/1040-session-bridge.md`, `.claude/rules/acos.md`, `.claude/skills/1040-session-bridge/SKILL.md`, `.claude/workflows/1040-session-bridge.md`, `.codex/rules/acos.md`, `.codex/skills/1040-session-bridge/SKILL.md`, `.cursor/commands/1040-session-bridge.md`, `.cursor/skills/1040-session-bridge/SKILL.md`, `.devin/skills/1040-session-bridge/SKILL.md`, `.kilo/commands/1040-session-bridge.md`, `.kilo/rules/acos.md`, `.kilo/skills/1040-session-bridge/SKILL.md`, `.kilocode/workflows/1040-session-bridge.md`, `.opencode/commands/1040-session-bridge.md`, `.opencode/rules/acos.md`, `.opencode/skills/1040-session-bridge/SKILL.md`, `.windsurf/workflows/1040-session-bridge.md`, `agent/skills/1040-session-bridge/SKILL.md`
-- **contentHash**: `48b2d42bb15688e345985ee1ac50ad8034057575dc9cf4e7ce4ea4c4f2d3511b`
+- **contentHash**: `eff2b6a4d258754441c39de920d20cb91b2737025f82e22573a957b54bf0cdd8`
 
 ### 1060-compact
 - **stableId**: `session.compact`
@@ -685,7 +685,7 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 - **description**: Automated improvement cycle — diagnose, critique, plan, execute, verify, hand off
 - **source**: `.ssot/agents/entrypoints/1840-auto-improve.md`
 - **projections**: `.agents/skills/1840-auto-improve/SKILL.md`, `.claude/commands/1840-auto-improve.md`, `.claude/rules/acos.md`, `.claude/skills/1840-auto-improve/SKILL.md`, `.claude/workflows/1840-auto-improve.md`, `.codex/rules/acos.md`, `.codex/skills/1840-auto-improve/SKILL.md`, `.cursor/commands/1840-auto-improve.md`, `.cursor/skills/1840-auto-improve/SKILL.md`, `.devin/skills/1840-auto-improve/SKILL.md`, `.kilo/commands/1840-auto-improve.md`, `.kilo/rules/acos.md`, `.kilo/skills/1840-auto-improve/SKILL.md`, `.kilocode/workflows/1840-auto-improve.md`, `.opencode/commands/1840-auto-improve.md`, `.opencode/rules/acos.md`, `.opencode/skills/1840-auto-improve/SKILL.md`, `.windsurf/workflows/1840-auto-improve.md`, `agent/skills/1840-auto-improve/SKILL.md`
-- **contentHash**: `076fc2f336ad90d8170ef5fce9891facdf7d6cfa9d6f519360bc7df8a5ffec41`
+- **contentHash**: `db5c7ed25c440344f9244784451b97f2d865e4e905678552086b06d955c4c2a5`
 
 ### planner
 - **stableId**: null
@@ -739,4 +739,4 @@ SSOT version: `1.9.3` · Content hash: `51e96caee8fa07bfc111f5829b7f6143b533c937
 - **description**: Entrypoint workflow registry (67 entrypoints) at .ssot/agents/workflows.json.
 - **source**: `.ssot/agents/workflows.json`
 - **projections**: *(none)*
-- **contentHash**: `cccbd19acd7495494a924611c27f09af77e17e620432775237c42acbed637c0d`
+- **contentHash**: `20891c1be71edc0e9cbe07b466b33d61a438b2d7b374a8086b16700e187f8fbe`

@@ -45,11 +45,14 @@ prompt file's `## Action` section.
   that will execute the cycle. Must exist in `.ssot/agents/workflows.json`.
 - `--question <text>` (optional) — the objective for the cycle. If not provided, the skill
   derives it from the handoff's "Next recommended action" and H1.
-- `--frontier` (optional) — flag the prompt file to request a frontier-model plan before
-  execution. When set, `0020-resume` will invoke `0200-frontier-consult --consumer <id>`
-  instead of launching the consumer directly. If the consumer declares a `planConsumer`
-  section in its frontmatter, the frontier model's plan is persisted to that location.
-  If not, the frontier model's output is advisory only.
+- `--frontier` (optional) — flag the prompt file to request a frontier-model critique
+  before execution. When set, `0020-resume` launches the consumer with `--frontier`;
+  the consumer produces diagnose + C1 + an internal plan FIRST, then invokes
+  `0200-frontier-consult --consumer <id>` with the objective and the full evidence
+  bundle (diagnostic, critique, internal plan, H1) — the frontier model reviews and
+  improves the plan rather than starting from scratch. If the consumer declares a
+  `planConsumer` section in its frontmatter, the improved plan is persisted to that
+  location. If not, the frontier model's output is advisory only.
 
 ## Procedure
 
@@ -68,6 +71,15 @@ prompt file's `## Action` section.
    reformulate the handoff next action + H1 into a clear cycle objective (**what**, not a
    full execution plan — C1 + plan happen in the next `1840`).
 
+4c. **Render waves and sub-agents from H1** — do not invent lanes. Read only the
+   candidate lanes already in H1 (wave role, write-set hint, parallelizable):
+   - **Waves** — one short paragraph per wave role present (`diagnose`, `fix`,
+     `validate`, `ship`): the intents in that role and their write-set hints.
+   - **Sub-agents** — per wave, how many agents. A lane marked parallelizable with a
+     write-set that does not overlap another lane in the same wave may be its own
+     agent. Overlapping or unspecified write-sets stay on one agent. If every lane
+     is `parallelizable: no`, say so and assign one agent.
+
 4b. **Resolve the target project (containers only)** — if `clients.json` declares
    `ecosystemChildren`, fill `## Target project` in the prompt with the satellite the
    next session should work in: the first entry of `.session/bridge-queue.md` if that
@@ -82,7 +94,10 @@ prompt file's `## Action` section.
    is set): "Consumer <id> does not declare a planConsumer section. The frontier model's
    output will be advisory only and won't be auto-persisted."
 
-6. **Write the prompt file** — write `.ssot/next-session-prompt.md` with this structure:
+6. **Write the prompt file** — if `.ssot/next-session-prompt.md` already exists (the
+   prompt consumed at the start of this cycle — **X1**), delete it immediately before
+   writing so the new file cleanly supersedes it. Then write
+   `.ssot/next-session-prompt.md` with this structure:
 
    ```markdown
    # Next session — auto-improve cycle
@@ -90,7 +105,7 @@ prompt file's `## Action` section.
    ## Action
    Launch `1840-auto-improve` directly after reprise.
    <!-- If --frontier was set, replace the line above with: -->
-   <!-- Launch `0200-frontier-consult --consumer 1840-auto-improve` with the objective below, then hand off to `1840-auto-improve --from-frontier`. -->
+   <!-- Launch `1840-auto-improve --frontier` after reprise — the consumer produces diagnose + C1 + an internal plan, then invokes `0200-frontier-consult --consumer 1840-auto-improve` to critique it, and continues `--from-frontier` after approval. -->
 
    ## Consumer
    <entrypoint-id>
@@ -114,6 +129,12 @@ prompt file's `## Action` section.
    ## Context summary
    <2-3 lines from status.md: current objective, active milestone, key blockers>
 
+   ## Waves
+   <H1 candidate lanes grouped by wave role — a rendering, not a new plan>
+
+   ## Sub-agents
+   <per wave: agent count, ownership, write-sets that must stay on one agent>
+
    ## Resume snippet
    <the copy-paste snippet produced in step 7>
    ```
@@ -132,7 +153,7 @@ prompt file's `## Action` section.
 
    If `--frontier` was set, the snippet's last line becomes:
    ```
-   Read .ssot/next-session-prompt.md and launch 0200-frontier-consult --consumer 1840-auto-improve with the internal plan as context, then hand off to 1840-auto-improve --from-frontier.
+   Read .ssot/next-session-prompt.md and launch 1840-auto-improve --frontier. The consumer produces its internal plan first, invokes 0200-frontier-consult to critique and improve it, then continues --from-frontier after approval.
    ```
 
    Then deliver the snippet on **three** channels (**B2**):
@@ -149,38 +170,48 @@ prompt file's `## Action` section.
    0020-resume will orient from the project rules and status files, then
    launch the cycle."
 
-8. **Tell the user** — report:
+8. **Tell the user** — this close is part of the cycle. Report, in prose:
    - The prompt file path (`.ssot/next-session-prompt.md`)
    - The H1 path used
    - The consumer entrypoint that will be used
-   - The objective that will be sent to the consumer
+   - The draft objective (the next `1840` critiques it before the gate)
+   - The wave synthesis (from `## Waves`)
+   - The sub-agent synthesis (from `## Sub-agents`)
    - Whether frontier-consult is enabled or disabled (default: disabled)
    - The copy-paste snippet (from step 7), and whether it was persisted in
      `## Resume snippet` and copied to the clipboard
-   - "At the next session, paste the snippet. `0020-resume` will find the prompt file and
-     launch the cycle. `1840` will revalidate and critique H1 (C1) before the gate."
+   - "Paste the snippet at the next session. `0020-resume` launches `1840`, which
+     re-reads this draft, critiques it (C1), enriches the plan, and stops for approval."
 
 ## What 0020-resume does with this file
 
 When `0020-resume` runs at the start of the next session, it checks for
 `.ssot/next-session-prompt.md`. If found, it:
 1. Reads the **whole** file (Action, Consumer, Objective, Hypothesis, Constraints,
-   Context, Resume snippet — informational only)
+   Context, Waves, Sub-agents, Resume snippet — informational only)
 2. **Default path (no frontier)**: launches the consumer entrypoint directly
    (`1840-auto-improve`) with the full contract as input
-3. **Frontier path (opt-in)**: if the prompt file's `## Action` section says `--frontier`,
-   launches `0200-frontier-consult --consumer <id>` with the objective, then hands off to
-   the consumer with `--from-frontier`
-4. Deletes `.ssot/next-session-prompt.md` after the cycle is launched (one-shot) — **X1**:
-   this is the only delete of the consumed prompt; the new prompt written by a later `1040`
-   must not be deleted by `1840`
+3. **Frontier path (opt-in)**: if the prompt file's `## Action` section contains
+   `--frontier`, launches the consumer with `--frontier`. The consumer produces
+   diagnose + C1 + an internal plan first, then invokes
+   `0200-frontier-consult --consumer <id>` with the objective and the evidence bundle,
+   then continues `--from-frontier` after approval
+4. Does **not** delete the prompt at launch (**X1**) — the file stays on disk as the
+   cycle contract for the whole session. The only delete happens here, inside
+   `1040-session-bridge` at the end of the cycle: the consumed prompt is removed
+   immediately before the **new** prompt is written (step 6). `1840` must never
+   delete the new prompt, and must not delete the consumed one during the cycle.
 
-This is a one-shot mechanism. The prompt file is consumed and deleted. If the cycle fails
-or is interrupted, the user can re-run `1040-session-bridge` to prepare a new one.
+The prompt file is consumed (read) at cycle start and deleted only when `1040` writes
+its replacement at cycle end. If the cycle fails or is interrupted before `1040`, the
+previous prompt stays in place: the next `0020` offers to launch it again and C1
+revalidates it — or the user can delete it / re-run `1040-session-bridge` to prepare
+a fresh one.
 
 ## Authority
 
-- This entrypoint is **read-only** except for writing `.ssot/next-session-prompt.md`.
+- This entrypoint is **read-only** except for deleting the consumed
+  `.ssot/next-session-prompt.md` (**X1**) and writing the new one.
 - It does **not** replace H1 with a new deep analysis (**B1**).
 - It does not invoke the frontier model. That happens in the next session only if the user
   explicitly opts in.

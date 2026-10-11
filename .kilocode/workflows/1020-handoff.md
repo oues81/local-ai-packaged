@@ -33,7 +33,7 @@ Source: .ssot/agents/entrypoints/1020-handoff.md
 > `.ssot/agents/context/orientation.md`.
 <!-- ACOS-ORIENTATION:END -->
 
-Update `.ssot/status.md` and `.ssot/handoff.md`. Record completed work, exact current state, modified files, verification results, unresolved problems, next recommended action, and commands needed to resume. Separate facts from assumptions. Do not claim completion when required checks failed or were not run.
+Update `.ssot/status.md` and `.ssot/handoff.md`. Record completed work, exact current state, modified files, verification results, unresolved problems, next recommended action, and commands needed to resume. Separate facts from assumptions. Do not claim completion when required checks failed or were not run. Flag any unresolved questions that were researched but could not be resolved — include what was investigated and what remains unclear so the next session can pick up the research (rule 8).
 
 **Project-specific verification (local-ai-packaged)**: this is an infrastructure project with
 no test suite — do not report "tests passed" as a verification. Instead, run and record the
@@ -42,13 +42,20 @@ e.g. `-f docker-compose.yml -f docker-compose.minimal.yml`) before claiming a co
 Dockerfile change is verified. If a container was touched, also record whether it was
 restarted and observed healthy (`docker compose ps`), not merely that the config parses.
 
-If the canonical context sources under `.ssot/agents/context/` (e.g., `AGENTS.src.md`, `CLAUDE.src.md`) were edited during the session, run `npx --no-install acos --fix` so the generated projections (`AGENTS.md`, `CLAUDE.md`, and client-specific pointers) are regenerated before handing off. Do not edit generated projections directly.
+When the session involved a material decision between options, record the alternatives considered, their impacts, and why the chosen option was selected (decision-support rule) — this feeds the next cycle's C1 critique.
+
+If the canonical context sources under `.ssot/agents/context/` (e.g., `AGENTS.src.md`, `CLAUDE.src.md`) were edited during the session, run `npx --no-install acos --fix` (or `maintenance.sync` / `0660-sync`) so the generated projections (`AGENTS.md`, `CLAUDE.md`, and client-specific pointers) are regenerated before handing off. Do not edit generated projections directly.
 
 Run `npx --no-install acos --check` to confirm projections are in sync, then run
-`npx --no-install acos-handoff-check --root .` after writing. Reconcile any Git state/count contradiction before
-ending the session; do not edit the handoff automatically merely to increase its score.
+`npx --no-install acos-handoff-check --root .` to verify handoff/git consistency. Reconcile any
+Git state/count contradiction before ending the session; do not edit the handoff automatically
+merely to increase its score. Since spec 019 **E1**, the same check also verifies the
+session bridge on a fresh handoff (`.ssot/next-session-prompt.md` + H1 artifact) —
+run `1040-session-bridge` before this check or it will flag the gap.
 
 After the handoff is written, check `.ssot/agents/dependencies.json`. If it exists, is valid JSON, and contains at least one dependency, invoke the `project.crosshandoff` entrypoint (`1080-cross-handoff`) to produce a cross-project handoff report for each declared downstream dependency. Include the resulting report in the session summary or attach it to the handoff.
+
+If any entrypoint bodies were personalized during the session (via `1220-personalize` or manually), verify that the `personalized: true` marker is present in their frontmatter. This marker protects the entire customized entrypoint (body + frontmatter description) from being overwritten by `acos-migrate --reconcile --apply --refresh-bodies`. Note any newly personalized entrypoints in the handoff so the next session is aware.
 
 ## H1 — Next-cycle hypothesis (mandatory before 1040)
 
@@ -76,8 +83,34 @@ this hypothesis artifact (not a leftover sentence alone).
 If this session ran an improve cycle (`1840` or equivalent) and H1 is missing, write it
 now. Do **not** call `1040` until H1 exists.
 
-After the handoff, cross-handoff, and **H1** are complete, invoke `1040-session-bridge`
-automatically to write `.ssot/next-session-prompt.md` and produce the copy-paste snippet
-for the next session. This is mandatory — every session handoff prepares the next
-session's auto-improve cycle so the user only needs to paste the snippet at the start
-of the next session.
+## S1 — Parallel next-cycle scan (mandatory after improve cycles)
+
+Spec: `../acos-mcp-launcher-work/docs/specs/019-cycle-continuity/spec.md` (invariant **S1**).
+
+Before writing H1, gather live evidence through a parallel scan wave instead of
+relying on session memory alone:
+
+- Dispatch up to 4 read-only sub-agents **in a single message** (true
+  parallelism). Each writes `.session/next-cycle-scan/<lane>.md`:
+  - `git-tests` — worktree state, ahead/behind, test/build suite result
+    (run, not assumed)
+  - `docs-specs` — active specs vs implementation state, stale documentation
+  - `harness` — `npx --no-install acos --check` result, drift, projection health
+  - `risks` — open blockers, TODOs, known issues, uncertainty candidates
+- Sub-agents are read-only and re-orient independently per
+  `.ssot/agents/context/orientation.md` → "When you are a sub-agent". They
+  return compact findings, not prose.
+- H1's "Facts carried forward" and "Candidate lanes" MUST cite the scan
+  artifacts.
+- After any `1840` (or equivalent) cycle the scan is **mandatory**. For a
+  trivial session (no improve cycle, small diff), the agent MAY record
+  `scan: skipped — <reason>` in H1 instead.
+
+After the handoff, cross-handoff, **S1**, and **H1** are complete, invoke
+`1040-session-bridge` automatically to write `.ssot/next-session-prompt.md` and
+deliver the copy-paste snippet for the next session (**B2**: persisted in the
+prompt file, printed, and copied to the clipboard best-effort). This is
+mandatory — every session handoff prepares the next session's auto-improve
+cycle so the user only needs to paste the snippet at the start of the next
+session. `acos-handoff-check` verifies both artifacts mechanically (**E1**) —
+a handoff without them scores `review` at best.

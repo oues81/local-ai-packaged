@@ -63,7 +63,8 @@ opt-in only.
 
 - The user's accompanying text is the **objective** of the cycle.
 - If `.ssot/next-session-prompt.md` exists, read the **whole** file (Objective, Hypothesis,
-  Constraints, Context) — not the objective line alone.
+  Constraints, Context, Waves, Sub-agents) — not the objective line alone. Waves and
+  Sub-agents are a rendering of H1. Critique them in C1; do not execute them as written.
 - Prior hypothesis (H1): `.session/next-cycle-hypothesis.md` or alias
   `.session/next-cycle-analysis.md` (search order: hypothesis → analysis → handoff-only
   degraded).
@@ -75,7 +76,7 @@ opt-in only.
 - `--frontier` (optional) — explicitly request a frontier-model critique of the internal plan
   before execution. Produce diagnose + C1 + internal plan first, then invoke
   `0200-frontier-consult --consumer 1840-auto-improve`. After the frontier model improves the
-  plan and the user approves, continue with `--from-frontier` semantics.
+  plan, continue with `--from-frontier` semantics. The only approval remains G1.
 
 ## Procedure
 
@@ -87,10 +88,13 @@ opt-in only.
    explicitly asks for a frontier-model critique:
    - **Produce diagnose + C1 + internal plan first** (steps 3–5 below), then return here.
    - Launch `0200-frontier-consult --consumer 1840-auto-improve` with the objective AND
-     the internal plan as context. The frontier model validates, critiques, and improves
-     the plan — it does NOT create one from scratch.
-   - After the frontier model returns the improved plan and the user approves it, continue
-     with `--from-frontier` semantics (the improved plan file is pre-existing).
+     the full evidence bundle as context — paths to `.session/diagnostic.md`,
+     `.session/hypothesis-critique.md`, `.session/plan.md` (the internal plan), and the
+     H1 artifact if present. The frontier model validates, critiques, and improves the
+     plan against that evidence — it does NOT create one from scratch.
+   - After the frontier model returns the improved plan, continue with
+     `--from-frontier` semantics (the improved plan file is pre-existing). The only
+     approval is the human gate (G1). Do not ask for a separate frontier approval.
    - If the user did NOT request frontier-consult, skip this step entirely and use the
      internal plan directly (step 5).
 
@@ -193,6 +197,10 @@ opt-in only.
      (b) the recommended plan from `.session/plan.md` with a short justification (why this
      option, what C1 kept / amended / dropped); (c) ask **Approve** or **Amend** (user
      specifies changes).
+   - Deliver the gate through the client's structured-choice surface when one exists
+     (question tool, menus, buttons): **Approve** is the identified recommendation,
+     answerable in one click; **Amend** collects the user's changes via the surface's
+     fallback path. With no such surface, present the same two options as a short list.
    - Alternatives are **analysis, not a menu**: each is shown with its impact and why it
      was kept or rejected. "No menus" forbids co-equal options without a recommendation —
      it does NOT forbid showing the decision space (rule 9).
@@ -249,11 +257,18 @@ opt-in only.
    - Commit the changes (do not push without explicit authorization).
    - `1020` invokes `1040-session-bridge` mandatorily.
 
-10. **Cleanup (X1)** — the prompt that launched this cycle was already consumed and
-    deleted by `0020-resume` at cycle start. Do **not** delete
-    `.ssot/next-session-prompt.md` after `1040` writes the **new** prompt for the next
-    session. If the cycle failed or was interrupted before `1040`, the user can re-run
-    `1040-session-bridge` to prepare a new one.
+10. **Cleanup (X1)** — `.ssot/next-session-prompt.md` is the cycle contract: it stays
+    on disk for the whole cycle so the objective and constraints remain referenceable
+    and an interrupted session can be re-launched. Nobody deletes it at cycle start —
+    not `0020`, not this entrypoint. The consumed prompt is deleted only at the end,
+    inside `1040-session-bridge` (invoked during step 9): `1040` removes the consumed
+    prompt **immediately before** writing the **new** prompt for the next session.
+    Do **not** delete
+    `.ssot/next-session-prompt.md` after `1040` writes the **new** prompt —
+    that file belongs to the next session. If the cycle ends without `1040`
+    writing a replacement (abort, gate refusal, interruption), the previous prompt
+    stays in place: the next `0020` launches it again and C1 revalidates it —
+    or the user can delete it / re-run `1040-session-bridge` manually.
 
 ## Personalization
 

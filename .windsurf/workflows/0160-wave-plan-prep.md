@@ -6,7 +6,7 @@ Source: .ssot/agents/entrypoints/0160-wave-plan-prep.md
 
 # 0160-wave-plan-prep
 
-> Frontier model strategic analysis and wave decomposition prep
+> Strategic analysis and wave decomposition prep (frontier model optional, opt-in)
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.
@@ -35,7 +35,9 @@ Source: .ssot/agents/entrypoints/0160-wave-plan-prep.md
 > `.ssot/agents/context/orientation.md`.
 <!-- ACOS-ORIENTATION:END -->
 
-Produce a frontier-model strategic analysis that feeds the wave-plan phase.
+Produce a strategic analysis that feeds the wave-plan phase. The current agent performs
+the analysis in-session by default (per `0200-frontier-consult` self-mode semantics); a
+frontier model is invoked only if the user explicitly requests one via `--cli`/`--frontier`.
 
 1. Determine the feature ID from the user's request or the active spec.
 2. Read `specs/<feature-id>/spec.md`, `specs/<feature-id>/plan.md`, and `specs/<feature-id>/data-model.md` if present.
