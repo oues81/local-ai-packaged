@@ -20,7 +20,7 @@
   },
   "acosSource": {
     "type": "local-checkout",
-    "path": "acos-mcp-launcher-work"
+    "path": "../acos-mcp-launcher-work"
   },
   "clients": {
     "claude": {

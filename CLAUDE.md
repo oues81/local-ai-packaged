@@ -2,7 +2,7 @@
 Source: .ssot/agents/context/CLAUDE.src.md
 -->
 
-# My Project — Claude Code Context
+# local-ai-packaged — Claude Code Context
 
 This file is a Claude-specific pointer. The shared canonical source is `/.ssot/agents/context/AGENTS.src.md`.
 

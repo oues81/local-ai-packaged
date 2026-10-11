@@ -1108,5 +1108,10 @@
     "contentHash": "83473df25d69e0bba24cc7d0995460a1a4ec1c010a27592ed6dbb11e4f28ce63",
     "generatedAt": "2026-10-11T02:39:09.764Z",
     "source": "acos"
+  },
+  "CLAUDE.md": {
+    "contentHash": "59c6837000561c39f16bd6ac437149a82813eca02af76de6276c2de3d19e1564",
+    "generatedAt": "2026-10-11T03:24:52.366Z",
+    "source": "acos"
   }
 }
