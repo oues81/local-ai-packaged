@@ -101,13 +101,14 @@ prompt file's `## Action` section.
    full execution plan — C1 + plan happen in the next `1840`).
 
 4c. **Render waves and sub-agents from H1** — do not invent lanes. Read only the
-   candidate lanes already in H1 (wave role, write-set hint, parallelizable):
-   - **Waves** — one short paragraph per wave role present (`diagnose`, `fix`,
-     `validate`, `ship`): the intents in that role and their write-set hints.
-   - **Sub-agents** — per wave, how many agents. A lane marked parallelizable with a
-     write-set that does not overlap another lane in the same wave may be its own
-     agent. Overlapping or unspecified write-sets stay on one agent. If every lane
-     is `parallelizable: no`, say so and assign one agent.
+   candidate lanes already in H1 (wave role, write-set hint, parallelizable).
+   Write them in **plain language a non-ACOS user understands** — no jargon-only
+   lines like "`fix` lane write-set `.ssot/agents/**` parallelizable: no".
+   - **Waves** — for each wave role present (`diagnose`, `fix`, `validate`,
+     `ship`), one bullet: what work happens in that wave, in everyday words.
+   - **Sub-agents** — for each wave: how many agents, who does which task, and
+     why they can (or cannot) run in parallel. Say "one agent does everything"
+     when that is the case.
 
 4b. **Resolve the target project (containers only)** — if `clients.json` declares
    `ecosystemChildren`, fill `## Target project` in the prompt with the satellite the
@@ -151,18 +152,30 @@ prompt file's `## Action` section.
 
    ## Constraints
    - Run diagnose, then **C1** (`.session/hypothesis-critique.md`) before planning.
-   - Human gate = one recommended plan; **approve or amend only** (no skip/reject menus).
+   - Cycle substance: plan material improvements/enrichments/corrections — not a
+     hollow one- or two-line micro-edit cycle.
+   - Human gate (G1) = one recommended concrete plan; outcomes are **Approve** or
+     **Amend** only (no skip/reject menus). Deliver via the client's structured-choice
+     surface (**AskQuestion** on Cursor) — do not ask the user to type "approve"/"amend".
    - Do not trust prior claims without live revalidation.
    - Do not push or deploy without explicit authorization.
+   - Close with `1020` → `1040`: close briefing (objective, tasks, waves,
+     sub-agents) then the resume snippet in a fenced code block.
 
    ## Context summary
    <2-3 lines from status.md: current objective, active milestone, key blockers>
 
    ## Waves
-   <H1 candidate lanes grouped by wave role — a rendering, not a new plan>
+   <!-- Plain language. Example shape:
+   - Fix wave: copy the new cycle rules into the project's live agent files, then regenerate projections.
+   - Later diagnose wave (parked): build a detector for personalized-file drift.
+   -->
 
    ## Sub-agents
-   <per wave: agent count, ownership, write-sets that must stay on one agent>
+   <!-- Plain language. Example shape:
+   - Fix wave: 1 agent (same files — must stay serial).
+   - Docs optional: 1 separate agent only if it touches docs/ only.
+   -->
 
    ## Resume snippet
    <the copy-paste snippet produced in step 7>
@@ -185,32 +198,96 @@ prompt file's `## Action` section.
    Read .ssot/next-session-prompt.md and launch 1840-auto-improve --frontier. The consumer produces its internal plan first, invokes 0200-frontier-consult to critique and improve it, then continues --from-frontier after approval.
    ```
 
-   Then deliver the snippet on **three** channels (**B2**):
+   Prepare the snippet for **three** channels (**B2**). **Do not show the
+   fenced block to the user yet** — step 8's close briefing comes first:
    - **Persist** — write it verbatim into the prompt file's `## Resume snippet`
      section (the file written in step 6).
-   - **Print** — show it to the user in a copy-paste code block.
-   - **Clipboard** — attempt a best-effort OS clipboard copy so the user can
-     paste directly: `clip` (Windows), `pbcopy` (macOS), `xclip`, `xsel`, or
-     `wl-copy` (Linux). Non-fatal — if no clipboard tool is available, the
-     printed block and the prompt file are the fallback. Report which channel
-     was used.
+   - **Print** — deferred to step 8: after the close briefing, show the snippet
+     in a markdown **fenced code block** (opening and closing ` ``` ` fences)
+     containing the full snippet and nothing else. Prose paragraphs, bullets,
+     or inline backticks do **not** satisfy B2.
+   - **Clipboard** — attempt a best-effort OS clipboard copy (`clip` /
+     `pbcopy` / `xclip` / `xsel` / `wl-copy`), non-fatal. May run during step 7
+     or 8; report which channel was used.
 
-   Tell the user: "Paste this snippet at the start of the next session.
-   0020-resume will orient from the project rules and status files, then
-   launch the cycle."
+8. **Close briefing (mandatory — before the snippet)** — the point is
+   **fluidity**: the user must understand the next cycle *now*, while this
+   session is still open, so they can ask questions or change the plan
+   **immediately**. Do not make them decode jargon, entrypoint IDs, or path
+   globs. The turn is incomplete until they have seen (A) this briefing and
+   (B) the fenced resume snippet. **Order**: briefing → fenced snippet.
 
-8. **Tell the user** — this close is part of the cycle. Report, in prose:
-   - The prompt file path (`.ssot/next-session-prompt.md`)
-   - The H1 path used
-   - The consumer entrypoint that will be used
-   - The draft objective (the next `1840` critiques it before the gate)
-   - The wave synthesis (from `## Waves`)
-   - The sub-agent synthesis (from `## Sub-agents`)
-   - Whether frontier-consult is enabled or disabled (default: disabled)
-   - The copy-paste snippet (from step 7), and whether it was persisted in
-     `## Resume snippet` and copied to the clipboard
-   - "Paste the snippet at the next session. `0020-resume` launches `1840`, which
-     re-reads this draft, critiques it (C1), enriches the plan, and stops for approval."
+   **Required format** — copy this skeleton and fill every section with real
+   content from H1 / step 4. Do not invent a different structure. Do not
+   collapse it into one opaque sentence.
+
+   ```markdown
+   ### Next session — what we plan to do
+
+   **In one plain sentence:** <what the next cycle is for — no entrypoint IDs,
+   no acronym soup>
+
+   **Tasks (numbered):**
+   1. <concrete task in everyday words — what changes, for what benefit>
+   2. <…>
+   3. <optional / parked — say so>
+
+   **Waves (how the work is sequenced):**
+   - <Wave name in plain words, e.g. "1. Diagnose">: <what happens>
+   - <Wave name, e.g. "2. Fix">: <what happens>
+   - <skip empty waves>
+
+   **Sub-agents (who does what):**
+   - <e.g. "One agent does all of wave 2 (same files — serial)">
+   - <e.g. "Optional docs task can be a second agent if it only touches docs/">
+
+   **Change it now?** Reply if you want a different objective, drop a task,
+   or add a constraint — I will update the plan in this session before you
+   paste the snippet.
+   ```
+
+   After that skeleton, one short **Meta** line is allowed (prompt path, H1
+   path, consumer name, frontier on/off, clipboard yes/no) — not a substitute
+   for the skeleton.
+
+   **Then** show the fenced resume snippet (step 7 Print channel).
+
+   **Forbidden outputs (B2/close failure):**
+   - A single opaque sentence instead of the skeleton
+   - Jargon-only bullets (`fix` / `write-set` / `parallelizable: no` with no
+     plain explanation)
+   - Only a code block / only "see `.ssot/next-session-prompt.md`"
+   - Skipping Tasks, Waves, or Sub-agents sections
+   - Asking the user to invent what the next session will do
+
+   **Bad close (FAIL — never ship this):**
+   ```
+   Next: run 1840 on H1; fix lane write-set `.ssot/agents/**` parallelizable: no;
+   see next-session-prompt.md. Paste snippet below.
+   ```
+
+   **Good close (PASS — match this clarity):**
+   ```
+   ### Next session — what we plan to do
+
+   **In one plain sentence:** Add a script that warns when a personalized
+   entrypoint silently drifted away from the current template.
+
+   **Tasks (numbered):**
+   1. Write the drift detector script and unit tests.
+   2. Wire it into the existing audit/doctor commands.
+   3. Document how to read the report (short note in migrations docs).
+
+   **Waves (how the work is sequenced):**
+   - 1. Fix: implement script + tests.
+   - 2. Validate: run the new tests and the audit command once.
+
+   **Sub-agents (who does what):**
+   - One agent does fix + validate (same files — serial).
+
+   **Change it now?** Say if you want a different scope before we continue.
+   ```
+   Then the fenced resume snippet.
 
 ## What 0020-resume does with this file
 

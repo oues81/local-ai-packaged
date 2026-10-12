@@ -64,13 +64,19 @@ opt-in only.
 
 ## Inputs
 
-- The user's accompanying text is the **objective** of the cycle.
-- If `.ssot/next-session-prompt.md` exists, read the **whole** file (Objective, Hypothesis,
-  Constraints, Context, Waves, Sub-agents) — not the objective line alone. Waves and
-  Sub-agents are a rendering of H1. Critique them in C1; do not execute them as written.
+- The user's accompanying text is the **current objective** and may declare a **requested
+  phase** (full cycle, analysis-only / transfer, diagnose-only, etc.).
+- Intent priority (same as `0020-resume`): current explicit instruction → explicitly active
+  resume contract → status/handoff as context. Qualify `.ssot/next-session-prompt.md` as
+  **absent**, **inactive**, **usable**, or **contradictory** before consuming it. An old or
+  inactive bridge must not override a new explicit objective or phase.
+- If a **usable** bridge is selected under that priority, read the **whole** file (Objective,
+  Hypothesis, Constraints, Context, Waves, Sub-agents) — not the objective line alone. Waves
+  and Sub-agents are a rendering of H1. Critique them in C1; do not execute them as written.
 - Prior hypothesis (H1): `.session/next-cycle-hypothesis.md` or alias
   `.session/next-cycle-analysis.md` (search order: hypothesis → analysis → handoff-only
-  degraded).
+  degraded). Missing or inactive H1 is allowed for a first cycle; C1 records
+  `degraded_input: true`.
 - `--from-frontier` (optional) — indicates a frontier-model critique already exists at the
   `planConsumer.specPath`/`planFile` location. The internal plan was produced, sent to the
   frontier model for critique, and the improved plan was written back. Read the improved plan
@@ -83,9 +89,12 @@ opt-in only.
 
 ## Procedure
 
-1. **Read the cycle contract** — if `.ssot/next-session-prompt.md` exists, read the whole
-   file. Also read H1 if present. Otherwise, use the user's accompanying text. If neither
-   provides a clear objective, ask the user what they want to improve.
+1. **Read the cycle contract** — apply intent priority. Prefer the current explicit user
+   instruction for objective and requested phase. If a usable bridge is selected and not
+   contradicted, read the whole file as context/contract. Also read H1 if present (qualify
+   inactive sentinels). If neither provides a clear objective, ask the user what they want
+   to improve. Record the requested phase: full execute (default) vs **analysis-only /
+   transfer** (stop after artifacts; no implementation, commit, or implicit relaunch).
 
 2. **Frontier-consult gate (optional)** — if `--frontier` was provided OR the user
    explicitly asks for a frontier-model critique:
@@ -140,8 +149,9 @@ opt-in only.
    - The parent agent aggregates all sub-agent diagnostics into `.session/diagnostic.md`
      with a per-satellite table.
    - If the diagnostic reveals a need for wave decomposition (multi-satellite,
-     multi-domain work), invoke `0160-wave-plan-prep` to prepare a structured wave plan
-     before proceeding to planning.
+     multi-domain work), invoke `0160-wave-plan-prep` as a **child prep** (parent-owned):
+     it returns `wave-prep.md` to this entrypoint without a second user gate. The single
+     **G1** remains step 6 on the complete plan.
    - If tests or build fail on any satellite: that satellite becomes a **correction
      priority** in the plan.
 
@@ -175,35 +185,64 @@ opt-in only.
      - **If things are green**: identify improvements (design, performance, security,
        technical debt, UX, missing tests, documentation gaps). Prioritize by impact.
      - **If things are red**: identify the corrections needed. Prioritize by severity.
+   - **Cycle substance (mandatory)** — a cycle is analysis plus material
+     improvements, enrichments, or corrections. It is **not** a wrapper for a routine
+     micro-edit. Forbidden as the sole deliverable of a cycle: a one- or two-line tweak,
+     a typo/comment-only change, or a single trivial task that belongs to an ordinary
+     agent turn outside the cycle. Each planned task MUST state why it is cycle-worthy
+     (expected impact / multi-concern or multi-file scope / high-impact justification).
+     If diagnose + C1 find only trivial work: either expand into a related substantive
+     package, or **stop** and report that no cycle-worthy work remains — do not invent
+     busywork and do not run a hollow cycle.
    - **Standard mode** (≤5 tasks, single project): break into prioritized tasks
      (max 5 per cycle to keep the scope bounded). Each task must have: description,
-     files affected, domain (code|tests|docs|infra), dependencies, and a verification
-     command.
+     files affected, domain (code|tests|docs|infra), dependencies, a verification
+     command, and a one-line cycle-worthiness rationale.
    - **Wave mode** (>5 tasks OR multi-satellite OR diagnostic invoked
      `0160-wave-plan-prep`): decompose into waves following the agent-wave orchestration
      pattern (diagnose → fix → validate → ship):
-     - Wave 1 = diagnose (parallel between projects, read-only)
-     - Wave 2 = fix/implement (parallel between projects, sequential within a project)
-     - Wave 3 = validate (sequential)
+     - Wave 1 = diagnose (parallel across lanes / projects when read-only and
+       ownership-disjoint, including **within a single repository**)
+     - Wave 2 = fix/implement (parallel across ownership-disjoint write-sets in the
+       same repository or across satellites; serialize only overlapping files,
+       shared generation, or true dependencies)
+     - Wave 3 = validate (sequential integration barrier)
      - Wave 4 = ship/handoff (sequential)
-     - Structure: `specs/auto-improve-{date}/waves/manifest.json` with per-lane
-       `promptFile`, `reportFile`, `statusFile`.
+     - Structure: resolve the active feature directory via artifact path resolution
+       (explicit path → project-declared active source → `docs/specs/<id>` then
+       `specs/<id>`; default consumer path remains `specs/`). Prefer reusing an
+       existing package (e.g. `docs/specs/021-…`) over re-deriving tasks. Write
+       `waves/manifest.json` with per-lane `promptFile`, `reportFile`, `statusFile`.
      - Each task must have: description, files affected, domain, dependencies,
        verification command, `Parallelizable: true|false`, `Lane` assignment.
-     - Max 5 parallel lanes per wave (coordination cost).
+     - Max 5 parallel lanes per wave (coordination cost). Example: six file-disjoint
+       tasks in one repo may run as parallel lanes when write-sets do not overlap.
+     - **Shared generation** (projection regeneration, pack-wide sync, shared manifests)
+       is reserved for the **coordinator / parent** after lane barriers — not for
+       concurrent lane agents.
+     - Child `0160-wave-plan-prep` returns prep only; it does not hold a second G1.
 
 6. **Human gate (G1)** — present **one** recommended plan to the user, backed by the
    analysis that produced it. Wait for approval before executing. Do NOT execute blindly.
-   This is the single human gate in the cycle.
+   This is the **single** human gate in the cycle (parent-owned). Child prep (`0160`)
+   and sub-agent lanes do not present additional Approve/Amend gates.
    - Required presentation: (a) the preliminary analysis — the viable options considered
      and the impact / trade-offs of each, including options rejected during diagnose + C1;
-     (b) the recommended plan from `.session/plan.md` with a short justification (why this
-     option, what C1 kept / amended / dropped); (c) ask **Approve** or **Amend** (user
-     specifies changes).
-   - Deliver the gate through the client's structured-choice surface when one exists
-     (question tool, menus, buttons): **Approve** is the identified recommendation,
-     answerable in one click; **Amend** collects the user's changes via the surface's
-     fallback path. With no such surface, present the same two options as a short list.
+     (b) the recommended plan from `.session/plan.md` as a **concrete file-by-file /
+     task-by-task list** (what changes, in which paths — not abstract option letters),
+     with a short justification (why this option, what C1 kept / amended / dropped);
+     (c) the semantic outcomes **Approve** or **Amend** (user specifies changes).
+   - Deliver the gate through the client's structured-choice surface when one exists —
+     on Cursor that is the **AskQuestion** tool (question tool, menus, buttons).
+     **Approve** is the identified recommendation, answerable in one click; **Amend**
+     collects the user's changes via the surface's fallback path (e.g. "Other").
+   - **Forbidden gate UX**: asking the user to type free-form answers such as
+     "approve", "disapprove", "reject", "amend", or option numbers when a
+     structured-choice surface exists. That is an open-text prompt — a G1 violation
+     (rule 9). If AskQuestion / the surface is unavailable in the current model
+     session, say so in one sentence, still present the concrete recommended plan,
+     and use the shortest possible confirmation path — never a multi-paragraph
+     typed quiz.
    - Alternatives are **analysis, not a menu**: each is shown with its impact and why it
      was kept or rejected. "No menus" forbids co-equal options without a recommendation —
      it does NOT forbid showing the decision space (rule 9).
@@ -213,11 +252,19 @@ opt-in only.
      the plan when diagnose+C1 already produced one.
    - Edge case only: if the user refuses the objective entirely, stop and ask for a new
      objective — this is not a routine menu option.
+   - **Analysis-only / transfer phase**: after diagnostic, C1, plan (and tasks / wave-prep
+     as needed) exist as concrete artifacts, **stop**. Do not run step 7 execute, do not
+     commit, do not push, do not implicitly relaunch the next cycle. Hand off the
+     artifacts and remaining G1/execute decision to the operator or next session.
+     Analysis-only is **not** execute authorization. **X1** still applies: do not delete
+     `.ssot/next-session-prompt.md` here.
 
-7. **Execute** — implement the approved tasks. Two modes:
+7. **Execute** — implement the approved tasks (skip entirely when requested phase is
+   analysis-only / transfer). Two modes:
 
    **Standard mode** (≤5 tasks, single project):
-   - Implement tasks one by one or in parallel if independent.
+   - Implement tasks one by one or in parallel if independent (ownership-disjoint
+     write-sets).
    - Respect protected paths (`protected-paths.json`).
    - Respect the constitution and existing decisions (`.ssot/decisions.md`).
    - Do not invent features outside the active spec.
@@ -225,14 +272,17 @@ opt-in only.
    - After each task, run its verification command. If it fails, fix before continuing
      to the next task.
 
-   **Wave mode** (>5 tasks OR multi-satellite):
+   **Wave mode** (>5 tasks OR multi-satellite OR ownership-disjoint lanes in one repo):
    - For each wave (diagnose → fix → validate → ship):
-     - Launch N sub-agents in parallel (one per lane/task, max 5 concurrent).
-       All parallel sub-agents for one wave MUST be dispatched in a single message
-       to achieve true parallelism.
+     - Launch N sub-agents in parallel (one per lane/task, max 5 concurrent) when
+       write-sets are file-disjoint — **including six disjoint tasks in a single
+       repository**. All parallel sub-agents for one wave MUST be dispatched in a
+       single message to achieve true parallelism.
      - **File-disjoint only**: before dispatching, list the files each task will touch.
-       If two tasks touch the same file, run them sequentially in the same subagent.
-       Parallel writes to one file corrupt work.
+       If two tasks touch the same file (or overlapping globs/dirs conservatively),
+       run them sequentially in the same subagent. Parallel writes to one file corrupt work.
+     - Shared projection generation and other shared outputs stay with the coordinator
+       parent after the wave barrier — lanes do not regenerate projections.
      - Each sub-agent prompt must include: task ID, exact file paths it may
        create/modify (the disjoint set), files it may read but not write (context),
        acceptance criteria, and "Do not touch files outside your allowed set."
@@ -254,11 +304,19 @@ opt-in only.
    - Run / let `1020` run the parallel next-cycle scan (**S1**) into
      `.session/next-cycle-scan/` — mandatory after a `1840` cycle.
    - Write/refresh `.session/next-cycle-hypothesis.md` (**H1**), citing the
-     scan artifacts, before `1040`.
+     scan artifacts, before `1040`. H1 candidate lanes MUST meet the cycle
+     substance bar (step 5) — micro-edits are non-goals or routine work, not lanes.
    - Record decisions in `.ssot/decisions.md`.
    - Sync the SSOT (`0660-sync`).
    - Commit the changes (do not push without explicit authorization).
    - `1020` invokes `1040-session-bridge` mandatorily.
+   - **Close incomplete without B2 + briefing**: the cycle is not finished until
+     `1040` has written `.ssot/next-session-prompt.md` and the agent has shown the
+     user (1) the **plain-language close-briefing skeleton** from `1040` step 8
+     (one sentence + numbered tasks + waves + sub-agents + invite to change now),
+     then (2) the resume snippet inside a markdown **fenced code block** (and
+     attempted clipboard copy). Ending with a bare snippet, opaque jargon, or a
+     single incomprehensible sentence instead of that skeleton is a cycle failure.
 
 10. **Cleanup (X1)** — `.ssot/next-session-prompt.md` is the cycle contract: it stays
     on disk for the whole cycle so the objective and constraints remain referenceable

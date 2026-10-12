@@ -64,11 +64,22 @@ After step 1 (classification), check `.ssot/agents/clients.json` for `ecosystemR
 
 ## Non-spec routing
 
-Not all tasks go through the spec lifecycle. After classification (step 1), route these task types to their dedicated entrypoints:
+Not all tasks go through the spec lifecycle. After classification (step 1), route these task types to their dedicated entrypoints.
+
+**Intent priority** (same rule as `0020-resume`): current explicit user instruction →
+explicitly active resume contract → status/handoff as context. Qualify
+`.ssot/next-session-prompt.md` as absent, inactive, usable, or contradictory before
+treating it as cycle intent. Mere file presence does **not** override a different
+explicit request.
 
 - **Migration or version upgrade**: route to `project.migrate` / `1100-migrate` (the migration router). The router determines whether it's a new install, version upgrade, or reconciliation, and dispatches to `1120-migrate-analyze`, `1140-migrate-workflow`, or `1180-migrate-ecosystem` as needed.
 - **Personalization**: if the user asks to personalize, customize, or specialize the SSOT for the project (e.g. "customize entrypoints for my stack", "personalize ACOS for this project"), route to `project.personalize` / `1220-personalize`.
-- **Auto-improve cycle**: if the user's text mentions "auto-improve", "cycle", or `.ssot/next-session-prompt.md` exists, route to `project.resume` / `0020-resume` which handles the fast-path launch of `project.autoimprove` / `1840-auto-improve`.
+- **Auto-improve cycle**: if the user's text names auto-improve / cycle / `1840`, or a
+  **usable** (non-contradictory) `.ssot/next-session-prompt.md` is selected under intent
+  priority, route to `project.resume` / `0020-resume` which handles the fast-path launch
+  of `project.autoimprove` / `1840-auto-improve`. Pass any **requested phase**
+  (including analysis-only / transfer): analysis produces artifacts and stops without
+  implicit implementation, commit, or relaunch.
 - **Session end / handoff**: if the user wants to end the session or write a handoff, route to `session.handoff` / `1020-handoff`.
 - **Next session preparation**: if the user wants to prepare the next session's auto-improve cycle, route to `session.bridge` / `1040-session-bridge`.
 - **Git operations**: route to `git.layout` / `0500-git-layout`, `git.acp` / `0540-git-acp`, `git.pr` / `0580-git-pr`, or `git.cleanup` / `0620-git-cleanup` as appropriate.
