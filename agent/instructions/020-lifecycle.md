@@ -8,6 +8,12 @@ Source: .ssot/agents/hooks.json lifecycleHooks
 > Lifecycle requirements are projected here as always-on instructions.
 > Treat each hook as a mandatory check at the described lifecycle point.
 
+## Eve catalog tools (0.80+)
+
+Use `eve__search`, `eve__tool`, and `eve__skill` to discover deferred tools/skills/connections.
+Do **not** call retired names `connection_search`, `connection_execute`, or `load_skill`.
+Built-ins also use the `eve__*` namespace (e.g. `eve__task_wait`, `eve__reply`).
+
 ## BeforeMutation
 
 **Inspect protected paths and the authority boundary before file mutations (writes/edits only — not shell commands).**

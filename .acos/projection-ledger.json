@@ -15,8 +15,8 @@
     "source": "acos"
   },
   "agent/sandbox/workspace/.ssot-seed-manifest.json": {
-    "contentHash": "a8676f3b605221db91588520b6489a915fab27550fe5e852d9d1a5f47b2c1b63",
-    "generatedAt": "2026-10-12T19:22:15.071Z",
+    "contentHash": "c14e18d59af3363bb3d37d53dd5b636c85661ddfb4421e4ae054849cdbc12218",
+    "generatedAt": "2026-10-17T17:00:44.729Z",
     "source": "acos"
   },
   ".claude/skills/1180-migrate-ecosystem/SKILL.md": {
@@ -60,13 +60,13 @@
     "source": "acos"
   },
   ".opencode/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "749ad2a793e4f6a8bd52769c31b2146eb2d2aa23eb37c1b9414475b8103e6d07",
-    "generatedAt": "2026-09-07T17:24:21.531Z",
+    "contentHash": "b107a29a6de2a50c1d603c877ae640283cf09de5fa227264cb32d487329e37b9",
+    "generatedAt": "2026-10-17T17:00:40.324Z",
     "source": "acos"
   },
   ".opencode/skills/1840-auto-improve/SKILL.md": {
-    "contentHash": "78feb1a0c4e9fa2540376f712d86fedbfafaf6ff163b1fe9138c877afc5eeb07",
-    "generatedAt": "2026-10-12T19:22:11.610Z",
+    "contentHash": "7422ccb9a7e86f9e8a0defc5833eac1a81cb8797436723059d4651114f314aa2",
+    "generatedAt": "2026-10-17T17:00:40.334Z",
     "source": "acos"
   },
   ".agents/skills/1180-migrate-ecosystem/SKILL.md": {
@@ -195,8 +195,8 @@
     "source": "acos"
   },
   ".claude/skills/0020-resume/SKILL.md": {
-    "contentHash": "d6280ddee0ae6ad3e660abd1699fdac5348373477c14bd3451f2dd6496e24661",
-    "generatedAt": "2026-10-11T02:43:09.018Z",
+    "contentHash": "66eeeb0b4f37159ab7f8b23f78ee4b511196e6e12ea24d35ceff6d8cbfae4ffc",
+    "generatedAt": "2026-10-17T17:00:39.917Z",
     "source": "acos"
   },
   ".claude/skills/1020-handoff/SKILL.md": {
@@ -205,8 +205,8 @@
     "source": "acos"
   },
   ".claude/commands/0020-resume.md": {
-    "contentHash": "89d4d81b0d81df16d536ee6acfa922ec241fc2958c7c4eb6896bd757ff649a8b",
-    "generatedAt": "2026-10-11T02:43:09.103Z",
+    "contentHash": "40845f8be1a9bea7d76014d964c51cd37e6800325229214715d4cdb6b7215169",
+    "generatedAt": "2026-10-17T17:00:39.992Z",
     "source": "acos"
   },
   ".claude/commands/1020-handoff.md": {
@@ -215,8 +215,8 @@
     "source": "acos"
   },
   ".cursor/skills/0020-resume/SKILL.md": {
-    "contentHash": "c9be47333779b418bca2f3411f3d77bb9641a1cb94eb226819f08997590bc03a",
-    "generatedAt": "2026-10-11T02:43:09.169Z",
+    "contentHash": "1c7810d179711da0bd0b854b63e7f783a4515596c58095276705a61cdefc4815",
+    "generatedAt": "2026-10-17T17:00:40.068Z",
     "source": "acos"
   },
   ".cursor/skills/1020-handoff/SKILL.md": {
@@ -225,8 +225,8 @@
     "source": "acos"
   },
   ".cursor/commands/0020-resume.md": {
-    "contentHash": "89d4d81b0d81df16d536ee6acfa922ec241fc2958c7c4eb6896bd757ff649a8b",
-    "generatedAt": "2026-10-11T02:43:09.224Z",
+    "contentHash": "40845f8be1a9bea7d76014d964c51cd37e6800325229214715d4cdb6b7215169",
+    "generatedAt": "2026-10-17T17:00:40.152Z",
     "source": "acos"
   },
   ".cursor/commands/1020-handoff.md": {
@@ -235,18 +235,18 @@
     "source": "acos"
   },
   ".opencode/skills/0020-resume/SKILL.md": {
-    "contentHash": "455aecd3558e58152cae8b18c5f471b95df253a4f476dee9845db78ec281b438",
-    "generatedAt": "2026-10-11T02:43:09.247Z",
+    "contentHash": "d9ff59767b855466da9b3e96b465b32b55696e4661f200cff0d687515e2a6201",
+    "generatedAt": "2026-10-17T17:00:40.231Z",
     "source": "acos"
   },
   ".opencode/skills/1020-handoff/SKILL.md": {
-    "contentHash": "3b630ae3cd6fbd3350ae1f31fddd7648073dd2dd8d9b4e8ec58adcd9651122de",
-    "generatedAt": "2026-10-11T02:43:09.266Z",
+    "contentHash": "ab91bc74dc8eea4b1081bde474508b590c5b5e9d8d645fad7861adce5046d0a1",
+    "generatedAt": "2026-10-17T17:00:40.306Z",
     "source": "acos"
   },
   ".agents/skills/0020-resume/SKILL.md": {
-    "contentHash": "d6280ddee0ae6ad3e660abd1699fdac5348373477c14bd3451f2dd6496e24661",
-    "generatedAt": "2026-10-11T02:43:09.289Z",
+    "contentHash": "66eeeb0b4f37159ab7f8b23f78ee4b511196e6e12ea24d35ceff6d8cbfae4ffc",
+    "generatedAt": "2026-10-17T17:00:40.340Z",
     "source": "acos"
   },
   ".agents/skills/1020-handoff/SKILL.md": {
@@ -255,8 +255,8 @@
     "source": "acos"
   },
   ".kilo/skills/0020-resume/SKILL.md": {
-    "contentHash": "d6280ddee0ae6ad3e660abd1699fdac5348373477c14bd3451f2dd6496e24661",
-    "generatedAt": "2026-10-11T02:43:09.332Z",
+    "contentHash": "66eeeb0b4f37159ab7f8b23f78ee4b511196e6e12ea24d35ceff6d8cbfae4ffc",
+    "generatedAt": "2026-10-17T17:00:40.414Z",
     "source": "acos"
   },
   ".kilo/skills/1020-handoff/SKILL.md": {
@@ -265,8 +265,8 @@
     "source": "acos"
   },
   ".kilo/commands/0020-resume.md": {
-    "contentHash": "89d4d81b0d81df16d536ee6acfa922ec241fc2958c7c4eb6896bd757ff649a8b",
-    "generatedAt": "2026-10-11T02:43:09.393Z",
+    "contentHash": "40845f8be1a9bea7d76014d964c51cd37e6800325229214715d4cdb6b7215169",
+    "generatedAt": "2026-10-17T17:00:40.492Z",
     "source": "acos"
   },
   ".kilo/commands/1020-handoff.md": {
@@ -275,8 +275,8 @@
     "source": "acos"
   },
   ".kilocode/workflows/0020-resume.md": {
-    "contentHash": "80b5a8f4cc017032168736a0e327a8a2847a12d30e87b7d3960f8b26d4e874b5",
-    "generatedAt": "2026-10-11T02:43:09.440Z",
+    "contentHash": "66f8bc13400134ea3e43f5a20513d229992e2a33715d7d03eb9f0c68313afa78",
+    "generatedAt": "2026-10-17T17:00:40.583Z",
     "source": "acos"
   },
   ".kilocode/workflows/1020-handoff.md": {
@@ -285,8 +285,8 @@
     "source": "acos"
   },
   ".opencode/commands/0020-resume.md": {
-    "contentHash": "89d4d81b0d81df16d536ee6acfa922ec241fc2958c7c4eb6896bd757ff649a8b",
-    "generatedAt": "2026-10-11T02:43:09.487Z",
+    "contentHash": "40845f8be1a9bea7d76014d964c51cd37e6800325229214715d4cdb6b7215169",
+    "generatedAt": "2026-10-17T17:00:40.651Z",
     "source": "acos"
   },
   ".opencode/commands/1020-handoff.md": {
@@ -295,8 +295,8 @@
     "source": "acos"
   },
   ".devin/skills/0020-resume/SKILL.md": {
-    "contentHash": "d6280ddee0ae6ad3e660abd1699fdac5348373477c14bd3451f2dd6496e24661",
-    "generatedAt": "2026-10-11T02:43:09.520Z",
+    "contentHash": "66eeeb0b4f37159ab7f8b23f78ee4b511196e6e12ea24d35ceff6d8cbfae4ffc",
+    "generatedAt": "2026-10-17T17:00:40.722Z",
     "source": "acos"
   },
   ".devin/skills/1020-handoff/SKILL.md": {
@@ -305,8 +305,8 @@
     "source": "acos"
   },
   ".windsurf/workflows/0020-resume.md": {
-    "contentHash": "5009ff4cd67f15906a5e2e1154b80a0e19161933cc68f852bfa328f8e2a7ed17",
-    "generatedAt": "2026-10-11T02:43:09.599Z",
+    "contentHash": "15b1a2b783c1047132dc8370989c7314055dc4d9b94b818462646c1d8af6559d",
+    "generatedAt": "2026-10-17T17:00:40.867Z",
     "source": "acos"
   },
   ".windsurf/workflows/1020-handoff.md": {
@@ -315,8 +315,8 @@
     "source": "acos"
   },
   ".codex/skills/0020-resume/SKILL.md": {
-    "contentHash": "84c573633ba9b8b388f63fb45ac9fed4bd81f39c8ff6fd3cdc10bed919a5991f",
-    "generatedAt": "2026-10-11T02:43:09.717Z",
+    "contentHash": "46271256e1e51cd03a277992494be050875b86678fb57e82e71653c0e2b52cfd",
+    "generatedAt": "2026-10-17T17:00:41.013Z",
     "source": "acos"
   },
   ".codex/skills/1020-handoff/SKILL.md": {
@@ -325,8 +325,8 @@
     "source": "acos"
   },
   "agent/skills/0020-resume/SKILL.md": {
-    "contentHash": "d6280ddee0ae6ad3e660abd1699fdac5348373477c14bd3451f2dd6496e24661",
-    "generatedAt": "2026-10-11T02:43:09.839Z",
+    "contentHash": "66eeeb0b4f37159ab7f8b23f78ee4b511196e6e12ea24d35ceff6d8cbfae4ffc",
+    "generatedAt": "2026-10-17T17:00:41.122Z",
     "source": "acos"
   },
   "agent/skills/1020-handoff/SKILL.md": {
@@ -355,8 +355,8 @@
     "source": "acos"
   },
   ".opencode/skills/1040-session-bridge/SKILL.md": {
-    "contentHash": "9064d3f156305366e2b6abfec50d6dc4a7b803ac3bcc20224efc21820dd64ff0",
-    "generatedAt": "2026-10-12T19:22:11.598Z",
+    "contentHash": "e4839b2c3e02e8907c994426916cf101bc38869be793866439ea096924421d40",
+    "generatedAt": "2026-10-17T17:00:40.308Z",
     "source": "acos"
   },
   ".agents/skills/1040-session-bridge/SKILL.md": {
@@ -570,43 +570,43 @@
     "source": "acos"
   },
   ".opencode/skills/0000-new/SKILL.md": {
-    "contentHash": "cc1b50617a3c0f02f69fff6f79ccca20ec190c0539bb17f5b4a7b381917c664a",
-    "generatedAt": "2026-09-27T20:38:07.622Z",
+    "contentHash": "b07ecbf344303b1d1b803b32f5fae281a78d158da4b5a2bc0f04e3d82b19fa74",
+    "generatedAt": "2026-10-17T17:00:40.229Z",
     "source": "acos"
   },
   ".opencode/skills/0040-route/SKILL.md": {
-    "contentHash": "44301d74fdd4132294d6a414f10561a0bcd8f8f761c13b69c10c2322fca774a0",
-    "generatedAt": "2026-10-12T19:22:11.556Z",
+    "contentHash": "8bb14d58b3c228b5945e62a0e2fb7662b19e9cc40ea184f7e6e32bf0fa0dc512",
+    "generatedAt": "2026-10-17T17:00:40.233Z",
     "source": "acos"
   },
   ".opencode/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "5b6f1401ee9f455f3e49df1531663b7e10b155ce43410e1625599d5488f5c9f8",
-    "generatedAt": "2026-10-11T02:39:08.854Z",
+    "contentHash": "7e1215bccdcff4ce51ef9fade24c7e88145efa43f6711db7230e4a79db62a488",
+    "generatedAt": "2026-10-17T17:00:40.245Z",
     "source": "acos"
   },
   ".opencode/skills/1100-migrate/SKILL.md": {
-    "contentHash": "527c84ef91fe827b42058f6b0a4a38acc709d1210e1ad3dbd0ca251f3339abbe",
-    "generatedAt": "2026-09-27T20:38:07.670Z",
+    "contentHash": "2e90d923744d556fc5d26bf6086b7d9923835cd5ab96d6585adc00e2144f9a37",
+    "generatedAt": "2026-10-17T17:00:40.315Z",
     "source": "acos"
   },
   ".opencode/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "4a65fde5638bb3b5572d4d66ff2b44e1b51030318c22a376a4d86e65c0f298f9",
-    "generatedAt": "2026-09-27T20:38:07.675Z",
+    "contentHash": "58789daab4b7fd31a54375a094deb58264e883f08a2dc801904bdc054149bbba",
+    "generatedAt": "2026-10-17T17:00:40.317Z",
     "source": "acos"
   },
   ".opencode/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "6e03cd2a4d730c229a6af3aa79d903130c2bd05373205f1ebb2940a8b19cbecb",
-    "generatedAt": "2026-09-27T20:38:07.678Z",
+    "contentHash": "2e3913690a5ec3e432579511231d0f832b3b7fd5015e6480354ab76ccad6c347",
+    "generatedAt": "2026-10-17T17:00:40.320Z",
     "source": "acos"
   },
   ".opencode/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "e3e30d446b1d8cb01c56fc7f1f15bc8dfb9897c30da72ac3213e3f2c381fd152",
-    "generatedAt": "2026-09-27T20:38:07.681Z",
+    "contentHash": "72687db1e9edae6ac6188d6eea9ccb96d9d7acb758681dbadae783e43291f16d",
+    "generatedAt": "2026-10-17T17:00:40.322Z",
     "source": "acos"
   },
   ".opencode/skills/1220-personalize/SKILL.md": {
-    "contentHash": "cccda6c6ab3030538c47af33ef77f3696ee488c9f91f372b8fdca51fbed0fcd4",
-    "generatedAt": "2026-09-27T20:38:07.687Z",
+    "contentHash": "aaaa70bb5192a90057d72a92bbaafbb131752b0e0632fd226ebd4fc2d905a480",
+    "generatedAt": "2026-10-17T17:00:40.327Z",
     "source": "acos"
   },
   ".agents/skills/0000-new/SKILL.md": {
@@ -1010,13 +1010,13 @@
     "source": "acos"
   },
   ".opencode/skills/0160-wave-plan-prep/SKILL.md": {
-    "contentHash": "a2b92e3fb5cd9d598774a66df86fd55f1e8e54ee38d2984c68d123e8ff5a1908",
-    "generatedAt": "2026-10-12T19:22:11.561Z",
+    "contentHash": "ea4c213fa08a8c8caf07cc5b85b66a16536905ce1aaf2b846e11d339d06c269d",
+    "generatedAt": "2026-10-17T17:00:40.241Z",
     "source": "acos"
   },
   ".opencode/skills/0760-runtime-sync/SKILL.md": {
-    "contentHash": "aadf203be488820d0ca5257b98b3af7b6bf38b64864d9046a5c1fbae4dcaacec",
-    "generatedAt": "2026-10-11T02:39:08.892Z",
+    "contentHash": "9210846fc3557a7bd13c1dc9843d5f05f0093bac2d82d0b640967c878d4127f8",
+    "generatedAt": "2026-10-17T17:00:40.288Z",
     "source": "acos"
   },
   ".agents/skills/0160-wave-plan-prep/SKILL.md": {
@@ -1990,218 +1990,218 @@
     "source": "acos"
   },
   ".opencode/skills/0060-constitution/SKILL.md": {
-    "contentHash": "09a4d6d1b2ba6f1437bb508c30c5c3a13d3615648316130298adfe7a7db76acf",
-    "generatedAt": "2026-10-12T19:22:11.557Z",
+    "contentHash": "f9cc50ec63371d114c18c734d932b9e6da209737bc12e5209842d262a2a897a5",
+    "generatedAt": "2026-10-17T17:00:40.235Z",
     "source": "acos"
   },
   ".opencode/skills/0100-spec/SKILL.md": {
-    "contentHash": "c2c0b65fb533718a48ad3978d15a6157aad898957b78aaddbb18bba8758bd53f",
-    "generatedAt": "2026-10-12T19:22:11.558Z",
+    "contentHash": "05a33c385461db2ee7ce066249e10844224fd3530644a4eb052b231862086e14",
+    "generatedAt": "2026-10-17T17:00:40.237Z",
     "source": "acos"
   },
   ".opencode/skills/0120-clarify/SKILL.md": {
-    "contentHash": "51fa85553c6d2a214001e59264d1d2bbc263c466591354643d9b7ea8b377abbd",
-    "generatedAt": "2026-10-12T19:22:11.559Z",
+    "contentHash": "85d4ee1683364ce2ad540780285a339da259ded83c1b5302ad91e71d44ee768a",
+    "generatedAt": "2026-10-17T17:00:40.238Z",
     "source": "acos"
   },
   ".opencode/skills/0140-plan/SKILL.md": {
-    "contentHash": "87a4af65f823296e18c83a2329a6f6fd7927e48b76264c2136dcdd2a8ada400f",
-    "generatedAt": "2026-10-12T19:22:11.560Z",
+    "contentHash": "4819382dd02199ac5f055507bd75309349e67890d891eff0171f4c64677ca5e7",
+    "generatedAt": "2026-10-17T17:00:40.240Z",
     "source": "acos"
   },
   ".opencode/skills/0180-data-model/SKILL.md": {
-    "contentHash": "8d5ba50e9c5d89d21e75a8086a871acbd7933526dfc1b9e5c4b2d52c50d0b596",
-    "generatedAt": "2026-10-12T19:22:11.562Z",
+    "contentHash": "ef4da20eb57fbb54b9de1d59db13f3b3827c1a822f6442a0d5ff7cac6f745c89",
+    "generatedAt": "2026-10-17T17:00:40.242Z",
     "source": "acos"
   },
   ".opencode/skills/0220-checklist/SKILL.md": {
-    "contentHash": "89a4b107209f5166b1ead4fc81cfe8227c98c9d8a7e0fb0be107192c0c04befc",
-    "generatedAt": "2026-10-12T19:22:11.563Z",
+    "contentHash": "7c888b7b50f6811c2954e887e4226376dffe665ad62f1eb31bf0271ece1cc8fd",
+    "generatedAt": "2026-10-17T17:00:40.246Z",
     "source": "acos"
   },
   ".opencode/skills/0240-tasks/SKILL.md": {
-    "contentHash": "0a19f837dbe780ae2dc491a471f8f3ad513af9b7392cbe0ba695c3f65e1ffc88",
-    "generatedAt": "2026-10-12T19:22:11.564Z",
+    "contentHash": "c70142cd4b9dd39250d08fce895978dbb8aef259d6856d07daee46495adf2084",
+    "generatedAt": "2026-10-17T17:00:40.248Z",
     "source": "acos"
   },
   ".opencode/skills/0260-execute/SKILL.md": {
-    "contentHash": "55e81ea91e555dee1abfe9e879ae7f30d3cf5fec1daf3b4e3690b72833cee4b8",
-    "generatedAt": "2026-10-12T19:22:11.566Z",
+    "contentHash": "c0b2ff199e529642937bbe20effe3d75539b0c8393716bc6b48e0cff666e67af",
+    "generatedAt": "2026-10-17T17:00:40.249Z",
     "source": "acos"
   },
   ".opencode/skills/0280-implement/SKILL.md": {
-    "contentHash": "f0f97a21ac6593097d34d1d4975331961c7fa2d6f18550e53668b466eb69b5ad",
-    "generatedAt": "2026-10-12T19:22:11.568Z",
+    "contentHash": "133e7b7d6c7c85bf13eb22c0d289b6d4906ee811478bd6d2c13de8f312ccf6c4",
+    "generatedAt": "2026-10-17T17:00:40.251Z",
     "source": "acos"
   },
   ".opencode/skills/0300-verify/SKILL.md": {
-    "contentHash": "f218558006773df3acd6787743887eb4874154115347c6d69b32e7acbd9bca0b",
-    "generatedAt": "2026-10-12T19:22:11.569Z",
+    "contentHash": "fdc0eb1f87c071b314995f87b1973defe9dfc7d09551b0f5ff05c3c045061e4e",
+    "generatedAt": "2026-10-17T17:00:40.252Z",
     "source": "acos"
   },
   ".opencode/skills/0320-review/SKILL.md": {
-    "contentHash": "1ccab5749e69808eeb748b75cf0bb788fc8a89ea23a3cd6d1ece7436bcef32fc",
-    "generatedAt": "2026-10-12T19:22:11.570Z",
+    "contentHash": "a215bf044d4b9add0382d36400bcdfcd5347331fe8936b4abe1e1614389df0cd",
+    "generatedAt": "2026-10-17T17:00:40.254Z",
     "source": "acos"
   },
   ".opencode/skills/0340-tests/SKILL.md": {
-    "contentHash": "f79f499be28936713cf58b381a06793c7c5535803f252378e9dc684128a2714b",
-    "generatedAt": "2026-10-12T19:22:11.571Z",
+    "contentHash": "772d017ca75cab941a5b87a476d8eec7b7d8c0f0267dbe0eaf1ae265fd74a656",
+    "generatedAt": "2026-10-17T17:00:40.255Z",
     "source": "acos"
   },
   ".opencode/skills/0360-lint/SKILL.md": {
-    "contentHash": "94bac914a488947ea1e9fd4c93ce033b62aeff3a6e8835a55a94d44a46090ed3",
-    "generatedAt": "2026-10-12T19:22:11.573Z",
+    "contentHash": "b7a7ac6a4bd7f15db4501c260d08158cb33a7a1e4d0d58cf41add931dadcba3e",
+    "generatedAt": "2026-10-17T17:00:40.257Z",
     "source": "acos"
   },
   ".opencode/skills/0380-security/SKILL.md": {
-    "contentHash": "eba6428a630ec8017658127e7eee30006ec9d8d3e6ed06375cc27ce8a2b28e6a",
-    "generatedAt": "2026-10-12T19:22:11.574Z",
+    "contentHash": "84e46d1fc4db042756c5a9a0b5aa1c4b4eadcdfc6181e9eb35838f71b864b528",
+    "generatedAt": "2026-10-17T17:00:40.258Z",
     "source": "acos"
   },
   ".opencode/skills/0400-analyze/SKILL.md": {
-    "contentHash": "8d78b9385895c5f83e9f15d23cde86a9ac99cf2633c77a59c86d748d221e493d",
-    "generatedAt": "2026-10-12T19:22:11.576Z",
+    "contentHash": "4d96e1bb37b8e421895cec2d003373b3c3fc4fe3dac0db7c627831f9501f1c50",
+    "generatedAt": "2026-10-17T17:00:40.259Z",
     "source": "acos"
   },
   ".opencode/skills/0420-converge/SKILL.md": {
-    "contentHash": "0b5059fe0db9b37f54778b440b25e21173e7503043a275f71f7dbe60d1a49e8e",
-    "generatedAt": "2026-10-12T19:22:11.577Z",
+    "contentHash": "924bedbcb380511a83b0759e8a65f2801186f6f35b23486227f41624aa82b05f",
+    "generatedAt": "2026-10-17T17:00:40.261Z",
     "source": "acos"
   },
   ".opencode/skills/0440-ship/SKILL.md": {
-    "contentHash": "75c630ff7326bdc1dbd457f2ce24faceb6cf04ec4e1d6c334d5fe360a734cbb3",
-    "generatedAt": "2026-10-12T19:22:11.578Z",
+    "contentHash": "d6795ab61ed554d21894fc356435fc5f6f70de731678749542d93dbe15fe45c3",
+    "generatedAt": "2026-10-17T17:00:40.262Z",
     "source": "acos"
   },
   ".opencode/skills/0500-git-layout/SKILL.md": {
-    "contentHash": "a19efedfce0814d5e10d32f4bf09b9468085f5ce65a6dadf9090271b53a1de52",
-    "generatedAt": "2026-10-12T19:22:11.579Z",
+    "contentHash": "cc04c8ad8c96ebe2792808b4c6d8f8cd7a46f7401a2597af705e1f1f7875158c",
+    "generatedAt": "2026-10-17T17:00:40.264Z",
     "source": "acos"
   },
   ".opencode/skills/0520-debug/SKILL.md": {
-    "contentHash": "1d526dabf389e780ffb3e112326cece911c09acf87d042f5820ce51553fa86ce",
-    "generatedAt": "2026-10-12T19:22:11.580Z",
+    "contentHash": "c9cdde689316de5a09d6a6b84dde822562e8becc5563a02a56e29a326e1a85bb",
+    "generatedAt": "2026-10-17T17:00:40.265Z",
     "source": "acos"
   },
   ".opencode/skills/0540-git-acp/SKILL.md": {
-    "contentHash": "0bdc51aec2e004216944dc20407a416e35d5935a739b36cad7de67d193f4d3b7",
-    "generatedAt": "2026-10-12T19:22:11.581Z",
+    "contentHash": "72a7ef406eb3664f4454b1ca9a06ddb698011bb069147c6ce250ff251dd829bb",
+    "generatedAt": "2026-10-17T17:00:40.267Z",
     "source": "acos"
   },
   ".opencode/skills/0560-docs/SKILL.md": {
-    "contentHash": "b9a36b85d510311261c4871286232465d1088e235484a2b43da9b6b0eb3a2361",
-    "generatedAt": "2026-10-12T19:22:11.581Z",
+    "contentHash": "122a9213f755b642648bc3ea675728f93ddad0721de2d6d1ca918b21c6e2e835",
+    "generatedAt": "2026-10-17T17:00:40.268Z",
     "source": "acos"
   },
   ".opencode/skills/0580-git-pr/SKILL.md": {
-    "contentHash": "62a34bf2f8cc0bfc05a804b75dc367d0eebef895a034f06e68e555d816231ad4",
-    "generatedAt": "2026-10-12T19:22:11.582Z",
+    "contentHash": "4f74cfc45f3717748957b7b332234dbbc06d630f318a6f7c17709211b435e4fc",
+    "generatedAt": "2026-10-17T17:00:40.270Z",
     "source": "acos"
   },
   ".opencode/skills/0600-changelog/SKILL.md": {
-    "contentHash": "a435b695e937e97a1913c29a88d115c7399630ccec43a2e7b560c158edbe6531",
-    "generatedAt": "2026-10-12T19:22:11.583Z",
+    "contentHash": "0b16ca096d62f34a425a97ec8cc5f9bb519dd3c2b7f23f94317c543fec89513b",
+    "generatedAt": "2026-10-17T17:00:40.272Z",
     "source": "acos"
   },
   ".opencode/skills/0620-git-cleanup/SKILL.md": {
-    "contentHash": "70fdd489c5f52ced7658e7cf3fa04b665c28adc55037b399d48fb485a08bc7f7",
-    "generatedAt": "2026-10-12T19:22:11.584Z",
+    "contentHash": "fecfeec77b348000b7c8b9d82b8f600c7b4501b5853e08ef0fd11612b13a4c9f",
+    "generatedAt": "2026-10-17T17:00:40.274Z",
     "source": "acos"
   },
   ".opencode/skills/0640-doctor/SKILL.md": {
-    "contentHash": "4e35d16e09d04dd2cecd5b19f2f332ca0bec812874339ce6924f63fe654a50ac",
-    "generatedAt": "2026-10-12T19:22:11.585Z",
+    "contentHash": "3e710a54a4212f52ef347fe168e3f0b0fea0b9f231d2bdf57bf351336cb53b45",
+    "generatedAt": "2026-10-17T17:00:40.276Z",
     "source": "acos"
   },
   ".opencode/skills/0660-sync/SKILL.md": {
-    "contentHash": "d5486bfb9df02ded478a83475a826a8d8021913d70f286d851620c4be59d20e6",
-    "generatedAt": "2026-10-12T19:22:11.586Z",
+    "contentHash": "a67e638a06b34a98d90e0417962f981eb1528e25b9707f5b7a49bb1f994f5656",
+    "generatedAt": "2026-10-17T17:00:40.278Z",
     "source": "acos"
   },
   ".opencode/skills/0680-infra/SKILL.md": {
-    "contentHash": "e1b21374a93e501ab04d433be76a9aa8d22d23ca1ee6c9d4a2ff95e11f508b1b",
-    "generatedAt": "2026-10-12T19:22:11.586Z",
+    "contentHash": "68ac52b58e05f0b216964a86925eb7974aa8ecd522e398a3bc6ff2f05b6230b4",
+    "generatedAt": "2026-10-17T17:00:40.279Z",
     "source": "acos"
   },
   ".opencode/skills/0700-env-setup/SKILL.md": {
-    "contentHash": "e83c75baa16666cc534ffdd4e1068ed4a621a87468766abaad4e96b8c7b43a4a",
-    "generatedAt": "2026-10-12T19:22:11.588Z",
+    "contentHash": "e9d9336193bc7b249b22c4ffa5df3fdb4619cda332de25ad6e4b7583cf09fee9",
+    "generatedAt": "2026-10-17T17:00:40.282Z",
     "source": "acos"
   },
   ".opencode/skills/0720-gsd/SKILL.md": {
-    "contentHash": "43bb9d7712cf6065c21d4921978bc0210e2d715e0170f405bf98435771c2eb0c",
-    "generatedAt": "2026-10-12T19:22:11.588Z",
+    "contentHash": "70fb36e0694d07ecf205fc71e9a501954fe776e3ab43052a19910de8b5a7ac6f",
+    "generatedAt": "2026-10-17T17:00:40.284Z",
     "source": "acos"
   },
   ".opencode/skills/0740-deps/SKILL.md": {
-    "contentHash": "8c5a3268b58151ad5de4cf1267afbe9b83f6e04809e64b77e0073229c1ef4311",
-    "generatedAt": "2026-10-12T19:22:11.589Z",
+    "contentHash": "566dc956c9d986020d39b76046c4365a18922698a9a9ae0e667c769a6f62eb07",
+    "generatedAt": "2026-10-17T17:00:40.286Z",
     "source": "acos"
   },
   ".opencode/skills/0780-docker/SKILL.md": {
-    "contentHash": "022c05373f4fdcf729d5088407d55d9f9463b20f34ee3f726438315b0d4d03d0",
-    "generatedAt": "2026-10-12T19:22:11.590Z",
+    "contentHash": "dc2b0f9e09ddc279bc2fecd8f203781c679dead4acf2f8298035b6e5ce628728",
+    "generatedAt": "2026-10-17T17:00:40.290Z",
     "source": "acos"
   },
   ".opencode/skills/0800-acp/SKILL.md": {
-    "contentHash": "919222756e391841ffa3c3b545d73eebbc9daac2c47208a9a9174b385866b70e",
-    "generatedAt": "2026-10-12T19:22:11.591Z",
+    "contentHash": "09ab8d7314a3fed830880b88c608c2c13c62f34e289e80b3f7af2f3d4185cafe",
+    "generatedAt": "2026-10-17T17:00:40.292Z",
     "source": "acos"
   },
   ".opencode/skills/0820-codebase-map/SKILL.md": {
-    "contentHash": "2a751cf061cfec0ee7e91fcf5d45cee1bb99f3bbd81b0c5beef76cb44f96867c",
-    "generatedAt": "2026-10-12T19:22:11.592Z",
+    "contentHash": "8783b5c5dde797e41d4dc60dcbfe1b940855c0dc4fd4986cb87399cf949b3131",
+    "generatedAt": "2026-10-17T17:00:40.294Z",
     "source": "acos"
   },
   ".opencode/skills/0900-knowledge/SKILL.md": {
-    "contentHash": "5477c75039119a534b89f86883cc1dac65e5a404e7cc5aaed5514ae8886590d3",
-    "generatedAt": "2026-10-12T19:22:11.593Z",
+    "contentHash": "a430f397ab2c8219f3f0f0838dcf9ab6bf2fbcb06764c06856c97249f368acfd",
+    "generatedAt": "2026-10-17T17:00:40.296Z",
     "source": "acos"
   },
   ".opencode/skills/0920-knowledge-ingest/SKILL.md": {
-    "contentHash": "a4ea76682ea50924b823fa622b7f039ad2e0f3e264592899b5fe01587087de9c",
-    "generatedAt": "2026-10-12T19:22:11.593Z",
+    "contentHash": "8965fd07dfcde7002de14c932f834c88110a4dddf57688df66607b139205be29",
+    "generatedAt": "2026-10-17T17:00:40.298Z",
     "source": "acos"
   },
   ".opencode/skills/0940-knowledge-query/SKILL.md": {
-    "contentHash": "7453f8c7f01592267a685c5caa884dfcc9dc67d0e6af529c6c40a156b8ac046d",
-    "generatedAt": "2026-10-12T19:22:11.594Z",
+    "contentHash": "34a41bda9492cd6738f9f8ada9bf03eed09d5a71e07e75e94139ea860e794398",
+    "generatedAt": "2026-10-17T17:00:40.300Z",
     "source": "acos"
   },
   ".opencode/skills/0960-knowledge-lint/SKILL.md": {
-    "contentHash": "234dfe6d567b89fc01fb689b24a76fe6fc64b7511973bec3848635179e741e1c",
-    "generatedAt": "2026-10-12T19:22:11.595Z",
+    "contentHash": "3a8bfa4fcde2d80b2532421aae145c9d6374238c69169528b9fea2357361d8a9",
+    "generatedAt": "2026-10-17T17:00:40.302Z",
     "source": "acos"
   },
   ".opencode/skills/1000-brief/SKILL.md": {
-    "contentHash": "fceec5bea5bacf42bcad8d816553388a60a3a30fc28e95ddb0d08c0c043f78ca",
-    "generatedAt": "2026-10-12T19:22:11.596Z",
+    "contentHash": "70f9f4c6aa8ff92ad16fab19dbdb6b58464a9cd97b5962a9907a817aa4a2a0ac",
+    "generatedAt": "2026-10-17T17:00:40.304Z",
     "source": "acos"
   },
   ".opencode/skills/1060-compact/SKILL.md": {
-    "contentHash": "755b414627e763ac2278536dc6931e8daeb27cefa48751df6c787459b39f10a8",
-    "generatedAt": "2026-10-12T19:22:11.598Z",
+    "contentHash": "1b50a0ff4c09bc7df717caa78e5abd9bc6647a7a430096aed6a15b860d9afa14",
+    "generatedAt": "2026-10-17T17:00:40.310Z",
     "source": "acos"
   },
   ".opencode/skills/1080-cross-handoff/SKILL.md": {
-    "contentHash": "b14998d946331f32abe257e8d0198409b7730d7d3cfffecd0f3f09c616eb7b61",
-    "generatedAt": "2026-10-12T19:22:11.599Z",
+    "contentHash": "e92ac1d6fe33af59f6569a407b07bbf20051b965456566d5fe933ccb86d9b25e",
+    "generatedAt": "2026-10-17T17:00:40.311Z",
     "source": "acos"
   },
   ".opencode/skills/1200-metaskill/SKILL.md": {
-    "contentHash": "907bd76efc758459a419ab885b239d854511aa6d33851a2fc782c4cac3eaf5b8",
-    "generatedAt": "2026-10-12T19:22:11.605Z",
+    "contentHash": "b21acf5aaad4d5781ddb73855439dc571848e61c5e942dee54ff616a72af523a",
+    "generatedAt": "2026-10-17T17:00:40.325Z",
     "source": "acos"
   },
   ".opencode/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "f4cff8a7b5c32e79acd9362b786b5172bd2e4d61939b7bb658c9b4e2f40a73f0",
-    "generatedAt": "2026-10-12T19:22:11.608Z",
+    "contentHash": "a1c912185706c9573a62db330949c249f0c937dcef691c58424cf069dad63be4",
+    "generatedAt": "2026-10-17T17:00:40.330Z",
     "source": "acos"
   },
   ".opencode/skills/1260-promote-skill/SKILL.md": {
-    "contentHash": "93587a5f381562561486f1fe2fa60cc44cf6021133915991aca4d1c5fe0fc7cb",
-    "generatedAt": "2026-10-12T19:22:11.609Z",
+    "contentHash": "b6582977832fc24768fe962e8f431cfce8ee5396815c678a383d5e68d455a96c",
+    "generatedAt": "2026-10-17T17:00:40.332Z",
     "source": "acos"
   },
   ".agents/skills/0060-constitution/SKILL.md": {
@@ -4030,8 +4030,8 @@
     "source": "acos"
   },
   "agent/instructions/020-lifecycle.md": {
-    "contentHash": "7f955b65949c253a7f8812d3463812989771d59b87bf927daa04090b237e8bf6",
-    "generatedAt": "2026-10-12T19:22:12.478Z",
+    "contentHash": "7fd7553cd11dbeff6a3330d5e500cc87c180a8218f08edea9a9c0034eb8470a5",
+    "generatedAt": "2026-10-17T17:00:41.118Z",
     "source": "acos"
   },
   "agent/skills/0060-constitution/SKILL.md": {
@@ -4357,6 +4357,146 @@
   "agent/subagents/README.md": {
     "contentHash": "32ec8f03a58ca0338c9ff383ca59f0c7ed3af77d57d855ca8ebf7ba5acd87f9e",
     "generatedAt": "2026-10-12T19:22:12.535Z",
+    "source": "acos"
+  },
+  ".claude/skills/1280-model-routing-audit/SKILL.md": {
+    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
+    "generatedAt": "2026-10-17T17:00:39.987Z",
+    "source": "acos"
+  },
+  ".claude/skills/0840-rollout/SKILL.md": {
+    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
+    "generatedAt": "2026-10-17T17:00:39.989Z",
+    "source": "acos"
+  },
+  ".claude/commands/1280-model-routing-audit.md": {
+    "contentHash": "0982172d99037838a9100d9d6a00e36488d13b5433c6e271fe8ca877a76a5276",
+    "generatedAt": "2026-10-17T17:00:40.064Z",
+    "source": "acos"
+  },
+  ".claude/commands/0840-rollout.md": {
+    "contentHash": "ad6191fc5dedd035989c63882f4352ce4c7f6f8a3d8f5ab3235fc8c226eee3c2",
+    "generatedAt": "2026-10-17T17:00:40.065Z",
+    "source": "acos"
+  },
+  ".cursor/skills/1280-model-routing-audit/SKILL.md": {
+    "contentHash": "c685976d8f352a4cba98099b64d41fe28b84c2ee21029be680b24151511d4a54",
+    "generatedAt": "2026-10-17T17:00:40.147Z",
+    "source": "acos"
+  },
+  ".cursor/skills/0840-rollout/SKILL.md": {
+    "contentHash": "627f8675109c5455937dea5e58e54407e0c3cc15462f49a2741f866c328e5662",
+    "generatedAt": "2026-10-17T17:00:40.149Z",
+    "source": "acos"
+  },
+  ".cursor/commands/1280-model-routing-audit.md": {
+    "contentHash": "0982172d99037838a9100d9d6a00e36488d13b5433c6e271fe8ca877a76a5276",
+    "generatedAt": "2026-10-17T17:00:40.227Z",
+    "source": "acos"
+  },
+  ".cursor/commands/0840-rollout.md": {
+    "contentHash": "ad6191fc5dedd035989c63882f4352ce4c7f6f8a3d8f5ab3235fc8c226eee3c2",
+    "generatedAt": "2026-10-17T17:00:40.227Z",
+    "source": "acos"
+  },
+  ".opencode/skills/1280-model-routing-audit/SKILL.md": {
+    "contentHash": "db0e6c34975e94738e854ed73cee4fa07fec3a9f98ec4ed6d80a8d7cb7846792",
+    "generatedAt": "2026-10-17T17:00:40.335Z",
+    "source": "acos"
+  },
+  ".opencode/skills/0840-rollout/SKILL.md": {
+    "contentHash": "a45040982b87c6551e97091dffd74170d3182dd871a37f5d028651a584346e99",
+    "generatedAt": "2026-10-17T17:00:40.336Z",
+    "source": "acos"
+  },
+  ".agents/skills/1280-model-routing-audit/SKILL.md": {
+    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
+    "generatedAt": "2026-10-17T17:00:40.408Z",
+    "source": "acos"
+  },
+  ".agents/skills/0840-rollout/SKILL.md": {
+    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
+    "generatedAt": "2026-10-17T17:00:40.410Z",
+    "source": "acos"
+  },
+  ".kilo/skills/1280-model-routing-audit/SKILL.md": {
+    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
+    "generatedAt": "2026-10-17T17:00:40.484Z",
+    "source": "acos"
+  },
+  ".kilo/skills/0840-rollout/SKILL.md": {
+    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
+    "generatedAt": "2026-10-17T17:00:40.487Z",
+    "source": "acos"
+  },
+  ".kilo/commands/1280-model-routing-audit.md": {
+    "contentHash": "0982172d99037838a9100d9d6a00e36488d13b5433c6e271fe8ca877a76a5276",
+    "generatedAt": "2026-10-17T17:00:40.579Z",
+    "source": "acos"
+  },
+  ".kilo/commands/0840-rollout.md": {
+    "contentHash": "ad6191fc5dedd035989c63882f4352ce4c7f6f8a3d8f5ab3235fc8c226eee3c2",
+    "generatedAt": "2026-10-17T17:00:40.580Z",
+    "source": "acos"
+  },
+  ".kilocode/workflows/1280-model-routing-audit.md": {
+    "contentHash": "e469b27e8838621fef4ff898fadffff9006a98ba1c7c4fe1db9e57b4cec4ae25",
+    "generatedAt": "2026-10-17T17:00:40.647Z",
+    "source": "acos"
+  },
+  ".kilocode/workflows/0840-rollout.md": {
+    "contentHash": "62948005666b3e7acf55dfdbcf2ab1360bea8777655608f5978ca8291fd80611",
+    "generatedAt": "2026-10-17T17:00:40.648Z",
+    "source": "acos"
+  },
+  ".opencode/commands/1280-model-routing-audit.md": {
+    "contentHash": "0982172d99037838a9100d9d6a00e36488d13b5433c6e271fe8ca877a76a5276",
+    "generatedAt": "2026-10-17T17:00:40.713Z",
+    "source": "acos"
+  },
+  ".opencode/commands/0840-rollout.md": {
+    "contentHash": "ad6191fc5dedd035989c63882f4352ce4c7f6f8a3d8f5ab3235fc8c226eee3c2",
+    "generatedAt": "2026-10-17T17:00:40.714Z",
+    "source": "acos"
+  },
+  ".devin/skills/1280-model-routing-audit/SKILL.md": {
+    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
+    "generatedAt": "2026-10-17T17:00:40.789Z",
+    "source": "acos"
+  },
+  ".devin/skills/0840-rollout/SKILL.md": {
+    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
+    "generatedAt": "2026-10-17T17:00:40.790Z",
+    "source": "acos"
+  },
+  ".windsurf/workflows/1280-model-routing-audit.md": {
+    "contentHash": "76f6ac3ee48b94fd510b43cd59e56c56b17c7b850b36f5732d32eb121742bfdf",
+    "generatedAt": "2026-10-17T17:00:40.947Z",
+    "source": "acos"
+  },
+  ".windsurf/workflows/0840-rollout.md": {
+    "contentHash": "492d219004aed74ea45bbddbe79e7725aa4940a4f89a7c244c37d73bbc9a5e5b",
+    "generatedAt": "2026-10-17T17:00:40.948Z",
+    "source": "acos"
+  },
+  ".codex/skills/1280-model-routing-audit/SKILL.md": {
+    "contentHash": "892ad5ba146d33dbd26bf0da266e14129567e2193c381174cfa68218a4427c74",
+    "generatedAt": "2026-10-17T17:00:41.093Z",
+    "source": "acos"
+  },
+  ".codex/skills/0840-rollout/SKILL.md": {
+    "contentHash": "b181e0fecee8994d71d60b967ea2d8f21d15759aa708b36b9014708db2cd2876",
+    "generatedAt": "2026-10-17T17:00:41.094Z",
+    "source": "acos"
+  },
+  "agent/skills/1280-model-routing-audit/SKILL.md": {
+    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
+    "generatedAt": "2026-10-17T17:00:41.192Z",
+    "source": "acos"
+  },
+  "agent/skills/0840-rollout/SKILL.md": {
+    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
+    "generatedAt": "2026-10-17T17:00:41.193Z",
     "source": "acos"
   }
 }

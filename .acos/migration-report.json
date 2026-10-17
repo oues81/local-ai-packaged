@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-27T20:32:30.299Z",
+  "generatedAt": "2026-10-17T17:00:37.527Z",
   "operations": [
-    ".ssot/agents/entrypoints/1460-ecosystem-cycle-launch.md",
+    ".ssot/agents/entrypoints/1280-model-routing-audit.md",
     ".ssot/agents/workflows.json",
     ".ssot/agents/clients.json",
     ".ssot/agents/dependencies.json",
@@ -16,10 +16,7 @@
     ".ssot/knowledge-profile.json",
     "agent/sandbox/workspace/.ssot-seed-manifest.json",
     ".ssot/agents/clients.json",
-    ".ssot/agents/clients.json"
-  ],
-  "filesModified": [
-    ".ssot/agents/entrypoints/1460-ecosystem-cycle-launch.md",
+    ".ssot/agents/entrypoints/0840-rollout.md",
     ".ssot/agents/workflows.json",
     ".ssot/agents/clients.json",
     ".ssot/agents/dependencies.json",
@@ -32,7 +29,25 @@
     ".ssot/adapter-publication.json",
     ".ssot/context-index.json",
     ".ssot/knowledge-profile.json",
-    "agent/sandbox/workspace/.ssot-seed-manifest.json"
+    "agent/sandbox/workspace/.ssot-seed-manifest.json",
+    ".ssot/agents/clients.json"
+  ],
+  "filesModified": [
+    ".ssot/agents/entrypoints/1280-model-routing-audit.md",
+    ".ssot/agents/workflows.json",
+    ".ssot/agents/clients.json",
+    ".ssot/agents/dependencies.json",
+    ".ssot/protected-paths.json",
+    ".ssot/specifications.json",
+    ".ssot/agents/hooks.json",
+    ".ssot/agents/mcp.json",
+    ".ssot/agents/runtimes.json",
+    ".ssot/agents/spec-engine.json",
+    ".ssot/adapter-publication.json",
+    ".ssot/context-index.json",
+    ".ssot/knowledge-profile.json",
+    "agent/sandbox/workspace/.ssot-seed-manifest.json",
+    ".ssot/agents/entrypoints/0840-rollout.md"
   ],
   "referencesNeedingUpdate": {
     "total": 0,
@@ -41,6 +56,7 @@
     "byUpdateMode": {}
   },
   "backupPaths": [
-    ".acos/migrations/1.9.2-to-1.9.3/2026-09-27T20-32-30.299Z"
+    ".acos/migrations/1.9.3-to-1.9.4/2026-10-17T17-00-37.527Z",
+    ".acos/migrations/1.9.4-to-1.9.5/2026-10-17T17-00-37.527Z"
   ]
 }

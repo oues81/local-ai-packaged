@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.3",
+  "ssotVersion": "1.9.5",
   "entrypointSourceDir": ".ssot/agents/entrypoints",
   "entrypoints": [
     {
@@ -537,6 +537,22 @@
       "description": "Automated improvement cycle — diagnose, critique, plan, execute, verify, hand off",
       "source": "1840-auto-improve.md",
       "category": "project"
+    },
+    {
+      "id": "project.modelrouting",
+      "order": 1280,
+      "slug": "model-routing-audit",
+      "description": "Audit and refresh frontier vs subagent model routing (Anthropic + OpenAI + Cursor) against the canonical matrix",
+      "source": "1280-model-routing-audit.md",
+      "category": "project"
+    },
+    {
+      "id": "maintenance.rollout",
+      "order": 840,
+      "slug": "rollout",
+      "description": "Update ACOS in an initialized project or an explicitly scoped batch; inspect first, then run only the required projection, structural, and semantic work",
+      "source": "0840-rollout.md",
+      "category": "maintenance"
     }
   ],
   "targets": [

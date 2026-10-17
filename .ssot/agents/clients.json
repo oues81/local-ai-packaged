@@ -1,5 +1,5 @@
 {
-  "ssotVersion": "1.9.3",
+  "ssotVersion": "1.9.5",
   "schemaNotes": "Projection objects support two optional boolean fields: 'legacy' (default false) marks outputs superseded by a newer surface, and 'desktopOnly' (default false) marks surfaces available only in the desktop variant of a client (not the CLI).",
   "projectName": "local-ai-packaged",
   "canonicalContextFile": ".ssot/agents/context/AGENTS.src.md",
@@ -921,6 +921,39 @@
         "documentation": "https://vercel.com/docs/eve",
         "notes": "Supported status. Network isolation probe (UD-005) verified empirically with eve@0.27.6 on 2026-07-26 (see docs/native-verification-checklist.md). Full compatibility spike (instruction ordering, skill discovery, eve build end-to-end) per spec 010 Phase 4 remains pending. Instructions directory form (agent/instructions/) is documented at https://eve.dev/docs/instructions."
       }
+    }
+  },
+  "frontierRouting": {
+    "version": 1,
+    "description": "Canonical frontier-consult model routing for budget control. Read by 0200-frontier-consult and audited by 1280-model-routing-audit.",
+    "consultant": {
+      "anthropic": "claude-opus-5-5",
+      "openai": "gpt-6.1-sol",
+      "defaultFamily": "anthropic"
+    },
+    "prepSubagents": {
+      "anthropic": "claude-haiku-5-5",
+      "openai": "gpt-6-luna",
+      "cursor": "composer-2.5-fast"
+    },
+    "verifyFloor": {
+      "anthropic": "claude-sonnet-5-5",
+      "openai": "gpt-6.1-sol"
+    },
+    "forbid": {
+      "autoExplore": true,
+      "proactiveCustomAgents": true,
+      "models": [
+        "claude-sonnet-4-6",
+        "claude-haiku-4-5",
+        "gpt-5.6-sol"
+      ]
+    },
+    "budget": {
+      "maxInputTokensPerRequest": 200000,
+      "longContextWarnTokens": 272000,
+      "warnAtPctOfDeclared": 80,
+      "declareIn": ".ssot/status.md (Token budget section or frontierBudget field)"
     }
   }
 }

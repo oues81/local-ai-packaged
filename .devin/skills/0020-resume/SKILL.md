@@ -105,6 +105,48 @@ The cycle is **composable**: entrypoints assemble into chains that cover differe
 Each entrypoint in a chain knows its successors and predecessors. `1220-personalize` should
 specialize the entrypoints in the cycles the project actually uses (Phase 0e of 1220-personalize).
 
+## Cycle intent resolution (before fast-path)
+
+Ordinary ACOS update / version upgrade intent MUST route to `maintenance.rollout` / `0840-rollout` (sole public update door).
+
+
+Resolve what to launch **before** treating any on-disk bridge as authoritative.
+**Intent priority** (highest first):
+
+1. **Current explicit user instruction** — the accompanying text for this turn
+   (objective, requested phase, analysis-only / transfer, named consumer, or plain resume).
+2. **Explicitly active resume contract** — `.ssot/next-session-prompt.md` only when
+   qualified as usable (below) **and** not contradicted by (1).
+3. **Status / handoff as context** — `.ssot/status.md` and `.ssot/handoff.md` inform
+   orientation; they do not override (1) or an inactive/contradictory bridge.
+
+### Bridge qualification (mandatory before consume)
+
+Classify `.ssot/next-session-prompt.md` before launch:
+
+| State | Meaning | Action |
+|-------|---------|--------|
+| **absent** | File missing | First cycle / plain resume from user text + status/handoff. Do not invent a bridge. |
+| **inactive** | Present but sentinel / collaborative note / empty Action-Objective / explicitly marked inactive | Do **not** auto-launch. Treat as absent; follow current user instruction. |
+| **usable** | Complete Action, Consumer, Objective (and expected sections); no contradiction with current instruction | May launch consumer with the **full** contract (**X1** keep-on-disk). |
+| **contradictory** | Usable shape, but current user instruction names a different objective, phase, or consumer | Prefer current instruction. Record the conflict; do not silently execute the old bridge. |
+
+Distinguish these scenarios explicitly:
+
+- **Old bridge + new explicit intent** → current intent wins; bridge is context only.
+- **Inactive bridge** → ignore for auto-launch; first-cycle or plain resume rules apply.
+- **Explicit resume** (user asks to resume / continue the bridge, or pastes the resume snippet without a conflicting objective) → consume usable bridge; keep **X1**.
+- **First cycle** (no usable bridge/H1) → launch from user text; degraded H1 input is allowed at C1.
+
+### Requested phase
+
+If the current instruction requests **analysis-only**, **transfer**, diagnose/plan without
+implementation, or an equivalent bound: launch the consumer with that phase. The consumer
+MUST stop after concrete artifacts (diagnostic, C1, plan, tasks, handoff/transfer) and MUST
+NOT implement, commit, push, or implicitly relaunch the next cycle. Analysis is not
+authorization to execute. Full execute cycles still require **G1** approve/amend inside
+the consumer.
+
 ## Fast-path: automated improvement cycle
 
 If the user's intent is to launch an automated improvement cycle (text mentions

@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.2.0",
-  "analyzedAt": "2026-09-27T20:29:46.486Z",
-  "projectVersion": "1.9.2",
-  "targetVersion": "1.9.3",
+  "analyzedAt": "2026-10-17T17:00:37.402Z",
+  "projectVersion": "1.9.3",
+  "targetVersion": "1.9.5",
   "renames": [],
   "missingStateFiles": [],
   "semanticReferences": [],
@@ -12,73 +12,40 @@
   "projectionGaps": {
     "missingEntrypoints": [
       {
-        "stableId": "ecosystem.cycle.launch",
-        "order": 1460,
-        "slug": "ecosystem-cycle-launch",
-        "source": "1460-ecosystem-cycle-launch.md",
-        "category": "ecosystem",
-        "description": "Resolve and fan-out per-project ACOS cycles (0020→1840→1020) from a container across selected targets"
+        "stableId": "maintenance.rollout",
+        "order": 840,
+        "slug": "rollout",
+        "source": "0840-rollout.md",
+        "category": "maintenance",
+        "description": "Update ACOS in an initialized project or an explicitly scoped batch; inspect first, then run only the required projection, structural, and semantic work"
+      },
+      {
+        "stableId": "project.modelrouting",
+        "order": 1280,
+        "slug": "model-routing-audit",
+        "source": "1280-model-routing-audit.md",
+        "category": "project",
+        "description": "Audit and refresh frontier vs subagent model routing (Anthropic + OpenAI + Cursor) against the canonical matrix"
       }
     ],
     "staleEntrypoints": [],
     "orphanedSourceFiles": [],
     "missingTargets": [],
     "staleClientProjections": [],
-    "staleGeneratedFiles": [
-      {
-        "clientKey": "claude",
-        "projectValue": [
-          "AGENTS.md",
-          "CLAUDE.md",
-          ".claude/skills/*/SKILL.md",
-          ".claude/commands/*.md",
-          ".claude/rules/*.md",
-          ".claude/agents/*.md",
-          ".claude/settings.json",
-          ".mcp.json",
-          ".claude/workflows/*.js",
-          ".claude-plugin/plugin.json",
-          ".claude/output-styles/*.md"
-        ],
-        "templateValue": [
-          "AGENTS.md",
-          "CLAUDE.md",
-          ".claude/skills/*/SKILL.md",
-          ".claude/commands/*.md",
-          ".claude/rules/*.md",
-          ".claude/agents/*.md",
-          ".claude/settings.json",
-          ".mcp.json",
-          ".claude/workflows/*.js",
-          ".claude-plugin/plugin.json"
-        ]
-      }
-    ],
-    "removedClientProjections": [
-      {
-        "clientKey": "claude",
-        "artifactKey": "outputStyles",
-        "projectValue": {
-          "mode": "native",
-          "surface": "Claude Code output styles in .claude/output-styles/*.md",
-          "outputs": [
-            ".claude/output-styles/*.md"
-          ]
-        }
-      }
-    ],
+    "staleGeneratedFiles": [],
+    "removedClientProjections": [],
     "phantomSurfaces": [],
     "deprecatedSurfacesNotMarked": [],
     "missingSurfaces": [],
     "desktopOnlyMismatches": [],
     "driftSummary": {
-      "missingEntrypointCount": 1,
+      "missingEntrypointCount": 2,
       "staleEntrypointCount": 0,
       "orphanedFileCount": 0,
       "missingTargetCount": 0,
       "staleProjectionCount": 0,
-      "staleGeneratedFileCount": 1,
-      "removedProjectionCount": 1,
+      "staleGeneratedFileCount": 0,
+      "removedProjectionCount": 0,
       "phantomSurfaceCount": 0,
       "deprecatedSurfaceCount": 0,
       "missingSurfaceCount": 0,
@@ -110,30 +77,30 @@
   "review": {
     "status": "complete",
     "reviewerType": "agent",
-    "reviewedAt": "2026-09-27T20:32:10.944Z",
-    "scannerVersion": "1.9.3",
+    "reviewedAt": "2026-10-17T17:00:37.471Z",
+    "scannerVersion": "1.9.5",
     "contentHashes": {
-      "workflowsJson": "271203007e4db10cd391d5a5ce86fc2730534877b3c2d61aa8aa5f5ab4f60795",
-      "clientsJson": "3b2672db5f105a26580792421c18d35806bd6967eae192d558e73d8d1d395ca1"
+      "workflowsJson": "20891c1be71edc0e9cbe07b466b33d61a438b2d7b374a8086b16700e187f8fbe",
+      "clientsJson": "2207d3ff733d15718346167f28f2b4430b1147bf0a40e2dee94b4e497bf50544"
     },
     "dispositions": [
       {
         "findingType": "personalizedDrift",
         "findingKey": "project.resume",
         "decision": "accept",
-        "rationale": "personalized:true marker — intentional project customization; route 1.9.2→1.9.3 is additive (1460) and does not touch entrypoint bodies"
+        "rationale": "Accept personalized drift for structural migrate; obligation merge (C) handled separately for declared sidecars"
       },
       {
         "findingType": "personalizedDrift",
         "findingKey": "maintenance.docker",
         "decision": "accept",
-        "rationale": "personalized:true marker — intentional project customization; route 1.9.2→1.9.3 is additive (1460) and does not touch entrypoint bodies"
+        "rationale": "Accept personalized drift for structural migrate; obligation merge (C) handled separately for declared sidecars"
       },
       {
         "findingType": "personalizedDrift",
         "findingKey": "session.handoff",
         "decision": "accept",
-        "rationale": "personalized:true marker — intentional project customization; route 1.9.2→1.9.3 is additive (1460) and does not touch entrypoint bodies"
+        "rationale": "Accept personalized drift for structural migrate; obligation merge (C) handled separately for declared sidecars"
       }
     ]
   }
