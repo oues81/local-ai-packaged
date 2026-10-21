@@ -4,7 +4,7 @@ Source: .ssot/agents/entrypoints/1120-migrate-analyze.md
 
 # 1120-migrate-analyze
 
-> Perform pre-migration analysis to identify custom content, missing state files, semantic references, and non-conformities before the deterministic migration apply
+> Internal phase: pre-migration analysis for maintenance.rollout or explicit analysis-only requests
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.

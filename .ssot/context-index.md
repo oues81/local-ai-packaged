@@ -2,7 +2,7 @@
 
 # Context Index
 
-SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f0e85b942662a5df5b999e56b`
+SSOT version: `1.9.7` · Content hash: `2fe45bd7f1d53e0072ae997e21733ae68a2c30c190210c057ae8498771db64ec`
 
 ## Quick reference
 
@@ -17,7 +17,7 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 | 0140 | plan | Create or update a dependency-aware implementation plan |
 | 0160 | wave-plan-prep | Strategic analysis and wave decomposition prep (frontier model optional, opt-in) |
 | 0180 | data-model | Generate or update the data model for a feature |
-| 0200 | frontier-consult | Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch |
+| 0200 | frontier-consult | Frontier-grade strategic analysis — self in-session, --cli for Codex/Claude/etc., or ChatGPT web emit-prompt channel |
 | 0220 | checklist | Generate a quality checklist for a spec or plan |
 | 0240 | tasks | Generate an actionable, dependency-ordered tasks.md for the feature |
 | 0260 | execute | Execute the current approved plan with bounded autonomy |
@@ -48,6 +48,7 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 | 0800 | acp | Integrate or explain the Agent Client Protocol (ACP) adapter for ACOS |
 | 0820 | codebase-map | Map codebase architecture, modules, dependencies, and conventions |
 | 0840 | rollout | Update ACOS in an initialized project or an explicitly scoped batch; inspect first, then run only the required projection, structural, and semantic work |
+| 0860 | client-surface-currency | Review and refresh the seven-client Knowledge Pack currency, propose SSOT promotions without auto-applying projections |
 | 0900 | knowledge | Declare and initialize the OKF knowledge layer (.ssot/knowledge/) |
 | 0920 | knowledge-ingest | Ingest a source into the OKF knowledge layer as concept pages |
 | 0940 | knowledge-query | Query the OKF knowledge layer and synthesize a cited answer |
@@ -57,14 +58,14 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 | 1040 | session-bridge | Prepare the next session prompt for an automated improvement cycle |
 | 1060 | compact | Compress durable context without losing decisions or blockers |
 | 1080 | cross-handoff | Produce a cross-project handoff report for declared dependencies |
-| 1100 | migrate | Migration router — determines the correct migration path based on project state (new install, version upgrade, structural reconciliation, or ecosystem batch migration) |
-| 1120 | migrate-analyze | Perform pre-migration analysis to identify custom content, missing state files, semantic references, and non-conformities before the deterministic migration apply |
-| 1140 | migrate-workflow | Orchestrate the full 5-phase hybrid migration workflow — analysis, agent prep, deterministic apply, post-merge agent, verify — with human gates between each phase |
-| 1160 | migration-verify | Verify post-migration coverage by comparing the legacy backup against the current ACOS state, or by checking projection-gap resolutions against the analysis artifact (spec 012) |
-| 1180 | migrate-ecosystem | Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting |
+| 1100 | migrate | Install/adopt ACOS in an uninitialized project; existing-project update calls redirect to maintenance.rollout |
+| 1120 | migrate-analyze | Internal phase: pre-migration analysis for maintenance.rollout or explicit analysis-only requests |
+| 1140 | migrate-workflow | Internal hybrid migration phase: focused semantic delta for maintenance.rollout, or explicitly requested full five-phase workflow |
+| 1160 | migration-verify | Internal phase: verify migration evidence for maintenance.rollout / 1140 / 1180 (or explicit audit) |
+| 1180 | migrate-ecosystem | Internal phase: batch structural migrate for an explicitly scoped container+satellites set (called from maintenance.rollout) |
 | 1200 | metaskill | Generate a project-specific ACOS skill by analyzing the target project and producing a custom migration or workflow skill |
 | 1220 | personalize | Analyze an initialized ACOS project and personalize its SSOT items based on the project's actual codebase, architecture, conventions, and current client best practices |
-| 1240 | migrate-refs | Dispatch an agent for semantic reference updates after a deterministic ACOS migration |
+| 1240 | migrate-refs | Internal phase: semantic reference updates after deterministic handling (opt-in; called from 0840 or 1140) |
 | 1260 | promote-skill | Promote a reusable project-specific skill to canonical ACOS through scan, generalization, approval, and write |
 | 1280 | model-routing-audit | Audit and refresh frontier vs subagent model routing (Anthropic + OpenAI + Cursor) against the canonical matrix |
 | 1300 | mco-relaunch-agent | Force relaunch a specific agent (1-4) for a project's latest cycle via MCPCO |
@@ -82,7 +83,8 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 | — | verifier | Verification subagent that runs acceptance checks and reports evidence. |
 | — | hooks | Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints. |
 | — | mcp | MCP server configuration (1 server) at .ssot/agents/mcp.json. |
-| — | workflows | Entrypoint workflow registry (69 entrypoints) at .ssot/agents/workflows.json. |
+| — | workflows | Entrypoint workflow registry (70 entrypoints) at .ssot/agents/workflows.json. |
+| — | prepare-strategic-audit | Prepare (do not run) a pasteable ChatGPT-web GitHub audit mandate from local project context. Invoked by 0200-frontier-consult --channel chatgpt-web / "Frontier Consult ChatGPT". |
 
 ## Detailed
 
@@ -111,7 +113,7 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **description**: Route a task, specification, or question through the appropriate workflow
 - **source**: `.ssot/agents/entrypoints/0040-route.md`
 - **projections**: `.agents/skills/0040-route/SKILL.md`, `.claude/commands/0040-route.md`, `.claude/rules/acos.md`, `.claude/skills/0040-route/SKILL.md`, `.claude/workflows/0040-route.md`, `.codex/rules/acos.md`, `.codex/skills/0040-route/SKILL.md`, `.cursor/commands/0040-route.md`, `.cursor/skills/0040-route/SKILL.md`, `.devin/skills/0040-route/SKILL.md`, `.kilo/commands/0040-route.md`, `.kilo/rules/acos.md`, `.kilo/skills/0040-route/SKILL.md`, `.kilocode/workflows/0040-route.md`, `.opencode/commands/0040-route.md`, `.opencode/rules/acos.md`, `.opencode/skills/0040-route/SKILL.md`, `.windsurf/workflows/0040-route.md`, `agent/skills/0040-route/SKILL.md`
-- **contentHash**: `dad21324e2dc51ac29a1fc611e963598482271616420a78e300c396116202007`
+- **contentHash**: `ff5988dbdc7ef9ebd34cf181e76cafe83a09e42b6a58c13893cd924df325e80e`
 
 ### 0060-constitution
 - **stableId**: `project.constitution`
@@ -171,10 +173,10 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **stableId**: `delivery.frontierconsult`
 - **category**: delivery
 - **type**: entrypoint
-- **description**: Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch
+- **description**: Frontier-grade strategic analysis — self in-session, --cli for Codex/Claude/etc., or ChatGPT web emit-prompt channel
 - **source**: `.ssot/agents/entrypoints/0200-frontier-consult.md`
 - **projections**: `.agents/skills/0200-frontier-consult/SKILL.md`, `.claude/commands/0200-frontier-consult.md`, `.claude/rules/acos.md`, `.claude/skills/0200-frontier-consult/SKILL.md`, `.claude/workflows/0200-frontier-consult.md`, `.codex/rules/acos.md`, `.codex/skills/0200-frontier-consult/SKILL.md`, `.cursor/commands/0200-frontier-consult.md`, `.cursor/skills/0200-frontier-consult/SKILL.md`, `.devin/skills/0200-frontier-consult/SKILL.md`, `.kilo/commands/0200-frontier-consult.md`, `.kilo/rules/acos.md`, `.kilo/skills/0200-frontier-consult/SKILL.md`, `.kilocode/workflows/0200-frontier-consult.md`, `.opencode/commands/0200-frontier-consult.md`, `.opencode/rules/acos.md`, `.opencode/skills/0200-frontier-consult/SKILL.md`, `.windsurf/workflows/0200-frontier-consult.md`, `agent/skills/0200-frontier-consult/SKILL.md`
-- **contentHash**: `1185473a34921fa0f88d46903e400cbb55037468297c9cbd42f99fd33d175745`
+- **contentHash**: `1080a721a70629524bf945bad79a66f1ebafeb299c2d5480586f18eed8041708`
 
 ### 0220-checklist
 - **stableId**: `delivery.checklist`
@@ -444,7 +446,16 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **description**: Update ACOS in an initialized project or an explicitly scoped batch; inspect first, then run only the required projection, structural, and semantic work
 - **source**: `.ssot/agents/entrypoints/0840-rollout.md`
 - **projections**: `.agents/skills/0840-rollout/SKILL.md`, `.claude/commands/0840-rollout.md`, `.claude/rules/acos.md`, `.claude/skills/0840-rollout/SKILL.md`, `.claude/workflows/0840-rollout.md`, `.codex/rules/acos.md`, `.codex/skills/0840-rollout/SKILL.md`, `.cursor/commands/0840-rollout.md`, `.cursor/skills/0840-rollout/SKILL.md`, `.devin/skills/0840-rollout/SKILL.md`, `.kilo/commands/0840-rollout.md`, `.kilo/rules/acos.md`, `.kilo/skills/0840-rollout/SKILL.md`, `.kilocode/workflows/0840-rollout.md`, `.opencode/commands/0840-rollout.md`, `.opencode/rules/acos.md`, `.opencode/skills/0840-rollout/SKILL.md`, `.windsurf/workflows/0840-rollout.md`, `agent/skills/0840-rollout/SKILL.md`
-- **contentHash**: `d115cf3eb1dbe9aa80f067b81b7b35c15dd94c66465d83eecb0b05af472c0315`
+- **contentHash**: `7a4cfa4dea104d3bf947a1a8d82f4a551b2a57266ed0d7ec61a990464374d520`
+
+### 0860-client-surface-currency
+- **stableId**: `maintenance.clientsurface`
+- **category**: maintenance
+- **type**: entrypoint
+- **description**: Review and refresh the seven-client Knowledge Pack currency, propose SSOT promotions without auto-applying projections
+- **source**: `.ssot/agents/entrypoints/0860-client-surface-currency.md`
+- **projections**: `.agents/skills/0860-client-surface-currency/SKILL.md`, `.claude/commands/0860-client-surface-currency.md`, `.claude/rules/acos.md`, `.claude/skills/0860-client-surface-currency/SKILL.md`, `.claude/workflows/0860-client-surface-currency.md`, `.codex/rules/acos.md`, `.codex/skills/0860-client-surface-currency/SKILL.md`, `.cursor/commands/0860-client-surface-currency.md`, `.cursor/skills/0860-client-surface-currency/SKILL.md`, `.devin/skills/0860-client-surface-currency/SKILL.md`, `.kilo/commands/0860-client-surface-currency.md`, `.kilo/rules/acos.md`, `.kilo/skills/0860-client-surface-currency/SKILL.md`, `.kilocode/workflows/0860-client-surface-currency.md`, `.opencode/commands/0860-client-surface-currency.md`, `.opencode/rules/acos.md`, `.opencode/skills/0860-client-surface-currency/SKILL.md`, `.windsurf/workflows/0860-client-surface-currency.md`, `agent/skills/0860-client-surface-currency/SKILL.md`
+- **contentHash**: `f71de05faab1367b7e83c9d5d78be143622037784ff023f07cf598fd15cc80f6`
 
 ### 0900-knowledge
 - **stableId**: `knowledge.init`
@@ -498,7 +509,7 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **description**: Persist a factual end-of-session handoff
 - **source**: `.ssot/agents/entrypoints/1020-handoff.md`
 - **projections**: `.agents/skills/1020-handoff/SKILL.md`, `.claude/commands/1020-handoff.md`, `.claude/rules/acos.md`, `.claude/skills/1020-handoff/SKILL.md`, `.claude/workflows/1020-handoff.md`, `.codex/rules/acos.md`, `.codex/skills/1020-handoff/SKILL.md`, `.cursor/commands/1020-handoff.md`, `.cursor/skills/1020-handoff/SKILL.md`, `.devin/skills/1020-handoff/SKILL.md`, `.kilo/commands/1020-handoff.md`, `.kilo/rules/acos.md`, `.kilo/skills/1020-handoff/SKILL.md`, `.kilocode/workflows/1020-handoff.md`, `.opencode/commands/1020-handoff.md`, `.opencode/rules/acos.md`, `.opencode/skills/1020-handoff/SKILL.md`, `.windsurf/workflows/1020-handoff.md`, `agent/skills/1020-handoff/SKILL.md`
-- **contentHash**: `c2f2a552858067ae39093fca176b31dddd911098e3c34cd6a4336a1565e109be`
+- **contentHash**: `39541779190a71eecf20c7853f3cc630b0f73d82bcce71b3298831206a3ca0d0`
 
 ### 1040-session-bridge
 - **stableId**: `session.bridge`
@@ -531,46 +542,46 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **stableId**: `project.migrate`
 - **category**: project
 - **type**: entrypoint
-- **description**: Migration router — determines the correct migration path based on project state (new install, version upgrade, structural reconciliation, or ecosystem batch migration)
+- **description**: Install/adopt ACOS in an uninitialized project; existing-project update calls redirect to maintenance.rollout
 - **source**: `.ssot/agents/entrypoints/1100-migrate.md`
 - **projections**: `.agents/skills/1100-migrate/SKILL.md`, `.claude/commands/1100-migrate.md`, `.claude/rules/acos.md`, `.claude/skills/1100-migrate/SKILL.md`, `.claude/workflows/1100-migrate.md`, `.codex/rules/acos.md`, `.codex/skills/1100-migrate/SKILL.md`, `.cursor/commands/1100-migrate.md`, `.cursor/skills/1100-migrate/SKILL.md`, `.devin/skills/1100-migrate/SKILL.md`, `.kilo/commands/1100-migrate.md`, `.kilo/rules/acos.md`, `.kilo/skills/1100-migrate/SKILL.md`, `.kilocode/workflows/1100-migrate.md`, `.opencode/commands/1100-migrate.md`, `.opencode/rules/acos.md`, `.opencode/skills/1100-migrate/SKILL.md`, `.windsurf/workflows/1100-migrate.md`, `agent/skills/1100-migrate/SKILL.md`
-- **contentHash**: `7a7c739da0dfcc7c06de95921e2b055cd84ba922021f0bfb5cba97e32452cc70`
+- **contentHash**: `896a473e23b1a4f2b909ea0e0076dd5ad03394a634f122964d937e8e739ed42b`
 
 ### 1120-migrate-analyze
 - **stableId**: `migration.analyze`
 - **category**: project
 - **type**: entrypoint
-- **description**: Perform pre-migration analysis to identify custom content, missing state files, semantic references, and non-conformities before the deterministic migration apply
+- **description**: Internal phase: pre-migration analysis for maintenance.rollout or explicit analysis-only requests
 - **source**: `.ssot/agents/entrypoints/1120-migrate-analyze.md`
 - **projections**: `.agents/skills/1120-migrate-analyze/SKILL.md`, `.claude/commands/1120-migrate-analyze.md`, `.claude/rules/acos.md`, `.claude/skills/1120-migrate-analyze/SKILL.md`, `.claude/workflows/1120-migrate-analyze.md`, `.codex/rules/acos.md`, `.codex/skills/1120-migrate-analyze/SKILL.md`, `.cursor/commands/1120-migrate-analyze.md`, `.cursor/skills/1120-migrate-analyze/SKILL.md`, `.devin/skills/1120-migrate-analyze/SKILL.md`, `.kilo/commands/1120-migrate-analyze.md`, `.kilo/rules/acos.md`, `.kilo/skills/1120-migrate-analyze/SKILL.md`, `.kilocode/workflows/1120-migrate-analyze.md`, `.opencode/commands/1120-migrate-analyze.md`, `.opencode/rules/acos.md`, `.opencode/skills/1120-migrate-analyze/SKILL.md`, `.windsurf/workflows/1120-migrate-analyze.md`, `agent/skills/1120-migrate-analyze/SKILL.md`
-- **contentHash**: `24814d2e917fbff5b885ce8ebbd4603758a3c876d4d68cd0f30a221025421e44`
+- **contentHash**: `66769f7f81a2dd804083ffbd8f5fbe7a17dff03769759600fb7aa819350694c4`
 
 ### 1140-migrate-workflow
 - **stableId**: `migration.workflow`
 - **category**: project
 - **type**: entrypoint
-- **description**: Orchestrate the full 5-phase hybrid migration workflow — analysis, agent prep, deterministic apply, post-merge agent, verify — with human gates between each phase
+- **description**: Internal hybrid migration phase: focused semantic delta for maintenance.rollout, or explicitly requested full five-phase workflow
 - **source**: `.ssot/agents/entrypoints/1140-migrate-workflow.md`
 - **projections**: `.agents/skills/1140-migrate-workflow/SKILL.md`, `.claude/commands/1140-migrate-workflow.md`, `.claude/rules/acos.md`, `.claude/skills/1140-migrate-workflow/SKILL.md`, `.claude/workflows/1140-migrate-workflow.md`, `.codex/rules/acos.md`, `.codex/skills/1140-migrate-workflow/SKILL.md`, `.cursor/commands/1140-migrate-workflow.md`, `.cursor/skills/1140-migrate-workflow/SKILL.md`, `.devin/skills/1140-migrate-workflow/SKILL.md`, `.kilo/commands/1140-migrate-workflow.md`, `.kilo/rules/acos.md`, `.kilo/skills/1140-migrate-workflow/SKILL.md`, `.kilocode/workflows/1140-migrate-workflow.md`, `.opencode/commands/1140-migrate-workflow.md`, `.opencode/rules/acos.md`, `.opencode/skills/1140-migrate-workflow/SKILL.md`, `.windsurf/workflows/1140-migrate-workflow.md`, `agent/skills/1140-migrate-workflow/SKILL.md`
-- **contentHash**: `933926a630baa1ede9f176ed5648d8c67fc41c570a10c16040e8146098541a44`
+- **contentHash**: `10b95051be19f42bc3918fd62c5085a2e6e18a7d32def1e0da2d5ebd4495325d`
 
 ### 1160-migration-verify
 - **stableId**: `project.migrate.verify`
 - **category**: project
 - **type**: entrypoint
-- **description**: Verify post-migration coverage by comparing the legacy backup against the current ACOS state, or by checking projection-gap resolutions against the analysis artifact (spec 012)
+- **description**: Internal phase: verify migration evidence for maintenance.rollout / 1140 / 1180 (or explicit audit)
 - **source**: `.ssot/agents/entrypoints/1160-migration-verify.md`
 - **projections**: `.agents/skills/1160-migration-verify/SKILL.md`, `.claude/commands/1160-migration-verify.md`, `.claude/rules/acos.md`, `.claude/skills/1160-migration-verify/SKILL.md`, `.claude/workflows/1160-migration-verify.md`, `.codex/rules/acos.md`, `.codex/skills/1160-migration-verify/SKILL.md`, `.cursor/commands/1160-migration-verify.md`, `.cursor/skills/1160-migration-verify/SKILL.md`, `.devin/skills/1160-migration-verify/SKILL.md`, `.kilo/commands/1160-migration-verify.md`, `.kilo/rules/acos.md`, `.kilo/skills/1160-migration-verify/SKILL.md`, `.kilocode/workflows/1160-migration-verify.md`, `.opencode/commands/1160-migration-verify.md`, `.opencode/rules/acos.md`, `.opencode/skills/1160-migration-verify/SKILL.md`, `.windsurf/workflows/1160-migration-verify.md`, `agent/skills/1160-migration-verify/SKILL.md`
-- **contentHash**: `e210b80d8bbfa964e59d9df8c748c42d07ef6d54b03e2e59e6d6f3b81a2998cd`
+- **contentHash**: `6f208e6b227f95191258c8fe412ee46c1fcbe38110a4f94d7e1e7c43aabc082a`
 
 ### 1180-migrate-ecosystem
 - **stableId**: `migration.ecosystem`
 - **category**: project
 - **type**: entrypoint
-- **description**: Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting
+- **description**: Internal phase: batch structural migrate for an explicitly scoped container+satellites set (called from maintenance.rollout)
 - **source**: `.ssot/agents/entrypoints/1180-migrate-ecosystem.md`
 - **projections**: `.agents/skills/1180-migrate-ecosystem/SKILL.md`, `.claude/commands/1180-migrate-ecosystem.md`, `.claude/rules/acos.md`, `.claude/skills/1180-migrate-ecosystem/SKILL.md`, `.claude/workflows/1180-migrate-ecosystem.md`, `.codex/rules/acos.md`, `.codex/skills/1180-migrate-ecosystem/SKILL.md`, `.cursor/commands/1180-migrate-ecosystem.md`, `.cursor/skills/1180-migrate-ecosystem/SKILL.md`, `.devin/skills/1180-migrate-ecosystem/SKILL.md`, `.kilo/commands/1180-migrate-ecosystem.md`, `.kilo/rules/acos.md`, `.kilo/skills/1180-migrate-ecosystem/SKILL.md`, `.kilocode/workflows/1180-migrate-ecosystem.md`, `.opencode/commands/1180-migrate-ecosystem.md`, `.opencode/rules/acos.md`, `.opencode/skills/1180-migrate-ecosystem/SKILL.md`, `.windsurf/workflows/1180-migrate-ecosystem.md`, `agent/skills/1180-migrate-ecosystem/SKILL.md`
-- **contentHash**: `b2f96a88a7e6daa7b8cf43e128c545056c8e72b1ae856027ad2bda73825687c7`
+- **contentHash**: `f44910352f4f25113ebb5d9af3ad9aedc02fda0c39d6ffcce0186ce1eecf556e`
 
 ### 1200-metaskill
 - **stableId**: `project.metaskill`
@@ -594,10 +605,10 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **stableId**: `migration.migraterefs`
 - **category**: project
 - **type**: entrypoint
-- **description**: Dispatch an agent for semantic reference updates after a deterministic ACOS migration
+- **description**: Internal phase: semantic reference updates after deterministic handling (opt-in; called from 0840 or 1140)
 - **source**: `.ssot/agents/entrypoints/1240-migrate-refs.md`
 - **projections**: `.agents/skills/1240-migrate-refs/SKILL.md`, `.claude/commands/1240-migrate-refs.md`, `.claude/rules/acos.md`, `.claude/skills/1240-migrate-refs/SKILL.md`, `.claude/workflows/1240-migrate-refs.md`, `.codex/rules/acos.md`, `.codex/skills/1240-migrate-refs/SKILL.md`, `.cursor/commands/1240-migrate-refs.md`, `.cursor/skills/1240-migrate-refs/SKILL.md`, `.devin/skills/1240-migrate-refs/SKILL.md`, `.kilo/commands/1240-migrate-refs.md`, `.kilo/rules/acos.md`, `.kilo/skills/1240-migrate-refs/SKILL.md`, `.kilocode/workflows/1240-migrate-refs.md`, `.opencode/commands/1240-migrate-refs.md`, `.opencode/rules/acos.md`, `.opencode/skills/1240-migrate-refs/SKILL.md`, `.windsurf/workflows/1240-migrate-refs.md`, `agent/skills/1240-migrate-refs/SKILL.md`
-- **contentHash**: `d7da8e585ce65c7d2dde2f846bd3cb6dc6e11eae342379500a694b5b40f855fb`
+- **contentHash**: `7e6318b0e7ec8e58346e140a2a243e77a293ab1ac4754fd51ae1d22e09875b21`
 
 ### 1260-promote-skill
 - **stableId**: `meta.promoteskill`
@@ -615,7 +626,7 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **description**: Audit and refresh frontier vs subagent model routing (Anthropic + OpenAI + Cursor) against the canonical matrix
 - **source**: `.ssot/agents/entrypoints/1280-model-routing-audit.md`
 - **projections**: `.agents/skills/1280-model-routing-audit/SKILL.md`, `.claude/commands/1280-model-routing-audit.md`, `.claude/rules/acos.md`, `.claude/skills/1280-model-routing-audit/SKILL.md`, `.claude/workflows/1280-model-routing-audit.md`, `.codex/rules/acos.md`, `.codex/skills/1280-model-routing-audit/SKILL.md`, `.cursor/commands/1280-model-routing-audit.md`, `.cursor/skills/1280-model-routing-audit/SKILL.md`, `.devin/skills/1280-model-routing-audit/SKILL.md`, `.kilo/commands/1280-model-routing-audit.md`, `.kilo/rules/acos.md`, `.kilo/skills/1280-model-routing-audit/SKILL.md`, `.kilocode/workflows/1280-model-routing-audit.md`, `.opencode/commands/1280-model-routing-audit.md`, `.opencode/rules/acos.md`, `.opencode/skills/1280-model-routing-audit/SKILL.md`, `.windsurf/workflows/1280-model-routing-audit.md`, `agent/skills/1280-model-routing-audit/SKILL.md`
-- **contentHash**: `503728e83a874978fe3a9bbddec72df62eb432182a7d702743c443aa6bcf702f`
+- **contentHash**: `86165210ac89f3c03190204ab0b3b813ee3a925ba35423eae3798c27a26b600d`
 
 ### 1300-mco-relaunch-agent
 - **stableId**: `ecosystem.mco.relaunch`
@@ -741,7 +752,7 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **description**: Canonical ACOS lifecycle hooks projected to native client hook surfaces. Each lifecycle hook is a semantic requirement; clients with a safe native hook surface enforce it automatically, while every other adapter projects the same requirement into its mandatory rules and explicit entrypoints.
 - **source**: `.ssot/agents/hooks.json`
 - **projections**: *(none)*
-- **contentHash**: `1661665480c6f022bb9ae0dcaf92f90b16f465be2d694eedbb4be38dea88bf81`
+- **contentHash**: `f347f76c797dcf38788ef58b3c35c852bf52aeb091a621ef2afac50a19ff8318`
 
 ### mcp
 - **stableId**: null
@@ -750,13 +761,22 @@ SSOT version: `1.9.5` · Content hash: `02908393ceeb8c6a7acddab23b993c5fe1be476f
 - **description**: MCP server configuration (1 server) at .ssot/agents/mcp.json.
 - **source**: `.ssot/agents/mcp.json`
 - **projections**: *(none)*
-- **contentHash**: `e6ccf2e6f5e5eba1afd22065704a1cd79427352d65b02b8f8e5837a15e434f3e`
+- **contentHash**: `34f58d28d63ee2d6b5ef6d70a053aff6da6440e3d33428bc118aa34e2978b7f5`
 
 ### workflows
 - **stableId**: null
 - **category**: null
 - **type**: workflow
-- **description**: Entrypoint workflow registry (69 entrypoints) at .ssot/agents/workflows.json.
+- **description**: Entrypoint workflow registry (70 entrypoints) at .ssot/agents/workflows.json.
 - **source**: `.ssot/agents/workflows.json`
 - **projections**: *(none)*
-- **contentHash**: `fc8840058cc15b5fc36650100a498600b09b6d315910ad19bf6f73a151db6b7f`
+- **contentHash**: `e0f6cc423015626dd0d6cba5e5143a4cd899ac6c5abc7fe36ba46915fa9ee9dd`
+
+### prepare-strategic-audit
+- **stableId**: null
+- **category**: null
+- **type**: skill
+- **description**: Prepare (do not run) a pasteable ChatGPT-web GitHub audit mandate from local project context. Invoked by 0200-frontier-consult --channel chatgpt-web / "Frontier Consult ChatGPT".
+- **source**: `.ssot/skills/prepare-strategic-audit/SKILL.md`
+- **projections**: *(none)*
+- **contentHash**: `b1248200536caefe1daf13c41d93f1581858b4ca9fae152e4e2a3b931e1894b4`

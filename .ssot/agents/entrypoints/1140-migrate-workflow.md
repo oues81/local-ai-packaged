@@ -1,5 +1,5 @@
 ---
-description: Orchestrate the full 5-phase hybrid migration workflow — analysis, agent prep, deterministic apply, post-merge agent, verify — with human gates between each phase
+description: Internal hybrid migration phase: focused semantic delta for maintenance.rollout, or explicitly requested full five-phase workflow
 ---
 
 <!-- ACOS-ORIENTATION:START -->

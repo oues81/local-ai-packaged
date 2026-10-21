@@ -45,12 +45,46 @@ operator chooses from.
 
 - **Default scope**: the named project / current root only. Being a container does **not**
   expand scope to satellites.
+- **Scope fence (hard)**: stay inside the resolved `--root` / current workspace. Do **not**
+  open parent containers, sibling satellites, neighboring IDE folders, or foreign repos
+  (including any “Master Infra”, Docker infrastructure, or similar) unless the user
+  **explicitly** listed them in a registry / batch / ecosystem scope. Orientation must
+  **not** be used as a reason to leave the root. `ecosystemRole: "standalone"` (or missing)
+  means this project only.
 - **Explicit batch**: registry path or ecosystem scope must list every target and carry
   through planning and approval.
 - **Uninitialized projects** (no `.ssot/agents/`): do **not** use this entrypoint — route to
   `project.migrate` / `1100-migrate` (install/adopt).
-- **Engine**: discover via `acosSource`. Do **not** `git pull` / `npm install` unless the
-  user explicitly authorized an engine update.
+- **Engine**: discover via `acosSource`. Resolving `local-checkout` to an engine path does
+  **not** authorize reading or mutating that engine’s parent workspace or siblings — only
+  the declared checkout itself.
+- **Engine-repo writes (sidecars)**: resolving `undeclared-twins` prefers the
+  **project** override `.ssot/agents/entrypoints/obligations/` (inside `--root`).
+  Writing a sidecar into the engine checkout (`<acosSource.path>/templates/ssot/...`)
+  is legitimate **only** when the obligations are template-generic (they must hold for
+  every consumer of that entrypoint) — and it is an **engine-repo mutation**: outside
+  `--root`, so commit it in the engine repo, never leave it uncommitted. Obligation-
+  level waivers stay in-root (`.ssot/personalized-obligations-review.json`).
+- **Engine refresh when rolling out to a newer version (mandatory)**: if the user asked to
+  **update / roll out / migrate to a newer ACOS version** and `acosSource.type` is
+  `local-checkout`, the agent **MUST**:
+  1. **Identify the correct local clone** — use exactly `acosSource.path` from the
+     consumer’s `.ssot/agents/clients.json` (or an explicit `--engine <path>`). Do **not**
+     guess a sibling folder, parent monorepo, IDE-open repo, or PATH global install.
+  2. Confirm it is a git worktree (`git -C <path> rev-parse --show-toplevel`) and note
+     remotes / current branch / dirty state.
+  3. **`git fetch`** on that clone, then update the default branch (**`main`**, or the
+     remote’s default if it is not named `main`) with a **fast-forward only** pull
+     (`git pull --ff-only` / equivalent). If the tree is dirty, diverged, or cannot
+     fast-forward, **stop and report** — do not force-reset or merge WIP.
+  4. Re-read `CURRENT_SSOT_VERSION` / package version **after** the pull; that refreshed
+     checkout is the engine for classify / migrate / fix.
+  5. Invoke rollout/migrate/sync scripts **from that checkout** (fail-closed if `argv[1]`
+     is outside it — see `docs/acos-rollout.md`).
+  - For `npm` acosSource: install/update the **intended** `@acos/core` release only when
+    the same version-update objective applies — never silently refresh unrelated packages.
+  - If the user asked only for classify / projection `--fix` / repair **without** a
+    version update: do **not** pull or npm-update the engine.
 
 ### Personalized skills — spirit of the method (mandatory)
 
@@ -103,8 +137,30 @@ Classify from **evidence** (version, structural, projection, semantic). A/B/C ar
 
 MUST stop a project's mutation chain after a failed migrate/fix prerequisite. Version bump
 + `--fix` alone does **not** prove current cycle semantics if entrypoint bodies are stale.
-CLI classify is a **preflight**, not proof of all body drift — use reviewed reconcile tooling
-when structure/body findings remain. See `docs/acos-rollout.md`.
+CLI classify is a **preflight**, not proof of all body drift. Same-version template body
+drift: review inspect `refreshPlan` (full inventory), set dispositions for any
+`enriched-unflagged`, then `--apply --refresh-bodies [--refresh-plan <file>]`. Personalized
+bodies never refresh. B `--apply` prefights `validateReviewState`. Measured obligations PASS
+with unaudited template twins → coverage pending (not count-only C). See `docs/acos-rollout.md`.
+
+### F-0840-003 — PASS ≠ C-complete / undeclared policy
+
+Obligations audit **PASS** with `coverageComplete=false` (undeclared **template twins**) is
+**not** rollout success. Outcomes stay `inspect-semantic-pending` /
+`apply-semantic-pending` (not `*-ok`). Human banner must state PASS ≠ C-complete. Expand
+Spec 022 sidecars or complete C merges before claiming done. Custom (no-template) undeclared
+stays informational.
+
+### F-0840-004 — Preserve-proof after apply
+
+`apply-ok` / `inspect-ok` require mechanical proof that personalized bodies and
+`hold` / enriched dispositions survived refresh/apply. Missing personalized content or wiped
+`personalized: true` markers → fail (not ok). Proof hashes belong in the report.
+
+### F-0840-008 — Never “done at B”
+
+Mechanical audit + obligation merge + undeclared/coverageComplete policy are mandatory.
+CLI PASS alone is not spirit-of-C completion.
 
 **Symlink / `local-checkout` is the preferred engine supply.**
 
@@ -119,9 +175,16 @@ when structure/body findings remain. See `docs/acos-rollout.md`.
 
 ### 1. Resolve ACOS engine
 
-1. Read `.ssot/agents/clients.json` → `acosSource`.
-2. If `local-checkout`: resolve path; confirm `CURRENT_SSOT_VERSION`. No pull unless asked.
-3. If `npm`: confirm installed package matches intended release; update only when asked.
+1. Read `.ssot/agents/clients.json` → `acosSource` (and honor `--engine` when passed).
+2. If the objective is a **version update / rollout to a newer release** and type is
+   `local-checkout`: identify **that** clone (`acosSource.path`), then **fetch +
+   fast-forward `main`** (or remote default) as specified under “Engine refresh…” above.
+   Re-confirm `CURRENT_SSOT_VERSION` after pull. Do not skip this step and classify against
+   a stale checkout.
+3. If type is `npm` and the objective is a version update: confirm/install the intended
+   release, then proceed.
+4. If the objective is classify/fix only (no version bump): resolve the path/package and
+   confirm version — **no** fetch/pull/npm update.
 
 ### 2. Classify (deterministic)
 

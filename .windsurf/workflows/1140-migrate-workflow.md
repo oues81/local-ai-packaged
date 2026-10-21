@@ -6,7 +6,7 @@ Source: .ssot/agents/entrypoints/1140-migrate-workflow.md
 
 # 1140-migrate-workflow
 
-> Orchestrate the full 5-phase hybrid migration workflow — analysis, agent prep, deterministic apply, post-merge agent, verify — with human gates between each phase
+> Internal hybrid migration phase: focused semantic delta for maintenance.rollout, or explicitly requested full five-phase workflow
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.

@@ -6,7 +6,7 @@ Source: .ssot/agents/entrypoints/1240-migrate-refs.md
 
 # 1240-migrate-refs
 
-> Dispatch an agent for semantic reference updates after a deterministic ACOS migration
+> Internal phase: semantic reference updates after deterministic handling (opt-in; called from 0840 or 1140)
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.

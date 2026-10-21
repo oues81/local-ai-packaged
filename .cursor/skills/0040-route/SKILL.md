@@ -59,9 +59,12 @@ stable semantic IDs and MUST NOT expose an unnumbered replacement command.
 
 After step 1 (classification), check `.ssot/agents/clients.json` for `ecosystemRole`:
 
-- If `ecosystemRole === "container"` and the task involves **migration** or **version upgrade**: route to `migration.ecosystem` / `1180-migrate-ecosystem` instead of `migration.workflow` / `1140-migrate-workflow`. The ecosystem entrypoint handles batch migration of the container + all satellites. If the task is not migration-related, continue with the normal routing — the container's own SSOT is independent.
-- If `ecosystemRole === "satellite"`: proceed normally. The satellite's SSOT is independent. If the task requires ecosystem-wide changes, advise the user to run from the container root instead.
-- If `ecosystemRole === "standalone"` or absent: proceed normally. No ecosystem routing needed.
+- If the task is an **ordinary ACOS update / version upgrade / reconciliation** on an
+  initialized project (including a container): route to `maintenance.rollout` / `0840-rollout`.
+  Do **not** override to `1180-migrate-ecosystem` merely because `ecosystemRole === "container"`.
+  Ecosystem/registry batch is an **explicit scope** chosen inside `0840`, not a default.
+- If `ecosystemRole === "satellite"`: proceed normally. The satellite's SSOT is independent. If the task requires ecosystem-wide changes, advise the user to run from the container root via `0840` with explicit ecosystem scope.
+- If `ecosystemRole === "standalone"` or absent: proceed normally.
 
 ## Non-spec routing
 
@@ -73,7 +76,13 @@ explicitly active resume contract → status/handoff as context. Qualify
 treating it as cycle intent. Mere file presence does **not** override a different
 explicit request.
 
-- **Migration or version upgrade**: route to `project.migrate` / `1100-migrate` (the migration router). The router determines whether it's a new install, version upgrade, or reconciliation, and dispatches to `1120-migrate-analyze`, `1140-migrate-workflow`, or `1180-migrate-ecosystem` as needed.
+- **Update / version upgrade / reconciliation (initialized)**: route to
+  `maintenance.rollout` / `0840-rollout`. That is the sole public update door; it may call
+  internal phases (`1120`/`1140`/`1160`/`1180`/`1240`) as needed.
+- **Install / adopt (uninitialized — no `.ssot/agents/`)**: route to
+  `project.migrate` / `1100-migrate`.
+- **Explicit phase request** (user names analysis-only, full hybrid, ecosystem batch,
+  migrate-refs, or a specific internal skill): honor that request; otherwise prefer `0840`.
 - **Personalization**: if the user asks to personalize, customize, or specialize the SSOT for the project (e.g. "customize entrypoints for my stack", "personalize ACOS for this project"), route to `project.personalize` / `1220-personalize`.
 - **Auto-improve cycle**: if the user's text names auto-improve / cycle / `1840`, or a
   **usable** (non-contradictory) `.ssot/next-session-prompt.md` is selected under intent

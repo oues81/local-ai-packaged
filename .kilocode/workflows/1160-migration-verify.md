@@ -4,7 +4,7 @@ Source: .ssot/agents/entrypoints/1160-migration-verify.md
 
 # 1160-migration-verify
 
-> Verify post-migration coverage by comparing the legacy backup against the current ACOS state, or by checking projection-gap resolutions against the analysis artifact (spec 012)
+> Internal phase: verify migration evidence for maintenance.rollout / 1140 / 1180 (or explicit audit)
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.
@@ -33,84 +33,95 @@ Source: .ssot/agents/entrypoints/1160-migration-verify.md
 > `.ssot/agents/context/orientation.md`.
 <!-- ACOS-ORIENTATION:END -->
 
-Treat the user's accompanying text as the verification objective. Minimize questions.
+## Invocation contract
 
-1. Identify the target project root from the user's request. If not provided, use the current directory.
-2. **⚠️ CRITICAL — Verify the installed ACOS code is up to date.** The verifier runs from the ACOS code in `node_modules/@acos/core` (npm) or `acosSource.path` (local-checkout). If this code is stale, verification uses old logic and may pass a broken migration or fail a correct one. Before proceeding:
-   - Read `.ssot/agents/clients.json` → `acosSource`. If `type: "npm"`, run `npm install --save-dev git+https://github.com/oues81/acos.git#main` to update. If `type: "local-checkout"`, verify the source repo is at the latest commit (`git -C <path> pull`) and that `node -e "console.log(require('<path>/scripts/core/ssot-migrations.mjs').CURRENT_SSOT_VERSION)"` matches the target version.
-   - **Never verify with stale ACOS code.** Changing the version number in `package.json` or `clients.json` does NOT update the code — the actual scripts, schemas, and templates must be replaced.
-   - If the user provides an ACOS source path, use that path to verify the version. Do not assume `node_modules` is current.
-3. Confirm the project is ACOS-initialized (`.ssot/agents/` exists). Then select the verification mode (spec 012):
-   - **Analysis-driven mode** (preferred when `.ssot/migration-analysis.json` exists and has a `projectionGaps` section with any `resolutionStrategy` set): run `verifyProjectionGaps`, which asserts the project's on-disk/JSON state matches what each gap's `resolutionStrategy` implies. This mode does **not** require `.ssot.legacy/` to exist.
-     - For `staleEntrypoints` with `resolutionStrategy: "renumber"`, the verifier checks that the entrypoint exists at `expectedOrder`/`expectedSource` (populated from the analysis artifact's `customRenumbering` proposal). If `expectedOrder` is absent, the verifier falls back to `currentOrder` (the entrypoint stays at its current position — only the ID changed).
-   - **Legacy-backup mode** (the initial-adoption path, when `.ssot.legacy/` exists but no analysis artifact with projection gaps is present): run the existing `verify()` comparison against the legacy backup.
-   - If neither artifact is available, stop and explain that there is nothing to verify against — do not fail silently.
-4. Run the deterministic ACOS migration verifier in the selected mode:
-   - Resolve the ACOS code path: read `.ssot/agents/clients.json` → `acosSource`. If `type: "npm"`, use `<project-root>/node_modules/@acos/core`. If `type: "local-checkout"`, resolve `acosSource.path` relative to the project root. If `acosSource` is absent or the path is invalid, ask the user for the ACOS code path.
-   - Analysis-driven: `node <acos-path>/scripts/audit/migration-verify.mjs --root <target-project> --analysis .ssot/migration-analysis.json`
-   - Legacy-backup: `node <acos-path>/scripts/audit/migration-verify.mjs --root <target-project>`
-5. Read the generated `ACOS_POST_MIGRATION_VERIFY.md` (and `ACOS_POST_MIGRATION_VERIFY.json` if requested). In analysis-driven mode, the report includes:
-   - overall pass/fail status;
-   - `checkedCount` (number of gaps with a `resolutionStrategy` that were asserted);
-   - per-gap failures (gapType, key, expected state, actual state).
-   In legacy-backup mode, the report includes:
-   - overall pass/fail status;
-   - per-client coverage (legacy, current, mapped, unmapped);
-   - orphaned current files without a legacy source;
-   - unmapped legacy files in `.ssot.legacy/`;
-   - missing decision entries in `.ssot/decisions.md`.
-6. Summarize the report for the user using whichever mode was active.
-7. Verify the new projection surfaces from the July 2026 audit are present for each active client:
-   - If **Devin** is an active client, verify `.devin/agents/*/AGENT.md` is generated (custom subagents, experimental) and `.agents/agents/*/AGENT.md` is generated (shared standard).
-   - If **Codex** is an active client, verify `.codex/rules/*.rules` is generated (Starlark exec-policy rules).
-   - If **Kilo** is an active client, verify `.kilo/plugin/acos-hooks.ts` is generated (hooks via plugin system).
-   - If **OpenCode** is an active client, verify `.opencode/plugins/acos-hooks.ts` is generated (hooks via plugin system).
-   - If **Cursor** is an active client, verify `.cursor/permissions.json` is generated.
-   - If **Claude** is an active client, verify the `.claude/workflows/` extension point (directory + managed README) is generated.
-   - Verify that `legacy: true` projections (e.g., `.codex/skills/`, `.kilocode/rules/`, `.kilocode/workflows/`) carry the deprecation banner at the top of the generated file.
-   - Verify that `desktopOnly: true` projections (e.g., `.windsurf/workflows/`) carry the desktop-only banner at the top of the generated file.
-   - Flag any missing surface or missing banner as a verification failure.
-   - If `--reconcile` was used for the migration, verify that any `staleTemplateContent` entries had their **frontmatter description** refreshed from the template (Bug 10: body content is preserved, not overwritten). Check that the frontmatter `description` field matches the template, but do NOT expect the full file hash to match — the body may contain legitimate project customizations. If a file's body was incorrectly overwritten (full file hash matches template exactly), flag it as a verification failure — custom content may have been lost.
-   - If `--refresh-bodies` was used, verify that:
-     - Non-personalized stale entrypoints now match the template **exactly** (body + frontmatter). These were deliberately refreshed.
-     - Personalized entrypoints (`personalized: true` in frontmatter) still contain their custom body content AND their custom frontmatter description — the **entire file is preserved** when the marker is present. If a personalized entrypoint's body or description was overwritten, flag it as a verification failure — the marker was not honored.
-     - The `personalized: true` marker is still present in the frontmatter of personalized entrypoints (it should not have been removed by the refresh).
-   - If `--reconcile` was used, verify that `templateRemoved` entries (entrypoints once in the ACOS template but since removed) were deleted from `workflows.json` and their source files removed. Check the dry-run report's `Template-removed entrypoints` section — each listed entry should no longer exist in the project. If a `templateRemoved` entry still exists, the reconcile did not complete correctly.
-7b. If the analysis artifact (`.ssot/migration-analysis.json`) has a `personalizedDrift[]` section, verify each listed entrypoint was actually merged rather than mechanically overwritten or left untouched — run:
-   `node <acos-path>/scripts/core/ssot-migrations.mjs --check-post-agent-diff --root <target-project> --analysis .ssot/migration-analysis.json`
-   This confirms the post-merge agent (`1240-migrate-refs`) performed a real content merge on each `personalizedDrift` entry (see "Personalized entrypoint merge" in `docs/migrations.md`) instead of skipping it or blindly adopting the template. Flag any entrypoint still listed in `personalizedDrift` with no corresponding merge evidence as a verification failure.
-8. If gaps are found, propose concrete next actions:
-   - analysis-driven: re-apply the missing resolution (e.g. re-run `acos-migrate --apply` if a `resolutionStrategy: "add"` entrypoint is still absent), or revise the analysis artifact's `resolutionStrategy` if the operator's intent changed;
-   - legacy-backup: migrate an unmapped legacy file; archive it and record a decision; delete an orphaned current file if it is no longer needed.
-   - missing surface: re-run `acos --fix` to regenerate the missing projection, or verify `clients.json` declares the projection if it is still absent.
-   - missing banner: re-run `acos --fix` to regenerate the file with the correct `legacy` or `desktopOnly` banner.
-9. Do not mutate the project autonomously. Pause for explicit approval before any fix.
-10. After fixes, re-run the verifier in the same mode until the report passes.
-11. Update the target project's `.ssot/status.md` and `.ssot/handoff.md` with the verification outcome.
-12. **Handoff**: after verification is complete (all checks PASS), launch `1020-handoff` to persist the session state. This closes the migration chain (`0020 → 0040 → 1100 → 1120 → 1140 → 1160 → 1020`). If verification FAILS and the user chooses to roll back, do not launch 1020 — instead surface the rollback path (see `1140-migrate-workflow` → "Rollback per phase") and wait for user direction.
+Caller: `0840` after B/C, `1140`, `1180`, or explicit audit. Pick the verifier **branch that
+matches available evidence**. Not the public update door (`0840-rollout` / `maintenance.rollout`).
+
+Treat the user's accompanying text as the verification objective. Minimize questions.
+**This entrypoint verifies only** — it does not mutate the target, install packages, pull git,
+or update the engine without an existing explicit authority grant from the caller.
+
+1. Identify the target project root (user request, else cwd). Confirm `.ssot/agents/` exists.
+2. **Resolve the verification engine (read-only discovery — no install/pull).**
+   - Read `.ssot/agents/clients.json` → `acosSource`.
+   - `type: "npm"` → engine root = `<project>/node_modules/@acos/core` (must exist).
+   - `type: "local-checkout"` → resolve `acosSource.path` relative to the project; require
+     `scripts/core/ssot-migrations.mjs` under that path.
+   - If absent/invalid, ask for an absolute engine path — do **not** run
+     `npm install` or `git pull` from this entrypoint.
+   - Read-only version check (ESM):
+     `node --input-type=module -e "import { CURRENT_SSOT_VERSION } from '<engine>/scripts/core/ssot-migrations.mjs'; console.log(CURRENT_SSOT_VERSION)"`
+   - Compare to the project's `ssotVersion` / caller target. Report skew; **do not** upgrade
+     the engine here. Engine updates require the caller's existing authority path.
+3. Select exactly one verification branch:
+
+   ### Branch P — Projection-only / focused C (no historical analysis required)
+   Use when the caller asks to confirm drift/obligations after A or C, and no analysis
+   artifact with selected `resolutionStrategy` gaps is required.
+   - Drift: `node <engine>/scripts/core/sync-clients.mjs --root <target> --check`
+     (do **not** treat `migration-step-verify.mjs` alone as drift proof — that helper may
+     invoke `--validate`, which is not the same as `--check`).
+   - Obligations (when personalized bodies matter):
+     `node <engine>/scripts/audit/personalized-obligations-audit.mjs --root <target> [--json]`
+     and/or the registry report.
+   - Optional supporting step evidence:
+     `node <engine>/scripts/audit/migration-step-verify.mjs --root <target> --acos-path <engine>`
+   - Missing historical analysis is **unverified** for gap assertions — say so; do not invent
+     PASS from projection checks alone.
+
+   ### Branch A — Analysis-driven (spec 012 gap resolutions)
+   Use when an absolute analysis path is available (typically `.ssot/migration-analysis.json`)
+   with `projectionGaps` entries carrying `resolutionStrategy`.
+   - Run:
+     `node <engine>/scripts/audit/migration-verify.mjs --root <target> --analysis <abs-analysis> [--json] [--output <path>] [--template-root <abs>]`
+   - Explicit missing/unreadable/malformed analysis → nonzero diagnostic (**no** silent legacy
+     fallback).
+   - Zero selected gap assertions → **not-verified** (nonzero). Completeness is evaluated in
+     the same CLI invocation.
+   - Default analysis output is **stdout** (human or one JSON document with `--json`). A
+     markdown/JSON file is written only when `--output` is passed — do **not** claim
+     `ACOS_POST_MIGRATION_VERIFY.md` was written unless `--output` (or legacy mode) did so.
+
+   ### Branch L — Legacy-backup adoption
+   Use when `.ssot.legacy/` exists and the caller needs adoption coverage (no `--analysis` flag).
+   - Run: `node <engine>/scripts/audit/migration-verify.mjs --root <target> [--json] [--output <path>]`
+   - Default human report path: `<target>/ACOS_POST_MIGRATION_VERIFY.md` unless `--output`.
+   - Completeness vs packaged templates is part of the CLI result.
+
+4. Derive active-client surface expectations from declared clients in `clients.json` (only
+   clients that are present). Spot-check generated surfaces/banners the caller cares about;
+   flag missing surfaces as findings returned to the caller — do not auto-fix.
+   Desktop-only carve-out example: Devin Desktop legacy storage may still emit
+   `.windsurf/workflows/` (`desktopOnly: true`) — verify the desktop-only banner when that
+   surface is declared; Windsurf is not a first-class ACOS client.
+5. When refresh/reconcile evidence exists in the caller's session, verify preserve rules:
+   personalized files keep full bytes + marker; non-personalized refreshed bodies match
+   template when intentionally refreshed; `templateRemoved` entries are gone.
+6. If `personalizedDrift[]` is present in analysis, optionally run
+   `node <engine>/scripts/core/ssot-migrations.mjs --check-post-agent-diff --root <target> --analysis <abs-analysis>`
+   and report merge evidence gaps — still no autonomous repair.
+7. Summarize with explicit **scope** for each result (projection drift / gap assertions /
+   legacy coverage / completeness). Propose next actions; **do not mutate**. Return findings
+   to the caller (`0840` / `1140` / operator). Lifecycle status/handoff updates belong to the
+   authorized parent — verification-only authority does not launch `1020` or start an
+   improvement cycle by itself.
 
 ## Upstream producers
 
-This entrypoint consumes artifacts produced by:
-- **`1120-migrate-analyze`** — produces `.ssot/migration-analysis.json` (the analysis artifact with `projectionGaps` and `resolutionStrategy` fields).
-- **`1140-migrate-workflow`** — orchestrates the full 5-phase migration and delegates Phase 4 verification to this entrypoint.
+- `1120-migrate-analyze` → `.ssot/migration-analysis.json`
+- `1140-migrate-workflow` / `0840-rollout` → may delegate verification here
 
-If neither producer has been invoked, the analysis artifact will be absent and verification falls back to legacy-backup mode (if `.ssot.legacy/` exists) or reports "nothing to verify against".
+If no producer artifact matches a branch, report **nothing to verify against** for that
+evidence class — do not fail silently and do not invent a mode.
 
 ## Completion checklist
 
-Before declaring verification complete, verify:
+- [ ] Engine path resolved; version printed (no install/pull performed here)
+- [ ] Branch P, A, or L selected and justified
+- [ ] Commands run with absolute analysis path when Branch A
+- [ ] Output behavior stated accurately (stdout vs `--output` vs default legacy report)
+- [ ] Drift proof used `sync-clients --check` when Branch P claims drift status
+- [ ] Findings returned to caller; no autonomous mutation
 
-- [ ] ACOS code is current (version check output shown)
-- [ ] Verification mode selected (analysis-driven OR legacy-backup) and justified
-- [ ] `migration-verify.mjs` was run (show full output)
-- [ ] All projection surfaces verified (Devin, Codex, Kilo, OpenCode, Cursor, Claude)
-- [ ] Legacy banners present on `legacy: true` projections
-- [ ] Desktop-only banners present on `desktopOnly: true` projections
-- [ ] If `personalizedDrift[]` present in the analysis artifact: `--check-post-agent-diff` run and each entry confirmed merged
-- [ ] If gaps found: concrete next actions proposed
-- [ ] If gaps fixed: re-run verifier until PASS
-- [ ] **Final step verification** — `migration-step-verify.mjs` run and reports PASS (show output)
-
-**This entrypoint verifies but does NOT mutate.** If gaps are found, propose fixes but do not
-apply them without explicit approval.
+**This entrypoint verifies but does NOT mutate.**

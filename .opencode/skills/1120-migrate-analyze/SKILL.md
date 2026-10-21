@@ -1,6 +1,6 @@
 ---
 name: 1120-migrate-analyze
-description: "Perform pre-migration analysis to identify custom content, missing state files, semantic references, and non-conformities before the deterministic migration apply"
+description: "Internal phase: pre-migration analysis for maintenance.rollout or explicit analysis-only requests"
 compatibility: opencode
 disable-model-invocation: true
 metadata:

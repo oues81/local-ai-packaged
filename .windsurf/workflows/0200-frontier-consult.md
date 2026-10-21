@@ -6,7 +6,7 @@ Source: .ssot/agents/entrypoints/0200-frontier-consult.md
 
 # 0200-frontier-consult
 
-> Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch
+> Frontier-grade strategic analysis — self in-session, --cli for Codex/Claude/etc., or ChatGPT web emit-prompt channel
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.

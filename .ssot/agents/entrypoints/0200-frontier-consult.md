@@ -1,5 +1,5 @@
 ---
-description: Frontier-grade strategic analysis — the current client answers in-session by default; --cli opts into cross-model dispatch
+description: Frontier-grade strategic analysis — self in-session, --cli for Codex/Claude/etc., or ChatGPT web emit-prompt channel
 ---
 
 <!-- ACOS-ORIENTATION:START -->

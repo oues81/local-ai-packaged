@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-19T14:44:19.382Z",
+  "dispositions": {
+    "0020-resume.md": {
+      "disposition": "skip-personalized",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "f4eac3bce9bd7f9fedda9732b7135fc2d3b5e68eae6cec22909d2cecbe42f80e"
+    },
+    "0040-route.md": {
+      "disposition": "replace-template",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "82c428f985959938e867e1cfaf9c90e2a4949c6c960a359b3fbd9d9ec9026cff",
+      "rationale": "non-personalized body drift; safe auto-disposition for reviewed apply"
+    },
+    "0200-frontier-consult.md": {
+      "disposition": "hold",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "d8ff1b0924a87c98d9612e75199a75e28af125ed16442aea38fd4bb9db172713",
+      "rationale": "Preserve project-enriched body (enriched-unflagged); do not wholesale replace with template."
+    },
+    "0780-docker.md": {
+      "disposition": "skip-personalized",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "a0db1b5b8b6f3dc0175ac1d2077f9421ddfe5f0ac0dac56d5f5eef91ab266ff0"
+    },
+    "0840-rollout.md": {
+      "disposition": "replace-template",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "924d5fc81c7ead0124edfd5beae23b34e45992137eabcab97d3033e7fdf5f739",
+      "rationale": "non-personalized body drift; safe auto-disposition for reviewed apply"
+    },
+    "1020-handoff.md": {
+      "disposition": "skip-personalized",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "4d463c874f9ad89c5f399b4f3aff108a3e3ff7ea4aadde8f728ba158fe5c9b61"
+    },
+    "1040-session-bridge.md": {
+      "disposition": "hold",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "a8a8d83d3952f2deb87337cdf536fe3ecfbdb60ecf9059a30f57db1d425d613e",
+      "rationale": "Preserve project-enriched body (enriched-unflagged); do not wholesale replace with template."
+    },
+    "1100-migrate.md": {
+      "disposition": "hold",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "9af94269ff4a0840b771ec5911749d7085a617a6ae59f27e68d9da8cde433f99",
+      "rationale": "Preserve project-enriched body (enriched-unflagged); do not wholesale replace with template."
+    },
+    "1120-migrate-analyze.md": {
+      "disposition": "hold",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "6a74a34974f382212d1f711ed09acce0b526399225bfabb274461dc85c62590a",
+      "rationale": "Preserve project-enriched body (enriched-unflagged); do not wholesale replace with template."
+    },
+    "1140-migrate-workflow.md": {
+      "disposition": "hold",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "904b2b583b4e89a08d1e0ca51645deea86d01f159d055c8e60a9a5a01f8b223d",
+      "rationale": "Preserve project-enriched body (enriched-unflagged); do not wholesale replace with template."
+    },
+    "1160-migration-verify.md": {
+      "disposition": "replace-template",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "36e7a110a2e440be691368d024e9a319370f325928e1d9180ae3d8d397fa7d80",
+      "rationale": "non-personalized body drift; safe auto-disposition for reviewed apply"
+    },
+    "1180-migrate-ecosystem.md": {
+      "disposition": "replace-template",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "3ed704ba0de0106d940454c218a435315629314ff80e809009cfb7de569894ec",
+      "rationale": "non-personalized body drift; safe auto-disposition for reviewed apply"
+    },
+    "1220-personalize.md": {
+      "disposition": "hold",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "4587197e25192567d942808010df33ea30a610e52e8e89341ce5d5a3f6a7cdec",
+      "rationale": "Preserve project-enriched body (enriched-unflagged); do not wholesale replace with template."
+    },
+    "1240-migrate-refs.md": {
+      "disposition": "hold",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "993e4ac9713d8e579e85d20e8bf911b26db1868a3b46769e6712a75dddc9638e",
+      "rationale": "Preserve project-enriched body (enriched-unflagged); do not wholesale replace with template."
+    },
+    "1280-model-routing-audit.md": {
+      "disposition": "replace-template",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "c747c4968724482578dfc71c449e3478d4b7c35ef349eb53def366d6675abfbc",
+      "rationale": "non-personalized body drift; safe auto-disposition for reviewed apply"
+    },
+    "1840-auto-improve.md": {
+      "disposition": "hold",
+      "setAt": "2026-10-19T14:44:19.382Z",
+      "plan": "rollout-refresh",
+      "bodySha256": "86ce002c9b0b75aaa0aa81769edea78fa0437a334d50d518c746a876e8fa4823",
+      "rationale": "Preserve project-enriched body (enriched-unflagged); do not wholesale replace with template."
+    }
+  }
+}

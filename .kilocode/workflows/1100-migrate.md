@@ -4,7 +4,7 @@ Source: .ssot/agents/entrypoints/1100-migrate.md
 
 # 1100-migrate
 
-> Migration router — determines the correct migration path based on project state (new install, version upgrade, structural reconciliation, or ecosystem batch migration)
+> Install/adopt ACOS in an uninitialized project; existing-project update calls redirect to maintenance.rollout
 
 > Generalist, project-agnostic. Project identity is read from
 > `.ssot/context-index.md` and `.ssot/agents/clients.json` at runtime.

@@ -1,0 +1,9 @@
+{
+  "dispositions": [
+    {
+      "entrypointSource": "0780-docker.md",
+      "decision": "accept",
+      "rationale": "Template twin has no engine obligations sidecar for maintenance.docker (0780). Personalized body documents local-ai-packaged compose layout (6 files, bake MCP path, ai_network); file-level accept waives undeclared twin so coverageComplete can close without inventing obligations or wholesale template replace."
+    }
+  ]
+}

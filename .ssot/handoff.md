@@ -1,53 +1,34 @@
 # Session Handoff
 
-Date: 2026-08-30
+Date: 2026-10-19
 
-- Last session: 2026-08-30 (entrypoint-cycle SSOT personalization via 1220-personalize)
+- Last session: 2026-10-19 — ACOS `0840-rollout` wave2 (1.9.5 → 1.9.7)
 - Completed:
-  - Personalized the active-cycle entrypoint bodies (0/65 previously carried
-    `personalized: true`; docs-only fields had been personalized on 2026-08-23 but
-    entrypoint bodies were still generic template):
-    - `.ssot/agents/entrypoints/0020-resume.md` — added "Project-specific orientation"
-      (compose validity/health commands, MCP build command, registry, ecosystem-satellite
-      pointer, stale-runtime note) and pointed step 6 at the real diagnostic command.
-    - `.ssot/agents/entrypoints/1020-handoff.md` — added a project-specific verification
-      paragraph (docker compose config/health, not a test-suite claim).
-    - `.ssot/agents/entrypoints/0780-docker.md` — documented the real 6-compose-file
-      layout, the `docker buildx bake` MCP build path, and the `ai_network` requirement.
-    - All three now carry `personalized: true`; logged as `D-007` in `.ssot/decisions.md`.
-  - Ran `node acos-mcp-launcher-work/scripts/core/sync-clients.mjs --fix` (44 projections
-    regenerated across all client surfaces) then `--check` (0 drift; 1 pre-existing
-    informational warning, see Known issues #4).
-- Previous: Langfuse memory fix + docs-only SSOT personalize (2026-08-23); ACOS init +
-  0840 docker build standards (2026-08-22)
+  - Classified `needsMigrate` (levels B+C+A); migration-analysis reviewed complete
+    (3 personalizedDrift accept: 0020 merge, 0780 preserve-as-is, 1020 merge;
+    missing `0860` accepted via reconcile).
+  - `--apply` authorized → ssot **1.9.7** (`prepare-strategic-audit` skillAdditions +
+    systemic reconcile including `0860-client-surface-currency`).
+  - Mode-1 C merge into personalized `1020-handoff.md` (`obl.handoff.h1-plan-base` +
+    S1 evidence-scan wording); preserved project-specific docker verification notes.
+  - File-level accept waiver for undeclared twin `0780-docker.md` in
+    `.ssot/personalized-obligations-review.json`.
+  - Perso audit: **PASS** + `coverageComplete=true`.
+  - `--refresh-bodies` with reviewed plan: replaced 0040/0840/1160/1180/1280;
+    held 8 enriched-unflagged; skipped personalized 0020/0780/1020.
+  - Final classify: **ok**; projections clean; model-routing hardViolations=0.
+  - Reports under `.session/rollout-0840-2026-10-19/wave2/local-ai-packaged-*`.
+  - **No commit/push** (operator scope).
 - In progress: nothing
-- Verification: `sync-clients.mjs --check` clean (0 drift). Docker/compose changes from
-  earlier uncommitted work (Neo4j memory tuning, minio/postgres network additions) were
-  present in the working tree before this session and were left untouched — out of scope
-  for this personalization pass; not verified by this session.
 - Blockers: none
-- Known issues:
-  1. Some :latest tags may remain in docker-compose.yml (pinned where stable versions could be verified)
-  2. Supabase stack intentionally disabled (uses cloud from archon-v2)
-  3. No tests (infrastructure project)
-  4. `sync-clients.mjs --check` reports the template entrypoint `1840-auto-improve.md` as
-     structurally missing from this project (informational, not drift) — this project does
-     not use the auto-improve cycle; resolving it is a migration/reconcile action, out of
-     scope for `1220-personalize`.
-  5. Remaining personalization gaps identified but deferred (not part of the active
-     0020→1020 cycle prioritized this session): `.ssot/agents/context/CLAUDE.src.md` still
-     has the generic "My Project" placeholder title; `.ssot/agents/runtimes.json` still
-     declares the example `fabric-staging` runtime instead of a real one or nothing.
+- C status: Mode-1 merge done for writeSet (`1020-handoff.md`); coverage complete
 - Next action:
-  1. Verify minimal compose starts correctly with the uncommitted Neo4j/minio/postgres
-     network changes: `docker compose -f docker-compose.yml -f docker-compose.minimal.yml
-     config --quiet` then `up -d`.
-  2. Optionally personalize `CLAUDE.src.md` (drop "My Project" placeholder) and clean up
-     the stale `fabric-staging` runtimes.json entry.
-  3. Pin remaining :latest tags if any.
+  1. Operator review / commit when ready (not done this session).
+  2. Optional: pin remaining `:latest` tags; personalize `CLAUDE.src.md` placeholder;
+     clean stale `fabric-staging` in `runtimes.json`.
+  3. Optional: verify minimal compose after prior uncommitted network tweaks.
 - Resume commands:
   - `cd /home/oues/projects/master-infra/local-ai-packaged`
-  - Build MCP server: `docker buildx bake --load`
-  - Start services: `python3 start_services.py`
-  - Minimal compose: `docker compose -f docker-compose.yml -f docker-compose.minimal.yml config --quiet`
-  - ACOS check: `node /home/oues/projects/master-infra/acos-mcp-launcher-work/scripts/core/sync-clients.mjs --check` (global `npx acos` is stale at v1.9.0 on this host)
+  - Build MCP: `docker buildx bake --load`
+  - ACOS check: `npx --no-install acos --check` (engine checkout `../acos-mcp-launcher-work`)
+  - Perso audit: `node ../acos-mcp-launcher-work/scripts/audit/personalized-obligations-audit.mjs --root .`

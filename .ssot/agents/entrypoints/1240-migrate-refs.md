@@ -1,5 +1,5 @@
 ---
-description: Dispatch an agent for semantic reference updates after a deterministic ACOS migration
+description: Internal phase: semantic reference updates after deterministic handling (opt-in; called from 0840 or 1140)
 ---
 
 <!-- ACOS-ORIENTATION:START -->

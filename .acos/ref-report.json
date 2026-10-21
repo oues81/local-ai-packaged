@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-17T17:00:41.287Z",
+  "generatedAt": "2026-10-19T14:42:14.059Z",
   "scanRoot": "/home/oues/projects/master-infra/local-ai-packaged",
   "references": [
     {
@@ -7127,6 +7127,141 @@
       "referenceString": "docs",
       "patternType": "slug",
       "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 7,
+      "referenceString": "handoff",
+      "patternType": "slug",
+      "targetEntrypoint": "session.handoff",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 21,
+      "referenceString": "1220-personalize",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "project.personalize",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 22,
+      "referenceString": "1280-model-routing-audit",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "project.modelrouting",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 28,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 29,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 30,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 31,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 32,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 35,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 47,
+      "referenceString": "knowledge",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.init",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 55,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 60,
+      "referenceString": "new",
+      "patternType": "slug",
+      "targetEntrypoint": "project.new",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 64,
+      "referenceString": "knowledge",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.init",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 68,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/entrypoints/0860-client-surface-currency.md",
+      "lineNumber": 78,
+      "referenceString": "plan",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.plan",
       "confidence": "low",
       "updateMode": "semantic"
     },
@@ -15845,6 +15980,60 @@
     {
       "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 318,
+      "referenceString": "maintenance.rollout",
+      "patternType": "stable-id",
+      "targetEntrypoint": "maintenance.rollout",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 320,
+      "referenceString": "rollout",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.rollout",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 322,
+      "referenceString": "0840-rollout.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "maintenance.rollout",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 326,
+      "referenceString": "maintenance.clientsurface",
+      "patternType": "stable-id",
+      "targetEntrypoint": "maintenance.clientsurface",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 328,
+      "referenceString": "client-surface-currency",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.clientsurface",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 330,
+      "referenceString": "0860-client-surface-currency.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "maintenance.clientsurface",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 334,
       "referenceString": "knowledge.init",
       "patternType": "stable-id",
       "targetEntrypoint": "knowledge.init",
@@ -15853,109 +16042,19 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 320,
-      "referenceString": "knowledge",
-      "patternType": "slug",
-      "targetEntrypoint": "knowledge.init",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 321,
-      "referenceString": "knowledge",
-      "patternType": "slug",
-      "targetEntrypoint": "knowledge.init",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 321,
-      "referenceString": "knowledge",
-      "patternType": "slug",
-      "targetEntrypoint": "knowledge.init",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 322,
-      "referenceString": "0900-knowledge.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "knowledge.init",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 323,
-      "referenceString": "knowledge",
-      "patternType": "slug",
-      "targetEntrypoint": "knowledge.init",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 326,
-      "referenceString": "knowledge.ingest",
-      "patternType": "stable-id",
-      "targetEntrypoint": "knowledge.ingest",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 328,
-      "referenceString": "knowledge-ingest",
-      "patternType": "slug",
-      "targetEntrypoint": "knowledge.ingest",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 329,
-      "referenceString": "knowledge",
-      "patternType": "slug",
-      "targetEntrypoint": "knowledge.init",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 330,
-      "referenceString": "0920-knowledge-ingest.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "knowledge.ingest",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 331,
-      "referenceString": "knowledge",
-      "patternType": "slug",
-      "targetEntrypoint": "knowledge.init",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 334,
-      "referenceString": "knowledge.query",
-      "patternType": "stable-id",
-      "targetEntrypoint": "knowledge.query",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 336,
-      "referenceString": "knowledge-query",
+      "referenceString": "knowledge",
       "patternType": "slug",
-      "targetEntrypoint": "knowledge.query",
+      "targetEntrypoint": "knowledge.init",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 337,
+      "referenceString": "knowledge",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.init",
       "confidence": "low",
       "updateMode": "semantic"
     },
@@ -15971,9 +16070,9 @@
     {
       "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 338,
-      "referenceString": "0940-knowledge-query.md",
+      "referenceString": "0900-knowledge.md",
       "patternType": "visible-prefix",
-      "targetEntrypoint": "knowledge.query",
+      "targetEntrypoint": "knowledge.init",
       "confidence": "high",
       "updateMode": "deterministic"
     },
@@ -15989,18 +16088,18 @@
     {
       "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 342,
-      "referenceString": "knowledge.lint",
+      "referenceString": "knowledge.ingest",
       "patternType": "stable-id",
-      "targetEntrypoint": "knowledge.lint",
+      "targetEntrypoint": "knowledge.ingest",
       "confidence": "high",
       "updateMode": "deterministic"
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 344,
-      "referenceString": "knowledge-lint",
+      "referenceString": "knowledge-ingest",
       "patternType": "slug",
-      "targetEntrypoint": "knowledge.lint",
+      "targetEntrypoint": "knowledge.ingest",
       "confidence": "low",
       "updateMode": "semantic"
     },
@@ -16016,9 +16115,9 @@
     {
       "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 346,
-      "referenceString": "0960-knowledge-lint.md",
+      "referenceString": "0920-knowledge-ingest.md",
       "patternType": "visible-prefix",
-      "targetEntrypoint": "knowledge.lint",
+      "targetEntrypoint": "knowledge.ingest",
       "confidence": "high",
       "updateMode": "deterministic"
     },
@@ -16034,6 +16133,96 @@
     {
       "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 350,
+      "referenceString": "knowledge.query",
+      "patternType": "stable-id",
+      "targetEntrypoint": "knowledge.query",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 352,
+      "referenceString": "knowledge-query",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.query",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 353,
+      "referenceString": "knowledge",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.init",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 354,
+      "referenceString": "0940-knowledge-query.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "knowledge.query",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 355,
+      "referenceString": "knowledge",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.init",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 358,
+      "referenceString": "knowledge.lint",
+      "patternType": "stable-id",
+      "targetEntrypoint": "knowledge.lint",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 360,
+      "referenceString": "knowledge-lint",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.lint",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 361,
+      "referenceString": "knowledge",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.init",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 362,
+      "referenceString": "0960-knowledge-lint.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "knowledge.lint",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 363,
+      "referenceString": "knowledge",
+      "patternType": "slug",
+      "targetEntrypoint": "knowledge.init",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 366,
       "referenceString": "session.brief",
       "patternType": "stable-id",
       "targetEntrypoint": "session.brief",
@@ -16042,7 +16231,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 352,
+      "lineNumber": 368,
       "referenceString": "brief",
       "patternType": "slug",
       "targetEntrypoint": "session.brief",
@@ -16051,7 +16240,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 353,
+      "lineNumber": 369,
       "referenceString": "brief",
       "patternType": "slug",
       "targetEntrypoint": "session.brief",
@@ -16060,7 +16249,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 354,
+      "lineNumber": 370,
       "referenceString": "1000-brief.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "session.brief",
@@ -16069,7 +16258,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 358,
+      "lineNumber": 374,
       "referenceString": "session.handoff",
       "patternType": "stable-id",
       "targetEntrypoint": "session.handoff",
@@ -16078,7 +16267,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 360,
+      "lineNumber": 376,
       "referenceString": "handoff",
       "patternType": "slug",
       "targetEntrypoint": "session.handoff",
@@ -16087,7 +16276,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 361,
+      "lineNumber": 377,
       "referenceString": "handoff",
       "patternType": "slug",
       "targetEntrypoint": "session.handoff",
@@ -16096,7 +16285,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 362,
+      "lineNumber": 378,
       "referenceString": "1020-handoff.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "session.handoff",
@@ -16105,7 +16294,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 366,
+      "lineNumber": 382,
       "referenceString": "session.bridge",
       "patternType": "stable-id",
       "targetEntrypoint": "session.bridge",
@@ -16114,7 +16303,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 368,
+      "lineNumber": 384,
       "referenceString": "session-bridge",
       "patternType": "slug",
       "targetEntrypoint": "session.bridge",
@@ -16123,7 +16312,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 370,
+      "lineNumber": 386,
       "referenceString": "1040-session-bridge.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "session.bridge",
@@ -16132,7 +16321,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 374,
+      "lineNumber": 390,
       "referenceString": "session.compact",
       "patternType": "stable-id",
       "targetEntrypoint": "session.compact",
@@ -16141,7 +16330,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 376,
+      "lineNumber": 392,
       "referenceString": "compact",
       "patternType": "slug",
       "targetEntrypoint": "session.compact",
@@ -16150,7 +16339,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 378,
+      "lineNumber": 394,
       "referenceString": "1060-compact.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "session.compact",
@@ -16159,7 +16348,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 382,
+      "lineNumber": 398,
       "referenceString": "project.crosshandoff",
       "patternType": "stable-id",
       "targetEntrypoint": "project.crosshandoff",
@@ -16168,7 +16357,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 384,
+      "lineNumber": 400,
       "referenceString": "cross-handoff",
       "patternType": "slug",
       "targetEntrypoint": "project.crosshandoff",
@@ -16177,7 +16366,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 385,
+      "lineNumber": 401,
       "referenceString": "handoff",
       "patternType": "slug",
       "targetEntrypoint": "session.handoff",
@@ -16186,7 +16375,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 386,
+      "lineNumber": 402,
       "referenceString": "1080-cross-handoff.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "project.crosshandoff",
@@ -16195,7 +16384,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 390,
+      "lineNumber": 406,
       "referenceString": "project.migrate",
       "patternType": "stable-id",
       "targetEntrypoint": "project.migrate",
@@ -16204,7 +16393,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 392,
+      "lineNumber": 408,
       "referenceString": "migrate",
       "patternType": "slug",
       "targetEntrypoint": "project.migrate",
@@ -16213,7 +16402,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 393,
+      "lineNumber": 409,
       "referenceString": "new",
       "patternType": "slug",
       "targetEntrypoint": "project.new",
@@ -16222,7 +16411,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 394,
+      "lineNumber": 410,
       "referenceString": "1100-migrate.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "project.migrate",
@@ -16231,7 +16420,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 398,
+      "lineNumber": 414,
       "referenceString": "migration.analyze",
       "patternType": "stable-id",
       "targetEntrypoint": "migration.analyze",
@@ -16240,7 +16429,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 400,
+      "lineNumber": 416,
       "referenceString": "migrate-analyze",
       "patternType": "slug",
       "targetEntrypoint": "migration.analyze",
@@ -16249,7 +16438,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 401,
+      "lineNumber": 417,
       "referenceString": "1120-migrate-analyze.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "migration.analyze",
@@ -16258,7 +16447,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 406,
+      "lineNumber": 422,
       "referenceString": "migration.workflow",
       "patternType": "stable-id",
       "targetEntrypoint": "migration.workflow",
@@ -16267,7 +16456,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 408,
+      "lineNumber": 424,
       "referenceString": "migrate-workflow",
       "patternType": "slug",
       "targetEntrypoint": "migration.workflow",
@@ -16276,7 +16465,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 409,
+      "lineNumber": 425,
       "referenceString": "1140-migrate-workflow.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "migration.workflow",
@@ -16285,7 +16474,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 411,
+      "lineNumber": 427,
       "referenceString": "verify",
       "patternType": "slug",
       "targetEntrypoint": "delivery.verify",
@@ -16294,7 +16483,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 414,
+      "lineNumber": 430,
       "referenceString": "project.migrate.verify",
       "patternType": "stable-id",
       "targetEntrypoint": "project.migrate.verify",
@@ -16303,7 +16492,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 416,
+      "lineNumber": 432,
       "referenceString": "migration-verify",
       "patternType": "slug",
       "targetEntrypoint": "project.migrate.verify",
@@ -16312,7 +16501,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 417,
+      "lineNumber": 433,
       "referenceString": "spec",
       "patternType": "slug",
       "targetEntrypoint": "delivery.spec",
@@ -16321,7 +16510,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 418,
+      "lineNumber": 434,
       "referenceString": "1160-migration-verify.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "project.migrate.verify",
@@ -16330,7 +16519,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 422,
+      "lineNumber": 438,
       "referenceString": "migration.ecosystem",
       "patternType": "stable-id",
       "targetEntrypoint": "migration.ecosystem",
@@ -16339,7 +16528,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 424,
+      "lineNumber": 440,
       "referenceString": "migrate-ecosystem",
       "patternType": "slug",
       "targetEntrypoint": "migration.ecosystem",
@@ -16348,7 +16537,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 425,
+      "lineNumber": 441,
       "referenceString": "1180-migrate-ecosystem.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "migration.ecosystem",
@@ -16357,7 +16546,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 430,
+      "lineNumber": 446,
       "referenceString": "project.metaskill",
       "patternType": "stable-id",
       "targetEntrypoint": "project.metaskill",
@@ -16366,7 +16555,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 432,
+      "lineNumber": 448,
       "referenceString": "metaskill",
       "patternType": "slug",
       "targetEntrypoint": "project.metaskill",
@@ -16375,7 +16564,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 434,
+      "lineNumber": 450,
       "referenceString": "1200-metaskill.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "project.metaskill",
@@ -16384,7 +16573,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 438,
+      "lineNumber": 454,
       "referenceString": "project.personalize",
       "patternType": "stable-id",
       "targetEntrypoint": "project.personalize",
@@ -16393,7 +16582,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 440,
+      "lineNumber": 456,
       "referenceString": "personalize",
       "patternType": "slug",
       "targetEntrypoint": "project.personalize",
@@ -16402,7 +16591,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 441,
+      "lineNumber": 457,
       "referenceString": "personalize",
       "patternType": "slug",
       "targetEntrypoint": "project.personalize",
@@ -16411,7 +16600,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 442,
+      "lineNumber": 458,
       "referenceString": "1220-personalize.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "project.personalize",
@@ -16420,7 +16609,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 446,
+      "lineNumber": 462,
       "referenceString": "migration.migraterefs",
       "patternType": "stable-id",
       "targetEntrypoint": "migration.migraterefs",
@@ -16429,7 +16618,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 448,
+      "lineNumber": 464,
       "referenceString": "migrate-refs",
       "patternType": "slug",
       "targetEntrypoint": "migration.migraterefs",
@@ -16438,7 +16627,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 450,
+      "lineNumber": 466,
       "referenceString": "1240-migrate-refs.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "migration.migraterefs",
@@ -16447,7 +16636,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 454,
+      "lineNumber": 470,
       "referenceString": "meta.promoteskill",
       "patternType": "stable-id",
       "targetEntrypoint": "meta.promoteskill",
@@ -16456,7 +16645,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 456,
+      "lineNumber": 472,
       "referenceString": "promote-skill",
       "patternType": "slug",
       "targetEntrypoint": "meta.promoteskill",
@@ -16465,7 +16654,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 458,
+      "lineNumber": 474,
       "referenceString": "1260-promote-skill.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "meta.promoteskill",
@@ -16474,304 +16663,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 462,
-      "referenceString": "ecosystem.mco.relaunch",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.mco.relaunch",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 464,
-      "referenceString": "mco-relaunch-agent",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.mco.relaunch",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 466,
-      "referenceString": "1300-mco-relaunch-agent.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.mco.relaunch",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 470,
-      "referenceString": "ecosystem.mco.abandon",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.mco.abandon",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 472,
-      "referenceString": "mco-abandon-cycle",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.mco.abandon",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 474,
-      "referenceString": "1320-mco-abandon-cycle.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.mco.abandon",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 478,
-      "referenceString": "ecosystem.mco.override",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.mco.override",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 480,
-      "referenceString": "mco-override-dependency",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.mco.override",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 482,
-      "referenceString": "1340-mco-override-dependency.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.mco.override",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 486,
-      "referenceString": "ecosystem.mco.prepare",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.mco.prepare",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 488,
-      "referenceString": "mco-prepare-cycle",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.mco.prepare",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 490,
-      "referenceString": "1360-mco-prepare-cycle.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.mco.prepare",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 494,
-      "referenceString": "ecosystem.mco.trigger",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.mco.trigger",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 496,
-      "referenceString": "mco-trigger-cycle",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.mco.trigger",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 498,
-      "referenceString": "1380-mco-trigger-cycle.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.mco.trigger",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 502,
-      "referenceString": "ecosystem.mco.analysis",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.mco.analysis",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 504,
-      "referenceString": "mco-force-analysis",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.mco.analysis",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 506,
-      "referenceString": "1400-mco-force-analysis.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.mco.analysis",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 510,
-      "referenceString": "ecosystem.mco.openpr",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.mco.openpr",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 512,
-      "referenceString": "mco-open-pr",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.mco.openpr",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 514,
-      "referenceString": "1420-mco-open-pr.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.mco.openpr",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 518,
-      "referenceString": "ecosystem.mco.authorizemerge",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.mco.authorizemerge",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 520,
-      "referenceString": "mco-authorize-merge",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.mco.authorizemerge",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 522,
-      "referenceString": "1440-mco-authorize-merge.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.mco.authorizemerge",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 526,
-      "referenceString": "ecosystem.cycle.launch",
-      "patternType": "stable-id",
-      "targetEntrypoint": "ecosystem.cycle.launch",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 528,
-      "referenceString": "ecosystem-cycle-launch",
-      "patternType": "slug",
-      "targetEntrypoint": "ecosystem.cycle.launch",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 530,
-      "referenceString": "1460-ecosystem-cycle-launch.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "ecosystem.cycle.launch",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 534,
-      "referenceString": "project.autoimprove",
-      "patternType": "stable-id",
-      "targetEntrypoint": "project.autoimprove",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 536,
-      "referenceString": "auto-improve",
-      "patternType": "slug",
-      "targetEntrypoint": "project.autoimprove",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 537,
-      "referenceString": "execute",
-      "patternType": "slug",
-      "targetEntrypoint": "delivery.execute",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 537,
-      "referenceString": "plan",
-      "patternType": "slug",
-      "targetEntrypoint": "delivery.plan",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 537,
-      "referenceString": "verify",
-      "patternType": "slug",
-      "targetEntrypoint": "delivery.verify",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 538,
-      "referenceString": "1840-auto-improve.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "project.autoimprove",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 542,
       "referenceString": "project.modelrouting",
       "patternType": "stable-id",
       "targetEntrypoint": "project.modelrouting",
@@ -16780,7 +16672,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 544,
+      "lineNumber": 480,
       "referenceString": "model-routing-audit",
       "patternType": "slug",
       "targetEntrypoint": "project.modelrouting",
@@ -16789,7 +16681,7 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 546,
+      "lineNumber": 482,
       "referenceString": "1280-model-routing-audit.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "project.modelrouting",
@@ -16798,28 +16690,298 @@
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
-      "lineNumber": 550,
-      "referenceString": "maintenance.rollout",
+      "lineNumber": 486,
+      "referenceString": "ecosystem.mco.relaunch",
       "patternType": "stable-id",
-      "targetEntrypoint": "maintenance.rollout",
+      "targetEntrypoint": "ecosystem.mco.relaunch",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 488,
+      "referenceString": "mco-relaunch-agent",
+      "patternType": "slug",
+      "targetEntrypoint": "ecosystem.mco.relaunch",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 490,
+      "referenceString": "1300-mco-relaunch-agent.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "ecosystem.mco.relaunch",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 494,
+      "referenceString": "ecosystem.mco.abandon",
+      "patternType": "stable-id",
+      "targetEntrypoint": "ecosystem.mco.abandon",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 496,
+      "referenceString": "mco-abandon-cycle",
+      "patternType": "slug",
+      "targetEntrypoint": "ecosystem.mco.abandon",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 498,
+      "referenceString": "1320-mco-abandon-cycle.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "ecosystem.mco.abandon",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 502,
+      "referenceString": "ecosystem.mco.override",
+      "patternType": "stable-id",
+      "targetEntrypoint": "ecosystem.mco.override",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 504,
+      "referenceString": "mco-override-dependency",
+      "patternType": "slug",
+      "targetEntrypoint": "ecosystem.mco.override",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 506,
+      "referenceString": "1340-mco-override-dependency.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "ecosystem.mco.override",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 510,
+      "referenceString": "ecosystem.mco.prepare",
+      "patternType": "stable-id",
+      "targetEntrypoint": "ecosystem.mco.prepare",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 512,
+      "referenceString": "mco-prepare-cycle",
+      "patternType": "slug",
+      "targetEntrypoint": "ecosystem.mco.prepare",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 514,
+      "referenceString": "1360-mco-prepare-cycle.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "ecosystem.mco.prepare",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 518,
+      "referenceString": "ecosystem.mco.trigger",
+      "patternType": "stable-id",
+      "targetEntrypoint": "ecosystem.mco.trigger",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 520,
+      "referenceString": "mco-trigger-cycle",
+      "patternType": "slug",
+      "targetEntrypoint": "ecosystem.mco.trigger",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 522,
+      "referenceString": "1380-mco-trigger-cycle.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "ecosystem.mco.trigger",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 526,
+      "referenceString": "ecosystem.mco.analysis",
+      "patternType": "stable-id",
+      "targetEntrypoint": "ecosystem.mco.analysis",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 528,
+      "referenceString": "mco-force-analysis",
+      "patternType": "slug",
+      "targetEntrypoint": "ecosystem.mco.analysis",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 530,
+      "referenceString": "1400-mco-force-analysis.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "ecosystem.mco.analysis",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 534,
+      "referenceString": "ecosystem.mco.openpr",
+      "patternType": "stable-id",
+      "targetEntrypoint": "ecosystem.mco.openpr",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 536,
+      "referenceString": "mco-open-pr",
+      "patternType": "slug",
+      "targetEntrypoint": "ecosystem.mco.openpr",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 538,
+      "referenceString": "1420-mco-open-pr.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "ecosystem.mco.openpr",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 542,
+      "referenceString": "ecosystem.mco.authorizemerge",
+      "patternType": "stable-id",
+      "targetEntrypoint": "ecosystem.mco.authorizemerge",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 544,
+      "referenceString": "mco-authorize-merge",
+      "patternType": "slug",
+      "targetEntrypoint": "ecosystem.mco.authorizemerge",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 546,
+      "referenceString": "1440-mco-authorize-merge.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "ecosystem.mco.authorizemerge",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 550,
+      "referenceString": "ecosystem.cycle.launch",
+      "patternType": "stable-id",
+      "targetEntrypoint": "ecosystem.cycle.launch",
       "confidence": "high",
       "updateMode": "deterministic"
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 552,
-      "referenceString": "rollout",
+      "referenceString": "ecosystem-cycle-launch",
       "patternType": "slug",
-      "targetEntrypoint": "maintenance.rollout",
+      "targetEntrypoint": "ecosystem.cycle.launch",
       "confidence": "low",
       "updateMode": "semantic"
     },
     {
       "referencingFile": ".ssot/agents/workflows.json",
       "lineNumber": 554,
-      "referenceString": "0840-rollout.md",
+      "referenceString": "1460-ecosystem-cycle-launch.md",
       "patternType": "visible-prefix",
-      "targetEntrypoint": "maintenance.rollout",
+      "targetEntrypoint": "ecosystem.cycle.launch",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 558,
+      "referenceString": "project.autoimprove",
+      "patternType": "stable-id",
+      "targetEntrypoint": "project.autoimprove",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 560,
+      "referenceString": "auto-improve",
+      "patternType": "slug",
+      "targetEntrypoint": "project.autoimprove",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 561,
+      "referenceString": "execute",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.execute",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 561,
+      "referenceString": "plan",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.plan",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 561,
+      "referenceString": "verify",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.verify",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/agents/workflows.json",
+      "lineNumber": 562,
+      "referenceString": "1840-auto-improve.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "project.autoimprove",
       "confidence": "high",
       "updateMode": "deterministic"
     },
@@ -17600,60 +17762,33 @@
     {
       "referencingFile": ".ssot/migration-analysis.json",
       "lineNumber": 15,
-      "referenceString": "maintenance.rollout",
+      "referenceString": "maintenance.clientsurface",
       "patternType": "stable-id",
-      "targetEntrypoint": "maintenance.rollout",
+      "targetEntrypoint": "maintenance.clientsurface",
       "confidence": "high",
       "updateMode": "deterministic"
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
       "lineNumber": 17,
-      "referenceString": "rollout",
+      "referenceString": "client-surface-currency",
       "patternType": "slug",
-      "targetEntrypoint": "maintenance.rollout",
+      "targetEntrypoint": "maintenance.clientsurface",
       "confidence": "low",
       "updateMode": "semantic"
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
       "lineNumber": 18,
-      "referenceString": "0840-rollout.md",
+      "referenceString": "0860-client-surface-currency.md",
       "patternType": "visible-prefix",
-      "targetEntrypoint": "maintenance.rollout",
+      "targetEntrypoint": "maintenance.clientsurface",
       "confidence": "high",
       "updateMode": "deterministic"
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 23,
-      "referenceString": "project.modelrouting",
-      "patternType": "stable-id",
-      "targetEntrypoint": "project.modelrouting",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 25,
-      "referenceString": "model-routing-audit",
-      "patternType": "slug",
-      "targetEntrypoint": "project.modelrouting",
-      "confidence": "low",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 26,
-      "referenceString": "1280-model-routing-audit.md",
-      "patternType": "visible-prefix",
-      "targetEntrypoint": "project.modelrouting",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 59,
+      "lineNumber": 51,
       "referenceString": "project.resume",
       "patternType": "stable-id",
       "targetEntrypoint": "project.resume",
@@ -17662,7 +17797,7 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 60,
+      "lineNumber": 52,
       "referenceString": "0020-resume.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "project.resume",
@@ -17671,7 +17806,7 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 62,
+      "lineNumber": 63,
       "referenceString": "0020-resume.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "project.resume",
@@ -17680,7 +17815,7 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 62,
+      "lineNumber": 63,
       "referenceString": "project.resume",
       "patternType": "stable-id",
       "targetEntrypoint": "project.resume",
@@ -17689,18 +17824,9 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 65,
+      "lineNumber": 67,
       "referenceString": "maintenance.docker",
       "patternType": "stable-id",
-      "targetEntrypoint": "maintenance.docker",
-      "confidence": "high",
-      "updateMode": "deterministic"
-    },
-    {
-      "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 66,
-      "referenceString": "0780-docker.md",
-      "patternType": "visible-prefix",
       "targetEntrypoint": "maintenance.docker",
       "confidence": "high",
       "updateMode": "deterministic"
@@ -17711,30 +17837,39 @@
       "referenceString": "0780-docker.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "maintenance.docker",
-      "confidence": "high",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 68,
-      "referenceString": "maintenance.docker",
-      "patternType": "stable-id",
-      "targetEntrypoint": "maintenance.docker",
-      "confidence": "high",
-      "updateMode": "semantic"
-    },
-    {
-      "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 71,
-      "referenceString": "session.handoff",
-      "patternType": "stable-id",
-      "targetEntrypoint": "session.handoff",
       "confidence": "high",
       "updateMode": "deterministic"
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
       "lineNumber": 72,
+      "referenceString": "0780-docker.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "maintenance.docker",
+      "confidence": "high",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 72,
+      "referenceString": "maintenance.docker",
+      "patternType": "stable-id",
+      "targetEntrypoint": "maintenance.docker",
+      "confidence": "high",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 76,
+      "referenceString": "session.handoff",
+      "patternType": "stable-id",
+      "targetEntrypoint": "session.handoff",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 77,
       "referenceString": "1020-handoff.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "session.handoff",
@@ -17743,7 +17878,7 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 74,
+      "lineNumber": 86,
       "referenceString": "1020-handoff.md",
       "patternType": "visible-prefix",
       "targetEntrypoint": "session.handoff",
@@ -17752,7 +17887,7 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 74,
+      "lineNumber": 86,
       "referenceString": "session.handoff",
       "patternType": "stable-id",
       "targetEntrypoint": "session.handoff",
@@ -17761,7 +17896,7 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 77,
+      "lineNumber": 91,
       "referenceString": "review",
       "patternType": "slug",
       "targetEntrypoint": "delivery.review",
@@ -17770,7 +17905,43 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 89,
+      "lineNumber": 103,
+      "referenceString": "0020-resume.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "project.resume",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 104,
+      "referenceString": "0780-docker.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "maintenance.docker",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 105,
+      "referenceString": "1020-handoff.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "session.handoff",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 107,
+      "referenceString": "migrate",
+      "patternType": "slug",
+      "targetEntrypoint": "project.migrate",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 111,
       "referenceString": "project.resume",
       "patternType": "stable-id",
       "targetEntrypoint": "project.resume",
@@ -17779,16 +17950,16 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 91,
-      "referenceString": "migrate",
-      "patternType": "slug",
-      "targetEntrypoint": "project.migrate",
-      "confidence": "low",
+      "lineNumber": 114,
+      "referenceString": "0020-resume.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "project.resume",
+      "confidence": "high",
       "updateMode": "semantic"
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 95,
+      "lineNumber": 118,
       "referenceString": "maintenance.docker",
       "patternType": "stable-id",
       "targetEntrypoint": "maintenance.docker",
@@ -17797,16 +17968,16 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 97,
-      "referenceString": "migrate",
-      "patternType": "slug",
-      "targetEntrypoint": "project.migrate",
-      "confidence": "low",
+      "lineNumber": 121,
+      "referenceString": "0780-docker.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "maintenance.docker",
+      "confidence": "high",
       "updateMode": "semantic"
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 101,
+      "lineNumber": 125,
       "referenceString": "session.handoff",
       "patternType": "stable-id",
       "targetEntrypoint": "session.handoff",
@@ -17815,7 +17986,34 @@
     },
     {
       "referencingFile": ".ssot/migration-analysis.json",
-      "lineNumber": 103,
+      "lineNumber": 128,
+      "referenceString": "1020-handoff.md",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "session.handoff",
+      "confidence": "high",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 132,
+      "referenceString": "maintenance.clientsurface",
+      "patternType": "stable-id",
+      "targetEntrypoint": "maintenance.clientsurface",
+      "confidence": "high",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 135,
+      "referenceString": "maintenance.clientsurface",
+      "patternType": "stable-id",
+      "targetEntrypoint": "maintenance.clientsurface",
+      "confidence": "high",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/migration-analysis.json",
+      "lineNumber": 135,
       "referenceString": "migrate",
       "patternType": "slug",
       "targetEntrypoint": "project.migrate",
@@ -17846,6 +18044,402 @@
       "referenceString": "knowledge",
       "patternType": "slug",
       "targetEntrypoint": "knowledge.init",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 38,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 52,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 55,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 63,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 63,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 67,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 67,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 85,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 96,
+      "referenceString": "plan",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.plan",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 97,
+      "referenceString": "tasks",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tasks",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 97,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 99,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 105,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 107,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 125,
+      "referenceString": "plan",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.plan",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 125,
+      "referenceString": "tasks",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tasks",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 127,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 128,
+      "referenceString": "handoff",
+      "patternType": "slug",
+      "targetEntrypoint": "session.handoff",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 130,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+      "lineNumber": 134,
+      "referenceString": "plan",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.plan",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 3,
+      "referenceString": "spec",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.spec",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 24,
+      "referenceString": "debug",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.debug",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 56,
+      "referenceString": "doctor",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.doctor",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 60,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 61,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 68,
+      "referenceString": "spec",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.spec",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 89,
+      "referenceString": "spec",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.spec",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 99,
+      "referenceString": "doctor",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.doctor",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+      "lineNumber": 105,
+      "referenceString": "debug",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.debug",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/quality-gates.md",
+      "lineNumber": 26,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/quality-gates.md",
+      "lineNumber": 26,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/references/quality-gates.md",
+      "lineNumber": 26,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 3,
+      "referenceString": "0200-frontier-consult",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "delivery.frontierconsult",
+      "confidence": "high",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 10,
+      "referenceString": "0200-frontier-consult",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "delivery.frontierconsult",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 18,
+      "referenceString": "plan",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.plan",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 18,
+      "referenceString": "tasks",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tasks",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 31,
+      "referenceString": "0020-resume",
+      "patternType": "visible-prefix",
+      "targetEntrypoint": "project.resume",
+      "confidence": "high",
+      "updateMode": "deterministic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 35,
+      "referenceString": "checklist",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.checklist",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 43,
+      "referenceString": "tests",
+      "patternType": "slug",
+      "targetEntrypoint": "delivery.tests",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 59,
+      "referenceString": "doctor",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.doctor",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 64,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 74,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 75,
+      "referenceString": "docs",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.docs",
+      "confidence": "low",
+      "updateMode": "semantic"
+    },
+    {
+      "referencingFile": ".ssot/skills/prepare-strategic-audit/SKILL.md",
+      "lineNumber": 81,
+      "referenceString": "doctor",
+      "patternType": "slug",
+      "targetEntrypoint": "maintenance.doctor",
       "confidence": "low",
       "updateMode": "semantic"
     },
@@ -17923,20 +18517,20 @@
     }
   ],
   "summary": {
-    "total": 1991,
+    "total": 2057,
     "byPatternType": {
-      "stable-id": 201,
-      "visible-prefix": 358,
+      "stable-id": 203,
+      "visible-prefix": 369,
       "projection-path": 0,
-      "slug": 1432
+      "slug": 1485
     },
     "byConfidence": {
-      "high": 559,
-      "low": 1432
+      "high": 572,
+      "low": 1485
     },
     "byUpdateMode": {
-      "deterministic": 485,
-      "semantic": 1506
+      "deterministic": 492,
+      "semantic": 1565
     }
   }
 }

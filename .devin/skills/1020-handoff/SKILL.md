@@ -72,11 +72,27 @@ The hypothesis MUST include:
 2. **Open gaps** — each tagged `fact` | `hypothesis` | `ops-only`.
 3. **Candidate lanes** — 1–5 next-cycle work items with intent, suggested wave role
    (`diagnose` | `fix` | `validate` | `ship`), write-set hint, parallelizable yes/no.
-4. **Explicit non-goals** — what the next cycle must not redo or must not claim.
-5. **Uncertainty log** — researched-but-unresolved questions for session N+1.
+   Each lane MUST be **cycle-worthy**: a **significant** enrichment and/or
+   problem-solving package for a full `1840` that uses the structured system
+   (diagnose, C1, plan, G1, execute/waves, verify, tools) — not a chore that
+   belongs in a normal chat turn. Micro-edits, one-file one-line tweaks,
+   rename-only, “add a bullet”, and typo/comment-only fixes are **not** candidate
+   lanes — put them in non-goals or handle them outside the cycle.
+4. **Draft parallelizable task-plan base** — numbered tasks or wave/lane stubs with
+   intended files/domains, dependencies, parallel vs sequential ownership. This is
+   the seed the next fresh agent enriches then executes — not a vague leftover and
+   not a locked rubber-stamp.
+5. **Explicit non-goals** — what the next cycle must not redo or must not claim.
+6. **Uncertainty log** — researched-but-unresolved questions for session N+1.
+
+**Why:** end of cycle prepares the next cycle’s plan base; next session re-analyzes
+with a fresh look, enriches, then executes — so the system’s power compounds.
 
 Forbidden as the only next-action: a leftover sentence ("fix X") or an unstructured
 shopping list. Ops-only items (push, deploy, bake) MUST be labeled `ops-only`.
+Forbidden as sole (or primary) candidate lanes: hollow micro-tasks that burn a
+cycle while leaving waves/audits/gates unused. If only trivial leftovers remain,
+say so explicitly — do not invent a fake cycle around one tiny edit.
 
 The handoff's "Next recommended action" MUST point at launching `1840-auto-improve` with
 this hypothesis artifact (not a leftover sentence alone).
@@ -84,28 +100,33 @@ this hypothesis artifact (not a leftover sentence alone).
 If this session ran an improve cycle (`1840` or equivalent) and H1 is missing, write it
 now. Do **not** call `1040` until H1 exists.
 
-## S1 — Parallel next-cycle scan (mandatory after improve cycles)
+## S1 — Next-cycle evidence scan (mandatory after improve cycles)
 
 Spec: `../acos-mcp-launcher-work/docs/specs/019-cycle-continuity/spec.md` (invariant **S1**).
+Cost rule: prefer direct reads over parallel subagents when coverage is enough
+(see engine common.md §10 / frontier-plan-contract).
 
-Before writing H1, gather live evidence through a parallel scan wave instead of
-relying on session memory alone:
+Before writing H1, gather live evidence instead of relying on session memory alone.
+**Evidence is mandatory; parallel subagents are optional.**
 
-- Dispatch up to 4 read-only sub-agents **in a single message** (true
-  parallelism). Each writes `.session/next-cycle-scan/<lane>.md`:
-  - `git-tests` — worktree state, ahead/behind, test/build suite result
-    (run, not assumed)
-  - `docs-specs` — active specs vs implementation state, stale documentation
-  - `harness` — `npx --no-install acos --check` result, drift, projection health
-  - `risks` — open blockers, TODOs, known issues, uncertainty candidates
-- Sub-agents are read-only and re-orient independently per
-  `.ssot/agents/context/orientation.md` → "When you are a sub-agent". They
-  return compact findings, not prose.
-- H1's "Facts carried forward" and "Candidate lanes" MUST cite the scan
-  artifacts.
-- After any `1840` (or equivalent) cycle the scan is **mandatory**. For a
-  trivial session (no improve cycle, small diff), the agent MAY record
-  `scan: skipped — <reason>` in H1 instead.
+Preferred order (stop when coverage is enough):
+
+1. Direct reads / targeted shell for git state, harness check, known issues.
+2. If gaps remain, dispatch up to 4 read-only sub-agents **in a single message**.
+   Each writes `.session/next-cycle-scan/<lane>.md`:
+   - `git-tests` — worktree state, ahead/behind; for this infra project record
+     `docker compose config --quiet` (relevant override files), not a missing test suite
+   - `docs-specs` — active specs vs implementation state, stale documentation
+   - `harness` — `npx --no-install acos --check` result, drift, projection health
+   - `risks` — open blockers, TODOs, known issues, uncertainty candidates
+3. Sub-agents are read-only and re-orient independently per
+   `.ssot/agents/context/orientation.md` → "When you are a sub-agent". They
+   return compact findings, not prose.
+4. H1's "Facts carried forward" and "Candidate lanes" MUST cite the evidence
+   (scan artifacts and/or direct-read pointers).
+5. After any `1840` (or equivalent) cycle the evidence scan is **mandatory**. For a
+   trivial session (no improve cycle, small diff), the agent MAY record
+   `scan: skipped — <reason>` in H1 instead.
 
 After the handoff, cross-handoff, **S1**, and **H1** are complete, invoke
 `1040-session-bridge` automatically to write `.ssot/next-session-prompt.md` and

@@ -50,16 +50,21 @@ This is **not** the client-surface completeness audit (spec 018 / personalize). 
 updates hooks, permissions, and native files. This entrypoint updates **which model IDs**
 belong on which role.
 
-## Canonical combos (as of 2026-10-16)
+## Canonical combos (as of 2026-10-18)
 
 | Stack | Frontier | Verify / review | Execute / volume |
 |-------|----------|-----------------|------------------|
 | Anthropic | `claude-opus-5-5` | `claude-sonnet-5-5` (≥ floor) | `claude-haiku-5-5` |
-| OpenAI | `gpt-6.1-sol` | Sol (or Luna with care) | `gpt-6-luna` |
+| OpenAI | `gpt-6.1-sol` (daily medium; consult high) | Sol (or Luna with care) | `gpt-6-luna` |
 | Cursor | Auto / Opus (chat) | ACOS agents `composer-2.5-fast` | Explore `disabled` in `cli-config.json` |
 
-**Banned for new work:** Sonnet 4.6 (dominated by 5.5), Haiku 4.5 (prefer 5.5), Haiku on
-planner/reviewer/verifier.
+**Banned for new work:** Sonnet 4.6, Haiku 4.5, Haiku on planner/reviewer/verifier,
+`gpt-5.6-sol`, `gpt-6-astra` as a default (escalation-only with explicit user auth).
+
+**Codex projection check:** after `--fix`, `.codex/config.toml` must include
+`model = "gpt-6.1-sol"`, `model_reasoning_effort = "medium"`, `[features] multi_agent = true`,
+and `[agents]` with `default_subagent_model = "gpt-6-luna"` and
+`max_concurrent_threads_per_session = 2` (from `frontierRouting.codexDefaults`).
 
 ## Procedure
 
@@ -91,7 +96,8 @@ Update `.ssot/agents/clients.json` only when the user approved concrete override
 
 - Cursor: `agentModelOverrides` planner/reviewer/verifier → `composer-2.5-fast`
 - Claude: keep ACOS agents ≥ `claude-sonnet-5-5`; document Haiku 5.5 for mechanical CLI waves
-- Codex: prefer `gpt-6-luna` for volume agents
+- Codex: prefer `gpt-6-luna` for volume agents; parent Sol medium via projected config.toml
+- Confirm `frontierRouting.codexDefaults` and `forbid.models` include `gpt-6-astra`
 
 Then:
 

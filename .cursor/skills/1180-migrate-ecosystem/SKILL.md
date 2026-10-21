@@ -1,6 +1,6 @@
 ---
 name: 1180-migrate-ecosystem
-description: "Migrate a container project and all its satellites to a target ssotVersion in a best-effort batch (use --strict for all-or-nothing with rollback) — batch migration with per-project status reporting"
+description: "Internal phase: batch structural migrate for an explicitly scoped container+satellites set (called from maintenance.rollout)"
 disable-model-invocation: true
 ---
 
@@ -35,6 +35,14 @@ Source: .ssot/agents/entrypoints/1180-migrate-ecosystem.md
 > `.ssot/agents/context/orientation.md`.
 <!-- ACOS-ORIENTATION:END -->
 
+## Invocation contract
+
+Caller: `0840-rollout` after **explicit** ecosystem/registry scope and batch plan, or a legacy
+explicit expert request. Do **not** expand to satellites merely because `ecosystemChildren`
+exists. Standalone/single-project updates → `0840` on that root. Do not auto install/pull
+engine without explicit authority. Not the public update door.
+
+
 Treat the user's accompanying text as the migration objective. Minimize questions.
 
 ## ⚠️ Autonomy directive — READ BEFORE PROCEEDING
@@ -57,11 +65,11 @@ You are an autonomous agent performing an ecosystem migration (container + satel
 
 1. Identify the container project root from the user's request. If not provided, ask for it.
 2. Verify the project is a **container**: read `.ssot/agents/clients.json` and check `ecosystemRole === "container"` with a non-empty `ecosystemChildren` array.
-   - If the project is standalone or a satellite, stop and direct the user to `1120-migrate-analyze` / `1140-migrate-workflow` for single-project migration.
-3. **⚠️ CRITICAL — Verify the installed ACOS code is up to date.** The migration engine runs from the ACOS code in `node_modules/@acos/core` (npm) or `acosSource.path` (local-checkout). If this code is stale, the batch migration uses old logic and will fail or produce incorrect results across all satellites. Before proceeding:
-   - Read `acosSource` from `clients.json`. If `type: "npm"`, run `npm install --save-dev git+https://github.com/oues81/acos.git#main` to update. If `type: "local-checkout"`, verify the source repo is at the latest commit (`git -C <path> pull`) and that `node -e "console.log(require('<path>/scripts/core/ssot-migrations.mjs').CURRENT_SSOT_VERSION)"` matches the target version.
-   - **Never run `acos-migrate --ecosystem --apply` with stale ACOS code.** Changing the version number in `package.json` or `clients.json` does NOT update the code — the actual scripts, schemas, and templates must be replaced.
-   - If the user provides an ACOS source path, use that path to verify the version. Do not assume `node_modules` is current.
+   - If the project is standalone or a satellite, stop and direct the user to `maintenance.rollout` / `0840-rollout` for single-project update. Do **not** expand scope merely because some other project has `ecosystemChildren`.
+3. **⚠️ Verify the installed ACOS engine** via `acosSource` (`npm` → `node_modules/@acos/core`, or `local-checkout` → resolved path). Confirm `CURRENT_SSOT_VERSION` matches the intended target.
+   - Do **not** `npm install` / `git pull` unless the user explicitly authorized an engine update.
+   - **Never run `acos-migrate --ecosystem --apply` with unauthorized or unverified ACOS code.** Changing version numbers alone does not update scripts/templates.
+   - If the user provides an ACOS source path, use that path to verify the version.
 4. Resolve the ACOS code path: read `acosSource` from `clients.json`. If `type: "npm"`, use `<project-root>/node_modules/@acos/core`. If `type: "local-checkout"`, resolve `acosSource.path` relative to the project root. If absent or invalid, ask the user.
 
 ## Phase 0 — Ecosystem audit (read-only)

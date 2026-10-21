@@ -20,8 +20,8 @@
     "source": "acos"
   },
   ".claude/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "a5deb8661ecdec3bfe8ac15820d85c135c0dd327e72a992d65d41d73d7d3991f",
-    "generatedAt": "2026-09-07T17:24:19.208Z",
+    "contentHash": "9e41743131c6480fb026f68457adce8787543f425d0517dde5b46e701730c1d0",
+    "generatedAt": "2026-10-19T14:44:20.749Z",
     "source": "acos"
   },
   ".claude/skills/1840-auto-improve/SKILL.md": {
@@ -30,8 +30,8 @@
     "source": "acos"
   },
   ".claude/commands/1180-migrate-ecosystem.md": {
-    "contentHash": "70c0585126854d36843cb4d215c76dc5cf2cd09a919425de5125349204ff5fcb",
-    "generatedAt": "2026-09-07T17:24:19.746Z",
+    "contentHash": "d285558b09da424212a18a53b75759f2900f086b8cd589ed984554bb801a302e",
+    "generatedAt": "2026-10-19T14:44:20.879Z",
     "source": "acos"
   },
   ".claude/commands/1840-auto-improve.md": {
@@ -40,8 +40,8 @@
     "source": "acos"
   },
   ".cursor/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "8d6df9d6cf44eeb3e501312620fc81acdb06e01d815e4e0cac29c1877bdedaaa",
-    "generatedAt": "2026-09-07T17:24:20.552Z",
+    "contentHash": "84bf8a31811fb34d50715938d087036ed7ee0770c36109c511f99deff830c82c",
+    "generatedAt": "2026-10-19T14:44:20.986Z",
     "source": "acos"
   },
   ".cursor/skills/1840-auto-improve/SKILL.md": {
@@ -50,8 +50,8 @@
     "source": "acos"
   },
   ".cursor/commands/1180-migrate-ecosystem.md": {
-    "contentHash": "70c0585126854d36843cb4d215c76dc5cf2cd09a919425de5125349204ff5fcb",
-    "generatedAt": "2026-09-07T17:24:21.002Z",
+    "contentHash": "d285558b09da424212a18a53b75759f2900f086b8cd589ed984554bb801a302e",
+    "generatedAt": "2026-10-19T14:44:21.086Z",
     "source": "acos"
   },
   ".cursor/commands/1840-auto-improve.md": {
@@ -60,8 +60,8 @@
     "source": "acos"
   },
   ".opencode/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "b107a29a6de2a50c1d603c877ae640283cf09de5fa227264cb32d487329e37b9",
-    "generatedAt": "2026-10-17T17:00:40.324Z",
+    "contentHash": "d9b7d291f9613395382bb8b0ee8ab6a240e7e7e29b61994a76728cf5af4c76af",
+    "generatedAt": "2026-10-19T14:44:21.120Z",
     "source": "acos"
   },
   ".opencode/skills/1840-auto-improve/SKILL.md": {
@@ -70,8 +70,8 @@
     "source": "acos"
   },
   ".agents/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "a5deb8661ecdec3bfe8ac15820d85c135c0dd327e72a992d65d41d73d7d3991f",
-    "generatedAt": "2026-09-07T17:24:21.734Z",
+    "contentHash": "9e41743131c6480fb026f68457adce8787543f425d0517dde5b46e701730c1d0",
+    "generatedAt": "2026-10-19T14:44:21.175Z",
     "source": "acos"
   },
   ".agents/skills/1840-auto-improve/SKILL.md": {
@@ -80,8 +80,8 @@
     "source": "acos"
   },
   ".kilo/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "a5deb8661ecdec3bfe8ac15820d85c135c0dd327e72a992d65d41d73d7d3991f",
-    "generatedAt": "2026-09-07T17:24:21.846Z",
+    "contentHash": "9e41743131c6480fb026f68457adce8787543f425d0517dde5b46e701730c1d0",
+    "generatedAt": "2026-10-19T14:44:21.222Z",
     "source": "acos"
   },
   ".kilo/skills/1840-auto-improve/SKILL.md": {
@@ -90,8 +90,8 @@
     "source": "acos"
   },
   ".kilo/commands/1180-migrate-ecosystem.md": {
-    "contentHash": "70c0585126854d36843cb4d215c76dc5cf2cd09a919425de5125349204ff5fcb",
-    "generatedAt": "2026-09-07T17:24:22.102Z",
+    "contentHash": "d285558b09da424212a18a53b75759f2900f086b8cd589ed984554bb801a302e",
+    "generatedAt": "2026-10-19T14:44:21.257Z",
     "source": "acos"
   },
   ".kilo/commands/1840-auto-improve.md": {
@@ -100,8 +100,8 @@
     "source": "acos"
   },
   ".kilocode/workflows/1180-migrate-ecosystem.md": {
-    "contentHash": "8f5b3b3f7b180341ecb20fddea8422b0e714e1cc415ecdc623e9649d3d8bd604",
-    "generatedAt": "2026-09-07T17:24:22.195Z",
+    "contentHash": "13ea128be16e99356fe496f79b8b541c188ee8bec316f85f33db946377b431d0",
+    "generatedAt": "2026-10-19T14:44:21.396Z",
     "source": "acos"
   },
   ".kilocode/workflows/1840-auto-improve.md": {
@@ -110,8 +110,8 @@
     "source": "acos"
   },
   ".opencode/commands/1180-migrate-ecosystem.md": {
-    "contentHash": "70c0585126854d36843cb4d215c76dc5cf2cd09a919425de5125349204ff5fcb",
-    "generatedAt": "2026-09-07T17:24:22.292Z",
+    "contentHash": "d285558b09da424212a18a53b75759f2900f086b8cd589ed984554bb801a302e",
+    "generatedAt": "2026-10-19T14:44:21.556Z",
     "source": "acos"
   },
   ".opencode/commands/1840-auto-improve.md": {
@@ -120,8 +120,8 @@
     "source": "acos"
   },
   ".devin/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "a5deb8661ecdec3bfe8ac15820d85c135c0dd327e72a992d65d41d73d7d3991f",
-    "generatedAt": "2026-09-07T17:24:22.439Z",
+    "contentHash": "9e41743131c6480fb026f68457adce8787543f425d0517dde5b46e701730c1d0",
+    "generatedAt": "2026-10-19T14:44:21.715Z",
     "source": "acos"
   },
   ".devin/skills/1840-auto-improve/SKILL.md": {
@@ -130,8 +130,8 @@
     "source": "acos"
   },
   ".windsurf/workflows/1180-migrate-ecosystem.md": {
-    "contentHash": "72e2c23cf80aaa9e0f569a535e9979b93fc577bf77ab7b2ce2069cc54c225f05",
-    "generatedAt": "2026-09-07T17:24:22.809Z",
+    "contentHash": "da7186ba055c1a985e717c70c3d05def4088a7837c8a248dd3a300fc89a57be0",
+    "generatedAt": "2026-10-19T14:44:22.170Z",
     "source": "acos"
   },
   ".windsurf/workflows/1840-auto-improve.md": {
@@ -140,8 +140,8 @@
     "source": "acos"
   },
   ".codex/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "4aaad265c1ebce986bbed0f153d45698122f3901328d849dbcf7849b275cffc0",
-    "generatedAt": "2026-09-07T17:24:23.444Z",
+    "contentHash": "96666b94cafb35a5ab2431d689a91d5264de826c517e4ca1450071680b7b4026",
+    "generatedAt": "2026-10-19T14:44:22.353Z",
     "source": "acos"
   },
   ".codex/skills/1840-auto-improve/SKILL.md": {
@@ -150,8 +150,8 @@
     "source": "acos"
   },
   "agent/skills/1180-migrate-ecosystem/SKILL.md": {
-    "contentHash": "a5deb8661ecdec3bfe8ac15820d85c135c0dd327e72a992d65d41d73d7d3991f",
-    "generatedAt": "2026-09-07T17:24:23.885Z",
+    "contentHash": "9e41743131c6480fb026f68457adce8787543f425d0517dde5b46e701730c1d0",
+    "generatedAt": "2026-10-19T14:44:22.702Z",
     "source": "acos"
   },
   "agent/skills/1840-auto-improve/SKILL.md": {
@@ -180,8 +180,8 @@
     "source": "acos"
   },
   ".codex/config.toml": {
-    "contentHash": "c8ecc0c909d304d822f7320de2eb5f2dbd0ac85c5c0f3f96b7389926b2fd5a8f",
-    "generatedAt": "2026-09-07T19:38:15.680Z",
+    "contentHash": "e601843fc554e29e8bc6417843ca5441f1ef54824dbb765af1b5202519fb46f4",
+    "generatedAt": "2026-10-19T14:42:09.264Z",
     "source": "acos"
   },
   "agent/connections/archon.ts": {
@@ -200,8 +200,8 @@
     "source": "acos"
   },
   ".claude/skills/1020-handoff/SKILL.md": {
-    "contentHash": "709da44b805c146a8c9e69ca983b166f1a6b61a11891b40cb0badd961bf325f1",
-    "generatedAt": "2026-10-11T02:43:09.060Z",
+    "contentHash": "b6091346fdbf5909ef80c39c3eb59b3e1e149a5b9d4b29fcea9b4b19b1dd51cd",
+    "generatedAt": "2026-10-19T14:44:20.710Z",
     "source": "acos"
   },
   ".claude/commands/0020-resume.md": {
@@ -210,8 +210,8 @@
     "source": "acos"
   },
   ".claude/commands/1020-handoff.md": {
-    "contentHash": "cc4357006b79f2d5401eac94b4fd8957a8ee3ad1b36a4114b9e48484282f66b9",
-    "generatedAt": "2026-10-11T02:43:09.151Z",
+    "contentHash": "d11b3b141c6bc9fd2d5ceb7900737d0a54a5f0730fe02b6ff3fff134d5f8713f",
+    "generatedAt": "2026-10-19T14:44:20.841Z",
     "source": "acos"
   },
   ".cursor/skills/0020-resume/SKILL.md": {
@@ -220,8 +220,8 @@
     "source": "acos"
   },
   ".cursor/skills/1020-handoff/SKILL.md": {
-    "contentHash": "136a79064c13e71e9f2fbbb6417f6094167140bbda9e8a8da3ed7a40633d6f18",
-    "generatedAt": "2026-10-11T02:43:09.209Z",
+    "contentHash": "283e0eff0c8a74bfd4d3e032649f79847593f73060efe842bd4555bf186e9422",
+    "generatedAt": "2026-10-19T14:44:20.975Z",
     "source": "acos"
   },
   ".cursor/commands/0020-resume.md": {
@@ -230,8 +230,8 @@
     "source": "acos"
   },
   ".cursor/commands/1020-handoff.md": {
-    "contentHash": "cc4357006b79f2d5401eac94b4fd8957a8ee3ad1b36a4114b9e48484282f66b9",
-    "generatedAt": "2026-10-11T02:43:09.240Z",
+    "contentHash": "d11b3b141c6bc9fd2d5ceb7900737d0a54a5f0730fe02b6ff3fff134d5f8713f",
+    "generatedAt": "2026-10-19T14:44:21.074Z",
     "source": "acos"
   },
   ".opencode/skills/0020-resume/SKILL.md": {
@@ -240,8 +240,8 @@
     "source": "acos"
   },
   ".opencode/skills/1020-handoff/SKILL.md": {
-    "contentHash": "ab91bc74dc8eea4b1081bde474508b590c5b5e9d8d645fad7861adce5046d0a1",
-    "generatedAt": "2026-10-17T17:00:40.306Z",
+    "contentHash": "8654169f59a9fe3a5d1f7fd32a6ccd210fc8339dfa6eae8ee9e21c2b2913eea3",
+    "generatedAt": "2026-10-19T14:44:21.108Z",
     "source": "acos"
   },
   ".agents/skills/0020-resume/SKILL.md": {
@@ -250,8 +250,8 @@
     "source": "acos"
   },
   ".agents/skills/1020-handoff/SKILL.md": {
-    "contentHash": "709da44b805c146a8c9e69ca983b166f1a6b61a11891b40cb0badd961bf325f1",
-    "generatedAt": "2026-10-11T02:43:09.307Z",
+    "contentHash": "b6091346fdbf5909ef80c39c3eb59b3e1e149a5b9d4b29fcea9b4b19b1dd51cd",
+    "generatedAt": "2026-10-19T14:44:21.164Z",
     "source": "acos"
   },
   ".kilo/skills/0020-resume/SKILL.md": {
@@ -260,8 +260,8 @@
     "source": "acos"
   },
   ".kilo/skills/1020-handoff/SKILL.md": {
-    "contentHash": "709da44b805c146a8c9e69ca983b166f1a6b61a11891b40cb0badd961bf325f1",
-    "generatedAt": "2026-10-11T02:43:09.380Z",
+    "contentHash": "b6091346fdbf5909ef80c39c3eb59b3e1e149a5b9d4b29fcea9b4b19b1dd51cd",
+    "generatedAt": "2026-10-19T14:44:21.211Z",
     "source": "acos"
   },
   ".kilo/commands/0020-resume.md": {
@@ -270,8 +270,8 @@
     "source": "acos"
   },
   ".kilo/commands/1020-handoff.md": {
-    "contentHash": "cc4357006b79f2d5401eac94b4fd8957a8ee3ad1b36a4114b9e48484282f66b9",
-    "generatedAt": "2026-10-11T02:43:09.422Z",
+    "contentHash": "d11b3b141c6bc9fd2d5ceb7900737d0a54a5f0730fe02b6ff3fff134d5f8713f",
+    "generatedAt": "2026-10-19T14:44:21.249Z",
     "source": "acos"
   },
   ".kilocode/workflows/0020-resume.md": {
@@ -280,8 +280,8 @@
     "source": "acos"
   },
   ".kilocode/workflows/1020-handoff.md": {
-    "contentHash": "22c2f9d86a47e49f80a31d06c6777b9c934d53fbdcfe80ccc93f565a8295f817",
-    "generatedAt": "2026-10-11T02:43:09.479Z",
+    "contentHash": "304dc5a2e0e0889dffb40692914cae68c96c2c0313735d5869d8774f77651d53",
+    "generatedAt": "2026-10-19T14:44:21.339Z",
     "source": "acos"
   },
   ".opencode/commands/0020-resume.md": {
@@ -290,8 +290,8 @@
     "source": "acos"
   },
   ".opencode/commands/1020-handoff.md": {
-    "contentHash": "cc4357006b79f2d5401eac94b4fd8957a8ee3ad1b36a4114b9e48484282f66b9",
-    "generatedAt": "2026-10-11T02:43:09.504Z",
+    "contentHash": "d11b3b141c6bc9fd2d5ceb7900737d0a54a5f0730fe02b6ff3fff134d5f8713f",
+    "generatedAt": "2026-10-19T14:44:21.530Z",
     "source": "acos"
   },
   ".devin/skills/0020-resume/SKILL.md": {
@@ -300,8 +300,8 @@
     "source": "acos"
   },
   ".devin/skills/1020-handoff/SKILL.md": {
-    "contentHash": "709da44b805c146a8c9e69ca983b166f1a6b61a11891b40cb0badd961bf325f1",
-    "generatedAt": "2026-10-11T02:43:09.556Z",
+    "contentHash": "b6091346fdbf5909ef80c39c3eb59b3e1e149a5b9d4b29fcea9b4b19b1dd51cd",
+    "generatedAt": "2026-10-19T14:44:21.675Z",
     "source": "acos"
   },
   ".windsurf/workflows/0020-resume.md": {
@@ -310,8 +310,8 @@
     "source": "acos"
   },
   ".windsurf/workflows/1020-handoff.md": {
-    "contentHash": "ece338ac9ccc08297a07d9d67858b9cf394cd2616711c4799a0885198c1f16a7",
-    "generatedAt": "2026-10-11T02:43:09.645Z",
+    "contentHash": "38696e2870dd6a16b993ae27b17c6426657b53e5229aeb54b70878201dff6821",
+    "generatedAt": "2026-10-19T14:44:22.142Z",
     "source": "acos"
   },
   ".codex/skills/0020-resume/SKILL.md": {
@@ -320,8 +320,8 @@
     "source": "acos"
   },
   ".codex/skills/1020-handoff/SKILL.md": {
-    "contentHash": "c9aed0561b0bcacb5a6e94d408e037cf6fc906cfecae868ac0c654877359be77",
-    "generatedAt": "2026-10-11T02:43:09.772Z",
+    "contentHash": "2886b334bc2d2e7b0f02abf8e0db6d517de73d2b0b4d33e32ea86dc267d321cb",
+    "generatedAt": "2026-10-19T14:44:22.339Z",
     "source": "acos"
   },
   "agent/skills/0020-resume/SKILL.md": {
@@ -330,8 +330,8 @@
     "source": "acos"
   },
   "agent/skills/1020-handoff/SKILL.md": {
-    "contentHash": "709da44b805c146a8c9e69ca983b166f1a6b61a11891b40cb0badd961bf325f1",
-    "generatedAt": "2026-10-11T02:43:09.877Z",
+    "contentHash": "b6091346fdbf5909ef80c39c3eb59b3e1e149a5b9d4b29fcea9b4b19b1dd51cd",
+    "generatedAt": "2026-10-19T14:44:22.627Z",
     "source": "acos"
   },
   ".claude/skills/1040-session-bridge/SKILL.md": {
@@ -415,33 +415,33 @@
     "source": "acos"
   },
   ".claude/skills/0040-route/SKILL.md": {
-    "contentHash": "23ec0f9d4f0e5bcc5bdf921c634f9752aec4a655474bc60bc9b37ee51a182787",
-    "generatedAt": "2026-10-12T19:22:11.314Z",
+    "contentHash": "8ca006ef783dc77498d585be9bef062656ac33f7bf6150877afadb01c8598535",
+    "generatedAt": "2026-10-19T14:44:20.661Z",
     "source": "acos"
   },
   ".claude/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "4274b84bb6cc72bbbdf184e7e6ec1243f98ca8409384bd2569fadffd43ae1696",
-    "generatedAt": "2026-10-11T02:39:08.363Z",
+    "contentHash": "dea84b0b91e1e29cb00620cc4d0494f785735582310f613807d9f3cfa43917b1",
+    "generatedAt": "2026-10-19T14:44:20.674Z",
     "source": "acos"
   },
   ".claude/skills/1100-migrate/SKILL.md": {
-    "contentHash": "5c12240dbed2c7013c57036d369dd4c7389097c8738c7a130ca648441c9daba4",
-    "generatedAt": "2026-09-27T20:38:07.251Z",
+    "contentHash": "f1683a9be0139e8aa6f448dad0bc97bbbe00fdf1aae7402d5e37833fe5bda9d3",
+    "generatedAt": "2026-10-19T14:44:20.722Z",
     "source": "acos"
   },
   ".claude/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "03527ee1dd613bd83efa2659936255202a4a502b546374fb233e354407a9184f",
-    "generatedAt": "2026-09-27T20:38:07.253Z",
+    "contentHash": "1086dd9989fd40a6ef2555a071924eabb50e1cb831d5b6dd6265853010ad0c08",
+    "generatedAt": "2026-10-19T14:44:20.728Z",
     "source": "acos"
   },
   ".claude/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "8d64695cf5f329f9ec06f2e984706d947d3cad5b36cb05b2c2904afb95f8882b",
-    "generatedAt": "2026-09-27T20:38:07.255Z",
+    "contentHash": "abab36dd8c0ba17c1ca97313614a38102e9ae7e0c9a48f367b2534ba99286994",
+    "generatedAt": "2026-10-19T14:44:20.740Z",
     "source": "acos"
   },
   ".claude/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "a7bf0a6e7c2d038fbdb69dea74d0dd8a87b79ac0a4723a84b061083e349ff48d",
-    "generatedAt": "2026-09-27T20:38:07.258Z",
+    "contentHash": "1a3e73852de60fb14799f1262608856e5f7532a09d45bf685e38c58b5ce709c7",
+    "generatedAt": "2026-10-19T14:44:20.744Z",
     "source": "acos"
   },
   ".claude/skills/1220-personalize/SKILL.md": {
@@ -455,33 +455,33 @@
     "source": "acos"
   },
   ".claude/commands/0040-route.md": {
-    "contentHash": "37aa50e4a06196b6e6a4d3146b7b6d58f38c57096c8f8562d76dce6114829f73",
-    "generatedAt": "2026-10-12T19:22:11.370Z",
+    "contentHash": "376ea9ed61a6accbe19ef9b51c5f0ad8965bac30c2ba992b12f40be633dc17a6",
+    "generatedAt": "2026-10-19T14:44:20.769Z",
     "source": "acos"
   },
   ".claude/commands/0200-frontier-consult.md": {
-    "contentHash": "2ab36deffb8a55f1545d8fdd72bc1a93226a5b37d843acdb4c43e65a06dfb658",
-    "generatedAt": "2026-10-11T02:39:08.505Z",
+    "contentHash": "28cfd00176962b9b12083e3752c263af272329cce5a51f8e5c7ac879806a884f",
+    "generatedAt": "2026-10-19T14:44:20.777Z",
     "source": "acos"
   },
   ".claude/commands/1100-migrate.md": {
-    "contentHash": "bff9351190f60546853da6c85ecc4ea9670ed14dd50e6569a1f1f11572c12c7f",
-    "generatedAt": "2026-09-27T20:38:07.323Z",
+    "contentHash": "09711211cbd95f32f1c2d09b02bfc559bb45ba44d6e3a8739a4db811990a68ef",
+    "generatedAt": "2026-10-19T14:44:20.853Z",
     "source": "acos"
   },
   ".claude/commands/1120-migrate-analyze.md": {
-    "contentHash": "f3d2f2fbd720a155437d594ec698a3760e1946331d8e6ab8de885d31b5e97e11",
-    "generatedAt": "2026-09-27T20:38:07.327Z",
+    "contentHash": "ced031be2a01c367a2a39d9ea5cbd091f183d2435fcc1e2f531f7922d2f01e57",
+    "generatedAt": "2026-10-19T14:44:20.862Z",
     "source": "acos"
   },
   ".claude/commands/1140-migrate-workflow.md": {
-    "contentHash": "e222a5e08905db65dc0636db06531d0337f31ba0a8f5791017c42496824930f3",
-    "generatedAt": "2026-09-27T20:38:07.330Z",
+    "contentHash": "a178f647328b6ec63764434b3f3acf67a9944ad3512b3c4c1a82c186f5dabf72",
+    "generatedAt": "2026-10-19T14:44:20.869Z",
     "source": "acos"
   },
   ".claude/commands/1160-migration-verify.md": {
-    "contentHash": "95e0a5d90639333dd9b81b5fa7645a60ac294262bccdbf88c6af51c8330fa7f5",
-    "generatedAt": "2026-09-27T20:38:07.332Z",
+    "contentHash": "b0f6ad892ff4923b8cddd63d1ec0c2bcc4954c9d9ede7b8a51335b4a9329fe76",
+    "generatedAt": "2026-10-19T14:44:20.874Z",
     "source": "acos"
   },
   ".claude/commands/1220-personalize.md": {
@@ -495,33 +495,33 @@
     "source": "acos"
   },
   ".cursor/skills/0040-route/SKILL.md": {
-    "contentHash": "c7584288933d6c2d75a948ab99902b00778b26a23ab1c4bc52ed3e7772f8c784",
-    "generatedAt": "2026-10-12T19:22:11.433Z",
+    "contentHash": "8ca77e24a924fb0ebd6f22ff112b1f142c93c544be52a2db3c19cad5a492b8a3",
+    "generatedAt": "2026-10-19T14:44:20.899Z",
     "source": "acos"
   },
   ".cursor/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "78805ae16a70609a004fbccccbacd658c4911abaafd68dc65d5c2c0af919b7c4",
-    "generatedAt": "2026-10-11T02:39:08.638Z",
+    "contentHash": "394f9c7e1fd26f6377f9fe9055d554058cfb27a83bf561055ea93610ca11861f",
+    "generatedAt": "2026-10-19T14:44:20.915Z",
     "source": "acos"
   },
   ".cursor/skills/1100-migrate/SKILL.md": {
-    "contentHash": "84c705b5832a3db751ba675ae644da0e220e2025cfffd127060b42f0609df91f",
-    "generatedAt": "2026-09-27T20:38:07.451Z",
+    "contentHash": "a86ef442567bc05094057b1d3adaa82541ee3adda7cc23f0aa13578e5ea07e15",
+    "generatedAt": "2026-10-19T14:44:20.979Z",
     "source": "acos"
   },
   ".cursor/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "b59a8aed519798e323e956c4817ccf7fafaa05673d58996f9b271aa2c38b0505",
-    "generatedAt": "2026-09-27T20:38:07.457Z",
+    "contentHash": "718913c7c8041be69c81663914cb71fe48f366ad889bce23e6f51ff20077fd98",
+    "generatedAt": "2026-10-19T14:44:20.980Z",
     "source": "acos"
   },
   ".cursor/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "ca15eb0f937728c2737531c69a59a79b8909a12cfb6e754f90d6bd31c797b2e4",
-    "generatedAt": "2026-09-27T20:38:07.461Z",
+    "contentHash": "9576beeb789eb724615d75087cf79300a3b3b34fffa0fa52207552fc4abe34f0",
+    "generatedAt": "2026-10-19T14:44:20.982Z",
     "source": "acos"
   },
   ".cursor/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "2493127f4dfeb295d0a4bb61ff3976739a94a50dd2637ef422775bf7d9929740",
-    "generatedAt": "2026-09-27T20:38:07.466Z",
+    "contentHash": "46a0628f1aca884f3e7c116e969f2cf0cb663918de665ddf315fd2f0af2ca486",
+    "generatedAt": "2026-10-19T14:44:20.984Z",
     "source": "acos"
   },
   ".cursor/skills/1220-personalize/SKILL.md": {
@@ -535,33 +535,33 @@
     "source": "acos"
   },
   ".cursor/commands/0040-route.md": {
-    "contentHash": "37aa50e4a06196b6e6a4d3146b7b6d58f38c57096c8f8562d76dce6114829f73",
-    "generatedAt": "2026-10-12T19:22:11.494Z",
+    "contentHash": "376ea9ed61a6accbe19ef9b51c5f0ad8965bac30c2ba992b12f40be633dc17a6",
+    "generatedAt": "2026-10-19T14:44:21.000Z",
     "source": "acos"
   },
   ".cursor/commands/0200-frontier-consult.md": {
-    "contentHash": "2ab36deffb8a55f1545d8fdd72bc1a93226a5b37d843acdb4c43e65a06dfb658",
-    "generatedAt": "2026-10-11T02:39:08.759Z",
+    "contentHash": "28cfd00176962b9b12083e3752c263af272329cce5a51f8e5c7ac879806a884f",
+    "generatedAt": "2026-10-19T14:44:21.012Z",
     "source": "acos"
   },
   ".cursor/commands/1100-migrate.md": {
-    "contentHash": "bff9351190f60546853da6c85ecc4ea9670ed14dd50e6569a1f1f11572c12c7f",
-    "generatedAt": "2026-09-27T20:38:07.604Z",
+    "contentHash": "09711211cbd95f32f1c2d09b02bfc559bb45ba44d6e3a8739a4db811990a68ef",
+    "generatedAt": "2026-10-19T14:44:21.079Z",
     "source": "acos"
   },
   ".cursor/commands/1120-migrate-analyze.md": {
-    "contentHash": "f3d2f2fbd720a155437d594ec698a3760e1946331d8e6ab8de885d31b5e97e11",
-    "generatedAt": "2026-09-27T20:38:07.606Z",
+    "contentHash": "ced031be2a01c367a2a39d9ea5cbd091f183d2435fcc1e2f531f7922d2f01e57",
+    "generatedAt": "2026-10-19T14:44:21.081Z",
     "source": "acos"
   },
   ".cursor/commands/1140-migrate-workflow.md": {
-    "contentHash": "e222a5e08905db65dc0636db06531d0337f31ba0a8f5791017c42496824930f3",
-    "generatedAt": "2026-09-27T20:38:07.608Z",
+    "contentHash": "a178f647328b6ec63764434b3f3acf67a9944ad3512b3c4c1a82c186f5dabf72",
+    "generatedAt": "2026-10-19T14:44:21.083Z",
     "source": "acos"
   },
   ".cursor/commands/1160-migration-verify.md": {
-    "contentHash": "95e0a5d90639333dd9b81b5fa7645a60ac294262bccdbf88c6af51c8330fa7f5",
-    "generatedAt": "2026-09-27T20:38:07.610Z",
+    "contentHash": "b0f6ad892ff4923b8cddd63d1ec0c2bcc4954c9d9ede7b8a51335b4a9329fe76",
+    "generatedAt": "2026-10-19T14:44:21.085Z",
     "source": "acos"
   },
   ".cursor/commands/1220-personalize.md": {
@@ -575,33 +575,33 @@
     "source": "acos"
   },
   ".opencode/skills/0040-route/SKILL.md": {
-    "contentHash": "8bb14d58b3c228b5945e62a0e2fb7662b19e9cc40ea184f7e6e32bf0fa0dc512",
-    "generatedAt": "2026-10-17T17:00:40.233Z",
+    "contentHash": "76e5313d1eae437ed71933fcc0270d8bfb080417bd2f948117fb4b9b161cca81",
+    "generatedAt": "2026-10-19T14:44:21.092Z",
     "source": "acos"
   },
   ".opencode/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "7e1215bccdcff4ce51ef9fade24c7e88145efa43f6711db7230e4a79db62a488",
-    "generatedAt": "2026-10-17T17:00:40.245Z",
+    "contentHash": "8402aa73fe9f4bf5f23ef85e8c7dc88d3cefca9ec1780ed7a295885a332b5997",
+    "generatedAt": "2026-10-19T14:44:21.095Z",
     "source": "acos"
   },
   ".opencode/skills/1100-migrate/SKILL.md": {
-    "contentHash": "2e90d923744d556fc5d26bf6086b7d9923835cd5ab96d6585adc00e2144f9a37",
-    "generatedAt": "2026-10-17T17:00:40.315Z",
+    "contentHash": "1821316656e64c36e8c2de4faf074b3f17c455fb7f9e99ed9fdcdadb2cc9af93",
+    "generatedAt": "2026-10-19T14:44:21.110Z",
     "source": "acos"
   },
   ".opencode/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "58789daab4b7fd31a54375a094deb58264e883f08a2dc801904bdc054149bbba",
-    "generatedAt": "2026-10-17T17:00:40.317Z",
+    "contentHash": "f676f68b584fd67676dcbf2ffaaf4f378ab8c5887c75ddce74cd0c1cee0fefee",
+    "generatedAt": "2026-10-19T14:44:21.112Z",
     "source": "acos"
   },
   ".opencode/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "2e3913690a5ec3e432579511231d0f832b3b7fd5015e6480354ab76ccad6c347",
-    "generatedAt": "2026-10-17T17:00:40.320Z",
+    "contentHash": "fc2d6c83518562bc587e8dc657aaa7c29878842aa3d19e21f16bc010ae84b50d",
+    "generatedAt": "2026-10-19T14:44:21.116Z",
     "source": "acos"
   },
   ".opencode/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "72687db1e9edae6ac6188d6eea9ccb96d9d7acb758681dbadae783e43291f16d",
-    "generatedAt": "2026-10-17T17:00:40.322Z",
+    "contentHash": "cfdf021648efd5d24b079421fea13e40789076b07cd2220bcc8a4ef2fd433269",
+    "generatedAt": "2026-10-19T14:44:21.118Z",
     "source": "acos"
   },
   ".opencode/skills/1220-personalize/SKILL.md": {
@@ -615,33 +615,33 @@
     "source": "acos"
   },
   ".agents/skills/0040-route/SKILL.md": {
-    "contentHash": "23ec0f9d4f0e5bcc5bdf921c634f9752aec4a655474bc60bc9b37ee51a182787",
-    "generatedAt": "2026-10-12T19:22:11.614Z",
+    "contentHash": "8ca006ef783dc77498d585be9bef062656ac33f7bf6150877afadb01c8598535",
+    "generatedAt": "2026-10-19T14:44:21.132Z",
     "source": "acos"
   },
   ".agents/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "4274b84bb6cc72bbbdf184e7e6ec1243f98ca8409384bd2569fadffd43ae1696",
-    "generatedAt": "2026-10-11T02:39:08.969Z",
+    "contentHash": "dea84b0b91e1e29cb00620cc4d0494f785735582310f613807d9f3cfa43917b1",
+    "generatedAt": "2026-10-19T14:44:21.137Z",
     "source": "acos"
   },
   ".agents/skills/1100-migrate/SKILL.md": {
-    "contentHash": "5c12240dbed2c7013c57036d369dd4c7389097c8738c7a130ca648441c9daba4",
-    "generatedAt": "2026-09-27T20:38:07.757Z",
+    "contentHash": "f1683a9be0139e8aa6f448dad0bc97bbbe00fdf1aae7402d5e37833fe5bda9d3",
+    "generatedAt": "2026-10-19T14:44:21.167Z",
     "source": "acos"
   },
   ".agents/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "03527ee1dd613bd83efa2659936255202a4a502b546374fb233e354407a9184f",
-    "generatedAt": "2026-09-27T20:38:07.760Z",
+    "contentHash": "1086dd9989fd40a6ef2555a071924eabb50e1cb831d5b6dd6265853010ad0c08",
+    "generatedAt": "2026-10-19T14:44:21.169Z",
     "source": "acos"
   },
   ".agents/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "8d64695cf5f329f9ec06f2e984706d947d3cad5b36cb05b2c2904afb95f8882b",
-    "generatedAt": "2026-09-27T20:38:07.762Z",
+    "contentHash": "abab36dd8c0ba17c1ca97313614a38102e9ae7e0c9a48f367b2534ba99286994",
+    "generatedAt": "2026-10-19T14:44:21.171Z",
     "source": "acos"
   },
   ".agents/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "a7bf0a6e7c2d038fbdb69dea74d0dd8a87b79ac0a4723a84b061083e349ff48d",
-    "generatedAt": "2026-09-27T20:38:07.764Z",
+    "contentHash": "1a3e73852de60fb14799f1262608856e5f7532a09d45bf685e38c58b5ce709c7",
+    "generatedAt": "2026-10-19T14:44:21.173Z",
     "source": "acos"
   },
   ".agents/skills/1220-personalize/SKILL.md": {
@@ -655,33 +655,33 @@
     "source": "acos"
   },
   ".kilo/skills/0040-route/SKILL.md": {
-    "contentHash": "23ec0f9d4f0e5bcc5bdf921c634f9752aec4a655474bc60bc9b37ee51a182787",
-    "generatedAt": "2026-10-12T19:22:11.676Z",
+    "contentHash": "8ca006ef783dc77498d585be9bef062656ac33f7bf6150877afadb01c8598535",
+    "generatedAt": "2026-10-19T14:44:21.182Z",
     "source": "acos"
   },
   ".kilo/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "4274b84bb6cc72bbbdf184e7e6ec1243f98ca8409384bd2569fadffd43ae1696",
-    "generatedAt": "2026-10-11T02:39:09.073Z",
+    "contentHash": "dea84b0b91e1e29cb00620cc4d0494f785735582310f613807d9f3cfa43917b1",
+    "generatedAt": "2026-10-19T14:44:21.184Z",
     "source": "acos"
   },
   ".kilo/skills/1100-migrate/SKILL.md": {
-    "contentHash": "5c12240dbed2c7013c57036d369dd4c7389097c8738c7a130ca648441c9daba4",
-    "generatedAt": "2026-09-27T20:38:07.822Z",
+    "contentHash": "f1683a9be0139e8aa6f448dad0bc97bbbe00fdf1aae7402d5e37833fe5bda9d3",
+    "generatedAt": "2026-10-19T14:44:21.215Z",
     "source": "acos"
   },
   ".kilo/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "03527ee1dd613bd83efa2659936255202a4a502b546374fb233e354407a9184f",
-    "generatedAt": "2026-09-27T20:38:07.828Z",
+    "contentHash": "1086dd9989fd40a6ef2555a071924eabb50e1cb831d5b6dd6265853010ad0c08",
+    "generatedAt": "2026-10-19T14:44:21.217Z",
     "source": "acos"
   },
   ".kilo/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "8d64695cf5f329f9ec06f2e984706d947d3cad5b36cb05b2c2904afb95f8882b",
-    "generatedAt": "2026-09-27T20:38:07.830Z",
+    "contentHash": "abab36dd8c0ba17c1ca97313614a38102e9ae7e0c9a48f367b2534ba99286994",
+    "generatedAt": "2026-10-19T14:44:21.219Z",
     "source": "acos"
   },
   ".kilo/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "a7bf0a6e7c2d038fbdb69dea74d0dd8a87b79ac0a4723a84b061083e349ff48d",
-    "generatedAt": "2026-09-27T20:38:07.832Z",
+    "contentHash": "1a3e73852de60fb14799f1262608856e5f7532a09d45bf685e38c58b5ce709c7",
+    "generatedAt": "2026-10-19T14:44:21.221Z",
     "source": "acos"
   },
   ".kilo/skills/1220-personalize/SKILL.md": {
@@ -695,33 +695,33 @@
     "source": "acos"
   },
   ".kilo/commands/0040-route.md": {
-    "contentHash": "37aa50e4a06196b6e6a4d3146b7b6d58f38c57096c8f8562d76dce6114829f73",
-    "generatedAt": "2026-10-12T19:22:11.777Z",
+    "contentHash": "376ea9ed61a6accbe19ef9b51c5f0ad8965bac30c2ba992b12f40be633dc17a6",
+    "generatedAt": "2026-10-19T14:44:21.229Z",
     "source": "acos"
   },
   ".kilo/commands/0200-frontier-consult.md": {
-    "contentHash": "2ab36deffb8a55f1545d8fdd72bc1a93226a5b37d843acdb4c43e65a06dfb658",
-    "generatedAt": "2026-10-11T02:39:09.134Z",
+    "contentHash": "28cfd00176962b9b12083e3752c263af272329cce5a51f8e5c7ac879806a884f",
+    "generatedAt": "2026-10-19T14:44:21.233Z",
     "source": "acos"
   },
   ".kilo/commands/1100-migrate.md": {
-    "contentHash": "bff9351190f60546853da6c85ecc4ea9670ed14dd50e6569a1f1f11572c12c7f",
-    "generatedAt": "2026-09-27T20:38:07.895Z",
+    "contentHash": "09711211cbd95f32f1c2d09b02bfc559bb45ba44d6e3a8739a4db811990a68ef",
+    "generatedAt": "2026-10-19T14:44:21.251Z",
     "source": "acos"
   },
   ".kilo/commands/1120-migrate-analyze.md": {
-    "contentHash": "f3d2f2fbd720a155437d594ec698a3760e1946331d8e6ab8de885d31b5e97e11",
-    "generatedAt": "2026-09-27T20:38:07.897Z",
+    "contentHash": "ced031be2a01c367a2a39d9ea5cbd091f183d2435fcc1e2f531f7922d2f01e57",
+    "generatedAt": "2026-10-19T14:44:21.252Z",
     "source": "acos"
   },
   ".kilo/commands/1140-migrate-workflow.md": {
-    "contentHash": "e222a5e08905db65dc0636db06531d0337f31ba0a8f5791017c42496824930f3",
-    "generatedAt": "2026-09-27T20:38:07.900Z",
+    "contentHash": "a178f647328b6ec63764434b3f3acf67a9944ad3512b3c4c1a82c186f5dabf72",
+    "generatedAt": "2026-10-19T14:44:21.254Z",
     "source": "acos"
   },
   ".kilo/commands/1160-migration-verify.md": {
-    "contentHash": "95e0a5d90639333dd9b81b5fa7645a60ac294262bccdbf88c6af51c8330fa7f5",
-    "generatedAt": "2026-09-27T20:38:07.902Z",
+    "contentHash": "b0f6ad892ff4923b8cddd63d1ec0c2bcc4954c9d9ede7b8a51335b4a9329fe76",
+    "generatedAt": "2026-10-19T14:44:21.255Z",
     "source": "acos"
   },
   ".kilo/commands/1220-personalize.md": {
@@ -735,33 +735,33 @@
     "source": "acos"
   },
   ".kilocode/workflows/0040-route.md": {
-    "contentHash": "5ee11a10461cfcdd3a4d589baa3de1bc66aaec5307d4c3bcf85680cd1f0dd3d0",
-    "generatedAt": "2026-10-12T19:22:11.868Z",
+    "contentHash": "4118dc7d322183374b96a3a1408d83f3cb94b154174e4d6fe57cbacd2ea28872",
+    "generatedAt": "2026-10-19T14:44:21.269Z",
     "source": "acos"
   },
   ".kilocode/workflows/0200-frontier-consult.md": {
-    "contentHash": "63e9bc6a7e636ce7a03ffbf393d83ec5273ec8aa9fbd069467868e71a2fda11b",
-    "generatedAt": "2026-10-11T02:39:09.199Z",
+    "contentHash": "3392cca04907ce942058ab538db91bec1089e85eb8bb908512cfe46a3c27ac38",
+    "generatedAt": "2026-10-19T14:44:21.283Z",
     "source": "acos"
   },
   ".kilocode/workflows/1100-migrate.md": {
-    "contentHash": "540c90b647a48046105aed50d9d126c2f3b192ee8f627576dca94f4c96e7de56",
-    "generatedAt": "2026-09-27T20:38:07.959Z",
+    "contentHash": "3f56e1e9b8bd51863072d31bd587005e6f79942cbb9a34c0c3feedd6ceda005d",
+    "generatedAt": "2026-10-19T14:44:21.361Z",
     "source": "acos"
   },
   ".kilocode/workflows/1120-migrate-analyze.md": {
-    "contentHash": "29d866d617bc5a0641527fae170301a75c49db75d17f1d5bdadf4442348124c3",
-    "generatedAt": "2026-09-27T20:38:07.962Z",
+    "contentHash": "9593496d106735cf34f9aac2e58552cc983365364799d7b3b415e09f1d7db37f",
+    "generatedAt": "2026-10-19T14:44:21.367Z",
     "source": "acos"
   },
   ".kilocode/workflows/1140-migrate-workflow.md": {
-    "contentHash": "52dfc7c5c7ffc60247725409be9969bb250372370b90940e9063aeca80abac15",
-    "generatedAt": "2026-09-27T20:38:07.964Z",
+    "contentHash": "19740be8004b0f84361135f47b8ed104737ebe7b1b26d0f49836157710d0d229",
+    "generatedAt": "2026-10-19T14:44:21.383Z",
     "source": "acos"
   },
   ".kilocode/workflows/1160-migration-verify.md": {
-    "contentHash": "f31508602f336add409bf2d2f21038bd0dab6af545505897e7dbdb16eb5ceda6",
-    "generatedAt": "2026-09-27T20:38:07.966Z",
+    "contentHash": "e3100b4af9cfa1d910206340bd3a320fd33634c86a9a98e58ea762dee3fed7e6",
+    "generatedAt": "2026-10-19T14:44:21.387Z",
     "source": "acos"
   },
   ".kilocode/workflows/1220-personalize.md": {
@@ -775,33 +775,33 @@
     "source": "acos"
   },
   ".opencode/commands/0040-route.md": {
-    "contentHash": "37aa50e4a06196b6e6a4d3146b7b6d58f38c57096c8f8562d76dce6114829f73",
-    "generatedAt": "2026-10-12T19:22:11.953Z",
+    "contentHash": "376ea9ed61a6accbe19ef9b51c5f0ad8965bac30c2ba992b12f40be633dc17a6",
+    "generatedAt": "2026-10-19T14:44:21.432Z",
     "source": "acos"
   },
   ".opencode/commands/0200-frontier-consult.md": {
-    "contentHash": "2ab36deffb8a55f1545d8fdd72bc1a93226a5b37d843acdb4c43e65a06dfb658",
-    "generatedAt": "2026-10-11T02:39:09.266Z",
+    "contentHash": "28cfd00176962b9b12083e3752c263af272329cce5a51f8e5c7ac879806a884f",
+    "generatedAt": "2026-10-19T14:44:21.451Z",
     "source": "acos"
   },
   ".opencode/commands/1100-migrate.md": {
-    "contentHash": "bff9351190f60546853da6c85ecc4ea9670ed14dd50e6569a1f1f11572c12c7f",
-    "generatedAt": "2026-09-27T20:38:08.036Z",
+    "contentHash": "09711211cbd95f32f1c2d09b02bfc559bb45ba44d6e3a8739a4db811990a68ef",
+    "generatedAt": "2026-10-19T14:44:21.534Z",
     "source": "acos"
   },
   ".opencode/commands/1120-migrate-analyze.md": {
-    "contentHash": "f3d2f2fbd720a155437d594ec698a3760e1946331d8e6ab8de885d31b5e97e11",
-    "generatedAt": "2026-09-27T20:38:08.038Z",
+    "contentHash": "ced031be2a01c367a2a39d9ea5cbd091f183d2435fcc1e2f531f7922d2f01e57",
+    "generatedAt": "2026-10-19T14:44:21.540Z",
     "source": "acos"
   },
   ".opencode/commands/1140-migrate-workflow.md": {
-    "contentHash": "e222a5e08905db65dc0636db06531d0337f31ba0a8f5791017c42496824930f3",
-    "generatedAt": "2026-09-27T20:38:08.040Z",
+    "contentHash": "a178f647328b6ec63764434b3f3acf67a9944ad3512b3c4c1a82c186f5dabf72",
+    "generatedAt": "2026-10-19T14:44:21.545Z",
     "source": "acos"
   },
   ".opencode/commands/1160-migration-verify.md": {
-    "contentHash": "95e0a5d90639333dd9b81b5fa7645a60ac294262bccdbf88c6af51c8330fa7f5",
-    "generatedAt": "2026-09-27T20:38:08.041Z",
+    "contentHash": "b0f6ad892ff4923b8cddd63d1ec0c2bcc4954c9d9ede7b8a51335b4a9329fe76",
+    "generatedAt": "2026-10-19T14:44:21.555Z",
     "source": "acos"
   },
   ".opencode/commands/1220-personalize.md": {
@@ -815,33 +815,33 @@
     "source": "acos"
   },
   ".devin/skills/0040-route/SKILL.md": {
-    "contentHash": "23ec0f9d4f0e5bcc5bdf921c634f9752aec4a655474bc60bc9b37ee51a182787",
-    "generatedAt": "2026-10-12T19:22:12.060Z",
+    "contentHash": "8ca006ef783dc77498d585be9bef062656ac33f7bf6150877afadb01c8598535",
+    "generatedAt": "2026-10-19T14:44:21.599Z",
     "source": "acos"
   },
   ".devin/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "4274b84bb6cc72bbbdf184e7e6ec1243f98ca8409384bd2569fadffd43ae1696",
-    "generatedAt": "2026-10-11T02:39:09.359Z",
+    "contentHash": "dea84b0b91e1e29cb00620cc4d0494f785735582310f613807d9f3cfa43917b1",
+    "generatedAt": "2026-10-19T14:44:21.632Z",
     "source": "acos"
   },
   ".devin/skills/1100-migrate/SKILL.md": {
-    "contentHash": "5c12240dbed2c7013c57036d369dd4c7389097c8738c7a130ca648441c9daba4",
-    "generatedAt": "2026-09-27T20:38:08.098Z",
+    "contentHash": "f1683a9be0139e8aa6f448dad0bc97bbbe00fdf1aae7402d5e37833fe5bda9d3",
+    "generatedAt": "2026-10-19T14:44:21.689Z",
     "source": "acos"
   },
   ".devin/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "03527ee1dd613bd83efa2659936255202a4a502b546374fb233e354407a9184f",
-    "generatedAt": "2026-09-27T20:38:08.100Z",
+    "contentHash": "1086dd9989fd40a6ef2555a071924eabb50e1cb831d5b6dd6265853010ad0c08",
+    "generatedAt": "2026-10-19T14:44:21.691Z",
     "source": "acos"
   },
   ".devin/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "8d64695cf5f329f9ec06f2e984706d947d3cad5b36cb05b2c2904afb95f8882b",
-    "generatedAt": "2026-09-27T20:38:08.103Z",
+    "contentHash": "abab36dd8c0ba17c1ca97313614a38102e9ae7e0c9a48f367b2534ba99286994",
+    "generatedAt": "2026-10-19T14:44:21.707Z",
     "source": "acos"
   },
   ".devin/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "a7bf0a6e7c2d038fbdb69dea74d0dd8a87b79ac0a4723a84b061083e349ff48d",
-    "generatedAt": "2026-09-27T20:38:08.105Z",
+    "contentHash": "1a3e73852de60fb14799f1262608856e5f7532a09d45bf685e38c58b5ce709c7",
+    "generatedAt": "2026-10-19T14:44:21.713Z",
     "source": "acos"
   },
   ".devin/skills/1220-personalize/SKILL.md": {
@@ -855,33 +855,33 @@
     "source": "acos"
   },
   ".windsurf/workflows/0040-route.md": {
-    "contentHash": "082057168f4f7b81265758b2cf3e37a97f1e35ea0f9fd67fcff6dea57802ae88",
-    "generatedAt": "2026-10-12T19:22:12.221Z",
+    "contentHash": "8a10955860453e04a6d7c36c8cfa78fc2ea72c08d19237176184c212d0c3be6f",
+    "generatedAt": "2026-10-19T14:44:22.016Z",
     "source": "acos"
   },
   ".windsurf/workflows/0200-frontier-consult.md": {
-    "contentHash": "f02fde963abb02967f61ce220f212694fec6f05a0b70cfb9b387ab9e6b993098",
-    "generatedAt": "2026-10-11T02:39:09.493Z",
+    "contentHash": "c3b66cf83a6735501f5220690a217f06e561175cbdc81654027ac8b81769ac09",
+    "generatedAt": "2026-10-19T14:44:22.057Z",
     "source": "acos"
   },
   ".windsurf/workflows/1100-migrate.md": {
-    "contentHash": "1494966ba6e985878a4132a95290e9e89bcae4e038608cb0de8c4da102690889",
-    "generatedAt": "2026-09-27T20:38:08.214Z",
+    "contentHash": "08d9aa16fe5e3aff3b228a2f1cce94d529db8eba6fb54ce9e89dfda641be3633",
+    "generatedAt": "2026-10-19T14:44:22.149Z",
     "source": "acos"
   },
   ".windsurf/workflows/1120-migrate-analyze.md": {
-    "contentHash": "ad2174ac1db522666e6bab9f1e49e9af0b26e22495b7fa383754d1e82be17730",
-    "generatedAt": "2026-09-27T20:38:08.216Z",
+    "contentHash": "ce27eebd565bf8ac0e2aee023ed0ba408b9f587253ec327bcc47f4acf6dcd107",
+    "generatedAt": "2026-10-19T14:44:22.156Z",
     "source": "acos"
   },
   ".windsurf/workflows/1140-migrate-workflow.md": {
-    "contentHash": "43f5817e9e471fef9355059e8c91ced5d74cca8263e0d2f733967b51f3b84b84",
-    "generatedAt": "2026-09-27T20:38:08.218Z",
+    "contentHash": "5381eb82e81ba33621d85271e3d3ded51cbe009354c7bf3f66013a68aedff853",
+    "generatedAt": "2026-10-19T14:44:22.160Z",
     "source": "acos"
   },
   ".windsurf/workflows/1160-migration-verify.md": {
-    "contentHash": "2cf5b21048f86a50912f980479498e79ba9634bfc36a6cadb90dd9875a3e5add",
-    "generatedAt": "2026-09-27T20:38:08.219Z",
+    "contentHash": "6d7f739e28f9c616b4d98fd2f45f5f3ba2ed03e46d3ecff95d7bb5e0b992dbbe",
+    "generatedAt": "2026-10-19T14:44:22.167Z",
     "source": "acos"
   },
   ".windsurf/workflows/1220-personalize.md": {
@@ -895,33 +895,33 @@
     "source": "acos"
   },
   ".codex/skills/0040-route/SKILL.md": {
-    "contentHash": "576bd5d0ef9e5209fc052deb9eb242db84edf3095ac8af846b2af25e7b04b0dc",
-    "generatedAt": "2026-10-12T19:22:12.420Z",
+    "contentHash": "c7141b172a4b6cb78c6f267d69de5a16b003cf124c02d9b6ecdf2990b7467ee5",
+    "generatedAt": "2026-10-19T14:44:22.258Z",
     "source": "acos"
   },
   ".codex/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "e01681b6df09673a2ddc00e2093f86f77e1272ac2ad5ac23a6531e4c6ab74b7d",
-    "generatedAt": "2026-10-11T02:39:09.620Z",
+    "contentHash": "ba76ad6b2b46a602ffae3198dc40330f4f9d7e5f8ff686b52351286a9c6925af",
+    "generatedAt": "2026-10-19T14:44:22.273Z",
     "source": "acos"
   },
   ".codex/skills/1100-migrate/SKILL.md": {
-    "contentHash": "977677587f3a7dfbee555fc0b59da331cfbb0148f5342316979eeea6742f86ab",
-    "generatedAt": "2026-09-27T20:38:08.330Z",
+    "contentHash": "3b9519021c6a2bbf6930fc435e6a9dc80f43c99fe1726de48ed4ab24a9a61580",
+    "generatedAt": "2026-10-19T14:44:22.342Z",
     "source": "acos"
   },
   ".codex/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "0549d1af236a233bb071d6acefe7853445f359f0dde72945aba1a8a15838e06c",
-    "generatedAt": "2026-09-27T20:38:08.332Z",
+    "contentHash": "a2e717916aa74a2fb998b6056922a5e2cf524684bfc5bb5f6bc78a1fe4a1711a",
+    "generatedAt": "2026-10-19T14:44:22.345Z",
     "source": "acos"
   },
   ".codex/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "b519daa7a4cee070e49d54ad0b72a64bade72cec4adb0b00e79891ac3febf42f",
-    "generatedAt": "2026-09-27T20:38:08.335Z",
+    "contentHash": "57e7e0c6727fe9188252365eeccdf8629e5f341a8869c97fbe7f0d9e3e1f8747",
+    "generatedAt": "2026-10-19T14:44:22.347Z",
     "source": "acos"
   },
   ".codex/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "7537e1c0514222f2bec16b109b68cb30437fd79bfbbe18c0e7b7585d33527b62",
-    "generatedAt": "2026-09-27T20:38:08.337Z",
+    "contentHash": "444b48208ec45ee618ae2dac9515381e68b6240b4eccd9a0fdaf77ba4b606331",
+    "generatedAt": "2026-10-19T14:44:22.352Z",
     "source": "acos"
   },
   ".codex/skills/1220-personalize/SKILL.md": {
@@ -935,33 +935,33 @@
     "source": "acos"
   },
   "agent/skills/0040-route/SKILL.md": {
-    "contentHash": "23ec0f9d4f0e5bcc5bdf921c634f9752aec4a655474bc60bc9b37ee51a182787",
-    "generatedAt": "2026-10-12T19:22:12.481Z",
+    "contentHash": "8ca006ef783dc77498d585be9bef062656ac33f7bf6150877afadb01c8598535",
+    "generatedAt": "2026-10-19T14:44:22.451Z",
     "source": "acos"
   },
   "agent/skills/0200-frontier-consult/SKILL.md": {
-    "contentHash": "4274b84bb6cc72bbbdf184e7e6ec1243f98ca8409384bd2569fadffd43ae1696",
-    "generatedAt": "2026-10-11T02:39:09.736Z",
+    "contentHash": "dea84b0b91e1e29cb00620cc4d0494f785735582310f613807d9f3cfa43917b1",
+    "generatedAt": "2026-10-19T14:44:22.489Z",
     "source": "acos"
   },
   "agent/skills/1100-migrate/SKILL.md": {
-    "contentHash": "5c12240dbed2c7013c57036d369dd4c7389097c8738c7a130ca648441c9daba4",
-    "generatedAt": "2026-09-27T20:38:08.411Z",
+    "contentHash": "f1683a9be0139e8aa6f448dad0bc97bbbe00fdf1aae7402d5e37833fe5bda9d3",
+    "generatedAt": "2026-10-19T14:44:22.670Z",
     "source": "acos"
   },
   "agent/skills/1120-migrate-analyze/SKILL.md": {
-    "contentHash": "03527ee1dd613bd83efa2659936255202a4a502b546374fb233e354407a9184f",
-    "generatedAt": "2026-09-27T20:38:08.413Z",
+    "contentHash": "1086dd9989fd40a6ef2555a071924eabb50e1cb831d5b6dd6265853010ad0c08",
+    "generatedAt": "2026-10-19T14:44:22.672Z",
     "source": "acos"
   },
   "agent/skills/1140-migrate-workflow/SKILL.md": {
-    "contentHash": "8d64695cf5f329f9ec06f2e984706d947d3cad5b36cb05b2c2904afb95f8882b",
-    "generatedAt": "2026-09-27T20:38:08.415Z",
+    "contentHash": "abab36dd8c0ba17c1ca97313614a38102e9ae7e0c9a48f367b2534ba99286994",
+    "generatedAt": "2026-10-19T14:44:22.699Z",
     "source": "acos"
   },
   "agent/skills/1160-migration-verify/SKILL.md": {
-    "contentHash": "a7bf0a6e7c2d038fbdb69dea74d0dd8a87b79ac0a4723a84b061083e349ff48d",
-    "generatedAt": "2026-09-27T20:38:08.417Z",
+    "contentHash": "1a3e73852de60fb14799f1262608856e5f7532a09d45bf685e38c58b5ce709c7",
+    "generatedAt": "2026-10-19T14:44:22.700Z",
     "source": "acos"
   },
   "agent/skills/1220-personalize/SKILL.md": {
@@ -1335,8 +1335,8 @@
     "source": "acos"
   },
   ".claude/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "4955a002944f1ec04d1ff428e6163eef0ce85e043be25135610ee6222131a633",
-    "generatedAt": "2026-10-12T19:22:11.362Z",
+    "contentHash": "5e9a5a4bfb7e80fd3dd4ad54c4aee59f42e4bf889ddce6fba25098b1d1e48154",
+    "generatedAt": "2026-10-19T14:44:20.755Z",
     "source": "acos"
   },
   ".claude/skills/1260-promote-skill/SKILL.md": {
@@ -1550,8 +1550,8 @@
     "source": "acos"
   },
   ".claude/commands/1240-migrate-refs.md": {
-    "contentHash": "27ba54a6d52d6e6e747f34ffa0f15363b97960cfd529f3093e58cc55a8c4a434",
-    "generatedAt": "2026-10-12T19:22:11.427Z",
+    "contentHash": "86efcc98465ba9396647aa16071a6f0b6024a3b99dc620345bde50291d0940ad",
+    "generatedAt": "2026-10-19T14:44:20.887Z",
     "source": "acos"
   },
   ".claude/commands/1260-promote-skill.md": {
@@ -1765,8 +1765,8 @@
     "source": "acos"
   },
   ".cursor/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "1eee09827ec1910334048471873ca8dc01cb2ce7d792a817511ad50773caa182",
-    "generatedAt": "2026-10-12T19:22:11.488Z",
+    "contentHash": "568fb6c1038e5469e5ae42fffeb22a41b47c620c6a453317a8373965c3d36955",
+    "generatedAt": "2026-10-19T14:44:20.990Z",
     "source": "acos"
   },
   ".cursor/skills/1260-promote-skill/SKILL.md": {
@@ -1980,8 +1980,8 @@
     "source": "acos"
   },
   ".cursor/commands/1240-migrate-refs.md": {
-    "contentHash": "27ba54a6d52d6e6e747f34ffa0f15363b97960cfd529f3093e58cc55a8c4a434",
-    "generatedAt": "2026-10-12T19:22:11.542Z",
+    "contentHash": "86efcc98465ba9396647aa16071a6f0b6024a3b99dc620345bde50291d0940ad",
+    "generatedAt": "2026-10-19T14:44:21.088Z",
     "source": "acos"
   },
   ".cursor/commands/1260-promote-skill.md": {
@@ -2195,8 +2195,8 @@
     "source": "acos"
   },
   ".opencode/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "a1c912185706c9573a62db330949c249f0c937dcef691c58424cf069dad63be4",
-    "generatedAt": "2026-10-17T17:00:40.330Z",
+    "contentHash": "210d9340ea9a95b3ff082faa7690b152f5a5a3e58ba3bb35d194dbdafe6f636a",
+    "generatedAt": "2026-10-19T14:44:21.124Z",
     "source": "acos"
   },
   ".opencode/skills/1260-promote-skill/SKILL.md": {
@@ -2410,8 +2410,8 @@
     "source": "acos"
   },
   ".agents/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "4955a002944f1ec04d1ff428e6163eef0ce85e043be25135610ee6222131a633",
-    "generatedAt": "2026-10-12T19:22:11.663Z",
+    "contentHash": "5e9a5a4bfb7e80fd3dd4ad54c4aee59f42e4bf889ddce6fba25098b1d1e48154",
+    "generatedAt": "2026-10-19T14:44:21.178Z",
     "source": "acos"
   },
   ".agents/skills/1260-promote-skill/SKILL.md": {
@@ -2625,8 +2625,8 @@
     "source": "acos"
   },
   ".kilo/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "4955a002944f1ec04d1ff428e6163eef0ce85e043be25135610ee6222131a633",
-    "generatedAt": "2026-10-12T19:22:11.767Z",
+    "contentHash": "5e9a5a4bfb7e80fd3dd4ad54c4aee59f42e4bf889ddce6fba25098b1d1e48154",
+    "generatedAt": "2026-10-19T14:44:21.224Z",
     "source": "acos"
   },
   ".kilo/skills/1260-promote-skill/SKILL.md": {
@@ -2840,8 +2840,8 @@
     "source": "acos"
   },
   ".kilo/commands/1240-migrate-refs.md": {
-    "contentHash": "27ba54a6d52d6e6e747f34ffa0f15363b97960cfd529f3093e58cc55a8c4a434",
-    "generatedAt": "2026-10-12T19:22:11.856Z",
+    "contentHash": "86efcc98465ba9396647aa16071a6f0b6024a3b99dc620345bde50291d0940ad",
+    "generatedAt": "2026-10-19T14:44:21.262Z",
     "source": "acos"
   },
   ".kilo/commands/1260-promote-skill.md": {
@@ -3055,8 +3055,8 @@
     "source": "acos"
   },
   ".kilocode/workflows/1240-migrate-refs.md": {
-    "contentHash": "a16811e8f101c4a190d6be0f21db682128dab5094317fa6a2c8e663dc730ecd4",
-    "generatedAt": "2026-10-12T19:22:11.940Z",
+    "contentHash": "644dcd792ec13c3c5635baa6505d3cf914699224b49c724f0933da13c74f7643",
+    "generatedAt": "2026-10-19T14:44:21.411Z",
     "source": "acos"
   },
   ".kilocode/workflows/1260-promote-skill.md": {
@@ -3270,8 +3270,8 @@
     "source": "acos"
   },
   ".opencode/commands/1240-migrate-refs.md": {
-    "contentHash": "27ba54a6d52d6e6e747f34ffa0f15363b97960cfd529f3093e58cc55a8c4a434",
-    "generatedAt": "2026-10-12T19:22:12.042Z",
+    "contentHash": "86efcc98465ba9396647aa16071a6f0b6024a3b99dc620345bde50291d0940ad",
+    "generatedAt": "2026-10-19T14:44:21.563Z",
     "source": "acos"
   },
   ".opencode/commands/1260-promote-skill.md": {
@@ -3500,8 +3500,8 @@
     "source": "acos"
   },
   ".devin/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "4955a002944f1ec04d1ff428e6163eef0ce85e043be25135610ee6222131a633",
-    "generatedAt": "2026-10-12T19:22:12.142Z",
+    "contentHash": "5e9a5a4bfb7e80fd3dd4ad54c4aee59f42e4bf889ddce6fba25098b1d1e48154",
+    "generatedAt": "2026-10-19T14:44:21.733Z",
     "source": "acos"
   },
   ".devin/skills/1260-promote-skill/SKILL.md": {
@@ -3715,8 +3715,8 @@
     "source": "acos"
   },
   ".windsurf/workflows/1240-migrate-refs.md": {
-    "contentHash": "09ad1b634237cd655b4b0bc1b752f8e338c59c2c375182ecad82052db2c0fd3e",
-    "generatedAt": "2026-10-12T19:22:12.278Z",
+    "contentHash": "08ed21a3dee4531356149efb88636833c693e6dd6bb93718d6d7e7d5c6f604b2",
+    "generatedAt": "2026-10-19T14:44:22.186Z",
     "source": "acos"
   },
   ".windsurf/workflows/1260-promote-skill.md": {
@@ -3930,8 +3930,8 @@
     "source": "acos"
   },
   ".codex/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "8bacf6914aca3ed7c4aee725d7e51b2044d468db5b00eeb6e614b097b3984479",
-    "generatedAt": "2026-10-12T19:22:12.458Z",
+    "contentHash": "f78c1aad89a63b31644ba34f053938d4dcc1d5c538cc4f707f84d97ee14151e6",
+    "generatedAt": "2026-10-19T14:44:22.377Z",
     "source": "acos"
   },
   ".codex/skills/1260-promote-skill/SKILL.md": {
@@ -4010,8 +4010,8 @@
     "source": "acos"
   },
   ".codex/hooks.json": {
-    "contentHash": "37df5aead1a254727cd84c7f2a4184bf99e5cacb0bc2b014f9e28c79a53a2ed7",
-    "generatedAt": "2026-10-12T19:22:12.476Z",
+    "contentHash": "f6934052584fb13dfce00eb1caf998e878b6a72d19055120b4ec6bac75660070",
+    "generatedAt": "2026-10-19T14:42:13.635Z",
     "source": "acos"
   },
   ".devin/hooks.v1.json": {
@@ -4240,8 +4240,8 @@
     "source": "acos"
   },
   "agent/skills/1240-migrate-refs/SKILL.md": {
-    "contentHash": "4955a002944f1ec04d1ff428e6163eef0ce85e043be25135610ee6222131a633",
-    "generatedAt": "2026-10-12T19:22:12.520Z",
+    "contentHash": "5e9a5a4bfb7e80fd3dd4ad54c4aee59f42e4bf889ddce6fba25098b1d1e48154",
+    "generatedAt": "2026-10-19T14:44:22.712Z",
     "source": "acos"
   },
   "agent/skills/1260-promote-skill/SKILL.md": {
@@ -4360,143 +4360,213 @@
     "source": "acos"
   },
   ".claude/skills/1280-model-routing-audit/SKILL.md": {
-    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
-    "generatedAt": "2026-10-17T17:00:39.987Z",
+    "contentHash": "9085511e8315ac2d641976e32f6b7c843931883d966a661368667a8c040b3bcd",
+    "generatedAt": "2026-10-19T14:44:20.759Z",
     "source": "acos"
   },
   ".claude/skills/0840-rollout/SKILL.md": {
-    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
-    "generatedAt": "2026-10-17T17:00:39.989Z",
+    "contentHash": "1ff63e5070537042affbb4d1055c1ea2440bb1f5f67b70e3169438660a99562c",
+    "generatedAt": "2026-10-19T14:44:20.696Z",
     "source": "acos"
   },
   ".claude/commands/1280-model-routing-audit.md": {
-    "contentHash": "0982172d99037838a9100d9d6a00e36488d13b5433c6e271fe8ca877a76a5276",
-    "generatedAt": "2026-10-17T17:00:40.064Z",
+    "contentHash": "a17ddaab01753742c85312e69f1762e94990ccf162b3efdf5131f7ccc9db462f",
+    "generatedAt": "2026-10-19T14:44:20.893Z",
     "source": "acos"
   },
   ".claude/commands/0840-rollout.md": {
-    "contentHash": "ad6191fc5dedd035989c63882f4352ce4c7f6f8a3d8f5ab3235fc8c226eee3c2",
-    "generatedAt": "2026-10-17T17:00:40.065Z",
+    "contentHash": "3b4ab48a3e55095278dfd906a5a1972cf55ad6716153eb927b6e7f59248d9a01",
+    "generatedAt": "2026-10-19T14:44:20.821Z",
     "source": "acos"
   },
   ".cursor/skills/1280-model-routing-audit/SKILL.md": {
-    "contentHash": "c685976d8f352a4cba98099b64d41fe28b84c2ee21029be680b24151511d4a54",
-    "generatedAt": "2026-10-17T17:00:40.147Z",
+    "contentHash": "439511406dea92274c44a3bee5499e8955898e0a94725f4ef6b59415593bd78f",
+    "generatedAt": "2026-10-19T14:44:20.994Z",
     "source": "acos"
   },
   ".cursor/skills/0840-rollout/SKILL.md": {
-    "contentHash": "627f8675109c5455937dea5e58e54407e0c3cc15462f49a2741f866c328e5662",
-    "generatedAt": "2026-10-17T17:00:40.149Z",
+    "contentHash": "bf8720137781aedf27d07cb1c76cf805ddd23c6e8d10c17c574c3248cd3cc463",
+    "generatedAt": "2026-10-19T14:44:20.970Z",
     "source": "acos"
   },
   ".cursor/commands/1280-model-routing-audit.md": {
-    "contentHash": "0982172d99037838a9100d9d6a00e36488d13b5433c6e271fe8ca877a76a5276",
-    "generatedAt": "2026-10-17T17:00:40.227Z",
+    "contentHash": "a17ddaab01753742c85312e69f1762e94990ccf162b3efdf5131f7ccc9db462f",
+    "generatedAt": "2026-10-19T14:44:21.089Z",
     "source": "acos"
   },
   ".cursor/commands/0840-rollout.md": {
-    "contentHash": "ad6191fc5dedd035989c63882f4352ce4c7f6f8a3d8f5ab3235fc8c226eee3c2",
-    "generatedAt": "2026-10-17T17:00:40.227Z",
+    "contentHash": "3b4ab48a3e55095278dfd906a5a1972cf55ad6716153eb927b6e7f59248d9a01",
+    "generatedAt": "2026-10-19T14:44:21.051Z",
     "source": "acos"
   },
   ".opencode/skills/1280-model-routing-audit/SKILL.md": {
-    "contentHash": "db0e6c34975e94738e854ed73cee4fa07fec3a9f98ec4ed6d80a8d7cb7846792",
-    "generatedAt": "2026-10-17T17:00:40.335Z",
+    "contentHash": "c6f9c736452e4ccac19fbe4c515e32b3903c63447d5a46b9e6fab1e47c33d17c",
+    "generatedAt": "2026-10-19T14:44:21.125Z",
     "source": "acos"
   },
   ".opencode/skills/0840-rollout/SKILL.md": {
-    "contentHash": "a45040982b87c6551e97091dffd74170d3182dd871a37f5d028651a584346e99",
-    "generatedAt": "2026-10-17T17:00:40.336Z",
+    "contentHash": "b2dca2e7c274a124c4c29cba4c36b9f02075b477e3e1fa27cc10c158283de5c5",
+    "generatedAt": "2026-10-19T14:44:21.105Z",
     "source": "acos"
   },
   ".agents/skills/1280-model-routing-audit/SKILL.md": {
-    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
-    "generatedAt": "2026-10-17T17:00:40.408Z",
+    "contentHash": "9085511e8315ac2d641976e32f6b7c843931883d966a661368667a8c040b3bcd",
+    "generatedAt": "2026-10-19T14:44:21.179Z",
     "source": "acos"
   },
   ".agents/skills/0840-rollout/SKILL.md": {
-    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
-    "generatedAt": "2026-10-17T17:00:40.410Z",
+    "contentHash": "1ff63e5070537042affbb4d1055c1ea2440bb1f5f67b70e3169438660a99562c",
+    "generatedAt": "2026-10-19T14:44:21.160Z",
     "source": "acos"
   },
   ".kilo/skills/1280-model-routing-audit/SKILL.md": {
-    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
-    "generatedAt": "2026-10-17T17:00:40.484Z",
+    "contentHash": "9085511e8315ac2d641976e32f6b7c843931883d966a661368667a8c040b3bcd",
+    "generatedAt": "2026-10-19T14:44:21.226Z",
     "source": "acos"
   },
   ".kilo/skills/0840-rollout/SKILL.md": {
-    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
-    "generatedAt": "2026-10-17T17:00:40.487Z",
+    "contentHash": "1ff63e5070537042affbb4d1055c1ea2440bb1f5f67b70e3169438660a99562c",
+    "generatedAt": "2026-10-19T14:44:21.202Z",
     "source": "acos"
   },
   ".kilo/commands/1280-model-routing-audit.md": {
-    "contentHash": "0982172d99037838a9100d9d6a00e36488d13b5433c6e271fe8ca877a76a5276",
-    "generatedAt": "2026-10-17T17:00:40.579Z",
+    "contentHash": "a17ddaab01753742c85312e69f1762e94990ccf162b3efdf5131f7ccc9db462f",
+    "generatedAt": "2026-10-19T14:44:21.264Z",
     "source": "acos"
   },
   ".kilo/commands/0840-rollout.md": {
-    "contentHash": "ad6191fc5dedd035989c63882f4352ce4c7f6f8a3d8f5ab3235fc8c226eee3c2",
-    "generatedAt": "2026-10-17T17:00:40.580Z",
+    "contentHash": "3b4ab48a3e55095278dfd906a5a1972cf55ad6716153eb927b6e7f59248d9a01",
+    "generatedAt": "2026-10-19T14:44:21.244Z",
     "source": "acos"
   },
   ".kilocode/workflows/1280-model-routing-audit.md": {
-    "contentHash": "e469b27e8838621fef4ff898fadffff9006a98ba1c7c4fe1db9e57b4cec4ae25",
-    "generatedAt": "2026-10-17T17:00:40.647Z",
+    "contentHash": "fe58e26aeb69b765938409f194c8391fdbcbec4eecbe7fe8ef79739dfd17bc97",
+    "generatedAt": "2026-10-19T14:44:21.417Z",
     "source": "acos"
   },
   ".kilocode/workflows/0840-rollout.md": {
-    "contentHash": "62948005666b3e7acf55dfdbcf2ab1360bea8777655608f5978ca8291fd80611",
-    "generatedAt": "2026-10-17T17:00:40.648Z",
+    "contentHash": "f984b9e4a317c354122fad3120ba5f8c902801c63f8ff5f62c5a6089f1d5ee8d",
+    "generatedAt": "2026-10-19T14:44:21.310Z",
     "source": "acos"
   },
   ".opencode/commands/1280-model-routing-audit.md": {
-    "contentHash": "0982172d99037838a9100d9d6a00e36488d13b5433c6e271fe8ca877a76a5276",
-    "generatedAt": "2026-10-17T17:00:40.713Z",
+    "contentHash": "a17ddaab01753742c85312e69f1762e94990ccf162b3efdf5131f7ccc9db462f",
+    "generatedAt": "2026-10-19T14:44:21.569Z",
     "source": "acos"
   },
   ".opencode/commands/0840-rollout.md": {
-    "contentHash": "ad6191fc5dedd035989c63882f4352ce4c7f6f8a3d8f5ab3235fc8c226eee3c2",
-    "generatedAt": "2026-10-17T17:00:40.714Z",
+    "contentHash": "3b4ab48a3e55095278dfd906a5a1972cf55ad6716153eb927b6e7f59248d9a01",
+    "generatedAt": "2026-10-19T14:44:21.509Z",
     "source": "acos"
   },
   ".devin/skills/1280-model-routing-audit/SKILL.md": {
-    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
-    "generatedAt": "2026-10-17T17:00:40.789Z",
+    "contentHash": "9085511e8315ac2d641976e32f6b7c843931883d966a661368667a8c040b3bcd",
+    "generatedAt": "2026-10-19T14:44:21.740Z",
     "source": "acos"
   },
   ".devin/skills/0840-rollout/SKILL.md": {
-    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
-    "generatedAt": "2026-10-17T17:00:40.790Z",
+    "contentHash": "1ff63e5070537042affbb4d1055c1ea2440bb1f5f67b70e3169438660a99562c",
+    "generatedAt": "2026-10-19T14:44:21.659Z",
     "source": "acos"
   },
   ".windsurf/workflows/1280-model-routing-audit.md": {
-    "contentHash": "76f6ac3ee48b94fd510b43cd59e56c56b17c7b850b36f5732d32eb121742bfdf",
-    "generatedAt": "2026-10-17T17:00:40.947Z",
+    "contentHash": "fa4ed3ba16b6339efc3cc87557c9a62d998ba9b66a070921914ec05816fd987d",
+    "generatedAt": "2026-10-19T14:44:22.189Z",
     "source": "acos"
   },
   ".windsurf/workflows/0840-rollout.md": {
-    "contentHash": "492d219004aed74ea45bbddbe79e7725aa4940a4f89a7c244c37d73bbc9a5e5b",
-    "generatedAt": "2026-10-17T17:00:40.948Z",
+    "contentHash": "186c6267cfa56a615da33c0b1e5d939fe5ec0071c80a447c440fab3a2b7accc5",
+    "generatedAt": "2026-10-19T14:44:22.124Z",
     "source": "acos"
   },
   ".codex/skills/1280-model-routing-audit/SKILL.md": {
-    "contentHash": "892ad5ba146d33dbd26bf0da266e14129567e2193c381174cfa68218a4427c74",
-    "generatedAt": "2026-10-17T17:00:41.093Z",
+    "contentHash": "1778a8d288905ea5f3d9c5fadd7f7116678fbdc380f500e93b93bbb3e958937c",
+    "generatedAt": "2026-10-19T14:44:22.380Z",
     "source": "acos"
   },
   ".codex/skills/0840-rollout/SKILL.md": {
-    "contentHash": "b181e0fecee8994d71d60b967ea2d8f21d15759aa708b36b9014708db2cd2876",
-    "generatedAt": "2026-10-17T17:00:41.094Z",
+    "contentHash": "6cc6c55e3c9d01910b2246a023cfa4377d1406b3de0b8781767b584123befade",
+    "generatedAt": "2026-10-19T14:44:22.332Z",
     "source": "acos"
   },
   "agent/skills/1280-model-routing-audit/SKILL.md": {
-    "contentHash": "b9851ec3d65c14f882364e36e0ad743a08c0a2be9148bbfeaa4adf75cc9e7cf8",
-    "generatedAt": "2026-10-17T17:00:41.192Z",
+    "contentHash": "9085511e8315ac2d641976e32f6b7c843931883d966a661368667a8c040b3bcd",
+    "generatedAt": "2026-10-19T14:44:22.723Z",
     "source": "acos"
   },
   "agent/skills/0840-rollout/SKILL.md": {
-    "contentHash": "8eb05a62c89651b04d0ec8bf8c02094345538ee71fd83d747719ec1d0cdba847",
-    "generatedAt": "2026-10-17T17:00:41.193Z",
+    "contentHash": "1ff63e5070537042affbb4d1055c1ea2440bb1f5f67b70e3169438660a99562c",
+    "generatedAt": "2026-10-19T14:44:22.595Z",
+    "source": "acos"
+  },
+  ".claude/skills/0860-client-surface-currency/SKILL.md": {
+    "contentHash": "99d3e65ed95f08b6f214cac5c6645461a00bb270e66e739de2c86da975ed8891",
+    "generatedAt": "2026-10-19T14:42:09.737Z",
+    "source": "acos"
+  },
+  ".claude/commands/0860-client-surface-currency.md": {
+    "contentHash": "ab9d4232a8d3404d4add87429640bd1057f3fee65cadad40595cf3acbd40f557",
+    "generatedAt": "2026-10-19T14:42:10.092Z",
+    "source": "acos"
+  },
+  ".cursor/skills/0860-client-surface-currency/SKILL.md": {
+    "contentHash": "f8917292d1d67822432411dcbac6366bde4519b5f81d0285e5a74f4b73935751",
+    "generatedAt": "2026-10-19T14:42:10.411Z",
+    "source": "acos"
+  },
+  ".cursor/commands/0860-client-surface-currency.md": {
+    "contentHash": "ab9d4232a8d3404d4add87429640bd1057f3fee65cadad40595cf3acbd40f557",
+    "generatedAt": "2026-10-19T14:42:10.724Z",
+    "source": "acos"
+  },
+  ".opencode/skills/0860-client-surface-currency/SKILL.md": {
+    "contentHash": "0b9c71757fb16022a3e35cbd38a87bf1edd9ee7678740d600f0ed1f6e325d7fc",
+    "generatedAt": "2026-10-19T14:42:11.045Z",
+    "source": "acos"
+  },
+  ".agents/skills/0860-client-surface-currency/SKILL.md": {
+    "contentHash": "99d3e65ed95f08b6f214cac5c6645461a00bb270e66e739de2c86da975ed8891",
+    "generatedAt": "2026-10-19T14:42:11.353Z",
+    "source": "acos"
+  },
+  ".kilo/skills/0860-client-surface-currency/SKILL.md": {
+    "contentHash": "99d3e65ed95f08b6f214cac5c6645461a00bb270e66e739de2c86da975ed8891",
+    "generatedAt": "2026-10-19T14:42:11.615Z",
+    "source": "acos"
+  },
+  ".kilo/commands/0860-client-surface-currency.md": {
+    "contentHash": "ab9d4232a8d3404d4add87429640bd1057f3fee65cadad40595cf3acbd40f557",
+    "generatedAt": "2026-10-19T14:42:11.817Z",
+    "source": "acos"
+  },
+  ".kilocode/workflows/0860-client-surface-currency.md": {
+    "contentHash": "12fcc7a9de279c6cc7ab3b8808afca8248dbb72f62847f054c21c5c4442e1401",
+    "generatedAt": "2026-10-19T14:42:12.098Z",
+    "source": "acos"
+  },
+  ".opencode/commands/0860-client-surface-currency.md": {
+    "contentHash": "ab9d4232a8d3404d4add87429640bd1057f3fee65cadad40595cf3acbd40f557",
+    "generatedAt": "2026-10-19T14:42:12.301Z",
+    "source": "acos"
+  },
+  ".devin/skills/0860-client-surface-currency/SKILL.md": {
+    "contentHash": "99d3e65ed95f08b6f214cac5c6645461a00bb270e66e739de2c86da975ed8891",
+    "generatedAt": "2026-10-19T14:42:12.668Z",
+    "source": "acos"
+  },
+  ".windsurf/workflows/0860-client-surface-currency.md": {
+    "contentHash": "0313ebd7db55a5a780eae98b6cfedfa7f20cf76e42aada0203da2402bab6ea60",
+    "generatedAt": "2026-10-19T14:42:13.264Z",
+    "source": "acos"
+  },
+  ".codex/skills/0860-client-surface-currency/SKILL.md": {
+    "contentHash": "e8700663fc71a2dd37d089ae2763a79064a62e7b826bec972693635fd7d4a52f",
+    "generatedAt": "2026-10-19T14:42:13.540Z",
+    "source": "acos"
+  },
+  "agent/skills/0860-client-surface-currency/SKILL.md": {
+    "contentHash": "99d3e65ed95f08b6f214cac5c6645461a00bb270e66e739de2c86da975ed8891",
+    "generatedAt": "2026-10-19T14:42:13.759Z",
     "source": "acos"
   }
 }

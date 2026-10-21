@@ -1,7 +1,9 @@
 {
-  "generatedAt": "2026-10-17T17:00:37.527Z",
+  "generatedAt": "2026-10-19T14:42:03.666Z",
   "operations": [
-    ".ssot/agents/entrypoints/1280-model-routing-audit.md",
+    ".ssot/skills/prepare-strategic-audit/SKILL.md",
+    ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+    ".ssot/skills/prepare-strategic-audit/references/quality-gates.md",
     ".ssot/agents/workflows.json",
     ".ssot/agents/clients.json",
     ".ssot/agents/dependencies.json",
@@ -16,7 +18,9 @@
     ".ssot/knowledge-profile.json",
     "agent/sandbox/workspace/.ssot-seed-manifest.json",
     ".ssot/agents/clients.json",
-    ".ssot/agents/entrypoints/0840-rollout.md",
+    ".ssot/skills/prepare-strategic-audit/SKILL.md",
+    ".ssot/skills/prepare-strategic-audit/assets/chatgpt-cdp-send.mjs",
+    ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
     ".ssot/agents/workflows.json",
     ".ssot/agents/clients.json",
     ".ssot/agents/dependencies.json",
@@ -30,10 +34,14 @@
     ".ssot/context-index.json",
     ".ssot/knowledge-profile.json",
     "agent/sandbox/workspace/.ssot-seed-manifest.json",
-    ".ssot/agents/clients.json"
+    ".ssot/agents/clients.json",
+    ".ssot/agents/workflows.json",
+    ".ssot/agents/entrypoints/0860-client-surface-currency.md"
   ],
   "filesModified": [
-    ".ssot/agents/entrypoints/1280-model-routing-audit.md",
+    ".ssot/skills/prepare-strategic-audit/SKILL.md",
+    ".ssot/skills/prepare-strategic-audit/assets/prompt-template.md",
+    ".ssot/skills/prepare-strategic-audit/references/quality-gates.md",
     ".ssot/agents/workflows.json",
     ".ssot/agents/clients.json",
     ".ssot/agents/dependencies.json",
@@ -47,7 +55,9 @@
     ".ssot/context-index.json",
     ".ssot/knowledge-profile.json",
     "agent/sandbox/workspace/.ssot-seed-manifest.json",
-    ".ssot/agents/entrypoints/0840-rollout.md"
+    ".ssot/skills/prepare-strategic-audit/assets/chatgpt-cdp-send.mjs",
+    ".ssot/skills/prepare-strategic-audit/references/cdp-send.md",
+    ".ssot/agents/entrypoints/0860-client-surface-currency.md"
   ],
   "referencesNeedingUpdate": {
     "total": 0,
@@ -56,7 +66,7 @@
     "byUpdateMode": {}
   },
   "backupPaths": [
-    ".acos/migrations/1.9.3-to-1.9.4/2026-10-17T17-00-37.527Z",
-    ".acos/migrations/1.9.4-to-1.9.5/2026-10-17T17-00-37.527Z"
+    ".acos/migrations/1.9.5-to-1.9.6/2026-10-19T14-42-03.666Z",
+    ".acos/migrations/1.9.6-to-1.9.7/2026-10-19T14-42-03.666Z"
   ]
 }

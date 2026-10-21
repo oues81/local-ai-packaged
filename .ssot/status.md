@@ -2,8 +2,14 @@
 
 - Lifecycle: adopted
 - Current objective: Self-hosted AI stack — Docker Compose template with n8n, Ollama, Open WebUI, Flowise, Qdrant, Neo4j, SearXNG, Langfuse, Caddy, and custom MCP server
-- Active milestone: Docker build standards (0840) applied + SSOT personalized (docs + entrypoint cycle) + Langfuse healthcheck and memory fixed
-- Verification: ACOS projections in sync (2026-08-30, `sync-clients.mjs --check` clean; 1 pre-existing informational warning: template entrypoint `1840-auto-improve.md` not present in this project — out of scope for this session)
+- Active milestone: ACOS 0840 rollout to ssot **1.9.7** (wave2 2026-10-19) complete — class `ok`
+- ACOS / SSOT: `ssotVersion` **1.9.7** (migrated from 1.9.5); engine `acos-mcp-launcher-work` 1.9.7
+- 0840 class path: `needsMigrate` → apply (skillAdditions + reconcile) → Mode-1 C merge `1020-handoff.md` → waive undeclared twin `0780-docker.md` → `--refresh-bodies` (5 replace-template, 8 hold, 3 skip-personalized) → `ok`
+- Personalized entrypoints preserved: `0020-resume.md`, `0780-docker.md`, `1020-handoff.md` (`personalized: true`)
+- Personalized obligations: PASS + `coverageComplete=true` (0780 file-level accept waiver)
+- Model-routing-audit: hardViolations=0 (soft WARNs on missing planner/reviewer/verifier overrides)
+- Projection check: clean
+- Verification: ACOS projections in sync post-rollout (2026-10-19)
 - Ecosystem role: satellite of master-infra (container)
 - Test suite: no tests (infrastructure project, Docker Compose template)
 - Docker setup: 6 compose files (main, minimal, 3 overrides, supabase), 1 custom Dockerfile (Dockerfile.mcp), 15+ services
@@ -17,7 +23,7 @@
   4. Some :latest tags may remain in docker-compose.yml (pinned where stable versions verified)
 - Native client hooks: projected for Claude Code, Cursor, OpenAI Codex, and Devin
 - MCP configuration: projected for Claude Code, Cursor, Devin, OpenAI Codex, OpenCode, and Kilo Code
-- Last updated: 2026-08-30
+- Last updated: 2026-10-19
 
 ## Project identity
 
