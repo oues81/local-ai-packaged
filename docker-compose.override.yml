@@ -30,7 +30,7 @@
 #   postgres:          256M (kept)
 #   redis:             64M  → 32M
 #   searxng:           256M → 64M
-#   ollama-cpu:        3G   → 512M
+#   ollama-cpu:        stays 3G (minimum to load a model). Profile "cpu" only — do not start it on this host.
 #   ollama-gpu-amd:    3G   → 512M  (added)
 
 services:
