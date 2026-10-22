@@ -45,7 +45,9 @@ scripts/
 contracts/
 
 # Tests (local)
-tests/# === ACOS session migration artifacts (transient — backups/plans, not evidence) ===
+tests/
+
+# === ACOS session migration artifacts (transient — backups/plans, not evidence) ===
 .session/entrypoint-backups/
 .session/pre-merge-dirty-backup/
 .session/rollout-*.json
